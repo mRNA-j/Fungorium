@@ -1,6 +1,6 @@
-public class Spore {
+public abstract class Spore {
     private int nutrition;
     private String effectName;
 
-    public void addEffect(Insect insect) {}
+    public abstract void addEffect(Insect insect);
 }

@@ -10,5 +10,5 @@ public class Tecton {
     public void removeYarn(Yarn yarn) {}
     public void removeSpore(Spore spore) {}
     public void addSpore(Spore spore) {}
-    public void unEffectYarn(Yarn yarn) {}
+    public void runEffectYarn(Yarn yarn) {}
 }
