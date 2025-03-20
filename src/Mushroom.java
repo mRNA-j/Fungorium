@@ -36,6 +36,8 @@ public class Mushroom {
                 return;
         }
 
+
+        System.out.println("Spora hozzáadva");
         tecton.addSpore(sp);
         numberOfDispersions++;
 
