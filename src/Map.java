@@ -52,10 +52,14 @@ public class Map {
             return;
         }
 
-        // A régi Tectonon lévő gombafonalakat el kell vágni
-        for (Yarn yarn : new ArrayList<>(tecton.getYarns())) {
-            tecton.removeYarn(yarn);
+        if(tecton.getMushroom() != null) {
+            tecton.removeMushroom(tecton.getMushroom());
         }
+
+        // A régi Tectonon lévő gombafonalakat el kell vágni
+        /*for (Yarn yarn : new ArrayList<>(tecton.getYarns())) {
+            tecton.removeYarn(yarn);
+        }*/
 
         // Létrehozunk két új Tectont
         Tecton newTecton1 = new Tecton(this.random.nextInt(), tecton.getYarnLimit(), tecton.isMushroomPrevent());
@@ -76,7 +80,7 @@ public class Map {
         newTecton1.addNeighbour(newTecton2);
         newTecton2.addNeighbour(newTecton1);
 
-        // A régi Tectonon lévő gombákat, rovarokat, spórákat átrakjuk az új Tectonokra
+    /*    // A régi Tectonon lévő gombákat, rovarokat, spórákat átrakjuk az új Tectonokra
             Mushroom mushroom = tecton.getMushroom();
             tecton.removeMushroom(mushroom);
 
@@ -107,7 +111,7 @@ public class Map {
             } else {
                 newTecton2.addSpore(spore);
             }
-        }
+        }*/
 
         // A régi Tectont eltávolítjuk, az újakat hozzáadjuk a tectons listához
         tectons.remove(tecton);

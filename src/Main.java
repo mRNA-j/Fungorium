@@ -22,7 +22,6 @@ public class Main {
         playerName1= "cigo";
         System.out.println("Rovarasz jatekos neve: ");
         playerName2 = "feka";
-        test7();
 
     }
 
@@ -145,7 +144,16 @@ public class Main {
      * 6:  Teszt6 - Tekton ketttörése, gombatest van a tektonon
      */
     public static void test6() {
+        game = initTest();
 
+        System.out.println(kezdoString);
+        printState();
+
+        System.out.println("+++++++++++++++++++++++\nTest6 elkezdodott.");
+        game.getPlayField().splitting(game.getPlayField().getTectons().get(0));
+
+        System.out.println(vegString);
+        printState();
     }
 
     /*
