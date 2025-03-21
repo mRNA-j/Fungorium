@@ -30,6 +30,7 @@ public class Main {
         //test18();
         //test20();
         //test21();
+        test23();
     }
 
     public static Game initTest() {

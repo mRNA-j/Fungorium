@@ -14,6 +14,7 @@ public class Insect {
         cutPrevented = false;
 
         currentPlace = place;
+        place.addInsect(this);
     }
 
     public void setDecelerated(boolean decelerated) {

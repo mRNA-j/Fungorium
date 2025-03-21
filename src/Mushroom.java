@@ -9,6 +9,7 @@ public class Mushroom {
 
     public Mushroom(Tecton tecton) {
         this.tecton = tecton;
+        tecton.addMushroom(this);
     }
 
     public int getAge(){
