@@ -22,13 +22,17 @@ public class Main {
         playerName1= "cigo";
         System.out.println("Rovarasz jatekos neve: ");
         playerName2 = "feka";
+<<<<<<< Updated upstream
         test4();
+=======
+
+        test5();
+>>>>>>> Stashed changes
     }
 
     public static Game initTest() {
         Game game = new Game();
         game.start();
-
 
         mp = new MushroomPicker(playerName1, new Mushroom(game.getPlayField().getTectons().get(0)));
         el = new Entomologist(playerName2, new Insect(game.getPlayField().getTectons().get(1)));
@@ -66,13 +70,13 @@ public class Main {
 
 
         for (Tecton tecton : tectons) {
-            System.out.println("Tecton" + tecton.getId());
+            System.out.println("Tecton" + tecton.getId() + " (" + tecton + ")");
             System.out.println("\tRovar: " + tecton.getInsects());
             System.out.println("\tSporak: " + tecton.getSpores());
             System.out.println("\tGomba: " + tecton.getMushroom());
             System.out.println("\tFonalak: " + tecton.getYarns());
+            System.out.println("\tSzomszedai: " + tecton.getNeighbours());
         }
-
     }
 
     /*
@@ -102,7 +106,7 @@ public class Main {
         //mp.getOwnedMushrooms().get(0).setHasSpore(true);
         System.out.println(kezdoString);
         printState();
-        System.out.println("+++++++++++++++++++++++\nTest2 elkezdodott.+++++++++++++++++++++++");
+        System.out.println("+++++++++++++++++++++++\nTest2 elkezdodott.+++++++++++++++++++++++\n");
 
         mp.actionSporeDispersion(tectons.get(2),mp.getOwnedMushrooms().get(0));
 
@@ -117,7 +121,7 @@ public class Main {
         game = initTest();
         System.out.println("+++++++++++++++++++++++\nAlap helyzet.\n+++++++++++++++++++++++");
         printState();
-        System.out.println("+++++++++++++++++++++++\nTest3 elkezdodott.+++++++++++++++++++++++");
+        System.out.println("+++++++++++++++++++++++\nTest3 elkezdodott.+++++++++++++++++++++++\n");
 
         mp.actionSporeDispersion(tectons.get(1),mp.getOwnedMushrooms().get(0));
 
@@ -167,8 +171,16 @@ public class Main {
      * 5:  Teszt5 - Tekton kettétörése,rovar van a tektonon
      */
     public static void test5() {
+        game = initTest();
 
+        System.out.println(kezdoString);
+        printState();
 
+        System.out.println("+++++++++++++++++++++++\nTest5 elkezdodott.\n");
+        game.getPlayField().splitting(game.getPlayField().getTectons().get(1));
+
+        System.out.println(vegString);
+        printState();
     }
 
     /*
@@ -180,8 +192,8 @@ public class Main {
         System.out.println(kezdoString);
         printState();
 
-        System.out.println("+++++++++++++++++++++++\nTest6 elkezdodott.");
-        game.getPlayField().splitting(game.getPlayField().getTectons().get(0));
+        System.out.println("+++++++++++++++++++++++\nTest6 elkezdodott.\n");
+        game.getPlayField().splitting(game.getPlayField().getTectons().get(1));
 
         System.out.println(vegString);
         printState();
@@ -193,12 +205,11 @@ public class Main {
     public static void test7() {
         game = initTest();
 
-
         // Kiírjuk az alap állapotot
         System.out.println(kezdoString);
 
         printState();
-        System.out.println("+++++++++++++++++++++++\nTest7 elkezdodott.+++++++++++++++++++++++");
+        System.out.println("+++++++++++++++++++++++\nTest7 elkezdodott.\n");
 
         // 2. Kiválasztunk egy üres Tectont
         // (Például Tecton #2, ha biztosak vagyunk benne, hogy az üres)
@@ -378,23 +389,16 @@ public class Main {
      * 18: Teszt18 - Rovar fonalvágás akciója sikeres esetben
      */
     public static void test18() {
-
         game = initTest();
 
         Yarn y = new Yarn(mp.getOwnedMushrooms().get(0));
         tectons.get(1).growYarn(y);
 
-
-        // Print the starting state
         System.out.println(kezdoString);
         printState();
 
-        // 3) The Entomologist instructs the Insect to cut the Yarn
-        //    Since there is no paralysis or cut-prevention spore effect,
-        //    the cut should be successful.
         el.actionCutYarn(y);
 
-        // 4) Print the ending state
         System.out.println(vegString);
         printState();
     }

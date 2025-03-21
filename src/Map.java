@@ -56,6 +56,29 @@ public class Map {
             tecton.removeMushroom(tecton.getMushroom());
         }
 
+        for (Spore spore : new ArrayList<>(tecton.getSpores())) {
+            tecton.removeSpore(spore);
+        }
+
+        Random random = new Random();
+        List<Insect>templist = tecton.getInsects();
+
+        for(Insect insect : templist) {
+            System.out.println("HOZZAADAS");
+            int randNum = random.nextInt(templist.size());
+            tectons.get(randNum).addInsect(insect);
+        }
+
+        for(int i=0;i<templist.size();i++) {
+            System.out.println("KITORLEEEES");
+            tecton.removeInsect(tecton.getInsects().get(i));
+        }
+
+
+
+
+
+
         // A régi Tectonon lévő gombafonalakat el kell vágni
         for (Yarn yarn : new ArrayList<>(tecton.getYarns())) {
             tecton.removeYarn(yarn);
@@ -81,16 +104,6 @@ public class Map {
         newTecton2.addNeighbour(newTecton1);
 
     /*    // A régi Tectonon lévő gombákat, rovarokat, spórákat átrakjuk az új Tectonokra
-            Mushroom mushroom = tecton.getMushroom();
-            tecton.removeMushroom(mushroom);
-
-            // Eldönthetjük, hogy melyikre kerüljön (random)
-            if (random.nextBoolean()) {
-                newTecton1.addMushroom(mushroom);
-            } else {
-                newTecton2.addMushroom(mushroom);
-            }
-
 
         for (Insect insect : new ArrayList<>(tecton.getInsects())) {
             tecton.removeInsect(insect);
@@ -101,17 +114,9 @@ public class Map {
             } else {
                 newTecton2.addInsect(insect);
             }
-        }
-
-        for (Spore spore : new ArrayList<>(tecton.getSpores())) {
-            tecton.removeSpore(spore);
-            // Eldönthetjük, hogy melyikre kerüljön (random)
-            if (random.nextBoolean()) {
-                newTecton1.addSpore(spore);
-            } else {
-                newTecton2.addSpore(spore);
-            }
         }*/
+
+
 
         // A régi Tectont eltávolítjuk, az újakat hozzáadjuk a tectons listához
         tectons.remove(tecton);

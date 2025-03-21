@@ -64,7 +64,7 @@ public class Tecton {
      */
     public void addInsect(Insect insect) {
         this.insects.add(insect);
-        System.out.println("Insect added: " + insect);
+        System.out.println(id + "Insect added: " + insect);
     }
 
     /**
@@ -74,7 +74,7 @@ public class Tecton {
      */
     public void removeInsect(Insect insect) {
         this.insects.remove(insect);
-        System.out.println("Insect removed: " + insect);
+        System.out.println(id + "Insect removed: " + insect);
     }
 
     /**
