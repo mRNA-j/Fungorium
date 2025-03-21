@@ -211,8 +211,13 @@ public class Tecton {
      * @param tecton Az eltávolítandó szomszédos Tecton.
      */
     public void removeNeighbour(Tecton tecton) {
-        this.neighbours.remove(tecton);
-        tecton.removeNeighbour(this); // A szomszédság kölcsönös
+        if (this.neighbours.contains(tecton)) {
+            this.neighbours.remove(tecton);
+            // Prevent recursive calls by checking if tecton still has this as a neighbor
+            if (tecton.getNeighbours().contains(this)) {
+                tecton.getNeighbours().remove(this); // Directly remove without recursion
+            }
+        }
     }
 
     /**

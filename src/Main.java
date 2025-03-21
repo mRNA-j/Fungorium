@@ -22,24 +22,8 @@ public class Main {
         playerName1= "cigo";
         System.out.println("Rovarasz jatekos neve: ");
         playerName2 = "feka";
+        test7();
 
-<<<<<<< HEAD
-        //test3();
-        //test8();
-        //test9();
-        //test10();
-        test11();
-        //test18();
-        test16();
-        //test20();
-        //test21();
-=======
-        test14();
-        //test20();
-        //test21();
-        //test23();
-
->>>>>>> c0f964a2cfc06453f6a5d9f9615699db29362790
     }
 
     public static Game initTest() {
@@ -168,6 +152,28 @@ public class Main {
      * 7:  Teszt7 - Tekton ketttörése, tektonon nincsen semmi
      */
     public static void test7() {
+        game = initTest();
+
+
+        // Kiírjuk az alap állapotot
+        System.out.println(kezdoString);
+
+        printState();
+        System.out.println("+++++++++++++++++++++++\nTest7 elkezdodott.+++++++++++++++++++++++");
+
+        // 2. Kiválasztunk egy üres Tectont
+        // (Például Tecton #2, ha biztosak vagyunk benne, hogy az üres)
+        Tecton emptyTecton = tectons.get(2);
+        System.out.println("Kiválasztott Tecton: " + emptyTecton.getId());
+
+        // 3. Meghívjuk a kettétörő metódust
+        // (Feltételezve, hogy van pl. splitting(Tecton t) a Map osztályban)
+        game.getPlayField().splitting(emptyTecton);
+
+
+        // 4. Kiírjuk a végeredményt
+        System.out.println(vegString);
+        printState();
 
     }
 
