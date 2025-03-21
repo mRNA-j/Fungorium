@@ -23,6 +23,10 @@ public class Main {
 
         //test3();
         //test8();
+
+        test9();
+
+
         //test18();
         //test20();
         //test21();
@@ -180,7 +184,20 @@ public class Main {
      * 9:  Teszt9 - Gombafonal növesztése más játékos fonala van a tektonon ( csak egyfjta fonal növezthető a tektonra)
      */
     public static void test9() {
+        game = initTest();
 
+        Mushroom mushy=new Mushroom(tectons.get(2));
+        MushroomPicker mptest=new MushroomPicker("Goldilocks",mushy);
+        Yarn yarn= new Yarn(mptest.getOwnedMushrooms().get(0));
+        mptest.actionGrowYarn(tectons.get(1),yarn,true);
+        System.out.println(kezdoString);
+        printState();
+        System.out.println("+++++++++++++++++++++++\nTest8 elkezdodott.+++++++++++++++++++++++");
+
+        mp.actionGrowYarn(tectons.get(1),yarn,true);
+
+        System.out.println(kezdoString);
+        printState();
     }
 
     /*
