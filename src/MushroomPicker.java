@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class MushroomPicker extends Player {
     private List<Mushroom> ownedMushrooms;
-    private List<Yarn> ownedYarns;
+    private static List<Yarn> ownedYarns;
 
     public MushroomPicker(String name, Mushroom mushroom){
         super(name, 0);
@@ -22,7 +22,7 @@ public class MushroomPicker extends Player {
         return ownedYarns;
     }
 
-    private static boolean IsTectonInRange(Tecton tecton){
+    private static boolean isTectonInRange(Tecton tecton){
         for(int i = 0; i< ownedYarns.size(); i++){
             if(ownedYarns.get(i).getTectons().contains(tecton)) {
                 return true;
@@ -31,7 +31,7 @@ public class MushroomPicker extends Player {
         return false;
     }
 
-    private boolean CanIConquerTecton(Tecton tecton){
+    private boolean canIConquerTecton(Tecton tecton){
         int limit = tecton.getYarnLimit();
         if(limit == 2){
             return true;
@@ -79,7 +79,7 @@ public class MushroomPicker extends Player {
     }
     public void actionGrowYarn(Tecton targetTecton, Yarn selectedYarn, boolean firstTime) {
         if(selectedYarn.getTectons().get(0).isNeighbour(targetTecton) || selectedYarn.getTectons().get(1).isNeighbour(targetTecton)){
-            if(CanIConquerTecton(targetTecton) && firstTime){
+            if(canIConquerTecton(targetTecton) && firstTime){
                 if(targetTecton.getSpore().size() != 0){//vanspóra
                     targetTecton.removeSpore(targetTecton.getSpore().get(0));
                     actionGrowYarn(targetTecton, selectedYarn, false);
