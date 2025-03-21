@@ -47,9 +47,12 @@ public class Insect {
         this.currentPlace = currentPlace;
     }
 
-    public void cutYarn(Yarn yarn) {}
+    public void cutYarn(Yarn yarn) {
+        currentPlace.removeYarn(yarn);
+    }
     public void eatSpore(Spore spore) {
-
+        currentPlace.removeSpore(spore);
+        spore.addEffect(this);
     }
     public boolean move(Tecton targetTecton) {
 
