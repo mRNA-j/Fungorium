@@ -128,6 +128,8 @@ public class MushroomPicker extends Player {
      * @param targetTecton A cél tecton, ahol a gombát növeszteni szeretnénk.
      */
     public void actionGrowMushroom(Tecton targetTecton) {
+        final String errorMessage = "Feltetelek nem teljesultek";
+
         // Ellenőrzi, hogy a cél tecton nem gátolja-e a gomba növekedést
         if (!targetTecton.getMushroomPrevent()) {
             // Ellenőrzi, hogy a tecton már tartalmaz-e gombát
@@ -144,16 +146,16 @@ public class MushroomPicker extends Player {
                         targetTecton.removeSpore(targetTecton.getSpores().remove(0)); // Második spóra eltávolítása
                         targetTecton.removeSpore(targetTecton.getSpores().remove(0)); // Harmadik spóra eltávolítása
                     } else {
-                        System.out.println("Nem erheto el birtokolt fonalakkal");
+                        System.out.println(errorMessage);
                     }
                 } else {
-                    System.out.println("Tektonon nincs legalabb 3 spora");
+                    System.out.println(errorMessage);
                 }
             } else {
-                System.out.println("Tekton mar tartalmaz gombat");
+                System.out.println(errorMessage);
             }
         } else {
-            System.out.println("Tekton gatolja a gomba novesztest");
+            System.out.println(errorMessage);
         }
     }
     /**
@@ -169,7 +171,6 @@ public class MushroomPicker extends Player {
             // Ellenőrzi, hogy a tecton meghódítható-e és ez az első próbálkozás
             if (canIConquerTecton(targetTecton)) {
                 // Ellenőrzi, hogy a tecton tartalmaz-e spórát
-
                 if (targetTecton.getSpores().size() != 0) { // Ha spóra található
                     targetTecton.removeSpore(targetTecton.getSpores().get(0)); // Távolítja az első spórát a tectonról
                     actionGrowYarn(targetTecton, selectedYarn); // Újra meghívja a metódust, immár nem első próbálkozásként

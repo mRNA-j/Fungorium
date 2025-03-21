@@ -22,12 +22,8 @@ public class Main {
         playerName1= "cigo";
         System.out.println("Rovarasz jatekos neve: ");
         playerName2 = "feka";
-<<<<<<< Updated upstream
-        test4();
-=======
 
-        test5();
->>>>>>> Stashed changes
+        test15();
     }
 
     public static Game initTest() {
@@ -129,7 +125,7 @@ public class Main {
         printState();
     }
 
-    /*
+    /* EZ MEG NEM JO!!!!!!!!!!!!!!!!!!!!!!
      * 4:  Teszt4 - Tekton kettétörése, ha van rajta gombafonal
      */
     public static void test4() {
@@ -360,7 +356,24 @@ public class Main {
      * 15: Teszt15 - Gomba növesztse, nem teljesünek a fetételek (altesztesetek ?)
      */
     public static void test15() {
-        //Szia doma
+        game = initTest();
+        Yarn y = new Yarn(mp.getOwnedMushrooms().get(0));
+        mp.addYarn(y);
+
+        tectons.get(0).growYarn(y);
+
+        System.out.println(kezdoString);
+        printState();
+
+        System.out.println("+++++++++++++++++++++++\nTest15 elkezdodott.");
+
+        for (int i=0;i<5;i++) {
+            tectons.get(1).addSpore(new AcceleratorSpore());
+        }
+
+        mp.actionGrowMushroom(tectons.get(2));
+        System.out.println(vegString);
+        printState();
     }
 
     /*
