@@ -24,11 +24,15 @@ public class Map {
         Tecton tecton2 = new Tecton(2, 1, false);
         Tecton tecton3 = new Tecton(3, 2, true);
         Tecton tecton4 = new Tecton(4, 1, false);
+        Tecton tecton5 = new YarnAbsorbantTecton( 5,1, false);
+        Tecton tecton6=new Tecton(6,2,false);
 
         tectons.add(tecton1);
         tectons.add(tecton2);
         tectons.add(tecton3);
         tectons.add(tecton4);
+        tectons.add(tecton5);
+        tectons.add(tecton6);
 
         tecton1.addNeighbour(tecton2);
         tecton2.addNeighbour(tecton1);
@@ -36,6 +40,10 @@ public class Map {
         tecton3.addNeighbour(tecton2);
         tecton3.addNeighbour(tecton4);
         tecton4.addNeighbour(tecton3);
+        tecton5.addNeighbour(tecton4);
+        tecton4.addNeighbour(tecton5);
+        tecton6.addNeighbour(tecton5);
+        tecton5.addNeighbour(tecton6);
 
         System.out.println("Map generated with " + tectons.size() + " tectons.");
     }

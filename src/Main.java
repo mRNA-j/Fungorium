@@ -23,7 +23,7 @@ public class Main {
         System.out.println("Rovarasz jatekos neve: ");
         playerName2 = "feka";
 
-        test15();
+        test13();
     }
 
     public static Game initTest() {
@@ -318,14 +318,46 @@ public class Main {
      * 12: Teszt12 - Gombafonal növesztése egyfonala tektonra (nincs rajta más játko fonala)
      */
     public static void test12() {
+        game = initTest();
 
+        Yarn yarn=new Yarn(mp.getOwnedMushrooms().get(0));
+
+        System.out.println(kezdoString);
+        printState();
+        System.out.println("+++++++++++++++++++++++\nTest12 elkezdodott.+++++++++++++++++++++++");
+
+
+            mp.actionGrowYarn(tectons.get(1),yarn);
+
+
+        System.out.println(vegString);
+        printState();
     }
 
     /*
      * 13: Teszt13 - Gombafonal felszívása
      */
     public static void test13() {
+        game = initTest();
 
+        Yarn yarn=new Yarn(mp.getOwnedMushrooms().get(0));
+        tectons.get(1).growYarn(yarn);
+        tectons.get(2).growYarn(yarn);
+        tectons.get(3).growYarn(yarn);
+        tectons.get(4).growYarn(yarn);
+        tectons.get(5).growYarn(yarn);
+
+
+        System.out.println(kezdoString);
+        printState();
+        System.out.println("+++++++++++++++++++++++\nTest13 elkezdodott.+++++++++++++++++++++++");
+
+
+       tectons.get(4).runEffect(yarn);
+
+
+        System.out.println(vegString);
+        printState();
     }
 
     /*

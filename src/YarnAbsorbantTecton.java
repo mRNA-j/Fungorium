@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.List;
 
 /** A YarnAbsorbantTecton class egy speciális Tecton, ami felszívja a gombafonalakat. */
 public class YarnAbsorbantTecton extends Tecton {
@@ -9,8 +10,8 @@ public class YarnAbsorbantTecton extends Tecton {
      * @param yarnLimit A maximális gombafonal szám, ami a Tectonon lehet.
      * @param mushroomPrevent A  jelzés, hogy a Tectonon nem lehet gomba.
      */
-    public YarnAbsorbantTecton(int yarnLimit, boolean mushroomPrevent) {
-        super((new Random()).nextInt(), yarnLimit, mushroomPrevent);
+    public YarnAbsorbantTecton(int id,int yarnLimit, boolean mushroomPrevent) {
+        super(id, yarnLimit, mushroomPrevent);
     }
 
     /**
@@ -21,7 +22,25 @@ public class YarnAbsorbantTecton extends Tecton {
     @Override
     public void runEffect(Yarn yarn) {
         System.out.println("Running absorbant effect on yarn: " + yarn);
-        yarn.getTectons().remove(this);
-        removeYarn(yarn);
+
+        int index = this.getId() - 2; // Ensure index is valid
+        List<Tecton> tectons = yarn.getTectons();
+        int size = tectons.size();
+
+        // Validate index range
+        if (index < 0) {
+            index = 0;  // Prevent negative index
+        }
+        if (index >= size) {
+            System.out.println("Index out of bounds, skipping effect.");
+            return;
+        }
+
+        // Iterate safely using an iterator
+        for (int i = size-1; i>index; i--) {
+            tectons.get(i).removeYarn(yarn);
+        }
+
+        yarn.getTectons().subList(index, tectons.size()).clear();
     }
 }
