@@ -25,50 +25,34 @@ public class Entomologist extends Player{
         //bekérjük a tektont és tovább adjuk a bogárnak
         if(insect.move(targetTecton)){
             System.out.println(" mozgás sikeresen végrehajtva");
+            if(insect.getAccelerated()){
+                insect.setAccelerated(false);
+                this.actionMove(targetTecton);
+            }
         }
         else{
             System.out.println("Mozgás végrehajtása sikertelen");
         }
-
-        if(currentTecton.getYarns().size() == 0){
-            System.out.println("Nem csatlakozik gombafonal a tektonhoz, a mozgás sajnos nem lehetséges");
+    }
+    public void actionEatSpore(Spore spore) {
+        if(insect.getParalized()){
+            System.out.println("A rovar bénítóspóra hatása alatt van, az evés nem lehetéges");
+            return;
         }
-
-        boolean targetTectonIsInReach = false;
-        for(int i = 0; i < currentTecton.getYarns().size(); i++){
-            if(currentTecton.getYarns().getTectons().contains(targetTecton)){
-                targetTectonIsInReach = true;
-            }
+        //itt be kell kérni az insect currentPlace spórái közül az egyiket
+        insect.eatSpore(spore);
+    }
+    public void actionCutYarn(Yarn yarn) {
+        if(insect.getParalized()){
+            System.out.println("A rovar bénítóspóra hatása alatt van, a fonalvágás nem lehetéges");
+            return;
         }
-
-        if(targetTectonIsInReach){
-            System.out.println("a tecton elérhető,");
-        }
-        else{
-            System.out.println("A választott tektonra erről a tektonról nem vezet gombafonal. A mozgás nem lehetséges.");
+        if(insect.getCutPrevented()){
+            System.out.println("A rovar vágásgátló spóra hatása alatt van, az fonalvágás nem lehetéges");
             return;
         }
 
-
-        if(insect.getAccelerated()){
-            insect.move();
-        }
-
-
-
-        //szerintem itt kell bekérni a tektont
-
-
-
-        //össze van e kötve a 2 tekton
-
-    }
-    public void actionEatSpore(Spore spore) {
-        //itt kell bekérni a spórát
-
-    }
-    public void actionCutYarn(Yarn yarn) {
-
-
+        //be kell kérni magát a yarnt
+        insect.cutYarn(yarn);
     }
 }

@@ -48,6 +48,21 @@ public class Insect {
     }
 
     public void cutYarn(Yarn yarn) {}
-    public void eatSpore(Spore spore) {}
-    public boolean move(Tecton targetTecton) {}
+    public void eatSpore(Spore spore) {
+
+    }
+    public boolean move(Tecton targetTecton) {
+
+        if(targetTecton.isConnectedWithYarn(currentPlace)){
+            currentPlace.removeInsect(this);
+            targetTecton.addInsect(this);
+            currentPlace = targetTecton;
+            System.out.println("A választott tektonra vezet gombafonal. A mozgás végrehajtva");
+            return true;
+        }
+        else{
+            System.out.println("A választott tektonra erről a tektonról nem vezet gombafonal. A mozgás nem lehetséges.");
+            return false;
+        }
+    }
 }
