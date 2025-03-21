@@ -247,7 +247,7 @@ public class Main {
 
         Yarn y = new Yarn(mp.getOwnedMushrooms().get(0));
 
-        //tectons.get(0).growYarn(y);
+        tectons.get(0).growYarn(y);
 
 
         // Print the starting state

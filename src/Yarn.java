@@ -96,9 +96,6 @@ public class Yarn {
     public void addTecton(Tecton t) {
         if (!tectons.contains(t)) {
             this.tectons.add(t);
-            if (!t.getYarns().contains(this)) {
-                t.growYarn(this);
-            }
             System.out.println("Adding tecton to yarn: " + t);
         }
     }

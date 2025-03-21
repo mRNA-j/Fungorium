@@ -98,9 +98,10 @@ public class Tecton {
      * @param yarn A hozzáadandó gombafonal.
      */
     public void growYarn(Yarn yarn) {
+        //yarnhoz hozzadjuk a tectont
         yarn.addTecton(this);
         yarns.add(yarn);
-        System.out.println("Yarn added: " + yarn);
+        System.out.println(id + " Yarn added: " + yarn);
     }
 
     /**
