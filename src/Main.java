@@ -23,6 +23,7 @@ public class Main {
         System.out.println("Rovarasz jatekos neve: ");
         playerName2 = "feka";
 
+<<<<<<< HEAD
         //test3();
         //test8();
         //test9();
@@ -32,6 +33,13 @@ public class Main {
         test16();
         //test20();
         //test21();
+=======
+        test14();
+        //test20();
+        //test21();
+        //test23();
+
+>>>>>>> c0f964a2cfc06453f6a5d9f9615699db29362790
     }
 
     public static Game initTest() {
@@ -194,7 +202,6 @@ public class Main {
         Yarn tyarn= new Yarn(mptest.getOwnedMushrooms().get(0));
         Yarn yarn=new Yarn(mp.getOwnedMushrooms().get(0));
 
-        //tectons.get(2).growYarn(yarn);
         tectons.get(1).growYarn(tyarn);
 
         System.out.println(kezdoString);
@@ -274,13 +281,30 @@ public class Main {
      */
     public static void test14() {
 
+        Yarn y = new Yarn(mp.getOwnedMushrooms().get(0));
+        mp.addYarn(y);
+
+        tectons.get(0).growYarn(y);
+
+        System.out.println(kezdoString);
+        printState();
+
+        System.out.println("+++++++++++++++++++++++\nTest14 elkezdodott.");
+
+        for (int i=0;i<5;i++) {
+            tectons.get(1).addSpore(new AcceleratorSpore());
+        }
+
+        mp.actionGrowMushroom(tectons.get(1));
+        System.out.println(vegString);
+        printState();
     }
 
     /*
      * 15: Teszt15 - Gomba növesztse, nem teljesünek a fetételek (altesztesetek ?)
      */
     public static void test15() {
-
+        //Szia doma
     }
 
     /*
@@ -303,7 +327,6 @@ public class Main {
         System.out.println("Current round: "+game.getCurrentTurn());
         game.nextTurn();
         System.out.println("Current round: "+game.getCurrentTurn());
-
     }
 
     /*
@@ -314,8 +337,6 @@ public class Main {
         game = initTest();
 
         Yarn y = new Yarn(mp.getOwnedMushrooms().get(0));
-
-
         tectons.get(1).growYarn(y);
 
 
@@ -331,7 +352,6 @@ public class Main {
         // 4) Print the ending state
         System.out.println(vegString);
         printState();
-
     }
 
     /*
