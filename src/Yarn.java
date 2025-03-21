@@ -56,35 +56,35 @@ public class Yarn {
         int index = tectons.indexOf(tecton);
         if (index == 0 || index == tectons.size() - 1) {
             System.out.println("Splitting yarn on an edge Tecton, removing");
-            tecton.removeYarn(this);
             tectons.remove(tecton);
+            tecton.getYarns().remove(this);  // Direct removal without calling removeYarn
             return;
         }
 
-        // 1. Létrehozunk két új Yarn objektumot
+        // 1. Create two new Yarn objects
         Yarn newYarn1 = new Yarn(mushroom);
         Yarn newYarn2 = new Yarn(mushroom);
 
-        // 2. Az első Yarn-hez hozzáadjuk a Tectonokat a vágási pontig
+        // 2. Add Tectons to the first yarn up to the cutting point
         for (int i = 0; i < index; i++) {
             Tecton t = tectons.get(i);
             newYarn1.addTecton(t);
-            t.removeYarn(this);
+            t.getYarns().add(newYarn1);  // Directly add without removing first
         }
 
-        // 3. A második Yarn-hez hozzáadjuk a Tectonokat a vágási pont után
+        // 3. Add Tectons to the second yarn after the cutting point
         for (int i = index + 1; i < tectons.size(); i++) {
             Tecton t = tectons.get(i);
             newYarn2.addTecton(t);
-            t.removeYarn(this);
+            t.getYarns().add(newYarn2);  // Directly add without removing first
         }
 
-        // 4. Eltávolítjuk az összes Tectont a jelenlegi Yarn-ból
+        // 4. Finally, remove this yarn from all tectons' yarn lists
         for (Tecton t : new ArrayList<>(tectons)) {
-            t.removeYarn(this);
-            tectons.remove(t);
+            t.getYarns().remove(this);  // Direct removal
         }
 
+        tectons.clear();  // Clear the list of tectons in this yarn
         System.out.println("Yarn split into two.");
     }
 

@@ -23,7 +23,7 @@ public class Main {
 
         //test3();
         //test8();
-        //test18();
+        test18();
         //test20();
         //test21();
     }
@@ -248,13 +248,14 @@ public class Main {
 
         Yarn y = new Yarn(mp.getOwnedMushrooms().get(0));
 
+
         tectons.get(0).growYarn(y);
+        tectons.get(1).growYarn(y);
 
 
         // Print the starting state
         System.out.println(kezdoString);
         printState();
-        System.out.println(kezdoString);
 
         // 3) The Entomologist instructs the Insect to cut the Yarn
         //    Since there is no paralysis or cut-prevention spore effect,
@@ -264,14 +265,34 @@ public class Main {
         // 4) Print the ending state
         System.out.println(vegString);
         printState();
-        System.out.println(vegString);
+
     }
 
     /*
      * 19: Teszt19 - Rovar fonlvágás akciója vágágátló spóra hatása alatt
      */
     public static void test19() {
+        game = initTest();
 
+        Yarn y = new Yarn(mp.getOwnedMushrooms().get(0));
+
+
+        tectons.get(0).growYarn(y);
+        tectons.get(1).growYarn(y);
+
+
+        // Print the starting state
+        System.out.println(kezdoString);
+        printState();
+
+        // 3) The Entomologist instructs the Insect to cut the Yarn
+        //    Since there is no paralysis or cut-prevention spore effect,
+        //    the cut should be successful.
+        el.actionCutYarn(y);
+
+        // 4) Print the ending state
+        System.out.println(vegString);
+        printState();
     }
 
     /*
