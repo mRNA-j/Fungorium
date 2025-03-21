@@ -31,8 +31,11 @@ public class Map {
         tectons.add(tecton4);
 
         tecton1.addNeighbour(tecton2);
+        tecton2.addNeighbour(tecton1);
         tecton2.addNeighbour(tecton3);
+        tecton3.addNeighbour(tecton2);
         tecton3.addNeighbour(tecton4);
+        tecton4.addNeighbour(tecton3);
 
         System.out.println("Map generated with " + tectons.size() + " tectons.");
     }

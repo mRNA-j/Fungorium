@@ -11,6 +11,10 @@ public class Entomologist extends Player{
         this.insect = insect;
     }
 
+    public Insect getInsect(){
+      return insect;
+    }
+
 
 
    /* private int getInputTecton(){
@@ -59,29 +63,30 @@ public class Entomologist extends Player{
         }
         else{
             System.out.println("Mozgás végrehajtása sikertelen");
-        }
+        }*/
     }
     public void actionEatSpore(Spore spore) {
         if(insect.getParalized()){
             System.out.println("A rovar bénítóspóra hatása alatt van, az evés nem lehetéges");
             return;
         }
+        insect.eatSpore(spore);
+        this.addPoints(spore.getNutrition());
+        System.out.println("A játékos pontjai megnőttek: " + spore.getNutrition() + " ponttal");
         //itt be kell kérni az insect currentPlace spórái közül az egyiket
-        try{
+        /*try{
             System.out.println("Choose a spore from the tecton ["+insect.getCurrentPlace().getSpores().size()+"]");
             InputStreamReader is= new InputStreamReader(System.in);
             BufferedReader br= new BufferedReader(is);
             String input= br.readLine();
 
             int selected_spore=Integer.parseInt(input)-1;
-            insect.eatSpore(insect.getCurrentPlace().getSpores().get(selected_spore));
-            this.addPoints(spore.getNutrition());
-            System.out.println("A játékos pontjai megnőttek: " + spore.getNutrition() + " ponttal");
+
 
         }
         catch(IOException e){
 
-        }
+        }*/
 
 
     }

@@ -2,6 +2,11 @@ public abstract class Spore {
     private int nutrition;
     private String effectName;
 
+    public Spore(int nutrition, String effectName){
+        this.nutrition = nutrition;
+        this.effectName = effectName;
+    }
+
     public void setNutrition(int nutrition) {
         this.nutrition = nutrition;
     }

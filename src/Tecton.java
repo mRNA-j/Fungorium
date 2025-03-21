@@ -99,6 +99,7 @@ public class Tecton {
      */
     public void growYarn(Yarn yarn) {
         yarn.addTecton(this);
+        yarns.add(yarn);
         System.out.println("Yarn added: " + yarn);
     }
 
@@ -109,6 +110,7 @@ public class Tecton {
      */
     public void removeYarn(Yarn yarn) {
         yarn.split(this);
+        yarns.remove(yarn);
         System.out.println("Yarn removed: " + yarn);
     }
 

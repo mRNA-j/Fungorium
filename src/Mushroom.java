@@ -61,4 +61,11 @@ public class Mushroom {
     public void restartSporeGrowth() {
         newSporeGrowth = 5;
     }
+
+    public Tecton getTecton(){
+        return tecton;
+    }
+    public void setTecton(Tecton t){
+        tecton=t;
+    }
 }

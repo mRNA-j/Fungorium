@@ -88,31 +88,26 @@ public class MushroomPicker extends Player {
     }
 
     /**
-     * Lekéri a megadott tecton szomszédait.
-     *
-     * @param tecton A tecton, amelynek szomszédjait szeretnénk lekérdezni.
-     * @return A tecton szomszédainak listája.
-     */
-    private List<Tecton> addNeighbours(Tecton tecton){
-        return tecton.getNeighbours();
-    }
-
-    /**
      * Lekéri az első szintű szomszédok szomszédait, azaz a másodfokú szomszédokat.
      *
-     * @param tectons Az első szintű szomszédok listája.
+     * @param tecton A kiinduló tekton.
      * @return A másodfokú szomszédok listája.
      */
-    private List<Tecton> addsecondNeighbours(List<Tecton> tectons) {
-        List<Tecton> secondNeighbours = tectons; // Másolat készítése az első szintű szomszédok listájáról
-        for (int i = 0; i < tectons.size(); i++) { // Iterálás az első szintű szomszédokon
+        private List<Tecton> addSecondNeighbours(Tecton tecton) {
+        List<Tecton> secondNeighbours = new ArrayList<>(); // Másolat készítése az első szintű szomszédok listájáról
+        List<Tecton> firstNeighbours = tecton.getNeighbours();
+        for (int i = 0; i < firstNeighbours.size(); i++) { // Iterálás az első szintű szomszédokon
             // Iterálás az aktuális tecton szomszédain
-            for (int j = 0; j < tectons.get(i).getNeighbours().size(); j++) {
+            for (int j = 0; j < firstNeighbours.get(i).getNeighbours().size(); j++) {
                 // Ha a másodfokú lista még nem tartalmazza az aktuális szomszédot
-                if (!secondNeighbours.contains(tectons.get(i).getNeighbours().get(j))) {
-                    //EZZZ NEM FIX JO
-                    secondNeighbours.add(tectons.get(j)); // Hozzáadja az aktuális tectont a listához
+                if (!secondNeighbours.contains(firstNeighbours.get(i).getNeighbours().get(j)) && (firstNeighbours.get(i).getNeighbours().get(j) != tecton)) {
+                    secondNeighbours.add(firstNeighbours.get(i).getNeighbours().get(j)); // Hozzáadja az aktuális tectont a listához
                 }
+            }
+        }
+        for(int i = 0; i < firstNeighbours.size(); i++){
+            if(!secondNeighbours.contains(firstNeighbours.get(i))){
+                secondNeighbours.add(firstNeighbours.get(i));
             }
         }
         return secondNeighbours; // Visszaadja a másodfokú szomszédok listáját
@@ -185,22 +180,30 @@ public class MushroomPicker extends Player {
         }
 
         int age = mushroom.getAge(); // Lekérdezi a gomba korát
-        List<Tecton> neighbours = addNeighbours(targetTecton); // Lekéri a cél tecton szomszédait
-
-        // Ha a gomba kora nagyobb, mint 10, bővíti a hatókört a másodfokú szomszédokra
-        if (age > 10) {
-            List<Tecton> secondNeighbours = addsecondNeighbours(neighbours); // Lekéri a másodfokú szomszédokat
-            neighbours = secondNeighbours; // Frissíti a szomszédok listáját
+        if(age <= 10) {
+            // Ellenőrzi, hogy a cél tecton szerepel-e a szomszédok között
+            //Ha nem, akkor visszatér a függvény
+            if (!mushroom.getTecton().getNeighbours().contains(targetTecton)) {
+                System.out.println("a target tekton nem elérhető");
+                return;
+            }
+            //Ha szerepel, akkor elindítja a szórást
+            else{
+                mushroom.disperseSpore(targetTecton);   // Elindítja a spóra szórását a cél tectonra
+            }
         }
-        // Ellenőrzi, hogy a cél tecton szerepel-e a szomszédok között
-        if (neighbours.contains(targetTecton)) {
-            System.out.println("A kiválasztott tekton elérhető"); // Kiírja, hogy a tecton elérhető
-            mushroom.disperseSpore(targetTecton); // Elindítja a spóra szórását a cél tectonra
-        } else {
-            System.out.println("a target tekton nem elérhető"); // Kiírja, hogy a tecton nem elérhető
-            return; // Kilép a metódusból
+        // Ha a gomba kora nagyobb, mint 10, bővíti a hatókört a másodfokú szomszédokra
+        else {
+            // Ellenőrzi, hogy a cél tecton szerepel-e a szomszédok között
+            //Ha nem, akkor visszatér a függvény
+            if (!addSecondNeighbours(mushroom.getTecton()).contains(targetTecton)) {
+                System.out.println("A target tekton nem elérhető");
+                return;
+            }
+            //Ha szerepel, akkor elindítja a szórást
+            else{
+                mushroom.disperseSpore(targetTecton);   // Elindítja a spóra szórását a cél tectonra
+            }
         }
     }
-
-
 }
