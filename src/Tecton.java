@@ -4,6 +4,7 @@ import java.util.List;
 /** A Tecton class a játéktér egy területi egységének reprezentációja. */
 public class Tecton {
 
+    private int id;
     private int yarnLimit;
     private boolean mushroomPrevent;
     private Mushroom mushroom;
@@ -29,7 +30,8 @@ public class Tecton {
      * @param yarnLimit A maximális gombafonal szám, ami a Tectonon lehet.
      * @param mushroomPrevent true, ha a Tectonon nem lehet gomba.
      */
-    public Tecton(int yarnLimit, boolean mushroomPrevent) {
+    public Tecton(int id, int yarnLimit, boolean mushroomPrevent) {
+        this.id = id;
         this.yarnLimit = yarnLimit;
         this.mushroomPrevent = mushroomPrevent;
         this.mushroom = null;
@@ -221,4 +223,8 @@ public class Tecton {
      * @param yarn A gombafonal, amire a hatást kifejti.
      */
     public void runEffect(Yarn yarn) {}
+
+    public int getId() {
+        return id;
+    }
 }

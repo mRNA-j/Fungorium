@@ -4,7 +4,6 @@ import java.util.Random;
 
 /** A Map class a játéktér reprezentációja. */
 public class Map {
-
     private List<Tecton> tectons;
     private Random random; // Random szám generátor
 
@@ -21,10 +20,10 @@ public class Map {
         // Példa implementáció: kézzel létrehozott gráf
         // Valós implementációban ezt valamilyen konfigurációból kell beolvasni!
 
-        Tecton tecton1 = new Tecton(3, false);
-        Tecton tecton2 = new Tecton(3, false);
-        Tecton tecton3 = new Tecton(3, false);
-        Tecton tecton4 = new Tecton(3, false);
+        Tecton tecton1 = new Tecton(1, 1, false);
+        Tecton tecton2 = new Tecton(2, 1, true);
+        Tecton tecton3 = new Tecton(3, 2, false);
+        Tecton tecton4 = new Tecton(4, 1, false);
 
         tectons.add(tecton1);
         tectons.add(tecton2);
@@ -32,8 +31,8 @@ public class Map {
         tectons.add(tecton4);
 
         tecton1.addNeighbour(tecton2);
-        tecton1.addNeighbour(tecton3);
-        tecton2.addNeighbour(tecton4);
+        tecton2.addNeighbour(tecton3);
+        tecton3.addNeighbour(tecton4);
 
         System.out.println("Map generated with " + tectons.size() + " tectons.");
     }
@@ -56,8 +55,8 @@ public class Map {
         }
 
         // Létrehozunk két új Tectont
-        Tecton newTecton1 = new Tecton(tecton.getYarnLimit(), tecton.isMushroomPrevent());
-        Tecton newTecton2 = new Tecton(tecton.getYarnLimit(), tecton.isMushroomPrevent());
+        Tecton newTecton1 = new Tecton(this.random.nextInt(), tecton.getYarnLimit(), tecton.isMushroomPrevent());
+        Tecton newTecton2 = new Tecton(this.random.nextInt(), tecton.getYarnLimit(), tecton.isMushroomPrevent());
 
         // Beállítjuk az új Tectonok szomszédságát (a régi Tecton szomszédai + egymás)
         List<Tecton> originalNeighbours = new ArrayList<>(tecton.getNeighbours());
