@@ -23,19 +23,6 @@ public class Main {
         System.out.println("Rovarasz jatekos neve: ");
         playerName2 = "feka";
 
-        //test1();
-        //test8();
-        //test9();
-        //test10();
-        test11();
-        //test18();
-        test16();
-        //test20();
-        //test21();
-
-        //test9();
-
-
         test14();
         //test20();
         //test21();
@@ -203,7 +190,6 @@ public class Main {
         Yarn tyarn= new Yarn(mptest.getOwnedMushrooms().get(0));
         Yarn yarn=new Yarn(mp.getOwnedMushrooms().get(0));
 
-        //tectons.get(2).growYarn(yarn);
         tectons.get(1).growYarn(tyarn);
 
         System.out.println(kezdoString);
@@ -288,7 +274,6 @@ public class Main {
         mp.addYarn(y);
 
         tectons.get(0).growYarn(y);
-        tectons.get(1).growYarn(y);
 
         System.out.println(kezdoString);
         printState();
@@ -300,7 +285,6 @@ public class Main {
         }
 
         mp.actionGrowMushroom(tectons.get(1));
-
         System.out.println(vegString);
         printState();
     }
@@ -309,7 +293,7 @@ public class Main {
      * 15: Teszt15 - Gomba növesztse, nem teljesünek a fetételek (altesztesetek ?)
      */
     public static void test15() {
-
+        //Szia doma
     }
 
     /*
@@ -332,7 +316,6 @@ public class Main {
         System.out.println("Current round: "+game.getCurrentTurn());
         game.nextTurn();
         System.out.println("Current round: "+game.getCurrentTurn());
-
     }
 
     /*
@@ -343,10 +326,7 @@ public class Main {
         game = initTest();
 
         Yarn y = new Yarn(mp.getOwnedMushrooms().get(0));
-
-
         tectons.get(1).growYarn(y);
-
         System.out.println(kezdoString);
         printState();
 
@@ -354,7 +334,6 @@ public class Main {
 
         System.out.println(vegString);
         printState();
-
     }
 
     /*
