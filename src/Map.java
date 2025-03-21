@@ -21,8 +21,8 @@ public class Map {
         // Valós implementációban ezt valamilyen konfigurációból kell beolvasni!
 
         Tecton tecton1 = new Tecton(1, 1, false);
-        Tecton tecton2 = new Tecton(2, 1, true);
-        Tecton tecton3 = new Tecton(3, 2, false);
+        Tecton tecton2 = new Tecton(2, 1, false);
+        Tecton tecton3 = new Tecton(3, 2, true);
         Tecton tecton4 = new Tecton(4, 1, false);
 
         tectons.add(tecton1);

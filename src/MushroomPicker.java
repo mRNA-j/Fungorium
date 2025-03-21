@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -49,6 +50,12 @@ public class MushroomPicker extends Player {
     public List<Yarn> getOwnedYarns() {
         return ownedYarns;
     }
+
+    public void addYarn(Yarn y) {
+        ownedYarns.add(y);
+    }
+
+
 
     /**
      * Ellenőrzi, hogy a megadott tecton elérhető-e a birtokolt fonalak alapján.
@@ -124,7 +131,7 @@ public class MushroomPicker extends Player {
         // Ellenőrzi, hogy a cél tecton nem gátolja-e a gomba növekedést
         if (!targetTecton.getMushroomPrevent()) {
             // Ellenőrzi, hogy a tecton már tartalmaz-e gombát
-            if (targetTecton.getMushroom() != null) {
+            if (!Objects.nonNull(targetTecton.getMushroom())) {
                 // Ellenőrzi, hogy legalább 3 spóra van-e a tectonon
                 if (targetTecton.getSpores().size() >= 3) {
                     // Ellenőrzi, hogy a tecton elérhető-e a birtokolt fonalakkal
@@ -133,12 +140,20 @@ public class MushroomPicker extends Player {
                         targetTecton.addMushroom(newMushroom); // Új gomba hozzáadása a tectonhoz
                         ownedMushrooms.add(newMushroom); // Új gomba hozzáadása a játékos gombáihoz
                         // Három spóra eltávolítása a tectonról
-                        targetTecton.removeSpore(targetTecton.getSpore().remove(0)); // Első spóra eltávolítása
-                        targetTecton.removeSpore(targetTecton.getSpore().remove(0)); // Második spóra eltávolítása
-                        targetTecton.removeSpore(targetTecton.getSpore().remove(0)); // Harmadik spóra eltávolítása
+                        targetTecton.removeSpore(targetTecton.getSpores().remove(0)); // Első spóra eltávolítása
+                        targetTecton.removeSpore(targetTecton.getSpores().remove(0)); // Második spóra eltávolítása
+                        targetTecton.removeSpore(targetTecton.getSpores().remove(0)); // Harmadik spóra eltávolítása
+                    } else {
+                        System.out.println("Nem erheto el birtokolt fonalakkal");
                     }
+                } else {
+                    System.out.println("Tektonon nincs legalabb 3 spora");
                 }
+            } else {
+                System.out.println("Tekton mar tartalmaz gombat");
             }
+        } else {
+            System.out.println("Tekton gatolja a gomba novesztest");
         }
     }
     /**
@@ -154,6 +169,15 @@ public class MushroomPicker extends Player {
             // Ellenőrzi, hogy a tecton meghódítható-e és ez az első próbálkozás
             if (canIConquerTecton(targetTecton)) {
                 // Ellenőrzi, hogy a tecton tartalmaz-e spórát
+<<<<<<< Updated upstream
+=======
+                if (targetTecton.getSpores().size() != 0) { // Ha spóra található
+                    targetTecton.removeSpore(targetTecton.getSpores().get(0)); // Távolítja az első spórát a tectonról
+                    actionGrowYarn(targetTecton, selectedYarn, false); // Újra meghívja a metódust, immár nem első próbálkozásként
+                }
+                // Ha nincs spóra a tectonon
+                else { // Nincs spóra
+>>>>>>> Stashed changes
                     targetTecton.growYarn(selectedYarn); // Elindítja a fonal növesztését a kiválasztott fonallal
             }
         }

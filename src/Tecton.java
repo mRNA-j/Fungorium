@@ -11,15 +11,11 @@ public class Tecton {
     private List<Insect> insects;
     private List<Yarn> yarns;
     private List<Spore> spores;
-    private Tecton currentPlace;
+    //private Tecton currentPlace;
     private List<Tecton> neighbours; // Új attribútum: szomszédok listája
 
     public boolean getMushroomPrevent(){
         return mushroomPrevent;
-    }
-
-    public List<Spore> getSpore(){
-        return spores;
     }
 
 
