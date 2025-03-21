@@ -99,6 +99,7 @@ public class Entomologist extends Player{
             System.out.println("A rovar vágásgátló spóra hatása alatt van, az fonalvágás nem lehetéges");
             return;
         }
+        insect.cutYarn(yarn);
         /*
         int selected_yarn=-1;
         try{
@@ -115,7 +116,7 @@ public class Entomologist extends Player{
         }
 
         if(selected_yarn !=-1){
-            insect.cutYarn(yarn);
+
         }*/
 
     }
