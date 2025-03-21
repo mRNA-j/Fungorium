@@ -23,8 +23,9 @@ public class Main {
 
         //test3();
         //test8();
-        test18();
+        //test18();
         //test20();
+        //test21();
     }
 
     public static Game initTest() {
@@ -308,7 +309,29 @@ public class Main {
      * 21: Teszt21 - Rovar spóraevés akciója bénító spóra hatása alatt
      */
     public static void test21() {
+        // 1) Initialize the game state
+        game = initTest();
 
+
+        // 2) Create an accelerator Spore on on Tecton(1) and pput the paralyzing effect on the insect
+        Spore spore = new AcceleratorSpore();
+        tectons.get(1).addSpore(spore);
+        el.getInsect().setParalized(true);
+
+
+        // Print the starting state
+        System.out.println(kezdoString);
+        printState();
+        System.out.println(kezdoString);
+
+        //3) The Entomologist instructs the Insect to cut the Yarn
+        //    Since there is paralysis the eating process shouldn't be successful
+
+        el.actionEatSpore(spore);
+
+        // 4) Print the ending state
+        System.out.println(vegString);
+        printState();
     }
 
     /*
@@ -322,7 +345,33 @@ public class Main {
      * 23: Teszt23 - Rovar mozgatása bénító spóra hatása alatt
      */
     public static void test23() {
+        // 1) Initialize the game state
+        game = initTest();
 
+
+        // 2) Put the paralyzing effect on the insect and create a Yarn between t2 and t3
+        el.getInsect().setParalized(true);
+
+        Yarn yarn= new Yarn(mp.getOwnedMushrooms().get(0));
+        yarn.addTecton(tectons.get(0));
+        yarn.addTecton(tectons.get(1));
+
+
+
+
+        // Print the starting state
+        System.out.println(kezdoString);
+        printState();
+        System.out.println(kezdoString);
+
+        //3) The Entomologist instructs the Insect to cut the Yarn
+        //    Since there is paralysis the eating process shouldn't be successful
+
+        el.actionMove(tectons.get(2));
+
+        // 4) Print the ending state
+        System.out.println(vegString);
+        printState();
     }
 
     /*
