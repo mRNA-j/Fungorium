@@ -57,9 +57,9 @@ public class Map {
         }
 
         // A régi Tectonon lévő gombafonalakat el kell vágni
-        /*for (Yarn yarn : new ArrayList<>(tecton.getYarns())) {
+        for (Yarn yarn : new ArrayList<>(tecton.getYarns())) {
             tecton.removeYarn(yarn);
-        }*/
+        }
 
         // Létrehozunk két új Tectont
         Tecton newTecton1 = new Tecton(this.random.nextInt(), tecton.getYarnLimit(), tecton.isMushroomPrevent());

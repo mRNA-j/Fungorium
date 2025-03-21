@@ -22,7 +22,7 @@ public class Main {
         playerName1= "cigo";
         System.out.println("Rovarasz jatekos neve: ");
         playerName2 = "feka";
-
+        test4();
     }
 
     public static Game initTest() {
@@ -129,9 +129,40 @@ public class Main {
      * 4:  Teszt4 - Tekton kettétörése, ha van rajta gombafonal
      */
     public static void test4() {
+        System.out.println("\n+++++++++++++++++++++++\nTest4 elkezdodott.++++++++++++++++++++++++");
 
+        // Initialize the game
+        game = initTest();
+        Map playField = game.getPlayField();
+
+        // Get the target Tecton to split (Tecton3)
+        Tecton targetTecton = tectons.get(2);
+
+        // Create a yarn and connect it to the mushroom
+        Yarn yarn = new Yarn(mp.getOwnedMushrooms().get(0));
+        mp.addYarn(yarn);
+
+        // Add the yarn to the target Tecton
+        targetTecton.growYarn(yarn);
+
+        // Add the yarn to an adjacent Tecton as well to create a path
+        Tecton adjacentTecton = targetTecton.getNeighbours().get(0);
+        adjacentTecton.growYarn(yarn);
+
+        // Print the initial state
+        System.out.println(kezdoString);
+        printState();
+
+        // Split the tecton
+        System.out.println("Kiválasztott Tecton: " + targetTecton.getId());
+
+        //YARNOKAT SZARUL KEZELI LE, EZT JAVITANI KELL CSAK NEM LATOM AT
+        playField.splitting(targetTecton);
+
+        // Print the final state
+        System.out.println(vegString);
+        printState();
     }
-
     /*
      * 5:  Teszt5 - Tekton kettétörése,rovar van a tektonon
      */
