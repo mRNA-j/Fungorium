@@ -84,7 +84,7 @@ public class MushroomPicker extends Player {
         if (limit == 1 && tecton.getYarns().get(0).getPlayer() == this){ //tipus lekerdezes??
             return true;
         }
-        System.out.println("The tecton has been conquered");
+        System.out.println("The tecton has been conquered already");
         return false;
     }
 
@@ -146,29 +146,35 @@ public class MushroomPicker extends Player {
      *
      * @param targetTecton A cél tecton.
      * @param selectedYarn A kiválasztott fonal, amelyet felhasználunk.
-     * @param firstTime    Jelzi, hogy ez az első próbálkozás.
      */
-    public void actionGrowYarn(Tecton targetTecton, Yarn selectedYarn, boolean firstTime) {
+    public void actionGrowYarn(Tecton targetTecton, Yarn selectedYarn) {
         // Ellenőrzi, hogy a kiválasztott fonal egyik végpontja szomszédos-e a cél tectonnal
         if (selectedYarn.getTectons().get(0).isNeighbour(targetTecton) ||
                 selectedYarn.getTectons().get(1).isNeighbour(targetTecton)) {
             // Ellenőrzi, hogy a tecton meghódítható-e és ez az első próbálkozás
-            if (canIConquerTecton(targetTecton) && firstTime) {
+            if (canIConquerTecton(targetTecton)) {
                 // Ellenőrzi, hogy a tecton tartalmaz-e spórát
-                if (targetTecton.getSpore().size() != 0) { // Ha spóra található
-                    targetTecton.removeSpore(targetTecton.getSpore().get(0)); // Távolítja az első spórát a tectonról
-                    actionGrowYarn(targetTecton, selectedYarn, false); // Újra meghívja a metódust, immár nem első próbálkozásként
-                }
-                // Ha nincs spóra a tectonon
-                else { // Nincs spóra
                     targetTecton.growYarn(selectedYarn); // Elindítja a fonal növesztését a kiválasztott fonallal
-                }
             }
         }
         else{
             System.out.println("The selected tecton does not neighbour the yarn");
         }
     }
+
+    public boolean sporeCheck(Tecton targetTecton) {
+        if(targetTecton.getSpores().size() != 0){
+            targetTecton.getSpores().remove(0);
+            for(int i=1; i<targetTecton.getSpores().size(); i++){
+                targetTecton.getSpores().set(i-1, targetTecton.getSpores().get(i));
+            }
+            return true;
+        }
+       return false;
+    }
+
+
+
 
     /**
      * A spóra szórásának akciója, mely során a megadott gombából spórát próbál eljuttatni a cél tectonra.

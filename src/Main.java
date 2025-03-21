@@ -25,7 +25,10 @@ public class Main {
 
         //test3();
         //test8();
-        test18();
+        //test9();
+        //test10();
+        test11();
+        //test18();
         //test20();
         //test21();
     }
@@ -171,7 +174,7 @@ public class Main {
         printState();
         System.out.println("+++++++++++++++++++++++\nTest8 elkezdodott.+++++++++++++++++++++++");
 
-        mp.actionGrowYarn(tectons.get(3),yarn,true);
+        mp.actionGrowYarn(tectons.get(3),yarn);
 
         System.out.println(kezdoString);
         printState();
@@ -186,13 +189,17 @@ public class Main {
 
         Mushroom mushy=new Mushroom(tectons.get(2));
         MushroomPicker mptest=new MushroomPicker("Goldilocks",mushy);
-        Yarn yarn= new Yarn(mptest.getOwnedMushrooms().get(0));
-        mptest.actionGrowYarn(tectons.get(1),yarn,true);
+        Yarn tyarn= new Yarn(mptest.getOwnedMushrooms().get(0));
+        Yarn yarn=new Yarn(mp.getOwnedMushrooms().get(0));
+
+        //tectons.get(2).growYarn(yarn);
+        tectons.get(1).growYarn(tyarn);
+
         System.out.println(kezdoString);
         printState();
-        System.out.println("+++++++++++++++++++++++\nTest8 elkezdodott.+++++++++++++++++++++++");
+        System.out.println("+++++++++++++++++++++++\nTest9 elkezdodott.+++++++++++++++++++++++");
 
-        mp.actionGrowYarn(tectons.get(1),yarn,true);
+        mp.actionGrowYarn(tectons.get(1),yarn);
 
         System.out.println(kezdoString);
         printState();
@@ -202,14 +209,48 @@ public class Main {
      * 10: Teszt10 - Gombafonal növesztése többfonalas tektonon
      */
     public static void test10() {
+        game = initTest();
 
+        Mushroom mushy=new Mushroom(tectons.get(2));
+        MushroomPicker mptest=new MushroomPicker("Goldilocks",mushy);
+        Yarn tyarn= new Yarn(mptest.getOwnedMushrooms().get(0));
+        Yarn yarn=new Yarn(mp.getOwnedMushrooms().get(0));
+        tectons.get(1).growYarn(tyarn);
+
+        tectons.get(1).setYarnLimit(2);
+
+        System.out.println(kezdoString);
+        printState();
+        System.out.println("+++++++++++++++++++++++\nTest10 elkezdodott.+++++++++++++++++++++++");
+
+        mp.actionGrowYarn(tectons.get(1),yarn);
+
+        System.out.println(vegString);
+        printState();
     }
 
     /*
      * 11: Teszt11 - Gombafonal növesztése olyan tektonra, ahol van spóra
      */
     public static void test11() {
+        game = initTest();
+        Tecton t=tectons.get(1);
 
+        Yarn yarn=new Yarn(mp.getOwnedMushrooms().get(0));
+        Spore spore=new AcceleratorSpore(t);
+        t.addSpore(spore);
+
+        System.out.println(kezdoString);
+        printState();
+        System.out.println("+++++++++++++++++++++++\nTest11 elkezdodott.+++++++++++++++++++++++");
+
+        if(mp.sporeCheck(tectons.get(1))){
+            mp.actionGrowYarn(t,yarn);
+            mp.actionGrowYarn(tectons.get(2),yarn);
+
+        }
+        System.out.println(vegString);
+        printState();
     }
 
     /*
@@ -264,7 +305,6 @@ public class Main {
         Yarn y = new Yarn(mp.getOwnedMushrooms().get(0));
 
 
-        tectons.get(0).growYarn(y);
         tectons.get(1).growYarn(y);
 
 

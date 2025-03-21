@@ -144,6 +144,16 @@ public class Tecton {
         return yarnLimit;
     }
 
+
+    /**
+     * Módosítja a Tectonhoz tartozó maximális gombafonal limitet.
+     *
+     *
+     */
+    public void setYarnLimit(int yl) {
+        yarnLimit=yl;
+    }
+
     /**
      * Visszaadja, hogy a Tectonon lehet-e gomba.
      *
