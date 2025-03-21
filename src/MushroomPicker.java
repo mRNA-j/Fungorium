@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,6 +12,7 @@ public class MushroomPicker extends Player {
     public MushroomPicker(String name, Mushroom mushroom){
         super(name, 0);
         ownedMushrooms.add(mushroom);
+        ownedYarns = new ArrayList<Yarn>();
     }
 
     public List<Mushroom> getOwnedMushrooms() {
@@ -21,7 +23,7 @@ public class MushroomPicker extends Player {
     }
 
     private static boolean IsTectonInRange(Tecton tecton){
-        for(int i = 0; i<ownedYarns.size(); i++){
+        for(int i = 0; i< ownedYarns.size(); i++){
             if(ownedYarns.get(i).getTectons().contains(tecton)) {
                 return true;
             }
@@ -34,7 +36,7 @@ public class MushroomPicker extends Player {
         if(limit == 2){
             return true;
         }
-        if(tecton.getYarns().length() == 0){
+        if(tecton.getYarns().size() == 0){
             return true;
         }
         if (limit == 1 && tecton.getYarns().getPlayer() == this){ //tipus lekerdezes??
@@ -61,10 +63,10 @@ public class MushroomPicker extends Player {
 
     public void actionGrowMushroom(Tecton targetTecton) {
         if(!targetTecton.getMushroomPrevent()) {
-            if (targetTecton.getMushroom().length() == 0) {
-                if (targetTecton.getSpores().length() >= 3) {
+            if (targetTecton.getMushroom() != null) {
+                if (targetTecton.getSpores().size() >= 3) {
                     if(isTectonInRange(targetTecton)) {
-                        //Mushroom newMushroom = new Mushroom(targetTecton);
+                        Mushroom newMushroom = new Mushroom(targetTecton);
                         targetTecton.addMushroom(newMushroom);
                         ownedMushrooms.add(newMushroom);
                         targetTecton.removeSpore(targetTecton.getSpore().remove(0));
@@ -78,7 +80,7 @@ public class MushroomPicker extends Player {
     public void actionGrowYarn(Tecton targetTecton, Yarn selectedYarn, boolean firstTime) {
         if(selectedYarn.getTectons().get(0).isNeighbour(targetTecton) || selectedYarn.getTectons().get(1).isNeighbour(targetTecton)){
             if(CanIConquerTecton(targetTecton) && firstTime){
-                if(targetTecton.getSpore().length() != 0){//vanspóra
+                if(targetTecton.getSpore().size() != 0){//vanspóra
                     targetTecton.removeSpore(targetTecton.getSpore().get(0));
                     actionGrowYarn(targetTecton, selectedYarn, false);
                 }

@@ -6,6 +6,11 @@ public class Yarn {
 
     private List<Tecton> tectons;
     private Mushroom mushroom;
+    private MushroomPicker player;
+
+    public MushroomPicker getPlayer() {
+        return player;
+    }
 
     /**
      * A Yarn class konstruktora.

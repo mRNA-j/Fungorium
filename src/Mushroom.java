@@ -6,6 +6,13 @@ public class Mushroom {
     private int age;
     private boolean hasSpore;
 
+    public int getAge(){
+        return age;
+    }
+    public boolean getHasSpore(){
+        return hasSpore;
+    }
+
     public void disperseSpore(Tecton tecton) {
         System.out.println("Melyik sporat akarod letrehozni?");
         System.out.println("1. Accelrator");

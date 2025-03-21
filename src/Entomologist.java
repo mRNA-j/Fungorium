@@ -70,7 +70,7 @@ public class Entomologist extends Player{
         }
         //itt be kell kérni az insect currentPlace spórái közül az egyiket
         try{
-            System.out.println("Choose a spore from the tecton ["+insect.getCurrentPlace().getSpores().length()+"]");
+            System.out.println("Choose a spore from the tecton ["+insect.getCurrentPlace().getSpores().size()+"]");
             InputStreamReader is= new InputStreamReader(System.in);
             BufferedReader br= new BufferedReader(is);
             String input= br.readLine();
@@ -98,7 +98,7 @@ public class Entomologist extends Player{
         }
         int selected_yarn=-1;
         try{
-            System.out.println("Choose yarn ["+insect.getCurrentPlace().getYarns().length()+"]");
+            System.out.println("Choose yarn ["+insect.getCurrentPlace().getYarns().size()+"]");
             InputStreamReader is= new InputStreamReader(System.in);
             BufferedReader br= new BufferedReader(is);
             String input= br.readLine();
@@ -112,7 +112,7 @@ public class Entomologist extends Player{
 
         //be kell kérni magát a yarnt
         if(selected_yarn !=-1){
-            insect.cutYarn(insect.getCurrentPlace().getYarns().length());
+            insect.cutYarn(insect.getCurrentPlace().getYarns().size());
         }
 
     }
