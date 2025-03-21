@@ -19,7 +19,7 @@ public class Mushroom {
     }
 
     public void disperseSpore(Tecton tecton) {
-        System.out.println("Melyik sporat akarod letrehozni?");
+        System.out.println("Melyik sporat akarod kiloni?");
         System.out.println("1. Accelrator");
         System.out.println("2. Paralyzing");
         System.out.println("3. Declerator");
@@ -49,7 +49,7 @@ public class Mushroom {
         }
 
 
-        System.out.println("Spora hozzáadva");
+        System.out.println("Spora kilove");
         tecton.addSpore(sp);
         numberOfDispersions++;
 

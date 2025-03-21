@@ -98,16 +98,25 @@ public class MushroomPicker extends Player {
 
     //hol kapom be a tectont? hol vizsgálom hogy melyik tektonra lőhet szerintem itt, visszacsatok
     public void actionSporeDispersion(Tecton targetTecton, Mushroom mushroom) {
+        if(!mushroom.getHasSpore()) {
+            System.out.println("Nincs spóra a gombatestben");
+            return;
+        }
+
         int age = mushroom.getAge();
         List<Tecton> neighbours = addNeighbours(targetTecton);
 
-        if(mushroom.getHasSpore()){
-            if(age > 10){
-                List<Tecton> secondNeighbours = addsecondNeighbours(neighbours);
-                neighbours = secondNeighbours;
-            }
-            //if (targetTecton.)
+        if(age > 10){
+            List<Tecton> secondNeighbours = addsecondNeighbours(neighbours);
+            neighbours = secondNeighbours;
+        }
+        if (neighbours.contains(targetTecton)){
+            System.out.println("A kiválasztott tekton elérhető");
             mushroom.disperseSpore(targetTecton);
+        }
+        else{
+            System.out.println("a target tekton nem elérhető");
+            return;
         }
     }
 
