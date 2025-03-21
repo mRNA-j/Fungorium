@@ -40,8 +40,14 @@ public class Insect {
     public boolean getCutPrevented() {
         return cutPrevented;
     }
+    public Tecton getCurrentPlace(){
+        return currentPlace;
+    }
+    public void setCurrentPlace(Tecton currentPlace){
+        this.currentPlace = currentPlace;
+    }
 
     public void cutYarn(Yarn yarn) {}
     public void eatSpore(Spore spore) {}
-    public void move(Tecton targetTecton) {}
+    public boolean move(Tecton targetTecton) {}
 }
