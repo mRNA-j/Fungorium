@@ -25,7 +25,6 @@ public class Main {
 
         //test1();
         //test8();
-<<<<<<< Updated upstream
         //test9();
         //test10();
         test11();
@@ -33,7 +32,6 @@ public class Main {
         test16();
         //test20();
         //test21();
-=======
 
         //test9();
 
@@ -42,7 +40,7 @@ public class Main {
         //test20();
         //test21();
         //test23();
->>>>>>> Stashed changes
+
     }
 
     public static Game initTest() {
