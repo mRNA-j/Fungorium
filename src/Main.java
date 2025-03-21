@@ -29,6 +29,7 @@ public class Main {
         //test10();
         test11();
         //test18();
+        test16();
         //test20();
         //test21();
     }
@@ -37,6 +38,7 @@ public class Main {
         Game game = new Game();
         game.start();
 
+
         mp = new MushroomPicker(playerName1, new Mushroom(game.getPlayField().getTectons().get(0)));
         el = new Entomologist(playerName2, new Insect(game.getPlayField().getTectons().get(1)));
 
@@ -44,7 +46,7 @@ public class Main {
         pl.add(mp);
         pl.add(el);
         game.setPlayers(pl);
-
+        game.setActivePlayer(mp);
         tectons = game.getPlayField().getTectons();
         return game;
     }
@@ -285,6 +287,11 @@ public class Main {
      * 16: Teszt16 - Következő játékos jön
      */
     public static void test16() {
+        game = initTest();
+
+        System.out.println(game.getActivePlayer().getName());
+        game.nextPlayer();
+        System.out.println(game.getActivePlayer().getName());
 
     }
 
@@ -292,6 +299,10 @@ public class Main {
      * 17: Teszt17 - Játékban eltelik egy kör
      */
     public static void test17() {
+        game = initTest();
+        System.out.println("Current round: "+game.getCurrentTurn());
+        game.nextTurn();
+        System.out.println("Current round: "+game.getCurrentTurn());
 
     }
 
@@ -328,6 +339,7 @@ public class Main {
      */
     public static void test19() {
         game = initTest();
+        el.getInsect().setCutPrevented(true);
 
         Yarn y = new Yarn(mp.getOwnedMushrooms().get(0));
 

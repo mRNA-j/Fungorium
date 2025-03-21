@@ -15,7 +15,9 @@ public class Entomologist extends Player{
       return insect;
     }
 
-
+    public void actionWait() {
+        return;
+    }
 
    /* private int getInputTecton(){
 
@@ -93,10 +95,12 @@ public class Entomologist extends Player{
     public void actionCutYarn(Yarn yarn) {
         if(insect.getParalized()){
             System.out.println("A rovar bénítóspóra hatása alatt van, a fonalvágás nem lehetéges");
+            actionWait();
             return;
         }
         if(insect.getCutPrevented()){
             System.out.println("A rovar vágásgátló spóra hatása alatt van, az fonalvágás nem lehetéges");
+            actionWait();
             return;
         }
         insect.cutYarn(yarn);

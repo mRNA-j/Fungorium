@@ -16,6 +16,14 @@ public class Game {
         numberOfTurns = 50;
     }
 
+    public Player getActivePlayer() {
+        return activePlayer;
+    }
+
+    public int getCurrentTurn(){
+        return currentTurn;
+    }
+
     public Map getPlayField() {
         return playField;
     }
@@ -26,10 +34,12 @@ public class Game {
 
     public void nextPlayer() {
         activePlayerIndex++;
-        //activePlayer = players[activePlayerIndex];
+        activePlayer = players.get(activePlayerIndex);
+    }
+    public void setActivePlayer(Player player){
+        activePlayer = player;
     }
     public void start() {
-        //activePlayer = players[activePlayerIndex];
         playField.generate();
     }
     public void nextTurn() {
