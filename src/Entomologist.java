@@ -13,7 +13,7 @@ public class Entomologist extends Player{
 
 
 
-    private int getInputTecton(){
+   /* private int getInputTecton(){
 
         int selected_tecton=-1;
         try{
@@ -29,7 +29,7 @@ public class Entomologist extends Player{
 
         }
         return selected_tecton;
-    }
+    }*/
     public void actionWatch() {
         return;     //?????
     }
@@ -44,14 +44,14 @@ public class Entomologist extends Player{
             return;
         }
 
-        int tectonFromList=getInputTecton();
+        //int tectonFromList=getInputTecton();
 
 
 
 
         //ha a mozgást nem gátolja spóra hatása, akkor bekérjük majd a tektont, azután fogjuk vizsgálni hogy jó-e7
         //bekérjük a tektont és tovább adjuk a bogárnak
-        if(insect.move(game.getPlayfield().get(tectonFromList))){
+        /*if(insect.move(targetTecton)){
             System.out.println(" mozgás sikeresen végrehajtva");
             if(insect.getAccelerated()){
                 insect.setAccelerated(false);
@@ -61,7 +61,7 @@ public class Entomologist extends Player{
         }
         else{
             System.out.println("Mozgás végrehajtása sikertelen");
-        }
+        }*/
     }
     public void actionEatSpore(Spore spore) {
         if(insect.getParalized()){
@@ -112,7 +112,7 @@ public class Entomologist extends Player{
 
         //be kell kérni magát a yarnt
         if(selected_yarn !=-1){
-            insect.cutYarn(insect.getCurrentPlace().getYarns().size());
+            insect.cutYarn(yarn);
         }
 
     }

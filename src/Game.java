@@ -6,15 +6,22 @@ public class Game {
     private final int numberOfTurns;
     private int activePlayerIndex;
     private Player activePlayer;
-    private final List<Player> players;
+    private List<Player> players;
     private final Map playField;
 
-    public Game(List<Player> playersInput) {
+    public Game() {
         activePlayerIndex = 0;
         currentTurn = 0;
         playField = new Map();
         numberOfTurns = 50;
-        players = playersInput;
+    }
+
+    public Map getPlayField() {
+        return playField;
+    }
+
+    public void setPlayers(List<Player> input) {
+        players = input;
     }
 
     public void nextPlayer() {

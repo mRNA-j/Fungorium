@@ -227,4 +227,8 @@ public class Tecton {
     public int getId() {
         return id;
     }
+
+    public boolean isConnectedWithYarn(Tecton other) {
+        return true;
+    }
 }

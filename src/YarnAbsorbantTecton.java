@@ -1,3 +1,5 @@
+import java.util.Random;
+
 /** A YarnAbsorbantTecton class egy speciális Tecton, ami felszívja a gombafonalakat. */
 public class YarnAbsorbantTecton extends Tecton {
 
@@ -8,7 +10,7 @@ public class YarnAbsorbantTecton extends Tecton {
      * @param mushroomPrevent A  jelzés, hogy a Tectonon nem lehet gomba.
      */
     public YarnAbsorbantTecton(int yarnLimit, boolean mushroomPrevent) {
-        super(yarnLimit, mushroomPrevent);
+        super((new Random()).nextInt(), yarnLimit, mushroomPrevent);
     }
 
     /**

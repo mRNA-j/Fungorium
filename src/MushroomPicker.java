@@ -11,6 +11,7 @@ public class MushroomPicker extends Player {
 
     public MushroomPicker(String name, Mushroom mushroom){
         super(name, 0);
+        ownedMushrooms = new ArrayList<>();
         ownedMushrooms.add(mushroom);
         ownedYarns = new ArrayList<Yarn>();
     }
