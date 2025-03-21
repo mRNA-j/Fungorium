@@ -39,7 +39,7 @@ public class MushroomPicker extends Player {
         if(tecton.getYarns().size() == 0){
             return true;
         }
-        if (limit == 1 && tecton.getYarns().getPlayer() == this){ //tipus lekerdezes??
+        if (limit == 1 && tecton.getYarns().get(0).getPlayer() == this){ //tipus lekerdezes??
             return true;
         }
         return false;
@@ -59,6 +59,7 @@ public class MushroomPicker extends Player {
             }
 
         }
+        return  secondNeighbours;
     }
 
     public void actionGrowMushroom(Tecton targetTecton) {
@@ -78,12 +79,16 @@ public class MushroomPicker extends Player {
         }
     }
     public void actionGrowYarn(Tecton targetTecton, Yarn selectedYarn, boolean firstTime) {
+        // yarn egyik oldala vagy másiki szomszedos e velunk
         if(selectedYarn.getTectons().get(0).isNeighbour(targetTecton) || selectedYarn.getTectons().get(1).isNeighbour(targetTecton)){
+            //van-e rajta es lehet-e noveszteni
             if(canIConquerTecton(targetTecton) && firstTime){
+                //van-e rajta spora
                 if(targetTecton.getSpore().size() != 0){//vanspóra
                     targetTecton.removeSpore(targetTecton.getSpore().get(0));
                     actionGrowYarn(targetTecton, selectedYarn, false);
                 }
+                //nincsen spora
                 else{       //nincsspóra
                     targetTecton.growYarn(selectedYarn);    //what????
                 }
@@ -101,44 +106,8 @@ public class MushroomPicker extends Player {
                 List<Tecton> secondNeighbours = addsecondNeighbours(neighbours);
                 neighbours = secondNeighbours;
             }
-            //miért itt hozom létre a spórát???
-            int fajta = 0;
-
-            try{
-            InputStreamReader in=new InputStreamReader(System.in);
-            BufferedReader br=new BufferedReader(in);
-            String type=br.readLine();
-
-
-                while (!(fajta == 1 || fajta ==2 || fajta == 3 || fajta == 4)) {
-                    System.out.println("Adja meg a spóra fajtáját:\n1: gyorsito\n2: lassito\n3: vagasgatlo\n4: benito");
-                    fajta = Integer.parseInt(type);
-                }
-            }
-            catch(Exception e){
-
-            }
-            Spore spore=null;
-            switch(fajta){
-                case 1:
-                    spore=new AcceleratorSpore();
-                    break;
-                    case 2:
-                        spore=new DeceleratorSpore();
-                        break;
-                        case 3:
-                            spore= new CutPreventingSpore();
-                            break;
-                            case 4:
-                                spore= new ParalyzingSpore();
-                                break;
-                                default:
-
-                                    break;
-            }
-            if(spore != null){
-                mushroom.disperseSpore(targetTecton,spore);
-            }
+            //if (targetTecton.)
+            mushroom.disperseSpore(targetTecton);
         }
     }
 
