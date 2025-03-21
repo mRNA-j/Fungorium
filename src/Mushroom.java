@@ -18,6 +18,10 @@ public class Mushroom {
         return hasSpore;
     }
 
+    public void setHasSpore(boolean hasSpore){
+        this.hasSpore = hasSpore;
+    }
+
     public void disperseSpore(Tecton tecton) {
         System.out.println("Melyik sporat akarod kiloni?");
         System.out.println("1. Accelrator");

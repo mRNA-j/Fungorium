@@ -30,9 +30,7 @@ public class Entomologist extends Player{
         }
         return selected_tecton;
     }*/
-    public void actionWatch() {
-        return;     //?????
-    }
+    public void actionWatch() {return;}
     public void actionMove(Tecton targetTecton) {
         Tecton currentTecton = insect.getCurrentPlace();
         if(insect.getParalized()){
@@ -61,7 +59,7 @@ public class Entomologist extends Player{
         }
         else{
             System.out.println("Mozgás végrehajtása sikertelen");
-        }*/
+        }
     }
     public void actionEatSpore(Spore spore) {
         if(insect.getParalized()){
@@ -96,6 +94,7 @@ public class Entomologist extends Player{
             System.out.println("A rovar vágásgátló spóra hatása alatt van, az fonalvágás nem lehetéges");
             return;
         }
+        /*
         int selected_yarn=-1;
         try{
             System.out.println("Choose yarn ["+insect.getCurrentPlace().getYarns().size()+"]");
@@ -110,10 +109,9 @@ public class Entomologist extends Player{
 
         }
 
-        //be kell kérni magát a yarnt
         if(selected_yarn !=-1){
             insect.cutYarn(yarn);
-        }
+        }*/
 
     }
 }
