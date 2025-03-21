@@ -5,6 +5,11 @@ public class Mushroom {
     private int newSporeGrowth;
     private int age;
     private boolean hasSpore;
+    private Tecton tecton;
+
+    public Mushroom(Tecton tecton) {
+        this.tecton = tecton;
+    }
 
     public int getAge(){
         return age;
