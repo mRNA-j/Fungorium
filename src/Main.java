@@ -23,7 +23,7 @@ public class Main {
         System.out.println("Rovarasz jatekos neve: ");
         playerName2 = "feka";
 
-        //test1();
+        //test3();
         //test8();
         //test9();
         //test10();
@@ -32,15 +32,6 @@ public class Main {
         test16();
         //test20();
         //test21();
-
-        //test9();
-
-
-        test14();
-        //test20();
-        //test21();
-        //test23();
-
     }
 
     public static Game initTest() {
@@ -103,8 +94,7 @@ public class Main {
         mp.getOwnedMushrooms().get(0).setHasSpore(true);
         System.out.println(kezdoString);
         printState();
-        System.out.println("+++++++++++++++++++++++\nTest1 elkezdodott.");
-
+        System.out.println(kezdoString);
 
         mp.actionSporeDispersion(tectons.get(1),mp.getOwnedMushrooms().get(0));
 
@@ -121,7 +111,7 @@ public class Main {
         //mp.getOwnedMushrooms().get(0).setHasSpore(true);
         System.out.println(kezdoString);
         printState();
-        System.out.println("+++++++++++++++++++++++\nTest2 elkezdodott.");
+        System.out.println("+++++++++++++++++++++++\nTest2 elkezdodott.+++++++++++++++++++++++");
 
         mp.actionSporeDispersion(tectons.get(2),mp.getOwnedMushrooms().get(0));
 
@@ -134,13 +124,13 @@ public class Main {
      */
     public static void test3() {
         game = initTest();
-        System.out.println(kezdoString);
+        System.out.println("+++++++++++++++++++++++\nAlap helyzet.\n+++++++++++++++++++++++");
         printState();
+        System.out.println("+++++++++++++++++++++++\nTest3 elkezdodott.+++++++++++++++++++++++");
 
-        System.out.println("+++++++++++++++++++++++\nTest3 elkezdodott.");
         mp.actionSporeDispersion(tectons.get(1),mp.getOwnedMushrooms().get(0));
 
-        System.out.println(vegString);
+        System.out.println("\n+++++++++++++++++++++++\nVeghelyzet helyzet.\n+++++++++++++++++++++++");
         printState();
     }
 
@@ -155,6 +145,7 @@ public class Main {
      * 5:  Teszt5 - Tekton kettétörése,rovar van a tektonon
      */
     public static void test5() {
+
 
     }
 
@@ -282,27 +273,7 @@ public class Main {
      * 14: Teszt14 - Gomba növesztése, feltételek teljesülnek
      */
     public static void test14() {
-        game = initTest();
 
-        Yarn y = new Yarn(mp.getOwnedMushrooms().get(0));
-        mp.addYarn(y);
-
-        tectons.get(0).growYarn(y);
-        tectons.get(1).growYarn(y);
-
-        System.out.println(kezdoString);
-        printState();
-
-        System.out.println("+++++++++++++++++++++++\nTest14 elkezdodott.");
-
-        for (int i=0;i<5;i++) {
-            tectons.get(1).addSpore(new AcceleratorSpore());
-        }
-
-        mp.actionGrowMushroom(tectons.get(1));
-
-        System.out.println(vegString);
-        printState();
     }
 
     /*
@@ -347,11 +318,17 @@ public class Main {
 
         tectons.get(1).growYarn(y);
 
+
+        // Print the starting state
         System.out.println(kezdoString);
         printState();
 
+        // 3) The Entomologist instructs the Insect to cut the Yarn
+        //    Since there is no paralysis or cut-prevention spore effect,
+        //    the cut should be successful.
         el.actionCutYarn(y);
 
+        // 4) Print the ending state
         System.out.println(vegString);
         printState();
 
@@ -412,6 +389,8 @@ public class Main {
         // 4) Print the ending state
         System.out.println(vegString);
         printState();
+
+
     }
 
     /*
@@ -420,6 +399,7 @@ public class Main {
     public static void test21() {
         // 1) Initialize the game state
         game = initTest();
+
 
         // 2) Create an accelerator Spore on on Tecton(1) and pput the paralyzing effect on the insect
         Spore spore = new AcceleratorSpore();
@@ -456,12 +436,16 @@ public class Main {
         // 1) Initialize the game state
         game = initTest();
 
+
         // 2) Put the paralyzing effect on the insect and create a Yarn between t2 and t3
         el.getInsect().setParalized(true);
 
         Yarn yarn= new Yarn(mp.getOwnedMushrooms().get(0));
         yarn.addTecton(tectons.get(0));
         yarn.addTecton(tectons.get(1));
+
+
+
 
         // Print the starting state
         System.out.println(kezdoString);
