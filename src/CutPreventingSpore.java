@@ -1,3 +1,5 @@
 public class CutPreventingSpore extends Spore {
-    public void addEffect(Insect insect) {}
+    public void addEffect(Insect insect) {
+        insect.setCutPrevented(true);
+    }
 }
