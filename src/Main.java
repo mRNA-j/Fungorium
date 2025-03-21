@@ -50,7 +50,7 @@ public class Main {
         System.out.println("Rovarasz:");
         System.out.println("\t Pont: " + el.getPoints());
         if (!el.getInsect().getAccelerated() && !el.getInsect().getParalized() && !el.getInsect().getDecelerated() && !el.getInsect().getCutPrevented()) {
-
+            System.out.println("\t Rovaron levo sporahatas: nincs rajta hatas");
         }
         if(el.getInsect().getAccelerated()) {
             System.out.println("\t Rovaron levo sporahatas: gyorsito");
