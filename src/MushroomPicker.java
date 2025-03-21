@@ -84,6 +84,7 @@ public class MushroomPicker extends Player {
         if (limit == 1 && tecton.getYarns().get(0).getPlayer() == this){ //tipus lekerdezes??
             return true;
         }
+        System.out.println("The tecton has been conquered");
         return false;
     }
 
@@ -163,6 +164,9 @@ public class MushroomPicker extends Player {
                     targetTecton.growYarn(selectedYarn); // Elindítja a fonal növesztését a kiválasztott fonallal
                 }
             }
+        }
+        else{
+            System.out.println("The selected tecton does not neighbour the yarn");
         }
     }
 

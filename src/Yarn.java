@@ -18,6 +18,7 @@ public class Yarn {
      */
     public Yarn(Mushroom mushroom) {
         this.tectons = new ArrayList<>();
+        tectons.add(mushroom.getTecton());
         this.mushroom = mushroom;
     }
 
