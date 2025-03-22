@@ -3,24 +3,50 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+/**
+ * Az Entomologist osztály a játékos egyik lehetséges szereplőjét reprezentálja,
+ * aki egy rovart (Insect) irányít a játék során.
+ */
 public class Entomologist extends Player{
-    private Insect insect;
+    private Insect insect; // a rovarász játékos rovarja
 
+    /**
+     * Konstruktor az Entomologist példány létrehozásához.
+     *
+     * @param name   A játékos neve.
+     * @param insect A játékoshoz tartozó rovar.
+     */
     public Entomologist(String name, Insect insect){
         super(name, 0);
         this.insect = insect;
     }
 
+    /**
+     * Visszaadja az entomológushoz tartozó rovart.
+     *
+     * @return A rovar (Insect) objektum.
+     */
     public Insect getInsect(){
       return insect;
     }
 
+    /**
+     * Az akció várakozás, amely nem csinál semmit.
+     */
     public void actionWait() {
         return;
     }
 
+    /**
+     * Az akció figyelés, amely nem csinál semmit.
+     */
     public void actionWatch() {return;}
 
+    /**
+     * Megpróbálja a rovart egy másik tectonra mozgatni.
+     *
+     * @param targetTecton A cél tecton, ahová a rovar mozogni próbál.
+     */
     public void actionMove(Tecton targetTecton) {
         Tecton currentTecton = insect.getCurrentPlace();
         if(insect.getParalized()){
@@ -37,6 +63,11 @@ public class Entomologist extends Player{
         }
     }
 
+    /**
+     * A rovar elfogyaszt egy adott spórát, és a játékos pontokat kap érte.
+     *
+     * @param spore A megevésre szánt spóra.
+     */
     public void actionEatSpore(Spore spore) {
         if(insect.getParalized()){
             System.out.println("A rovar bénítóspóra hatása alatt van, az evés nem lehetéges");
@@ -45,24 +76,13 @@ public class Entomologist extends Player{
         insect.eatSpore(spore);
         this.addPoints(spore.getNutrition());
         System.out.println("A játékos pontjai megnőttek: " + spore.getNutrition() + " ponttal");
-        //itt be kell kérni az insect currentPlace spórái közül az egyiket
-        /*try{
-            System.out.println("Choose a spore from the tecton ["+insect.getCurrentPlace().getSpores().size()+"]");
-            InputStreamReader is= new InputStreamReader(System.in);
-            BufferedReader br= new BufferedReader(is);
-            String input= br.readLine();
-
-            int selected_spore=Integer.parseInt(input)-1;
-
-
-        }
-        catch(IOException e){
-
-        }*/
-
-
     }
 
+    /**
+     * Megpróbálja a rovart egy adott fonalat elvágni.
+     *
+     * @param yarn A vágni kívánt fonal.
+     */
     public void actionCutYarn(Yarn yarn) {
         if(insect.getParalized()){
             System.out.println("A rovar bénítóspóra hatása alatt van, a fonalvágás nem lehetéges");
@@ -75,24 +95,6 @@ public class Entomologist extends Player{
             return;
         }
         insect.cutYarn(yarn);
-        /*
-        int selected_yarn=-1;
-        try{
-            System.out.println("Choose yarn ["+insect.getCurrentPlace().getYarns().size()+"]");
-            InputStreamReader is= new InputStreamReader(System.in);
-            BufferedReader br= new BufferedReader(is);
-            String input= br.readLine();
-
-            selected_yarn=Integer.parseInt(input)-1;
-
-        }
-        catch(IOException e){
-
-        }
-
-        if(selected_yarn !=-1){
-
-        }*/
 
     }
 }
