@@ -69,32 +69,40 @@ public class Map {
         }
 
         Random random = new Random();
-        List<Insect>templist = tecton.getInsects();
+        List<Insect> templist = tecton.getInsects();
 
+        // A régi Tectonon lévő gombafonalakat el kell vágni
+        for (Yarn yarn : new ArrayList<>(tecton.getYarns())) {
+            tecton.removeYarn(yarn);
+
+            // minden szomszédról is el kell vágni ezeket a fonalakat
+            for(Tecton neighbourTecton : new ArrayList<>(tecton.getNeighbours())) {
+                if(neighbourTecton.getYarns().contains(yarn)) {
+                    neighbourTecton.removeYarn(yarn);
+                }
+            }
+        }
+
+        // Létrehozunk két új Tectont
+        Tecton newTecton1 = new Tecton(this.random.nextInt(), tecton.getYarnLimit(), tecton.isMushroomPrevent());
+        Tecton newTecton2 = new Tecton(this.random.nextInt(), tecton.getYarnLimit(), tecton.isMushroomPrevent());
+
+        // A rovarokat átrakjuk random tektonra
         for(Insect insect : templist) {
             System.out.println("HOZZAADAS");
-            int randNum = random.nextInt(templist.size());
-            tectons.get(randNum).addInsect(insect);
+
+            // Eldönthetjük, hogy melyikre kerüljön (random)
+            if (random.nextBoolean()) {
+                newTecton1.addInsect(insect);
+            } else {
+                newTecton2.addInsect(insect);
+            }
         }
 
         for(int i=0;i<templist.size();i++) {
             System.out.println("KITORLEEEES");
             tecton.removeInsect(tecton.getInsects().get(i));
         }
-
-
-
-
-
-
-        // A régi Tectonon lévő gombafonalakat el kell vágni
-        for (Yarn yarn : new ArrayList<>(tecton.getYarns())) {
-            tecton.removeYarn(yarn);
-        }
-
-        // Létrehozunk két új Tectont
-        Tecton newTecton1 = new Tecton(this.random.nextInt(), tecton.getYarnLimit(), tecton.isMushroomPrevent());
-        Tecton newTecton2 = new Tecton(this.random.nextInt(), tecton.getYarnLimit(), tecton.isMushroomPrevent());
 
         // Beállítjuk az új Tectonok szomszédságát (a régi Tecton szomszédai + egymás)
         List<Tecton> originalNeighbours = new ArrayList<>(tecton.getNeighbours());
@@ -111,7 +119,7 @@ public class Map {
         newTecton1.addNeighbour(newTecton2);
         newTecton2.addNeighbour(newTecton1);
 
-    /*    // A régi Tectonon lévő gombákat, rovarokat, spórákat átrakjuk az új Tectonokra
+    /*   // A régi Tectonon lévő gombákat, rovarokat, spórákat átrakjuk az új Tectonokra
 
         for (Insect insect : new ArrayList<>(tecton.getInsects())) {
             tecton.removeInsect(insect);

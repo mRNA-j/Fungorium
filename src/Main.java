@@ -1,6 +1,7 @@
     import java.util.ArrayList;
     import java.util.List;
     import java.util.Scanner;
+    import java.lang.reflect.Method;
 
     public class Main {
         private static Game game;
@@ -21,20 +22,27 @@
             System.out.println("Rovarasz jatekos neve: ");
             playerName2 = "feka";
 
-            //test3();
-            //test8();
+            System.out.println("Add meg a valasztott teszt eset szamat (1-26): ");
+            int chosenTestNumber = scanner.nextInt();
 
-            test9();
+            if(chosenTestNumber < 1 || chosenTestNumber > 26) {
+                System.out.println("Nincs ilyen teszteset! Kilépés!");
+                return;
+            }
 
+            try {
+                Class<?> clazz = Main.class;
 
-            //test18();
-            //test20();
-            //test21();
-            //test23();
-            //test24();
-            //test25();
-            //test26();
-            //test22();
+                Object obj = clazz.getDeclaredConstructor().newInstance();
+
+                String methodName = "test" + chosenTestNumber;
+                Method method = clazz.getMethod(methodName);
+
+                method.invoke(obj);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         public static Game initTest() {
@@ -140,29 +148,57 @@
          * 4:  Teszt4 - Tekton kettétörése, ha van rajta gombafonal
          */
         public static void test4() {
-
+            game = initTest();
+            System.out.println("+++++++++++++++++++++++\nAlap helyzet.\n+++++++++++++++++++++++");
+            Yarn yarn = new Yarn(game.getPlayField().getTectons().get(0).getMushroom());
+            game.getPlayField().getTectons().get(1).growYarn(yarn);
+            printState();
+            System.out.println("+++++++++++++++++++++++\nTest4 elkezdodott.+++++++++++++++++++++++");
+            game.getPlayField().splitting(tectons.get(1));
+            System.out.println("\n+++++++++++++++++++++++\nVeghelyzet helyzet.\n+++++++++++++++++++++++");
+            printState();
         }
 
         /*
-         * 5:  Teszt5 - Tekton kettétörése,rovar van a tektonon
+         * 5:  Teszt5 - Tekton kettétörése, rovar van a tektonon
          */
         public static void test5() {
+            game = initTest();
+            System.out.println("+++++++++++++++++++++++\nAlap helyzet.\n+++++++++++++++++++++++");
+            printState();
+            System.out.println("+++++++++++++++++++++++\nTest5 elkezdodott.+++++++++++++++++++++++");
 
-
+            game.getPlayField().splitting(tectons.get(1));
+            System.out.println("\n+++++++++++++++++++++++\nVeghelyzet helyzet.\n+++++++++++++++++++++++");
+            printState();
         }
 
         /*
          * 6:  Teszt6 - Tekton ketttörése, gombatest van a tektonon
          */
         public static void test6() {
+            game = initTest();
+            System.out.println("+++++++++++++++++++++++\nAlap helyzet.\n+++++++++++++++++++++++");
+            printState();
+            System.out.println("+++++++++++++++++++++++\nTest6 elkezdodott.+++++++++++++++++++++++");
 
+            game.getPlayField().splitting(tectons.get(0));
+            System.out.println("\n+++++++++++++++++++++++\nVeghelyzet helyzet.\n+++++++++++++++++++++++");
+            printState();
         }
 
         /*
          * 7:  Teszt7 - Tekton ketttörése, tektonon nincsen semmi
          */
         public static void test7() {
+            game = initTest();
+            System.out.println("+++++++++++++++++++++++\nAlap helyzet.\n+++++++++++++++++++++++");
+            printState();
+            System.out.println("+++++++++++++++++++++++\nTest7 elkezdodott.+++++++++++++++++++++++");
 
+            game.getPlayField().splitting(tectons.get(2));
+            System.out.println("\n+++++++++++++++++++++++\nVeghelyzet helyzet.\n+++++++++++++++++++++++");
+            printState();
         }
 
         /*
