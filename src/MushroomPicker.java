@@ -167,20 +167,12 @@ public class MushroomPicker extends Player {
     public void actionGrowYarn(Tecton targetTecton, Yarn selectedYarn) {
         // Ellenőrzi, hogy a kiválasztott fonal egyik végpontja szomszédos-e a cél tectonnal
         if (selectedYarn.getTectons().get(0).isNeighbour(targetTecton) ||
-                selectedYarn.getTectons().get(1).isNeighbour(targetTecton)) {
+                selectedYarn.getTectons().get(selectedYarn.getTectons().size()-1) .isNeighbour(targetTecton)) {
             // Ellenőrzi, hogy a tecton meghódítható-e és ez az első próbálkozás
             if (canIConquerTecton(targetTecton)) {
-                // Ellenőrzi, hogy a tecton tartalmaz-e spórát
-                if (targetTecton.getSpores().size() != 0) { // Ha spóra található
-                    targetTecton.removeSpore(targetTecton.getSpores().get(0)); // Távolítja az első spórát a tectonról
-                    actionGrowYarn(targetTecton, selectedYarn); // Újra meghívja a metódust, immár nem első próbálkozásként
-                }
-                // Ha nincs spóra a tectonon
-                else { // Nincs spóra
-
-                    targetTecton.growYarn(selectedYarn); // Elindítja a fonal növesztését a kiválasztott fonallal
-                }
-            } else {
+                targetTecton.growYarn(selectedYarn); // Elindítja a fonal növesztését a kiválasztott fonallal
+            }
+            else {
                 System.out.println("The selected tecton does not neighbour the yarn");
             }
         }

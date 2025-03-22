@@ -243,6 +243,11 @@ public class Tecton {
     }
 
     public boolean isConnectedWithYarn(Tecton other) {
-        return true;
+        for (Yarn yarn : yarns) {
+            if (yarn.getTectons().contains(other)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
