@@ -162,4 +162,25 @@ public class Map {
     public List<Tecton> getTectons() {
         return tectons;
     }
+
+
+    public void noConnection() {
+        for (Tecton tecton : tectons) {
+            // Create a new list to avoid ConcurrentModificationException
+            List<Yarn> yarnsToRemove = new ArrayList<>();
+
+            // Identify yarns that are not connected to a mushroom
+            for (Yarn yarn : tecton.getYarns()) {
+                if (!yarn.isConnected()) {
+                    yarnsToRemove.add(yarn);
+                }
+            }
+
+            // Remove identified yarns from the tecton
+            for (Yarn yarn : yarnsToRemove) {
+                tecton.removeYarn(yarn);
+            }
+        }
+        System.out.println("Unconnected yarns removed from the map.");
+    }
 }

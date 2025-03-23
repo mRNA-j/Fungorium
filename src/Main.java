@@ -27,7 +27,7 @@ public class Main {
         System.out.println("Add meg a valasztott teszt eset szamat (1-26): ");
         int chosenTestNumber = scanner.nextInt();
 
-        if(chosenTestNumber < 1 || chosenTestNumber > 26) {
+        if(chosenTestNumber < 1 || chosenTestNumber > 27) {
             System.out.println("Nincs ilyen teszteset! Kilépés!");
             return;
         }
@@ -659,6 +659,25 @@ public class Main {
 
         // 4) Print the ending state
         System.out.println(vegString);
+        printState();
+    }
+    /**
+     * Tecton kettérorese es az egyik yarnhoz es nem lesz gomba gomba.
+     * Ez a teszt a Tecton kettéhasítását vizsgálja, ami után az egyik gombafonal elveszíti
+     * a kapcsolatát a gombával, majd a noConnection metódus eltávolítja a nem kapcsolódó fonalakat.
+     */
+    public static void test27() {
+        game = initTest();
+        System.out.println("+++++++++++++++++++++++\nAlap helyzet.\n+++++++++++++++++++++++");
+        Yarn yarn = new Yarn(game.getPlayField().getTectons().get(0).getMushroom());
+        game.getPlayField().getTectons().get(1).growYarn(yarn);
+        game.getPlayField().getTectons().get(2).growYarn(yarn);
+        printState();
+        System.out.println("+++++++++++++++++++++++\nTest4 elkezdodott.+++++++++++++++++++++++");
+        game.getPlayField().splitting(tectons.get(1));
+        System.out.println("\n+++++++++++++++++++++++\nnoConnection meghivasa.\n+++++++++++++++++++++++");
+        game.getPlayField().noConnection();
+        System.out.println("\n+++++++++++++++++++++++\nVeghelyzet helyzet.\n+++++++++++++++++++++++");
         printState();
     }
 
