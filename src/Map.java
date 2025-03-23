@@ -81,7 +81,7 @@ public class Map {
 
         // A rovarokat átrakjuk random tektonra
         for(Insect insect : templist) {
-            System.out.println("HOZZAADAS");
+            //System.out.println("HOZZAADAS");
 
             // Eldönthetjük, hogy melyikre kerüljön (random)
             if (random.nextBoolean()) {
@@ -92,7 +92,7 @@ public class Map {
         }
 
         for(int i=0;i<templist.size();i++) {
-            System.out.println("KITORLEEEES");
+            //System.out.println("KITORLEEEES");
             tecton.removeInsect(tecton.getInsects().get(i));
         }
 
@@ -166,17 +166,14 @@ public class Map {
 
     public void noConnection() {
         for (Tecton tecton : tectons) {
-            // Create a new list to avoid ConcurrentModificationException
             List<Yarn> yarnsToRemove = new ArrayList<>();
 
-            // Identify yarns that are not connected to a mushroom
             for (Yarn yarn : tecton.getYarns()) {
                 if (!yarn.isConnected()) {
                     yarnsToRemove.add(yarn);
                 }
             }
 
-            // Remove identified yarns from the tecton
             for (Yarn yarn : yarnsToRemove) {
                 tecton.removeYarn(yarn);
             }

@@ -128,34 +128,35 @@ public class MushroomPicker extends Player {
      * @param targetTecton A cél tecton, ahol a gombát növeszteni szeretnénk.
      */
     public void actionGrowMushroom(Tecton targetTecton) {
-        final String errorMessage = "Feltetelek nem teljesultek";
+        final String errorMessage = "Feltetelek nem teljesultek,";
 
         // Ellenőrzi, hogy a cél tecton nem gátolja-e a gomba növekedést
         if (!targetTecton.getMushroomPrevent()) {
             // Ellenőrzi, hogy a tecton már tartalmaz-e gombát
             if (!Objects.nonNull(targetTecton.getMushroom())) {
                 // Ellenőrzi, hogy legalább 3 spóra van-e a tectonon
+                //System.out.println(targetTecton.getSpores().size());
                 if (targetTecton.getSpores().size() >= 3) {
                     // Ellenőrzi, hogy a tecton elérhető-e a birtokolt fonalakkal
                     if (isTectonInRange(targetTecton)) {
                         Mushroom newMushroom = new Mushroom(targetTecton); // Új gomba létrehozása a cél tecton alapján
-                        targetTecton.addMushroom(newMushroom); // Új gomba hozzáadása a tectonhoz
                         ownedMushrooms.add(newMushroom); // Új gomba hozzáadása a játékos gombáihoz
                         // Három spóra eltávolítása a tectonról
                         targetTecton.removeSpore(targetTecton.getSpores().remove(0)); // Első spóra eltávolítása
                         targetTecton.removeSpore(targetTecton.getSpores().remove(0)); // Második spóra eltávolítása
                         targetTecton.removeSpore(targetTecton.getSpores().remove(0)); // Harmadik spóra eltávolítása
+                        this.addPoints(1);
                     } else {
-                        System.out.println(errorMessage);
+                        System.out.println(errorMessage + " Nem erheto el fonalakkal");
                     }
                 } else {
-                    System.out.println(errorMessage);
+                    System.out.println(errorMessage + " Nincs eleg spora a tektonon");
                 }
             } else {
-                System.out.println(errorMessage);
+                System.out.println(errorMessage + " Van mar gomba a tektonon");
             }
         } else {
-            System.out.println(errorMessage);
+            System.out.println(errorMessage + " Nem lehet gombat noveszteni a tektonon");
         }
     }
     /**
@@ -166,11 +167,16 @@ public class MushroomPicker extends Player {
      */
     public void actionGrowYarn(Tecton targetTecton, Yarn selectedYarn) {
         // Ellenőrzi, hogy a kiválasztott fonal egyik pontja szomszédos-e a cél tektonnal
+        //System.out.print("Fonal tektonjai: " + selectedYarn.getTectons() + "\n\n");
         for(int i = 0; i < selectedYarn.getTectons().size(); i++) {
             if(selectedYarn.getTectons().get(i).isNeighbour(targetTecton)){
                 // Ellenőrzi, hogy a tecton meghódítható-e és ez az első próbálkozás
                 if (canIConquerTecton(targetTecton)) {
                     targetTecton.growYarn(selectedYarn); // Elindítja a fonal növesztését a kiválasztott fonallal
+                    return;
+                } else {
+                    System.out.println("Mas jatekosnak mar van a fonala ezen  a tektonon");
+                    return;
                 }
             }
             else {
@@ -178,11 +184,12 @@ public class MushroomPicker extends Player {
             }
 
         }
+        System.out.println("A kivalasztott yarn-hoz tartozot tektonok kozul egyk se szomszedos a kivalasztott tektonnal, \nNem lehet fonalal növeszteni");
 
     }
 
     public boolean sporeCheck(Tecton targetTecton) {
-        if(targetTecton.getSpores().size() != 0){
+        if(!targetTecton.getSpores().isEmpty()){
             targetTecton.getSpores().remove(0);
             for(int i=1; i<targetTecton.getSpores().size(); i++){
                 targetTecton.getSpores().set(i-1, targetTecton.getSpores().get(i));

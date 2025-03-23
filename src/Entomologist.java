@@ -75,7 +75,6 @@ public class Entomologist extends Player{
         }
         insect.eatSpore(spore);
         this.addPoints(spore.getNutrition());
-        System.out.println("A játékos pontjai megnőttek: " + spore.getNutrition() + " ponttal");
     }
 
     /**
@@ -90,7 +89,7 @@ public class Entomologist extends Player{
             return;
         }
         if(insect.getCutPrevented()){
-            System.out.println("A rovar vágásgátló spóra hatása alatt van, az fonalvágás nem lehetéges");
+            System.out.println("A rovar vágásgátló spóra hatása alatt van, a fonalvágás nem lehetéges");
             actionWait();
             return;
         }

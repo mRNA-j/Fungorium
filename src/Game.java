@@ -36,6 +36,7 @@ public class Game {
     public void nextPlayer() {
         activePlayerIndex++;
         activePlayer = players.get(activePlayerIndex);
+        System.out.println("Kovetkezo jatekos jon");
     }
     public void setActivePlayer(Player player){
         activePlayer = player;
@@ -49,6 +50,7 @@ public class Game {
         if(currentTurn == numberOfTurns) {
             end();
         }
+        System.out.println("Kovetkezo kor");
     }
     public void end() {
         System.out.println("Game ended");

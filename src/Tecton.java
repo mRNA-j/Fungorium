@@ -65,7 +65,7 @@ public class Tecton {
      */
     public void addInsect(Insect insect) {
         this.insects.add(insect);
-        System.out.println(id + "Insect added: " + insect);
+        System.out.println("Insect added: " + insect);
     }
 
     /**
@@ -75,7 +75,7 @@ public class Tecton {
      */
     public void removeInsect(Insect insect) {
         this.insects.remove(insect);
-        System.out.println(id + "Insect removed: " + insect);
+        System.out.println("Insect removed: " + insect);
     }
 
     /**
@@ -98,7 +98,7 @@ public class Tecton {
         //yarnhoz hozzadjuk a tectont
         yarn.addTecton(this);
         yarns.add(yarn);
-        System.out.println(id + " Yarn added: " + yarn);
+        System.out.println("Yarn added: " + yarn);
     }
 
     /**
@@ -228,6 +228,10 @@ public class Tecton {
      */
     public List<Tecton> getNeighbours() {
         return neighbours;
+    }
+
+    public void printfNameAndId() {
+        System.out.print("Tecton" + id);
     }
 
     /**
