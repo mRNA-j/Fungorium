@@ -1,0 +1,26 @@
+1:  Teszt1 - Spóra kilövés olyan tektonra, amit elér a gomba
+2:  Teszt2 - Spóra kilövés, de a tekton nem szomszédos
+3:  Teszt3 - Spóra kilövés, de nincs spóra termelve
+4:  Teszt4 - Tekton kettétörése, ha van rajta gombafonal
+5:  Teszt5 - Tekton kettétörése,rovar an a tektonon
+6:  Teszt6 - Tekton ketttörése, gombatest van a tektonon
+7:  Teszt7 - Tekton ketttörése, tektonon nincsen semmi
+8:  Teszt8 - Gombafonal növesztése nem szomszédos tektonra
+9:  Teszt9 - Gombafonal növesztése más tékos onala van a tektonon ( csak egyfjta fonal növezthető a tektonra)
+10: Teszt10 - Gombafonal növesztése többfonalas tektonon
+11: Teszt11 - Gombafonal növesztése olyan tektonra, ahol van spóra
+12: Teszt12 - Gombafonal növesztése egyfonala tektonra (nincs rajta más játko fonala)
+13: Teszt13 - Gombafonal felszívása
+14: Teszt14 - Gomba növesztése, feltételek teljesülnek
+15: Teszt15 - Gomba növesztse, nem teljesünek a fetételek (altesztesetek ?)
+16: Teszt16 - Következő játékos jön
+17: Teszt17 - Játékban eltelik egy kör
+18: Teszt18 - Rovar fonalvágás akciója sikeres esetben
+19: Teszt19 - Rovar fonlvágás akciója vágágátló spóra hatása alatt
+20: Teszt20 - Rovar spóraevés akciója sikeresen végrehajtva
+21: Teszt21 - Rovar spóraevés akciója bénító spóra hatása alatt
+22: Teszt22 - Rovar mozgatása gyorsító spóra hatása alatt
+23: Teszt23 - Rovar mozgatása bénító spóra hatása alatt
+24: Teszt24 - Rovar mozgatása spóra hatása nélkül sikeresen
+25: Teszt25 - Rovar mozgatása két olyan tekton között amelyek között nem vezet gombafonal
+26: Teszt26 - Rovar mozgatása lassító spóra hatása alatt
