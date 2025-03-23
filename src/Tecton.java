@@ -13,13 +13,14 @@ public class Tecton {
     private List<Spore> spores;
     //private Tecton currentPlace;
     private List<Tecton> neighbours; // Új attribútum: szomszédok listája
+    private boolean yarnAbsorption = false;
 
     public boolean getMushroomPrevent(){
         return mushroomPrevent;
     }
 
 
-
+    public boolean getYarnAbsorption(){return yarnAbsorption;}
     /**
      * A Tecton class konstruktora.
      *

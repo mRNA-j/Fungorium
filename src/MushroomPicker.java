@@ -165,17 +165,20 @@ public class MushroomPicker extends Player {
      * @param selectedYarn A kiválasztott fonal, amelyet felhasználunk.
      */
     public void actionGrowYarn(Tecton targetTecton, Yarn selectedYarn) {
-        // Ellenőrzi, hogy a kiválasztott fonal egyik végpontja szomszédos-e a cél tectonnal
-        if (selectedYarn.getTectons().get(0).isNeighbour(targetTecton) ||
-                selectedYarn.getTectons().get(selectedYarn.getTectons().size()-1) .isNeighbour(targetTecton)) {
-            // Ellenőrzi, hogy a tecton meghódítható-e és ez az első próbálkozás
-            if (canIConquerTecton(targetTecton)) {
-                targetTecton.growYarn(selectedYarn); // Elindítja a fonal növesztését a kiválasztott fonallal
+        // Ellenőrzi, hogy a kiválasztott fonal egyik pontja szomszédos-e a cél tektonnal
+        for(int i = 0; i < selectedYarn.getTectons().size(); i++) {
+            if(selectedYarn.getTectons().get(i).isNeighbour(targetTecton)){
+                // Ellenőrzi, hogy a tecton meghódítható-e és ez az első próbálkozás
+                if (canIConquerTecton(targetTecton)) {
+                    targetTecton.growYarn(selectedYarn); // Elindítja a fonal növesztését a kiválasztott fonallal
+                }
             }
             else {
                 System.out.println("The selected tecton does not neighbour the yarn");
             }
+
         }
+
     }
 
     public boolean sporeCheck(Tecton targetTecton) {

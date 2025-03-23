@@ -2,6 +2,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Iterator;
 
 
 
@@ -315,7 +316,7 @@ public class Main {
     /*
      * 13: Teszt13 - Gombafonal felszívása
      */
-    public static void test13() {
+   public static void test13() {
         game = initTest();
 
         Yarn yarn=new Yarn(mp.getOwnedMushrooms().get(0));
@@ -329,9 +330,52 @@ public class Main {
         System.out.println(kezdoString);
         printState();
         System.out.println("+++++++++++++++++++++++\nTest13 elkezdodott.+++++++++++++++++++++++");
+        for (int i = 0; i < tectons.size(); i++) {
+            List<Yarn> toRemove= new ArrayList<>();
+            List<Yarn> check= new ArrayList<>();
+
+            //run Yarn absorption effect
+            for (Yarn yn : new ArrayList<>(tectons.get(i).getYarns())) {
+               if(tectons.get(i).getYarnAbsorption()){
+                   tectons.get(i).runEffect(yn);
+                   Yarn y1=new Yarn(yn.getTectons().subList(i, yn.getTectons().size()));
+                   Yarn y2=new Yarn(yn.getTectons().subList(0, i));
 
 
-        tectons.get(4).runEffect(yarn);
+                   check.add(y1);
+                   check.add(y2);
+
+
+                   toRemove.add(yn);
+               }
+            }
+
+
+            for(Yarn y : check){
+                //set the mushroom of new yarns
+                for(Tecton t : y.getTectons()){
+                    if(t.getMushroom() !=null){
+                        y.setMushroom(t.getMushroom());
+                    }
+                }
+                //verify that it has new mushrooms
+                if(y.isConnected()){
+                    for(Tecton t : y.getTectons()){
+                        t.growYarn(y);
+                    }
+                }
+            }
+            //remove old yarns from tecton
+            Iterator<Yarn> iterator = new ArrayList<>(toRemove).iterator();
+            while (iterator.hasNext()) {
+                Yarn yn = iterator.next();
+                for (Tecton t : new ArrayList<>(yn.getTectons())) {
+                    t.removeYarn(yn);
+                }
+            }
+
+        }
+
 
 
         System.out.println(vegString);
@@ -416,6 +460,7 @@ public class Main {
 
         Yarn y = new Yarn(mp.getOwnedMushrooms().get(0));
         tectons.get(1).growYarn(y);
+        tectons.get(2).growYarn(y);
 
         System.out.println(kezdoString);
         printState();

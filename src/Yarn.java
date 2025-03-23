@@ -12,11 +12,20 @@ public class Yarn {
         return player;
     }
 
+
+
     /**
      * A Yarn class konstruktora.
      */
     public Yarn() {
         this.tectons = new ArrayList<>();
+    }
+
+    /**
+     * A Yarn class konstruktora.
+     */
+    public Yarn(List<Tecton> tectons) {
+        this.tectons = tectons;
     }
 
     /**
@@ -30,6 +39,8 @@ public class Yarn {
         this.mushroom = mushroom;
     }
 
+
+
     /**
      * Ellenőrzi, hogy a gombafonal kapcsolódik-e gombatesthez. Implementáció: ellenőrzi, hogy a
      * gombatest Tectonja szerepel-e a gombafonalhoz tartozó Tectonok listájában.
@@ -37,15 +48,14 @@ public class Yarn {
      * @return Kapcsolódik-e gombatesthez?
      */
     public boolean isConnected() {
-        if (mushroom == null) {
-            return false; // Ha nincs gomba, akkor nem connected
-        }
 
         for (Tecton tecton : tectons) {
-            if (tecton.getMushroom() == mushroom) {
+            if (tecton.getMushroom() == mushroom && mushroom != null) {
                 return true; // Ha a gomba Tectonja benne van a listában, akkor connected
             }
         }
+
+
 
         return false; // Ha a gomba Tectonja nincs benne a listában, akkor nem connected
     }
