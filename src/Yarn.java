@@ -14,6 +14,13 @@ public class Yarn {
 
     /**
      * A Yarn class konstruktora.
+     */
+    public Yarn() {
+        this.tectons = new ArrayList<>();
+    }
+
+    /**
+     * A Yarn class konstruktora.
      * @param mushroom A gomba, amihez a gombafonal tartozik.
      */
     public Yarn(Mushroom mushroom) {
@@ -64,21 +71,31 @@ public class Yarn {
         }
 
         // 1. Create two new Yarn objects
-        Yarn newYarn1 = new Yarn(mushroom);
-        Yarn newYarn2 = new Yarn(mushroom);
+        Yarn newYarn1 = new Yarn();
+        Yarn newYarn2 = new Yarn();
+
+        int mushroomIndex = 0;
+        for (int i = 0; i < tectons.size(); i++) {
+            if(tectons.get(i).getMushroom() == mushroom)
+                mushroomIndex = i;
+        }
+
+        if(mushroomIndex < index) {
+            newYarn1.mushroom = mushroom;
+        } else {
+            newYarn2.mushroom = mushroom;
+        }
 
         // 2. Add Tectons to the first yarn up to the cutting point
         for (int i = 0; i < index; i++) {
             Tecton t = tectons.get(i);
-            newYarn1.addTecton(t);
-            t.getYarns().add(newYarn1);  // Directly add without removing first
+            t.growYarn(newYarn1);
         }
 
         // 3. Add Tectons to the second yarn after the cutting point
         for (int i = index + 1; i < tectons.size(); i++) {
             Tecton t = tectons.get(i);
-            newYarn2.addTecton(t);
-            t.getYarns().add(newYarn2);  // Directly add without removing first
+            t.growYarn(newYarn2);
         }
 
         // 4. Finally, remove this yarn from all tectons' yarn lists
@@ -130,5 +147,12 @@ public class Yarn {
      */
     public Mushroom getMushroom() {
         return mushroom;
+    }
+
+    /**
+     * Visszaadja a gombafonalhoz tartozó gombát
+     */
+    public void setMushroom(Mushroom mushroom) {
+        this.mushroom = mushroom;
     }
 }

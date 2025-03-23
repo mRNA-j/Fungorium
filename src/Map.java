@@ -70,17 +70,9 @@ public class Map {
 
         Random random = new Random();
         List<Insect> templist = tecton.getInsects();
-
         // A régi Tectonon lévő gombafonalakat el kell vágni
         for (Yarn yarn : new ArrayList<>(tecton.getYarns())) {
             tecton.removeYarn(yarn);
-
-            // minden szomszédról is el kell vágni ezeket a fonalakat
-            for(Tecton neighbourTecton : new ArrayList<>(tecton.getNeighbours())) {
-                if(neighbourTecton.getYarns().contains(yarn)) {
-                    neighbourTecton.removeYarn(yarn);
-                }
-            }
         }
 
         // Létrehozunk két új Tectont

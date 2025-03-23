@@ -154,6 +154,7 @@ public class Main {
         System.out.println("+++++++++++++++++++++++\nAlap helyzet.\n+++++++++++++++++++++++");
         Yarn yarn = new Yarn(game.getPlayField().getTectons().get(0).getMushroom());
         game.getPlayField().getTectons().get(1).growYarn(yarn);
+        game.getPlayField().getTectons().get(2).growYarn(yarn);
         printState();
         System.out.println("+++++++++++++++++++++++\nTest4 elkezdodott.+++++++++++++++++++++++");
         game.getPlayField().splitting(tectons.get(1));
