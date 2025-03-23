@@ -517,7 +517,33 @@ public class Main {
      * 22: Teszt22 - Rovar mozgatása gyorsító spóra hatása alatt
      */
     public static void test22() {
+// 1) Initialize the game state
+        game = initTest();
 
+
+        // 2) Create a Yarn between t1 - t2 - t3 - t4
+        Yarn yarn= new Yarn(mp.getOwnedMushrooms().get(0));
+        mp.actionGrowYarn(tectons.get(1),yarn);
+        mp.actionGrowYarn(tectons.get(2),yarn);
+        mp.actionGrowYarn(tectons.get(3),yarn);
+
+
+        // Print the starting state
+        System.out.println(kezdoString);
+        printState();
+        System.out.println(kezdoString);
+
+        //3) The Entomologist instructs the Insect to move from t2 to t3
+        //    Since there is accelerator spore effect, the process repeats itself because of the
+        //    accelerator spore effect. In the second move, the insect, should move from t3 to t4
+        //    It should be successful as well.
+
+        el.actionMove(tectons.get(2));
+        el.actionMove(tectons.get(3));
+
+        // 4) Print the ending state
+        System.out.println(vegString);
+        printState();
     }
 
     /*
@@ -626,7 +652,7 @@ public class Main {
         System.out.println(kezdoString);
 
         //3) The Entomologist instructs the Insect to move from t2 to t3, but
-        //    Since there is deceleratinf effect on the insect, the moving process shouldn't be successful
+        //    Since there is deccelerating effect on the insect, the moving process shouldn't be successful
 
         el.actionMove(tectons.get(2));
 
