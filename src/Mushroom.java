@@ -1,5 +1,9 @@
 import java.util.Scanner;
 
+/**
+ * A gomba entitást reprezentáló osztály.
+ * Kezeli a gomba korát, spóráit és a tectonhoz való kapcsolódását.
+ */
 public class Mushroom {
     private int numberOfDispersions;
     private int newSporeGrowth;
@@ -7,22 +11,48 @@ public class Mushroom {
     private boolean hasSpore;
     private Tecton tecton;
 
+    /**
+     * Létrehoz egy új gomba objektumot a megadott tectonon.
+     * @param tecton A tecton, amin a gomba elhelyezkedik.
+     */
     public Mushroom(Tecton tecton) {
         this.tecton = tecton;
         tecton.addMushroom(this);
+        age =0;
+        numberOfDispersions = 0;
+        newSporeGrowth = 5;
     }
 
+    /**
+     * Visszaadja a gomba életkorát.
+     * @return A gomba életkora.
+     */
     public int getAge(){
         return age;
     }
+
+    /**
+     * Visszaadja, hogy a gombának van-e spórája.
+     * @return Igaz, ha a gombának van spórája, egyébként hamis.
+     */
     public boolean getHasSpore(){
         return hasSpore;
     }
 
+    /**
+     * Beállítja a gomba spóra állapotát.
+     * @param hasSpore Igaz, ha a gombának van spórája, egyébként hamis.
+     */
     public void setHasSpore(boolean hasSpore){
         this.hasSpore = hasSpore;
     }
 
+    /**
+     * Spóra kilövését kezeli.
+     * A felhasználótól bekéri a kilövendő spóra típusát,
+     * létrehozza a megfelelő spórát és hozzáadja a tectonhoz.
+     * @param tecton A tecton, amire a spórát kilövi.
+     */
     public void disperseSpore(Tecton tecton) {
         System.out.println("Melyik sporat akarod kiloni?");
         System.out.println("1. Accelrator");
@@ -57,16 +87,21 @@ public class Mushroom {
         System.out.println("Spora kilove");
         tecton.addSpore(sp);
         numberOfDispersions++;
-
     }
+
+    /**
+     * Újraindítja a spóra növekedési idejét.
+     * Az új spóra növekedéséig hátralévő időt 5-re állítja.
+     */
     public void restartSporeGrowth() {
         newSporeGrowth = 5;
     }
 
+    /**
+     * Visszaadja a tectont, amelyen a gomba található.
+     * @return A tecton, amin a gomba elhelyezkedik.
+     */
     public Tecton getTecton(){
         return tecton;
-    }
-    public void setTecton(Tecton t){
-        tecton=t;
     }
 }
