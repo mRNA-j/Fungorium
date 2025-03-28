@@ -25,8 +25,10 @@ public class YarnAbsorbantTecton extends Tecton {
     @Override
     public void runEffect(Yarn yarn) {
         System.out.println("Running absorbant effect on yarn: " + yarn);
+        yarn.split(this);
         yarn.getTectons().remove(this);
         removeYarn(yarn);
+
     }
 
     public boolean getYarnAbsorption(){return yarnAbsorption;}
