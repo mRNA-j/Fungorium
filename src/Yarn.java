@@ -117,6 +117,8 @@ public class Yarn {
         System.out.println("Yarn split into two.");
     }
 
+
+
     /**
      * Hozzáad egy Tectont a gombafonalhoz.
      *

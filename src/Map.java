@@ -155,6 +155,8 @@ public class Map {
                 tecton.runEffect(yarn);
             }
         }
+
+        noConnection();
         System.out.println("Map refreshed.");
     }
 
@@ -167,12 +169,16 @@ public class Map {
         return tectons;
     }
 
+    public void setTectons(List<Tecton> ts) {
+        tectons = ts;
+    }
 
     public void noConnection() {
         for (Tecton tecton : tectons) {
             List<Yarn> yarnsToRemove = new ArrayList<>();
 
             for (Yarn yarn : tecton.getYarns()) {
+
                 if (!yarn.isConnected()) {
                     yarnsToRemove.add(yarn);
                 }
