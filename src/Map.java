@@ -13,6 +13,10 @@ public class Map {
         this.random = new Random();
     }
 
+    //new
+    public void addTecton(Tecton t){
+        tectons.add(t);
+    }
     /**
      * Generálja a Tectonokat és beállítja a szomszédos Tectonokat.
      */

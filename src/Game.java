@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,7 +33,10 @@ public class Game {
         currentTurn = 0;
         playField = new Map();
         numberOfTurns = 50;
+        players = new ArrayList<>();
     }
+
+    public List<Player> getPlayers(){return players;}
 
     /**
      * Visszaadja az aktuális, aktív játékost.

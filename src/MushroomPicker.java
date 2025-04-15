@@ -33,6 +33,13 @@ public class MushroomPicker extends Player {
         ownedYarns = new ArrayList<Yarn>(); // A statikus ownedYarns lista inicializálása egy új ArrayList példánnyal
     }
 
+
+    public MushroomPicker(String name) {
+        super(name, 0); // A szülő (Player) osztály konstruktorának meghívása a játékos névvel és induló értékkel (0)
+        ownedMushrooms = new ArrayList<>(); // A ownedMushrooms lista inicializálása egy új ArrayList példánnyal
+        ownedYarns = new ArrayList<Yarn>(); // A statikus ownedYarns lista inicializálása egy új ArrayList példánnyal
+    }
+
     /**
      * Visszaadja a játékos által birtokolt gombák listáját.
      *

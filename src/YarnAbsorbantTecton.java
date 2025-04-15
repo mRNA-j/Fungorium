@@ -13,7 +13,7 @@ public class YarnAbsorbantTecton extends Tecton {
      * @param yarnLimit A maximális gombafonal szám, ami a Tectonon lehet.
      * @param mushroomPrevent A  jelzés, hogy a Tectonon nem lehet gomba.
      */
-    public YarnAbsorbantTecton(int id,int yarnLimit, boolean mushroomPrevent) {
+    public YarnAbsorbantTecton(String id,int yarnLimit, boolean mushroomPrevent) {
         super(id, yarnLimit, mushroomPrevent);
     }
 

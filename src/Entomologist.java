@@ -20,7 +20,9 @@ public class Entomologist extends Player{
         super(name, 0);
         this.insect = insect;
     }
-
+    public Entomologist(String name){
+        super(name, 0);
+    }
     /**
      * Visszaadja az entomológushoz tartozó rovart.
      *

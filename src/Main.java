@@ -254,7 +254,7 @@ public class Main {
         game = initTest();
 
         Mushroom mushy=new Mushroom(tectons.get(2));
-        MushroomPicker mptest=new MushroomPicker("Goldilocks",mushy);
+        MushroomPicker mptest = new MushroomPicker("Goldilocks",mushy);
         Yarn tyarn= new Yarn(mptest.getOwnedMushrooms().get(0));
         Yarn yarn=new Yarn(mp.getOwnedMushrooms().get(0));
         //tectons.get(1).growYarn(tyarn);
