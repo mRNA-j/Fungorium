@@ -73,7 +73,201 @@ public class CmdParser {
         }
     }
 
+
+
+    /**
+     * Létrehoz egy megadott típusú spórát a megadott gombatestben.
+     *
+     * @param args A parancs argumentumai (mushroom_id, spore_type)
+     */
+    private static void grow_spore(String[] args) {
+        // Ellenőrizzük, hogy pontosan 3 argumentum van-e (beleértve a parancs nevét)
+        if (handleArgCount(args, 3)) {
+            System.out.println("Használat: grow_spore <mushroom_id> <spore_type>");
+            return;
+        }
+
+        String mushroomId = args[1];
+        String sporeType = args[2].toLowerCase();
+
+        // Keressük meg a megadott ID-jű gombát a térképen
+        Mushroom targetMushroom = null;
+        for (Tecton tecton : map.getTectons()) {
+            Mushroom mushroom = tecton.getMushroom();
+            if (mushroom != null && mushroom.getId().equals(mushroomId)) {
+                targetMushroom = mushroom;
+                break;
+            }
+        }
+
+        if (targetMushroom == null) {
+            System.out.println("Nem található gomba a megadott azonosítóval: " + mushroomId);
+            return;
+        }
+
+        // Ellenőrizzük, hogy a gombának van-e már spórája
+        if (targetMushroom.getHasSpore()) {
+            System.out.println("A gombának már van spórája.");
+            return;
+        }
+
+        // Létrehozzuk a megfelelő típusú spórát
+        Spore newSpore = null;
+
+        switch (sporeType) {
+            case "accelerator":
+                newSpore = new AcceleratorSpore();
+                break;
+
+            case "paralyzing":
+                newSpore = new ParalyzingSpore();
+                break;
+
+            case "decelerator":
+                newSpore = new DeceleratorSpore();
+                break;
+
+            case "insectduplicating":
+                // Ezt az esetet külön kellene implementálni, ha szükséges
+                System.out.println("Az InsectDuplicating spóra még nincs implementálva.");
+                return;
+
+            case "cutpreventing":
+                newSpore = new CutPreventingSpore();
+                break;
+
+            default:
+                System.out.println("Ismeretlen spóra típus: " + sporeType);
+                System.out.println("Támogatott típusok: accelerator, paralyzing, decelerator, insectDuplicating, cutPreventing");
+                return;
+        }
+
+        // Hozzáadjuk a spórát a gombához
+        targetMushroom.growSpore(newSpore);
+
+    }
+
+    private static void add_yarn(String[] args) {
+        //Nem hasznaljuk
+    }
+
+    /**
+     * A megadott típusú spóra hatást rárakja a megadott rovarra.
+     *
+     * @param args A parancs argumentumai (spore_type, insect_ID)
+     */
+    private static void add_effect_to_insect(String[] args) {
+        // Ellenőrizzük, hogy pontosan 3 argumentum van-e (beleértve a parancs nevét)
+        if (handleArgCount(args, 3)) {
+            System.out.println("Használat: add_effect_to_insect <spore_type> <insect_ID>");
+            return;
+        }
+
+        String sporeType = args[1].toLowerCase();
+        String insectId = args[2];
+
+        // Keressük meg a megadott ID-jű rovart a térképen
+        Insect targetInsect = null;
+        for (Tecton tecton : map.getTectons()) {
+            for (Insect insect : tecton.getInsects()) {
+                if (insect.getId() != null && insect.getId().equals(insectId)) {
+                    targetInsect = insect;
+                    break;
+                }
+            }
+            if (targetInsect != null) break;
+        }
+
+        if (targetInsect == null) {
+            System.out.println("Nem található rovar a megadott azonosítóval: " + insectId);
+            return;
+        }
+
+        // Alkalmazzuk a megfelelő spóra hatást a rovarra
+        switch (sporeType) {
+            case "accelerator":
+                targetInsect.setAccelerated(true);
+                break;
+
+            case "paralyzing":
+                targetInsect.setParalized(true);
+                break;
+
+            case "decelerator":
+                targetInsect.setDecelerated(true);
+                break;
+
+            case "insectduplicating":
+                // Ezt az esetet külön kellene implementálni, mivel nincs hozzá beépített metódus az Insect osztályban
+                System.out.println("A rovar duplikálása még nincs implementálva.");
+                break;
+
+            case "cutpreventing":
+                targetInsect.setCutPrevented(true);
+                break;
+
+            default:
+                System.out.println("Ismeretlen spóra típus: " + sporeType);
+                System.out.println("Támogatott típusok: accelerator, paralyzing, decelerator, insectDuplicating, cutPreventing");
+                break;
+        }
+    }
+
+    /**
+     * Hozzáadja a megadott gombatestet a megadott tektonhoz.
+     *
+     * @param args A parancs argumentumai (targetTecton_ID, mushroom_ID)
+     */
+    private static void add_mushroom_to_tecton(String[] args) {
+        // Ellenőrizzük, hogy pontosan 3 argumentum van-e (beleértve a parancs nevét)
+        if (handleArgCount(args, 3)) {
+            System.out.println("Használat: add_mushroom_to_tecton <targetTecton_ID> <mushroom_ID>");
+            return;
+        }
+
+        String tectonId = args[1];
+        String mushroomId = args[2];
+
+        // Keressük meg a megadott ID-jű tectont a térképen
+        Tecton targetTecton = null;
+        for (Tecton tecton : map.getTectons()) {
+            if (tecton.getId().equals(tectonId)) {
+                targetTecton = tecton;
+                break;
+            }
+        }
+
+        if (targetTecton == null) {
+            System.out.println("Nem található tecton a megadott azonosítóval: " + tectonId);
+            return;
+        }
+
+        // Ellenőrizzük, hogy a tectonon lehet-e gomba
+        if (targetTecton.isMushroomPrevent()) {
+            System.out.println("Ezen a tectonon nem lehet gomba.");
+            return;
+        }
+
+        // Ellenőrizzük, hogy van-e már gomba a tectonon
+        if (targetTecton.getMushroom() != null) {
+            System.out.println("A megadott tectonon már van gomba.");
+            return;
+        }
+
+        // Új gomba létrehozása a megadott ID-vel és hozzáadása a tectonhoz
+        Mushroom newMushroom = new Mushroom(targetTecton, mushroomId);
+
+        // Feltételezzük, hogy a Mushroom konstruktor már beállítja az ID-t vagy van egy setId metódus
+        // Ha nincs ilyen metódus, akkor a megfelelő implementációt kell létrehozni a Mushroom osztályban
+        // newMushroom.setId(mushroomId);
+
+        // Hozzáadjuk a gombát a tectonhoz
+        targetTecton.addMushroom(newMushroom);
+    }
+
     private static void add_insect_to_tecton(String[] args) {
+
+        ///nem hasznalja senki felesleg
     }
 
     /**
