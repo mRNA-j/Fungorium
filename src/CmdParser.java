@@ -6,6 +6,48 @@ public class CmdParser {
     private static Map map = new Map();
 
     /**
+     * Searches for a MushroomPicker player among the game players using the provided ID.
+     *
+     * @param id The ID of the MushroomPicker.
+     * @return The MushroomPicker if found; otherwise, null.
+     */
+    private static MushroomPicker findMushroomPickerById(String id) {
+        if (id == null || id.isEmpty()) {
+            return null;
+        }
+        for (Player player : game.getPlayers()) {
+            if (player instanceof MushroomPicker && player.getId().equals(id)) {
+                return (MushroomPicker) player;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Searches globally for a Yarn with the specified ID.
+     *
+     * @param yarnId The identifier of the Yarn to search for.
+     * @return The Yarn object if found; otherwise, null.
+     */
+    private static Yarn findYarnById(String yarnId) {
+        if (yarnId == null || yarnId.isEmpty()) {
+            return null;
+        }
+        // Iterate over all tectons in the map
+        for (Tecton tecton : map.getTectons()) {
+            // Search within each tecton's yarn collection.
+            for (Yarn yarn : tecton.getYarns()) {
+                if (yarn.getId().equals(yarnId)) {
+                    return yarn;
+                }
+            }
+        }
+        return null;
+    }
+
+
+
+    /**
      * Kezeli az argumentumok szamabol adodo hibakat
      *
      * @param args parancs argumentumlistaja
@@ -26,6 +68,131 @@ public class CmdParser {
         }
 
         return false;
+    }
+    /**
+     * Finds a Tecton by its ID in the map.
+     *
+     * @param id The ID of the Tecton to find
+     * @return The Tecton object if found, null otherwise
+     */
+    private static Tecton findTectonById(String id) {
+        if (id == null || id.isEmpty()) {
+            return null;
+        }
+
+        for (Tecton tecton : map.getTectons()) {
+            if (tecton.getId().equals(id)) {
+                return tecton;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Finds an Insect by its ID across all Tectons in the map.
+     *
+     * @param id The ID of the Insect to find
+     * @return The Insect object if found, null otherwise
+     */
+    private static Insect findInsectById(String id) {
+        if (id == null || id.isEmpty()) {
+            return null;
+        }
+
+        for (Tecton tecton : map.getTectons()) {
+            for (Insect insect : tecton.getInsects()) {
+                if (insect.getId().equals(id)) {
+                    return insect;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Finds a Mushroom by its ID across all Tectons in the map.
+     *
+     * @param id The ID of the Mushroom to find
+     * @return The Mushroom object if found, null otherwise
+     */
+    private static Mushroom findMushroomById(String id) {
+        if (id == null || id.isEmpty()) {
+            return null;
+        }
+
+        for (Tecton tecton : map.getTectons()) {
+            Mushroom mushroom = tecton.getMushroom();
+            if (mushroom != null && mushroom.getId().equals(id)) {
+                return mushroom;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Finds an Entomologist by their name from the game's player list.
+     *
+     * @param name The name of the Entomologist to find
+     * @return The Entomologist object if found, null otherwise
+     */
+    private static Entomologist findEntomologistByName(String name) {
+        if (name == null || name.isEmpty()) {
+            return null;
+        }
+
+        for (Player player : game.getPlayers()) {
+            if (player instanceof Entomologist && player.getName().equals(name)) {
+                return (Entomologist) player;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Finds the Entomologist who controls a specific insect.
+     *
+     * @param insect The Insect to find the controller for
+     * @return The Entomologist object if found, null otherwise
+     */
+    private static Entomologist findEntomologistByInsect(Insect insect) {
+        if (insect == null) {
+            return null;
+        }
+
+        for (Player player : game.getPlayers()) {
+            if (player instanceof Entomologist) {
+                Entomologist entomologist = (Entomologist) player;
+                if (entomologist.getInsect() == insect) {
+                    return entomologist;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Finds the Tecton that contains a specific Insect.
+     *
+     * @param insect The Insect to find the Tecton for
+     * @return The Tecton object if found, null otherwise
+     */
+    private static Tecton findTectonByInsect(Insect insect) {
+        if (insect == null) {
+            return null;
+        }
+
+        for (Tecton tecton : map.getTectons()) {
+            if (tecton.getInsects().contains(insect)) {
+                return tecton;
+            }
+        }
+
+        return null;
     }
 
 
@@ -73,11 +240,296 @@ public class CmdParser {
         }
     }
 
+    /**
+     * Executes the gombász yarn growing action.
+     * Command syntax: action_grow_yarn <from_tecton_ID> <target_tecton_ID> <yarn_ID>
+     *
+     * Leírás: A gombász gombafonal növesztés akciót hajt végre a körben a megadott tectonra.
+     *
+     * @param args Command arguments: from_tecton_ID, target_tecton_ID, yarn_ID
+     */
+    private static void action_grow_yarn(String[] args) {
+        // Ensure exactly 3 arguments are provided.
+        if (handleArgCount(args, 3)) {
+            return;
+        }
+
+        String fromTectonId = args[0];
+        String targetTectonId = args[1];
+        String yarnId = args[2];
+
+        // Find the "from" tecton.
+        Tecton fromTecton = findTectonById(fromTectonId);
+        if (fromTecton == null) {
+            System.out.println("Hiba: Nem található forrás tecton azonosítóval: " + fromTectonId);
+            return;
+        }
+
+        // Find the yarn globally.
+        Yarn yarn = findYarnById(yarnId);
+        if (yarn == null) {
+            System.out.println("Hiba: Nem található gombafonal azonosítóval: " + yarnId);
+            return;
+        }
+
+        // Ensure that the yarn is located on the specified "from" tecton.
+        Tecton yarnTecton = findTectonByYarn(yarn);
+        if (yarnTecton == null || !yarnTecton.getId().equals(fromTectonId)) {
+            System.out.println("Hiba: A gombafonal (" + yarnId + ") nem található a megadott forrás tectonban (" + fromTectonId + ").");
+            return;
+        }
+
+        // Find the target tecton.
+        Tecton targetTecton = findTectonById(targetTectonId);
+        if (targetTecton == null) {
+            System.out.println("Hiba: Nem található cél tecton azonosítóval: " + targetTectonId);
+            return;
+        }
+
+        // Find the mushroom picker (actor) among the players.
+        MushroomPicker mushroomPicker = findMushroomPickerById(mushroomPickerId);
+        if (mushroomPicker == null) {
+            System.out.println("Hiba: Nem található gombász játékos!");
+            return;
+        }
+
+        // Execute the yarn growing action.
+        mushroomPicker.actionGrowYarn(fromTecton, targetTecton, yarn);
+    }
+
+    private static void action_grow_mushroom(String[] args) {
+        //senki nem hasznalja
+    }
+
+    /**
+     * Executes the rovarász fonalvágás (yarn cutting) action for the entomologist controlling the specified insect.
+     * Command syntax: action_cut_yarn <insect_ID> <yarn_ID> <target_tecton_ID>
+     *
+     * Leírás: A rovarász végrehajtja a fonalvágás akciót a körben a megadott rovarral a megadott gombafonálon.
+     *
+     * @param args Command arguments: insect_ID, yarn_ID, target_tecton_ID
+     */
+    private static void action_cut_yarn(String[] args) {
+        // Ensure exactly 3 arguments are passed: insect_ID, yarn_ID, target_tecton_ID
+        if (handleArgCount(args, 3)) {
+            return;
+        }
+
+        String insectId = args[0];
+        String yarnId = args[1];
+        String tectonId = args[2];
+
+        // Look up the insect by its ID.
+        Insect targetInsect = findInsectById(insectId);
+        if (targetInsect == null) {
+            System.out.println("Hiba: Nem található rovar azonosítóval: " + insectId);
+            return;
+        }
+
+        // Globally search for the yarn using its ID.
+        Yarn targetYarn = findYarnById(yarnId);
+        if (targetYarn == null) {
+            System.out.println("Hiba: Nem található gombafonal azonosítóval: " + yarnId);
+            return;
+        }
+
+        // Verify that the yarn is located on the tecton with the given target_tecton_ID.
+        Tecton yarnTecton = findTectonByYarn(targetYarn);
+        if (yarnTecton == null || !yarnTecton.getId().equals(tectonId)) {
+            System.out.println("Hiba: A gombafonal (" + yarnId + ") nincs a megadott tectonban (" + tectonId + ").");
+            return;
+        }
+
+        // Find the entomologist controlling the insect.
+        Entomologist entomologist = findEntomologistByInsect(targetInsect);
+        if (entomologist == null) {
+            System.out.println("Hiba: Nem található rovarászt a rovarral azonosítóval: " + insectId);
+            return;
+        }
+
+        // Execute the yarn cutting action.
+        entomologist.actionCutYarn(targetYarn);
+    }
+
+
+
+    /**
+     * Finds the Tecton that contains the specified Yarn.
+     *
+     * @param yarn The Yarn whose parent tecton is to be determined.
+     * @return The Tecton that contains the Yarn, or null if not found.
+     */
+    private static Tecton findTectonByYarn(Yarn yarn) {
+        if (yarn == null) {
+            return null;
+        }
+        for (Tecton tecton : map.getTectons()) {
+            if (tecton.getYarns().contains(yarn)) {
+                return tecton;
+            }
+        }
+        return null;
+    }
+
+
+    /**
+     * Executes the eat spore action for an insect with the specified ID on a target spore.
+     * This command makes the insect eat a spore to gain nutrition points.
+     *
+     * @param args Command arguments, where args[0] is the insect ID and args[1] is the spore ID
+     */
+    private static void action_eat_spore(String[] args) {
+        // Check if we have exactly two arguments (insect ID and spore ID)
+        if (handleArgCount(args, 2)) {
+            return;
+        }
+
+        String insectId = args[0];
+        String sporeId = args[1];
+
+        // Find the insect with the specified ID
+        Insect targetInsect = findInsectById(insectId);
+        if (targetInsect == null) {
+            System.out.println("Error: Insect with ID " + insectId + " not found.");
+            return;
+        }
+
+        // Find the tecton containing the insect
+        Tecton insectTecton = findTectonByInsect(targetInsect);
+        if (insectTecton == null) {
+            System.out.println("Error: Tecton containing insect with ID " + insectId + " not found.");
+            return;
+        }
+
+        // Find the spore with the specified ID on the same Tecton as the insect
+        Spore targetSpore = null;
+        for (Spore spore : insectTecton.getSpores()) {
+            if (spore.getId().equals(sporeId)) {
+                targetSpore = spore;
+                break;
+            }
+        }
+
+        if (targetSpore == null) {
+            System.out.println("Error: Spore with ID " + sporeId + " not found on the same Tecton as the insect.");
+            return;
+        }
+
+        // Find the entomologist who controls this insect
+        Entomologist entomologist = findEntomologistByInsect(targetInsect);
+        if (entomologist == null) {
+            System.out.println("Error: No entomologist controls this insect.");
+            return;
+        }
+
+        // Execute the eat spore action
+        entomologist.actionEatSpore(targetSpore);
+    }
+
+    /**
+     * Executes the move action for an insect with the specified ID to a target Tecton.
+     * This command makes the insect move to another Tecton.
+     *
+     * @param args Command arguments, where args[0] is the insect ID and args[1] is the target Tecton ID
+     */
+    private static void action_move(String[] args) {
+        // Check if we have exactly two arguments (insect ID and target Tecton ID)
+        if (handleArgCount(args, 2)) {
+            return;
+        }
+
+        String insectId = args[0];
+        String targetTectonId = args[1];
+
+        // Find the insect with the specified ID
+        Insect targetInsect = findInsectById(insectId);
+        if (targetInsect == null) {
+            System.out.println("Error: Insect with ID " + insectId + " not found.");
+            return;
+        }
+
+        // Find the target Tecton with the specified ID
+        Tecton targetTecton = findTectonById(targetTectonId);
+        if (targetTecton == null) {
+            System.out.println("Error: Tecton with ID " + targetTectonId + " not found.");
+            return;
+        }
+
+        // Find the entomologist who controls this insect
+        Entomologist entomologist = findEntomologistByInsect(targetInsect);
+        if (entomologist == null) {
+            System.out.println("Error: No entomologist controls this insect.");
+            return;
+        }
+
+        // Execute the move action
+        entomologist.actionMove(targetTecton, targetInsect);
+    }
+
+    /**
+     * Executes the wait action for an insect with the specified ID.
+     * This command makes the insect do nothing for the current turn.
+     *
+     * @param args Command arguments, where args[0] is the ID of the insect
+     */
+    private static void action_wait(String[] args) {
+        // Check if we have exactly one argument (the insect ID)
+        if (handleArgCount(args, 1)) {
+            return;
+        }
+
+        String insectId = args[0];
+
+        // Find the insect with the specified ID
+        Insect targetInsect = findInsectById(insectId);
+        if (targetInsect == null) {
+            System.out.println("Error: Insect with ID " + insectId + " not found.");
+            return;
+        }
+
+        // Find the entomologist who controls this insect
+        Entomologist entomologist = findEntomologistByInsect(targetInsect);
+        if (entomologist == null) {
+            System.out.println("Error: No entomologist controls this insect.");
+            return;
+        }
+
+        // Execute the wait action
+        entomologist.actionWait(targetInsect);
+    }
+
+    private static void start_game(String[] args) {
+        //senki nem használja
+    }
+
+    /**
+     * Splits a Tecton into two separate Tectons.
+     * This method finds the target Tecton by ID and uses the Map's splitting method.
+     *
+     * @param args Command arguments, where args[0] is the ID of the Tecton to split
+     */
+    private static void split_tecton(String[] args) {
+        // Check if we have exactly one argument (the Tecton ID)
+        if (handleArgCount(args, 1)) {
+            return;
+        }
+
+        String targetId = args[0];
+
+        // Find the Tecton with the specified ID
+        Tecton targetTecton = findTectonById(targetId);
+        if (targetTecton == null) {
+            System.out.println("Error: Tecton with ID " + targetId + " not found.");
+            return;
+        }
+
+        // Split the Tecton using the existing splitting method
+        map.splitting(targetTecton);
+    }
 
 
     /**
      * Létrehoz egy megadott típusú spórát a megadott gombatestben.
-     *
      * @param args A parancs argumentumai (mushroom_id, spore_type)
      */
     private static void grow_spore(String[] args) {
@@ -90,15 +542,8 @@ public class CmdParser {
         String mushroomId = args[1];
         String sporeType = args[2].toLowerCase();
 
-        // Keressük meg a megadott ID-jű gombát a térképen
-        Mushroom targetMushroom = null;
-        for (Tecton tecton : map.getTectons()) {
-            Mushroom mushroom = tecton.getMushroom();
-            if (mushroom != null && mushroom.getId().equals(mushroomId)) {
-                targetMushroom = mushroom;
-                break;
-            }
-        }
+        // Használjuk a findMushroomById metódust a gomba megkereséséhez
+        Mushroom targetMushroom = findMushroomById(mushroomId);
 
         if (targetMushroom == null) {
             System.out.println("Nem található gomba a megadott azonosítóval: " + mushroomId);
@@ -113,29 +558,23 @@ public class CmdParser {
 
         // Létrehozzuk a megfelelő típusú spórát
         Spore newSpore = null;
-
         switch (sporeType) {
             case "accelerator":
                 newSpore = new AcceleratorSpore();
                 break;
-
             case "paralyzing":
                 newSpore = new ParalyzingSpore();
                 break;
-
             case "decelerator":
                 newSpore = new DeceleratorSpore();
                 break;
-
             case "insectduplicating":
                 // Ezt az esetet külön kellene implementálni, ha szükséges
                 System.out.println("Az InsectDuplicating spóra még nincs implementálva.");
                 return;
-
             case "cutpreventing":
                 newSpore = new CutPreventingSpore();
                 break;
-
             default:
                 System.out.println("Ismeretlen spóra típus: " + sporeType);
                 System.out.println("Támogatott típusok: accelerator, paralyzing, decelerator, insectDuplicating, cutPreventing");
@@ -144,7 +583,6 @@ public class CmdParser {
 
         // Hozzáadjuk a spórát a gombához
         targetMushroom.growSpore(newSpore);
-
     }
 
     private static void add_yarn(String[] args) {
@@ -153,7 +591,6 @@ public class CmdParser {
 
     /**
      * A megadott típusú spóra hatást rárakja a megadott rovarra.
-     *
      * @param args A parancs argumentumai (spore_type, insect_ID)
      */
     private static void add_effect_to_insect(String[] args) {
@@ -166,17 +603,8 @@ public class CmdParser {
         String sporeType = args[1].toLowerCase();
         String insectId = args[2];
 
-        // Keressük meg a megadott ID-jű rovart a térképen
-        Insect targetInsect = null;
-        for (Tecton tecton : map.getTectons()) {
-            for (Insect insect : tecton.getInsects()) {
-                if (insect.getId() != null && insect.getId().equals(insectId)) {
-                    targetInsect = insect;
-                    break;
-                }
-            }
-            if (targetInsect != null) break;
-        }
+        // Használjuk a findInsectById metódust a rovar megkereséséhez
+        Insect targetInsect = findInsectById(insectId);
 
         if (targetInsect == null) {
             System.out.println("Nem található rovar a megadott azonosítóval: " + insectId);
@@ -188,24 +616,19 @@ public class CmdParser {
             case "accelerator":
                 targetInsect.setAccelerated(true);
                 break;
-
             case "paralyzing":
                 targetInsect.setParalized(true);
                 break;
-
             case "decelerator":
                 targetInsect.setDecelerated(true);
                 break;
-
             case "insectduplicating":
                 // Ezt az esetet külön kellene implementálni, mivel nincs hozzá beépített metódus az Insect osztályban
                 System.out.println("A rovar duplikálása még nincs implementálva.");
                 break;
-
             case "cutpreventing":
                 targetInsect.setCutPrevented(true);
                 break;
-
             default:
                 System.out.println("Ismeretlen spóra típus: " + sporeType);
                 System.out.println("Támogatott típusok: accelerator, paralyzing, decelerator, insectDuplicating, cutPreventing");
@@ -215,7 +638,6 @@ public class CmdParser {
 
     /**
      * Hozzáadja a megadott gombatestet a megadott tektonhoz.
-     *
      * @param args A parancs argumentumai (targetTecton_ID, mushroom_ID)
      */
     private static void add_mushroom_to_tecton(String[] args) {
@@ -228,14 +650,8 @@ public class CmdParser {
         String tectonId = args[1];
         String mushroomId = args[2];
 
-        // Keressük meg a megadott ID-jű tectont a térképen
-        Tecton targetTecton = null;
-        for (Tecton tecton : map.getTectons()) {
-            if (tecton.getId().equals(tectonId)) {
-                targetTecton = tecton;
-                break;
-            }
-        }
+        // Használjuk a findTectonById metódust a tecton megkereséséhez
+        Tecton targetTecton = findTectonById(tectonId);
 
         if (targetTecton == null) {
             System.out.println("Nem található tecton a megadott azonosítóval: " + tectonId);
@@ -257,10 +673,6 @@ public class CmdParser {
         // Új gomba létrehozása a megadott ID-vel és hozzáadása a tectonhoz
         Mushroom newMushroom = new Mushroom(targetTecton, mushroomId);
 
-        // Feltételezzük, hogy a Mushroom konstruktor már beállítja az ID-t vagy van egy setId metódus
-        // Ha nincs ilyen metódus, akkor a megfelelő implementációt kell létrehozni a Mushroom osztályban
-        // newMushroom.setId(mushroomId);
-
         // Hozzáadjuk a gombát a tectonhoz
         targetTecton.addMushroom(newMushroom);
     }
@@ -272,7 +684,6 @@ public class CmdParser {
 
     /**
      * Kölcsönösen hozzáadja a megadott két tectont egymásnak szomszédként.
-     *
      * @param args A parancs argumentumai (tecton_id, neighbour_tecton_id)
      */
     private static void add_neighbour_to_tecton(String[] args) {
@@ -291,28 +702,16 @@ public class CmdParser {
             return;
         }
 
-        // Keressük meg a megadott ID-jű tectonokat a térképen
-        Tecton tecton = null;
-        Tecton neighbourTecton = null;
-
-        for (Tecton t : map.getTectons()) {
-            if (t.getId().equals(tectonId)) {
-                tecton = t;
-            }
-            if (t.getId().equals(neighbourTectonId)) {
-                neighbourTecton = t;
-            }
-            // Ha mindkét tectont megtaláltuk, kilépünk a ciklusból
-            if (tecton != null && neighbourTecton != null) {
-                break;
-            }
-        }
+        // Használjuk a findTectonById metódust a tectonok megkereséséhez
+        Tecton tecton = findTectonById(tectonId);
+        Tecton neighbourTecton = findTectonById(neighbourTectonId);
 
         // Ellenőrizzük, hogy mindkét tecton létezik-e
         if (tecton == null) {
             System.out.println("Nem található tecton a megadott azonosítóval: " + tectonId);
             return;
         }
+
         if (neighbourTecton == null) {
             System.out.println("Nem található tecton a megadott azonosítóval: " + neighbourTectonId);
             return;
@@ -326,13 +725,10 @@ public class CmdParser {
 
         // Hozzáadjuk őket egymáshoz szomszédként
         tecton.addNeighbour(neighbourTecton);
-
     }
 
-    
     /**
      * Létrehoz egy rovart a megadott rovarászhoz és lerakja a megadott tektonra.
-     *
      * @param args A parancs argumentumai (entomologist_NAME, tecton_id, test_name_id)
      */
     private static void create_insect(String[] args) {
@@ -346,32 +742,21 @@ public class CmdParser {
         String tectonId = args[2];
         String nameId = args[3];
 
-        // Keressük meg a megadott ID-jű tectont a térképen
-        Tecton targetTecton = null;
-        for (Tecton tecton : map.getTectons()) {
-            if (tecton.getId().equals(tectonId)) {
-                targetTecton = tecton;
-                break;
-            }
-        }
+        // Használjuk a findTectonById metódust a tecton megkereséséhez
+        Tecton targetTecton = findTectonById(tectonId);
 
         if (targetTecton == null) {
             System.out.println("Nem található tecton a megadott azonosítóval: " + tectonId);
             return;
         }
 
-        // Keressük meg vagy hozzuk létre a megadott nevű rovarászt
-        Entomologist entomologist = null;
-        for (Player player : game.getPlayers()) {
-            if (player instanceof Entomologist && player.getName().equals(entomologistName)) {
-                entomologist = (Entomologist) player;
-                break;
-            }
-        }
+        // Használjuk a findEntomologistByName metódust a rovarász megkereséséhez
+        Entomologist entomologist = findEntomologistByName(entomologistName);
 
         if (entomologist == null) {
             return;
         }
+
         List<Player> players = game.getPlayers();
         players.add(entomologist);
         game.setPlayers(players);
@@ -384,15 +769,13 @@ public class CmdParser {
 
         // Hozzáadjuk a rovart a tectonhoz
         targetTecton.addInsect(newInsect);
-
     }
 
-    /**
-     * Létrehoz egy spórát a megadott tectonon.
-     * Spóra típusok: paralyzing, decelerator, cutpreventing
-     *
-     * @param args A parancs argumentumai (tecton_id, spore_type)
-     */
+    //**
+ /* Létrehoz egy spórát a megadott tectonon.
+            * Spóra típusok: paralyzing, decelerator, cutpreventing
+ * @param args A parancs argumentumai (tecton_id, spore_type)
+ */
     private static void create_spore_on_tecton(String[] args) {
         // Ellenőrizzük, hogy pontosan 3 argumentum van-e (beleértve a parancs nevét)
         if (handleArgCount(args, 3)) {
@@ -403,14 +786,8 @@ public class CmdParser {
         String tectonId = args[1];
         String sporeType = args[2].toLowerCase();
 
-        // Keressük meg a megadott ID-jű tectont a térképen
-        Tecton targetTecton = null;
-        for (Tecton tecton : map.getTectons()) {
-            if (String.valueOf(tecton.getId()).equals(tectonId)) {
-                targetTecton = tecton;
-                break;
-            }
-        }
+        // Használjuk a findTectonById metódust a tecton megkereséséhez
+        Tecton targetTecton = findTectonById(tectonId);
 
         if (targetTecton == null) {
             System.out.println("Nem található tecton a megadott azonosítóval: " + tectonId);
@@ -424,15 +801,12 @@ public class CmdParser {
             case "paralyzing":
                 newSpore = new ParalyzingSpore();
                 break;
-
             case "decelerator":
                 newSpore = new DeceleratorSpore();
                 break;
-
             case "cutpreventing":
                 newSpore = new CutPreventingSpore();
                 break;
-
             default:
                 System.out.println("Ismeretlen spóra típus: " + sporeType);
                 System.out.println("Támogatott típusok: paralyzing, decelerator, cutpreventing");
@@ -441,13 +815,11 @@ public class CmdParser {
 
         // Hozzáadjuk a spórát a tectonhoz
         targetTecton.addSpore(newSpore);
-
     }
 
     /**
      * Létrehoz egy megadott típusú gombafonalat és hozzákapcsolja a megadott gombához.
      * Opciók: normal, killer (killer nincs még implementálva)
-     *
      * @param args A parancs argumentumai (mushroom_id, yarn_type, test_name_id)
      */
     private static void create_yarn(String[] args) {
@@ -461,17 +833,8 @@ public class CmdParser {
         String yarnType = args[2].toLowerCase();
         String nameId = args[3];
 
-        // Meg kell találnunk a mushroom_id alapján a gombát
-        Mushroom targetMushroom = null;
-
-        // Végig kell járnunk a tectonokat, és keresni a megfelelő ID-jű gombát
-        for (Tecton tecton : map.getTectons()) {
-            Mushroom mushroom = tecton.getMushroom();
-            if (mushroom != null && mushroom.getId().equals(mushroomId)) {
-                targetMushroom = mushroom;
-                break;
-            }
-        }
+        // Használjuk a findMushroomById metódust a gomba megkereséséhez
+        Mushroom targetMushroom = findMushroomById(mushroomId);
 
         if (targetMushroom == null) {
             System.out.println("Nem található gomba a megadott azonosítóval: " + mushroomId);
@@ -479,17 +842,14 @@ public class CmdParser {
         }
 
         Yarn newYarn = null;
-
         switch (yarnType) {
             case "normal":
                 newYarn = new Yarn(targetMushroom);
                 break;
-
             case "killer":
                 // KillerYarn subclass implementation would be needed
                 // newYarn = new KillerYarn(targetMushroom);
                 return;
-
             default:
                 System.out.println("Ismeretlen gombafonal típus: " + yarnType);
                 System.out.println("Támogatott típusok: normal, killer");
@@ -498,13 +858,10 @@ public class CmdParser {
 
         // A 'Yarn(Mushroom mushroom)' konstruktor már hozzáadja a Yarn-t a mushroom Tectonjához
         // és beállítja a gombafonalat a gombához is
-
     }
-
     /**
      * Létrehoz egy tektont a megadott típusból és hozzáadja a térképhez.
      * Opciók: normal, keepAlive, yarnAbsorbant, multiplePlayer, mushroomPrevent
-     *
      * @param args A parancs argumentumai (tecton_type, test_name_id)
      */
     private static void create_tecton(String[] args) {
@@ -517,38 +874,30 @@ public class CmdParser {
         String tectonType = args[1].toLowerCase();
         String nameId = args[2];
 
-
-
         // Default values
         int yarnLimit = 5; // Alapértelmezett érték
         boolean mushroomPrevent = false;
 
         Tecton newTecton = null;
-
         switch (tectonType) {
             case "normal":
                 newTecton = new Tecton(nameId, yarnLimit, mushroomPrevent);
                 break;
-
             case "keepalive":
                 // KeepAliveTecton subclass implementation would be needed
                 // newTecton = new KeepAliveTecton(id, yarnLimit, mushroomPrevent);
                 return;
-
             case "yarnabsorbant":
                 newTecton = new YarnAbsorbantTecton(nameId, yarnLimit, mushroomPrevent);
                 break;
-
             case "multipleplayer":
                 // MultiplePlayerTecton subclass implementation would be needed
                 // newTecton = new MultiplePlayerTecton(id, yarnLimit, mushroomPrevent);
                 System.out.println("MultiplePlayer Tecton létrehozása még nem implementált.");
                 return;
-
             case "mushroomprevent":
                 newTecton = new Tecton(nameId, yarnLimit, true); // mushroomPrevent = true
                 break;
-
             default:
                 System.out.println("Ismeretlen Tecton típus: " + tectonType);
                 System.out.println("Támogatott típusok: normal, keepAlive, yarnAbsorbant, multiplePlayer, mushroomPrevent");
@@ -557,8 +906,7 @@ public class CmdParser {
 
         // Hozzáadjuk a létrehozott Tecton-t a térképhez
         map.addTecton(newTecton);
-
-        System.out.println("Tecton sikeresen létrehozva és hozzáadva a térképhez. ID: " + id + ", Név: " + nameId);
+        System.out.println("Tecton sikeresen létrehozva és hozzáadva a térképhez. ID: " + nameId + ", Név: " + nameId);
     }
     /**
      * Creates a new Mushroom on a specified Tecton.
@@ -573,16 +921,8 @@ public class CmdParser {
 
         String tectonId = args[1];
 
-
-
-        // Find the tecton with the given ID
-        Tecton targetTecton = null;
-        for (Tecton tecton : map.getTectons()) {
-            if (tecton.getId().equals(tectonId)) {
-                targetTecton = tecton;
-                break;
-            }
-        }
+        // Use findTectonById method to find the tecton
+        Tecton targetTecton = findTectonById(tectonId);
 
         if (targetTecton == null) {
             System.out.println("Tecton with ID " + tectonId + " not found.");
@@ -604,7 +944,6 @@ public class CmdParser {
         // Create the mushroom on the tecton
         Mushroom mushroom = new Mushroom(targetTecton);
         targetTecton.addMushroom(mushroom);
-
         System.out.println("Mushroom created successfully on tecton with ID: " + tectonId);
     }
 
@@ -651,26 +990,11 @@ public class CmdParser {
         }
 
         String name = args[1];
-        int insectId;
+        String insectId = args[2];
 
-        try {
-            insectId = Integer.parseInt(args[2]);
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid insect ID format: " + args[2]);
-            return;
-        }
 
         // Find the insect with the given ID
-        Insect targetInsect = null;
-        for (Tecton tecton : map.getTectons()) {
-            for (Insect insect : tecton.getInsects()) {
-                if (insect.getId().equals(insectId)) {
-                    targetInsect = insect;
-                    break;
-                }
-            }
-            if (targetInsect != null) break;
-        }
+        Insect targetInsect = findInsectById(insectId);
 
         if (targetInsect == null) {
             System.out.println("Insect with ID " + insectId + " not found.");
@@ -685,6 +1009,5 @@ public class CmdParser {
         players.add(entomologist);
         game.setPlayers(players);
     }
-
 
 }

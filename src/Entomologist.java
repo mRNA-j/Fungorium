@@ -35,7 +35,7 @@ public class Entomologist extends Player{
     /**
      * Az akció várakozás, amely nem csinál semmit.
      */
-    public void actionWait() {
+    public void actionWait(Insect insect) {
         return;
     }
 
