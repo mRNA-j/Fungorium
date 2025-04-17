@@ -300,7 +300,7 @@ public class CmdParser {
             } else {
                 StringBuilder yarnString = new StringBuilder("Yarns: ");
                 for (Yarn yarn : tecton.getYarns()) {
-                    yarnString.append(yarn.getI()).append(" ");
+                    yarnString.append(yarn.getI()).append(" ");//Luca: getId???
                 }
                 System.out.println(yarnString.toString().trim());
             }
@@ -350,7 +350,7 @@ public class CmdParser {
         for (Mushroom mushroom : allMushrooms) {
             System.out.println("Mushroom: " + mushroom.getId());
             System.out.println("HasSpore: " + mushroom.getHasSpore());
-            System.out.println("Place: " + mushroom.getPlace().getName()); //TODO implement getPlace() getTecton?
+            System.out.println("Place: " + mushroom.getTecton().getName()); //TODO implement getPlace() getTecton-ra átírtam - Luca
             System.out.println("Owner: " + mushroom.getOwner().getName()); // TODO implement getOwner()
             System.out.println();
         }
@@ -700,7 +700,8 @@ public class CmdParser {
         }
 
         // Execute the yarn growing action.
-        mushroomPicker.actionGrowYarn(fromTecton, targetTecton, yarn);
+        // mushroomPicker.actionGrowYarn(targetTecton, yarn);//Luca: sztem így
+        mushroomPicker.actionGrowYarn(fromTecton, targetTecton, yarn); //Luca: itt nekünk csak a céltekton kell bemenetnek sztem
     }
 
     private static void action_grow_mushroom(String[] args) {
@@ -754,7 +755,7 @@ public class CmdParser {
         }
 
         // Execute the yarn cutting action.
-        entomologist.actionCutYarn(targetYarn);
+        entomologist.actionCutYarn(targetYarn, targetInsect); //Luca: kell az insect második bemenetnek
     }
 
 
@@ -829,7 +830,7 @@ public class CmdParser {
         }
 
         // Execute the eat spore action
-        entomologist.actionEatSpore(targetSpore);
+        entomologist.actionEatSpore(targetSpore, targetInsect); //Luca: kell az insect bemenetnek
     }
 
     /**
@@ -1287,14 +1288,14 @@ public class CmdParser {
         Tecton newTecton = null;
         switch (tectonType) {
             case "normal":
-                newTecton = new Tecton(nameId, yarnLimit, mushroomPrevent);
+                newTecton = new Tecton(nameId, yarnLimit, mushroomPrevent, false);
                 break;
             case "keepalive":
                 // KeepAliveTecton subclass implementation would be needed
-                // newTecton = new KeepAliveTecton(id, yarnLimit, mushroomPrevent);
+                //newTecton = new Tecton(nameId, yarnLimit, mushroomPrevent, true);//Luca sztem így kell
                 return;
             case "yarnabsorbant":
-                newTecton = new YarnAbsorbantTecton(nameId, yarnLimit, mushroomPrevent);
+                newTecton = new YarnAbsorbantTecton(nameId, yarnLimit, mushroomPrevent, false);
                 break;
             case "multipleplayer":
                 // MultiplePlayerTecton subclass implementation would be needed
@@ -1302,7 +1303,7 @@ public class CmdParser {
                 System.out.println("MultiplePlayer Tecton létrehozása még nem implementált.");
                 return;
             case "mushroomprevent":
-                newTecton = new Tecton(nameId, yarnLimit, true); // mushroomPrevent = true
+                newTecton = new Tecton(nameId, yarnLimit, true, false); // mushroomPrevent = true
                 break;
             default:
                 System.out.println("Ismeretlen Tecton típus: " + tectonType);

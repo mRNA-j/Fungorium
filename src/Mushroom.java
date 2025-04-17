@@ -25,6 +25,17 @@ public class Mushroom {
         currentSpore = null;
     }
 
+    public Mushroom(Tecton tecton, String testID) {
+        this.tecton = tecton;
+        tecton.addMushroom(this);
+        age = 0;
+        numberOfDispersions = 0;
+        newSporeGrowth = 5;
+        hasSpore = false;
+        currentSpore = null;
+        this.id = testID;
+    }
+
     /**
      * Visszaadja a gomba azonosítóját.
      * @return A gomba azonosítója.
