@@ -69,6 +69,7 @@ public class Tecton {
      */
     public void addInsect(Insect insect) {
         this.insects.add(insect);
+        insect.setCurrentPlace(this);
         System.out.println("Insect added: " + insect);
     }
 

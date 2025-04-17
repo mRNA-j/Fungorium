@@ -10,6 +10,8 @@ public class Main {
     private static Game game;
     private static MushroomPicker mp;
     private static Entomologist el;
+    private static Mushroom m;
+    private  static Insect i;
     private static List<Tecton> tectons;
     private static String playerName1 = "Doma";
     private static String playerName2 = "Barni";
@@ -23,7 +25,7 @@ public class Main {
         System.out.print("Add meg a valasztott teszt eset szamat (1-26): ");
         int chosenTestNumber = scanner.nextInt();
 
-        if(chosenTestNumber < 1 || chosenTestNumber > 27) {
+        if(chosenTestNumber < 1 || chosenTestNumber > 28) {
             System.out.println("Nincs ilyen teszteset! Kilépés!");
             return;
         }
@@ -46,8 +48,11 @@ public class Main {
         Game game = new Game();
         game.start();
 
-        mp = new MushroomPicker(playerName1, new Mushroom(game.getPlayField().getTectons().get(0)));
-        el = new Entomologist(playerName2, new Insect(game.getPlayField().getTectons().get(1)));
+        m = new Mushroom(game.getPlayField().getTectons().get(0));
+        i = new Insect(game.getPlayField().getTectons().get(1));
+
+        mp = new MushroomPicker(playerName1, m);
+        el = new Entomologist(playerName2, i);
 
         List<Player> pl = new ArrayList<>();
         pl.add(mp);
@@ -64,19 +69,19 @@ public class Main {
 
         System.out.println("Rovarasz:");
         System.out.println("\t Pont: " + el.getPoints());
-        if (!el.getInsect().getAccelerated() && !el.getInsect().getParalized() && !el.getInsect().getDecelerated() && !el.getInsect().getCutPrevented()) {
+        if (!el.getInsect().get(0).getAccelerated() && !el.getInsect().get(0).getParalized() && !el.getInsect().get(0).getDecelerated() && !el.getInsect().get(0).getCutPrevented()) {
             System.out.println("\t Rovaron levo sporahatas: nincs rajta hatas");
         }
-        if(el.getInsect().getAccelerated()) {
+        if(el.getInsect().get(0).getAccelerated()) {
             System.out.println("\t Rovaron levo sporahatas: gyorsito");
         }
-        if(el.getInsect().getParalized()) {
+        if(el.getInsect().get(0).getParalized()) {
             System.out.println("\t Rovaron levo sporahatas: benito");
         }
-        if(el.getInsect().getDecelerated()) {
+        if(el.getInsect().get(0).getDecelerated()) {
             System.out.println("\t Rovaron levo sporahatas: lassito");
         }
-        if(el.getInsect().getCutPrevented()) {
+        if(el.getInsect().get(0).getCutPrevented()) {
             System.out.println("\t Rovaron levo sporahatas: vagasgatlo");
         }
 
@@ -421,7 +426,7 @@ public class Main {
         printState();
 
         System.out.println("+++++++++++++++++++++++\nTest18 elkezdodott.\n+++++++++++++++++++++++\n");
-        el.actionCutYarn(y);
+        el.actionCutYarn(y, i);
         game.getPlayField().noConnection();
 
         System.out.println(vegString);
@@ -433,7 +438,7 @@ public class Main {
      */
     public static void test19() {
         game = initTest();
-        el.getInsect().setCutPrevented(true);
+        el.getInsect().get(0).setCutPrevented(true);
 
         Yarn y = new Yarn(mp.getOwnedMushrooms().get(0));
 
@@ -444,7 +449,7 @@ public class Main {
         printState();
 
         System.out.println("+++++++++++++++++++++++\nTest19 elkezdodott.\n+++++++++++++++++++++++\n");
-        el.actionCutYarn(y);
+        el.actionCutYarn(y,i);
 
         System.out.println(vegString);
         printState();
@@ -463,7 +468,7 @@ public class Main {
         printState();
 
         System.out.println("+++++++++++++++++++++++\nTest20 elkezdodott.\n+++++++++++++++++++++++\n");
-        el.actionEatSpore(spore);
+        el.actionEatSpore(spore,i);
 
         System.out.println(vegString);
         printState();
@@ -477,13 +482,13 @@ public class Main {
 
         Spore spore = new AcceleratorSpore();
         tectons.get(1).addSpore(spore);
-        el.getInsect().setParalized(true);
+        el.getInsect().get(0).setParalized(true);
 
         System.out.println(kezdoString);
         printState();
 
         System.out.println("+++++++++++++++++++++++\nTest21 elkezdodott.\n+++++++++++++++++++++++\n");
-        el.actionEatSpore(spore);
+        el.actionEatSpore(spore,i);
 
         System.out.println(vegString);
         printState();
@@ -506,8 +511,8 @@ public class Main {
         printState();
 
         System.out.println("+++++++++++++++++++++++\nTest22 elkezdodott.\n+++++++++++++++++++++++\n");
-        el.actionMove(tectons.get(2));
-        el.actionMove(tectons.get(3));
+        el.actionMove(tectons.get(2),i);
+        el.actionMove(tectons.get(3),i);
 
         System.out.println(vegString);
         printState();
@@ -519,7 +524,7 @@ public class Main {
     public static void test23() {
         game = initTest();
 
-        el.getInsect().setParalized(true);
+        el.getInsect().get(0).setParalized(true);
 
         Yarn yarn= new Yarn(mp.getOwnedMushrooms().get(0));
         mp.actionGrowYarn(tectons.get(1),yarn);
@@ -529,7 +534,7 @@ public class Main {
         printState();
 
         System.out.println("+++++++++++++++++++++++\nTest23 elkezdodott.\n+++++++++++++++++++++++\n");
-        el.actionMove(tectons.get(2));
+        el.actionMove(tectons.get(2),i);
 
         System.out.println(vegString);
         printState();
@@ -549,7 +554,7 @@ public class Main {
         printState();
 
         System.out.println("+++++++++++++++++++++++\nTest24 elkezdodott.\n+++++++++++++++++++++++\n");
-        el.actionMove(tectons.get(2));
+        el.actionMove(tectons.get(2),i);
 
         System.out.println(vegString);
         printState();
@@ -566,7 +571,7 @@ public class Main {
         System.out.println(kezdoString);
 
         System.out.println("+++++++++++++++++++++++\nTest25 elkezdodott.\n+++++++++++++++++++++++\n");
-        el.actionMove(tectons.get(2));
+        el.actionMove(tectons.get(2),i);
 
         System.out.println(vegString);
         printState();
@@ -578,7 +583,7 @@ public class Main {
     public static void test26() {
         game = initTest();
 
-        el.getInsect().setDecelerated(true);
+        el.getInsect().get(0).setDecelerated(true);
 
         Yarn yarn= new Yarn(mp.getOwnedMushrooms().get(0));
         mp.actionGrowYarn(tectons.get(1),yarn);
@@ -588,10 +593,26 @@ public class Main {
         printState();
 
         System.out.println("+++++++++++++++++++++++\nTest26 elkezdodott.\n+++++++++++++++++++++++\n");
-        el.actionMove(tectons.get(2));
+        el.actionMove(tectons.get(2),i);
 
         System.out.println(vegString);
         printState();
     }
 
+    public static void test27() {
+        game = initTest();
+
+        Yarn yarn=new KillerYarn(mp.getOwnedMushrooms().get(0));
+        mp.actionGrowYarn(tectons.get(1),yarn);
+        game.getPlayField().getTectons().get(1).addInsect(i);
+        i.setParalized(true);
+
+        System.out.println(kezdoString);
+        printState();
+        System.out.println("+++++++++++++++++++++++\nTest12 elkezdodott.\n+++++++++++++++++++++++\n");
+
+        game.nextTurn();
+        System.out.println(vegString);
+        printState();
+    }
 }

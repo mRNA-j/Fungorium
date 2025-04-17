@@ -1,24 +1,29 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /** A Yarn class a gombafonal reprezentációja. */
 public class Yarn {
 
-    private List<Tecton> tectons;
-    private Mushroom mushroom;
-    private MushroomPicker player;
+    protected List<Tecton> tectons;
+    protected Mushroom mushroom;
+    protected MushroomPicker player;
+    private String id;
+
+    public String getId() {
+        return id;
+    }
 
     public MushroomPicker getPlayer() {
         return player;
     }
-
-
 
     /**
      * A Yarn class konstruktora.
      */
     public Yarn() {
         this.tectons = new ArrayList<>();
+        id = "" + new Random().nextInt();
     }
 
     /**
@@ -26,6 +31,7 @@ public class Yarn {
      */
     public Yarn(List<Tecton> tectons) {
         this.tectons = tectons;
+        id = "" + new Random().nextInt();
     }
 
     /**
@@ -38,8 +44,6 @@ public class Yarn {
         tectons.get(0).growYarn(this);
         this.mushroom = mushroom;
     }
-
-
 
     /**
      * Ellenőrzi, hogy a gombafonal kapcsolódik-e gombatesthez. Implementáció: ellenőrzi, hogy a
@@ -117,8 +121,6 @@ public class Yarn {
         System.out.println("Yarn split into two.");
     }
 
-
-
     /**
      * Hozzáad egy Tectont a gombafonalhoz.
      *
@@ -166,5 +168,12 @@ public class Yarn {
      */
     public void setMushroom(Mushroom mushroom) {
         this.mushroom = mushroom;
+    }
+
+    /**
+     * Mivel az alap fonálnak nincs speciális hatása, nem történik semmi
+     */
+    public void runEffect() {
+        return;
     }
 }

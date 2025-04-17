@@ -152,6 +152,7 @@ public class Map {
         for (Tecton tecton : tectons) {
             // Példa: végigmegyünk a gombafonalakon, és futtatjuk a Tecton hatását rájuk
             for (Yarn yarn : new ArrayList<>(tecton.getYarns())) {
+                yarn.runEffect();
                 tecton.runEffect(yarn);
             }
         }
