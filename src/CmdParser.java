@@ -349,8 +349,8 @@ public class CmdParser {
         List<Mushroom> allMushrooms = getAllMushroomsInGame();
         for (Mushroom mushroom : allMushrooms) {
             System.out.println("Mushroom: " + mushroom.getId());
-            System.out.println("HasSpore: " + mushroom.hasSpore());
-            System.out.println("Place: " + mushroom.getPlace().getName()); //TODO implement getPlace()
+            System.out.println("HasSpore: " + mushroom.getHasSpore());
+            System.out.println("Place: " + mushroom.getPlace().getName()); //TODO implement getPlace() getTecton?
             System.out.println("Owner: " + mushroom.getOwner().getName()); // TODO implement getOwner()
             System.out.println();
         }

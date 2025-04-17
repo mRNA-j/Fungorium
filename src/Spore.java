@@ -71,4 +71,8 @@ public abstract class Spore {
      * @param insect Az a rovar, amelyre a spóra hatását alkalmazni kell.
      */
     public abstract void addEffect(Insect insect);
+
+    public String getId(){
+        return testID;
+    }
 }

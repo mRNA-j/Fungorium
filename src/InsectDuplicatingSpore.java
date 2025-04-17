@@ -15,6 +15,9 @@ public class InsectDuplicatingSpore extends Spore{
     public InsectDuplicatingSpore(){
         super(1, "insectDuplicating");
     }
+    public InsectDuplicatingSpore(String testID){
+        super(1, "insectDuplicating", testID);
+    }
 
     @Override
     public void addEffect(Insect insect) {

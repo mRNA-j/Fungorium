@@ -13,6 +13,9 @@ public class ParalyzingSpore extends Spore {
     public ParalyzingSpore(){
         super(4, "paralyzing");
     }
+    public ParalyzingSpore(String testID){
+        super(4, "paralyzing", testID);
+    }
     /**
      * Alkalmazza a bénító hatást a megadott rovarra.
      * A metódus beállítja a rovar bénult állapotát.

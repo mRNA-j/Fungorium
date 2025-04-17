@@ -11,6 +11,8 @@ public class Insect {
     private boolean accelerated;   // Gyorsító spóra hatása
     private boolean cutPrevented;  // Vágásgátló spóra hatása
 
+    private String testID;
+
     public  Tecton getPlace(){
         return currentPlace;
     }
@@ -44,6 +46,16 @@ public class Insect {
         paralized = false;
         accelerated = false;
         cutPrevented = false;
+
+        currentPlace = place;
+        place.addInsect(this);
+    }
+    public Insect(Tecton place, String testID){
+        decelerated = false;
+        paralized = false;
+        accelerated = false;
+        cutPrevented = false;
+        this.testID = testID;
 
         currentPlace = place;
         place.addInsect(this);
@@ -187,5 +199,9 @@ public class Insect {
             System.out.println("A választott tektonra erről a tektonról nem vezet gombafonal. A mozgás nem lehetséges.");
             return false;
         }
+    }
+
+    public String getId(){
+        return testID;
     }
 }
