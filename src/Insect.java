@@ -16,7 +16,7 @@ public class Insect {
      *
      * @param place A tecton, ahol a rovar elhelyezkedik kezdetben.
      */
-    Insect(Tecton place){
+    public Insect(Tecton place){
         decelerated = false;
         paralized = false;
         accelerated = false;

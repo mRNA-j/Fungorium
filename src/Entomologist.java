@@ -2,13 +2,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.*;
 
 /**
  * Az Entomologist osztály a játékos egyik lehetséges szereplőjét reprezentálja,
  * aki egy rovart (Insect) irányít a játék során.
  */
 public class Entomologist extends Player{
-    private Insect insect; // a rovarász játékos rovarja
+    private List<Insect> insects; // a rovarász játékos rovarja
 
     /**
      * Konstruktor az Entomologist példány létrehozásához.
@@ -18,7 +19,8 @@ public class Entomologist extends Player{
      */
     public Entomologist(String name, Insect insect){
         super(name, 0);
-        this.insect = insect;
+        insects = new ArrayList<>();
+        insects.add(insect);
     }
     public Entomologist(String name){
         super(name, 0);
@@ -28,8 +30,12 @@ public class Entomologist extends Player{
      *
      * @return A rovar (Insect) objektum.
      */
-    public Insect getInsect(){
-      return insect;
+    public List<Insect> getInsect(){
+      return insects;
+    }
+
+    public void addInsect(Insect insect){
+        insects.add(insect);
     }
 
     /**
@@ -40,16 +46,11 @@ public class Entomologist extends Player{
     }
 
     /**
-     * Az akció figyelés, amely nem csinál semmit.
-     */
-    public void actionWatch() {return;}
-
-    /**
      * Megpróbálja a rovart egy másik tectonra mozgatni.
      *
      * @param targetTecton A cél tecton, ahová a rovar mozogni próbál.
      */
-    public void actionMove(Tecton targetTecton) {
+    public void actionMove(Tecton targetTecton, Insect insect) {
         Tecton currentTecton = insect.getCurrentPlace();
         if(insect.getParalized()){
             System.out.println("A rovar bénítóspóra hatása alatt van, a mozgás nem lehetéges");
@@ -70,7 +71,7 @@ public class Entomologist extends Player{
      *
      * @param spore A megevésre szánt spóra.
      */
-    public void actionEatSpore(Spore spore) {
+    public void actionEatSpore(Spore spore, Insect insect) {
         if(insect.getParalized()){
             System.out.println("A rovar bénítóspóra hatása alatt van, az evés nem lehetéges");
             return;
@@ -84,7 +85,7 @@ public class Entomologist extends Player{
      *
      * @param yarn A vágni kívánt fonal.
      */
-    public void actionCutYarn(Yarn yarn) {
+    public void actionCutYarn(Yarn yarn, Insect insect) {
         if(insect.getParalized()){
             System.out.println("A rovar bénítóspóra hatása alatt van, a fonalvágás nem lehetéges");
             actionWait();
