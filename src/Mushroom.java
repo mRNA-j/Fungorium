@@ -84,6 +84,8 @@ public class Mushroom {
         return currentSpore;
     }
 
+
+
     /**
      * Spórát növeszt a gombában.
      * @param spore A növesztendő spóra.

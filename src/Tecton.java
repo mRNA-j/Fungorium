@@ -23,6 +23,24 @@ public class Tecton {
 
     public boolean getIsKeepAlive(){ return isKeepAlive; }
 
+    public String getType(){ // ezt valahogy szebben kéne
+        if(isKeepAlive){
+            return "Keep Alive Tecton";
+        }
+        if(mushroomPrevent){
+            return "Mushroom Preventing Tecton";
+        }
+        if(yarnAbsorption){
+            return "Yarn Absorbing Tecton";
+        }
+        if(yarnLimit>1){
+            return "Multiple Yarn Tecton";
+        }
+        else{
+            return "Single Yarn Tecton";
+        }
+    }
+
     /**
      * A Tecton class konstruktora.
      *

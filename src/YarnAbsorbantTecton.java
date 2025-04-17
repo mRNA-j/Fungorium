@@ -15,7 +15,9 @@ public class YarnAbsorbantTecton extends Tecton {
      */
     public YarnAbsorbantTecton(String id, int yarnLimit, boolean mushroomPrevent, boolean isKeepAlive) {
         super(id, yarnLimit, mushroomPrevent, isKeepAlive);
+
     }
+
 
     /**
      * Híváskor eltávolítja magáról a gombafonalat.
@@ -25,11 +27,10 @@ public class YarnAbsorbantTecton extends Tecton {
     @Override
     public void runEffect(Yarn yarn) {
         System.out.println("Running absorbant effect on yarn: " + yarn);
-        yarn.split(this);
-        yarn.getTectons().remove(this);
         removeYarn(yarn);
-
+        yarn.getTectons().remove(this);
     }
+
 
     public boolean getYarnAbsorption(){return yarnAbsorption;}
 }

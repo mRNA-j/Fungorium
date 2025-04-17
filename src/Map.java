@@ -177,22 +177,26 @@ public class Map {
     public void noConnection() {
         for (Tecton tecton : tectons) {
             List<Yarn> yarnsToRemove = new ArrayList<>();
+            List<Yarn> yarnsToKeepAlive = new ArrayList<>();
 
             for (Yarn yarn : tecton.getYarns()) {
                 // Ellenőrizzük, hogy a fonal nincs-e csatlakoztatva gombához
-                if (!yarn.isConnected()) {
-                    // Ellenőrizzük, hogy a fonal tektonjai között van-e életbentartó tekton
-                    boolean hasKeepAliveTecton = false;
-                    for (Tecton yarnTecton : yarn.getTectons()) {
-                        if (yarnTecton.getIsKeepAlive()) {
-                            hasKeepAliveTecton = true;
-                            break;
+                if (!yarnsToRemove.contains(yarn) && !yarnsToKeepAlive.contains(yarn)) {
+                    if (!yarn.isConnected()) {
+                        // Ellenőrizzük, hogy a fonal tektonjai között van-e életbentartó tekton
+                        boolean hasKeepAliveTecton = false;
+                        for (Tecton yarnTecton : yarn.getTectons()) {
+                            if (yarnTecton.getIsKeepAlive()) {
+                                hasKeepAliveTecton = true;
+                                yarnsToKeepAlive.add(yarn);
+                                break;
+                            }
                         }
-                    }
 
-                    // Csak akkor távolítjuk el a fonalat, ha nincs életbentartó tekton
-                    if (!hasKeepAliveTecton) {
-                        yarnsToRemove.add(yarn);
+                        // Csak akkor távolítjuk el a fonalat, ha nincs életbentartó tekton
+                        if (!hasKeepAliveTecton) {
+                            yarnsToRemove.add(yarn);
+                        }
                     }
                 }
             }

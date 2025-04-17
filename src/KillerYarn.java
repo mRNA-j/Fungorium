@@ -2,6 +2,7 @@ public class KillerYarn extends Yarn {
 
   public KillerYarn (Mushroom mushroom) {
     super(mushroom);
+    name = "KillerYarn";
   }
 
   @Override

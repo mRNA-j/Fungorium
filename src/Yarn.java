@@ -9,6 +9,7 @@ public class Yarn {
     protected Mushroom mushroom;
     protected MushroomPicker player;
     private String id;
+    protected String name;
 
     public String getId() {
         return id;
@@ -18,12 +19,15 @@ public class Yarn {
         return player;
     }
 
+    public String getName(){return name;}
+
     /**
      * A Yarn class konstruktora.
      */
     public Yarn() {
         this.tectons = new ArrayList<>();
         id = "" + new Random().nextInt();
+        name="normal";
     }
 
     /**

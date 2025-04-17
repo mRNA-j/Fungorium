@@ -300,7 +300,7 @@ public class CmdParser {
             } else {
                 StringBuilder yarnString = new StringBuilder("Yarns: ");
                 for (Yarn yarn : tecton.getYarns()) {
-                    yarnString.append(yarn.getI()).append(" ");//Luca: getId???
+                    yarnString.append(yarn.getId()).append(" ");//Luca: getId???
                 }
                 System.out.println(yarnString.toString().trim());
             }
@@ -334,7 +334,7 @@ public class CmdParser {
         List<Yarn> allYarns = getAllYarnsInGame();
         for (Yarn yarn : allYarns) {
             System.out.println("Yarn: " + yarn.getId());
-            System.out.println("Type: " + yarn.getName()); //TODO Implement type name
+            System.out.println("Type: " + yarn.getName()); //TODO Implement type name - technically implementáltam, gyakorlatilag spagetti- Erna
 
             // Print tectons connected by yarn
             StringBuilder tectonsInYarn = new StringBuilder("Tectons in yarn: ");
@@ -350,8 +350,8 @@ public class CmdParser {
         for (Mushroom mushroom : allMushrooms) {
             System.out.println("Mushroom: " + mushroom.getId());
             System.out.println("HasSpore: " + mushroom.getHasSpore());
-            System.out.println("Place: " + mushroom.getTecton().getName()); //TODO implement getPlace() getTecton-ra átírtam - Luca
-            System.out.println("Owner: " + mushroom.getOwner().getName()); // TODO implement getOwner()
+            System.out.println("Place: " + mushroom.getTecton().getId()); //TODO implement : itt nem getId() kéne? - Erna
+            System.out.println("Owner: " + findMushroomPickerById(mushroom.getId()).getName()); // TODO implement getOwner(): sztem ez így működőképes, nem?
             System.out.println();
         }
 
@@ -692,15 +692,16 @@ public class CmdParser {
             return;
         }
 
-        // Find the mushroom picker (actor) among the players.
-        MushroomPicker mushroomPicker = findMushroomPickerById(mushroomPickerId);
+        // Find the mushroom picker (actor) among the players
+        MushroomPicker mushroomPicker = findMushroomPickerById(yarn.getPlayer().getId()); //szerintem ez így megoldható
         if (mushroomPicker == null) {
             System.out.println("Hiba: Nem található gombász játékos!");
             return;
         }
 
         // Execute the yarn growing action.
-        // mushroomPicker.actionGrowYarn(targetTecton, yarn);//Luca: sztem így
+        // mushroomPicker.actionGrowYarn(targetTecton, yarn);//Luca: sztem így - nem biztos, hogy ez így jó lesz
+        //- itt lehet baj lesz az, hogy ha nem négyzetrácsos a grid/sarok is szomszéd - nem egyértelműen eldönthető, hogy honnan növesztjük - Erna
         mushroomPicker.actionGrowYarn(fromTecton, targetTecton, yarn); //Luca: itt nekünk csak a céltekton kell bemenetnek sztem
     }
 
