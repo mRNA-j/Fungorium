@@ -88,12 +88,12 @@ public class Entomologist extends Player{
     public void actionCutYarn(Yarn yarn, Insect insect) {
         if(insect.getParalized()){
             System.out.println("A rovar bénítóspóra hatása alatt van, a fonalvágás nem lehetéges");
-            actionWait();
+            actionWait(insect);
             return;
         }
         if(insect.getCutPrevented()){
             System.out.println("A rovar vágásgátló spóra hatása alatt van, a fonalvágás nem lehetéges");
-            actionWait();
+            actionWait(insect);
             return;
         }
         insect.cutYarn(yarn);

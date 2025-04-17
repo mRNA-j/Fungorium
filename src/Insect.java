@@ -4,7 +4,7 @@
  */
 public class Insect {
     private Tecton currentPlace; // Az aktuális tecton, ahol a rovar tartózkodik
-
+    private Entomologist owner; //visszadja melyik rovarász játékoshoz tartozik a rovar
     // A rovarra ható spóra effektusok
     private boolean decelerated;   // Lassító spóra hatása
     private boolean paralized;     // Bénító spóra hatása
@@ -107,6 +107,23 @@ public class Insect {
      */
     public void setCurrentPlace(Tecton currentPlace){
         this.currentPlace = currentPlace;
+    }
+    /**
+     * Visszaadja a rovar gazdáját (rovarász játékos)
+     *
+     * @return A rovarász, akihez a rovar tartozik
+     */
+    public Entomologist getOwner(){
+        return owner;
+    }
+
+    /**
+     * Beállítja a rovart birtokló rovarász játékost
+     *
+     * @param owner A rovarász, aihez a rovar tartozni fog
+     */
+    public void setOwner(Entomologist owner){
+        this.owner = owner;
     }
 
     /**
