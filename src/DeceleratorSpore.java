@@ -13,6 +13,9 @@ public class DeceleratorSpore extends Spore {
     public DeceleratorSpore(){
         super(3, "decelerator");
     }
+    public DeceleratorSpore(String testID){
+        super(3, "decelerator", testID);
+    }
     /**
      * Alkalmazza a lassító hatást a megadott rovarra.
      * A metódus beállítja a rovar lassított állapotát.

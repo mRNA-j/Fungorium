@@ -9,7 +9,7 @@ public abstract class Player {
 
     /** A játékos által összegyűjtött pontok */
     private int points;
-
+    private String testID;
     /**
      * Létrehoz egy új játékos objektumot a megadott névvel és kezdeti pontszámmal.
      * @param name A játékos neve.
@@ -18,6 +18,11 @@ public abstract class Player {
     public Player(String name, int points) {
         this.name = name;
         this.points = points;
+    }
+    public Player(String name, int points, String testID) {
+        this.name = name;
+        this.points = points;
+        this.testID = testID;
     }
 
     /**
@@ -52,5 +57,8 @@ public abstract class Player {
     public void addPoints(int numOfPoints) {
         points += numOfPoints;
         System.out.println("Points added: " + numOfPoints);
+    }
+    public String getId(){
+        return testID;
     }
 }

@@ -12,6 +12,7 @@ public abstract class Spore {
     private int nutrition;
     /** A spóra hatásának neve, amely megadja a spóra hatás típusát. */
     private String effectName;
+    public String testID;
 
     /**
      * Konstruktor, amely inicializálja a spórát tápanyaggal és hatásnévvel.
@@ -19,9 +20,15 @@ public abstract class Spore {
      * @param nutrition A spóra tápanyaga, amely meghatározza a tápértéket.
      * @param effectName A spóra hatásának neve.
      */
+    public Spore(int nutrition, String effectName, String testID){
+        this.nutrition = nutrition;
+        this.effectName = effectName;
+        this.testID = testID;
+    }
     public Spore(int nutrition, String effectName){
         this.nutrition = nutrition;
         this.effectName = effectName;
+        this.testID = null;
     }
 
     /**

@@ -12,7 +12,12 @@ public class AcceleratorSpore extends Spore {
      * Az alapértelmezett tápanyag érték 1, a hatás neve pedig "accelerator".
      */
     public AcceleratorSpore(){
+
         super(1, "accelerator");
+    }
+    public AcceleratorSpore(String testID){
+
+        super(1, "accelerator", testID);
     }
     /**
      * Paraméterezett konstruktor, amely létrehozza a gyorsító spórát egy Tecton objektummal.
@@ -22,6 +27,9 @@ public class AcceleratorSpore extends Spore {
      */
     public AcceleratorSpore(Tecton tecton) {
         super(1,"accelerator");
+    }
+    public AcceleratorSpore(Tecton tecton, String testID) {
+        super(1,"accelerator", testID);
     }
     /**
      * Alkalmazza a gyorsító hatást a megadott rovarra.
