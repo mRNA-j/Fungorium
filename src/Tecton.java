@@ -7,30 +7,34 @@ public class Tecton {
     private String id;
     private int yarnLimit;
     private boolean mushroomPrevent;
+    private boolean isKeepAlive;
     private Mushroom mushroom;
     private List<Insect> insects;
     private List<Yarn> yarns;
     private List<Spore> spores;
-    //private Tecton currentPlace;
-    private List<Tecton> neighbours; // Új attribútum: szomszédok listája
+    private List<Tecton> neighbours;
     private boolean yarnAbsorption = false;
 
     public boolean getMushroomPrevent(){
         return mushroomPrevent;
     }
 
+    public boolean getYarnAbsorption(){ return yarnAbsorption; }
 
-    public boolean getYarnAbsorption(){return yarnAbsorption;}
+    public boolean getIsKeepAlive(){ return isKeepAlive; }
+
     /**
      * A Tecton class konstruktora.
      *
      * @param yarnLimit A maximális gombafonal szám, ami a Tectonon lehet.
      * @param mushroomPrevent true, ha a Tectonon nem lehet gomba.
+     * @param isKeepAlive true, ha a tekton életbentartó.
      */
-    public Tecton(String id, int yarnLimit, boolean mushroomPrevent) {
+    public Tecton(String id, int yarnLimit, boolean mushroomPrevent, boolean isKeepAlive) {
         this.id = id;
         this.yarnLimit = yarnLimit;
         this.mushroomPrevent = mushroomPrevent;
+        this.isKeepAlive = isKeepAlive;
         this.mushroom = null;
         this.insects = new ArrayList<>();
         this.yarns = new ArrayList<>();

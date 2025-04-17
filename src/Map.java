@@ -24,12 +24,12 @@ public class Map {
         // Példa implementáció: kézzel létrehozott gráf
         // Valós implementációban ezt valamilyen konfigurációból kell beolvasni!
 
-        Tecton tecton1 = new Tecton(1, 1, false);
-        Tecton tecton2 = new Tecton(2, 1, false);
-        Tecton tecton3 = new Tecton(3, 2, true);
-        Tecton tecton4 = new Tecton(4, 1, false);
-        Tecton tecton5 = new YarnAbsorbantTecton( 5,1, false);
-        Tecton tecton6=new Tecton(6,2,false);
+        Tecton tecton1 = new Tecton("t1", 1, false, false);
+        Tecton tecton2 = new Tecton("t2", 1, false, false);
+        Tecton tecton3 = new Tecton("t3", 2, true, false);
+        Tecton tecton4 = new Tecton("t4", 1, false, false);
+        Tecton tecton5 = new YarnAbsorbantTecton( "t5",1, false, false);
+        Tecton tecton6=new Tecton("t6",2,false, false);
 
         tectons.add(tecton1);
         tectons.add(tecton2);
@@ -80,8 +80,8 @@ public class Map {
         }
 
         // Létrehozunk két új Tectont
-        Tecton newTecton1 = new Tecton(this.random.nextInt(), tecton.getYarnLimit(), tecton.isMushroomPrevent());
-        Tecton newTecton2 = new Tecton(this.random.nextInt(), tecton.getYarnLimit(), tecton.isMushroomPrevent());
+        Tecton newTecton1 = new Tecton("t".concat(Integer.toString(this.random.nextInt())), tecton.getYarnLimit(), tecton.isMushroomPrevent(), tecton.getIsKeepAlive());
+        Tecton newTecton2 = new Tecton("t".concat(Integer.toString(this.random.nextInt())), tecton.getYarnLimit(), tecton.isMushroomPrevent(), tecton.getIsKeepAlive());
 
         // A rovarokat átrakjuk random tektonra
         for(Insect insect : templist) {
@@ -178,9 +178,21 @@ public class Map {
             List<Yarn> yarnsToRemove = new ArrayList<>();
 
             for (Yarn yarn : tecton.getYarns()) {
-
+                // Ellenőrizzük, hogy a fonal nincs-e csatlakoztatva gombához
                 if (!yarn.isConnected()) {
-                    yarnsToRemove.add(yarn);
+                    // Ellenőrizzük, hogy a fonal tektonjai között van-e életbentartó tekton
+                    boolean hasKeepAliveTecton = false;
+                    for (Tecton yarnTecton : yarn.getTectons()) {
+                        if (yarnTecton.getIsKeepAlive()) {
+                            hasKeepAliveTecton = true;
+                            break;
+                        }
+                    }
+
+                    // Csak akkor távolítjuk el a fonalat, ha nincs életbentartó tekton
+                    if (!hasKeepAliveTecton) {
+                        yarnsToRemove.add(yarn);
+                    }
                 }
             }
 
