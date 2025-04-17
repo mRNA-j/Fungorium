@@ -11,6 +11,29 @@ public class Insect {
     private boolean accelerated;   // Gyorsító spóra hatása
     private boolean cutPrevented;  // Vágásgátló spóra hatása
 
+    public  Tecton getPlace(){
+        return currentPlace;
+    }
+    /**
+     * Gets the current effect acting on the insect.
+     * Returns the name of the effect or "none" if no effect is active.
+     *
+     * @return String representing the current effect (accelerated, decelerated, paralized, cutPrevented) or "none"
+     */
+    public String getCurrentEffect() {
+        if (accelerated) {
+            return "accelerated";
+        } else if (decelerated) {
+            return "decelerated";
+        } else if (paralized) {
+            return "paralized";
+        } else if (cutPrevented) {
+            return "cutPrevented";
+        } else {
+            return null;
+        }
+    }
+
     /**
      * Konstruktor, amely létrehoz egy rovart egy adott tectonon.
      *

@@ -38,6 +38,8 @@ public class Game {
 
     public List<Player> getPlayers(){return players;}
 
+    public int getRound() { return currentTurn; }
+
     /**
      * Visszaadja az aktuális, aktív játékost.
      * @return Az aktív játékos.
@@ -102,6 +104,7 @@ public class Game {
      * Ha elértük a maximális körszámot, akkor befejezi a játékot.
      */
     public void nextTurn() {
+        getPlayField().refresh();
         activePlayerIndex = 0;
         activePlayer = players.get(activePlayerIndex);
         currentTurn++;

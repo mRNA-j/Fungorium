@@ -1,5 +1,7 @@
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class CmdParser {
     private static Game game = new Game();
@@ -238,6 +240,410 @@ public class CmdParser {
             case "run": run(args); break;
             default: System.out.println("Rossz parancs: " + args[0]); break;
         }
+    }
+
+    /**
+     * Displays statistics about the current round and active player.
+     * Expected output format: ActivePlayer: [name], Current round: [round_number]
+     * @param args Command arguments (not used)
+     */
+    private static void statRound(String[] args) {
+        // Get the active player from the game
+        Player activePlayer = game.getActivePlayer();
+
+        // Get the current round number
+        int currentRound = game.getRound();
+
+        // Display the active player's name
+        System.out.println("ActivePlayer: " + (activePlayer != null ? activePlayer.getName() : "None"));
+
+        // Display the current round number
+        System.out.println("Current round: " + currentRound);
+    }
+
+    /**
+     * Displays statistics about the current game state.
+     * Command syntax: stat
+     * @param args Command arguments (none expected)
+     */
+    private static void stat(String[] args) {
+        if (handleArgCount(args, 1)) {
+            return;
+        }
+
+        // Print information about all tectons
+        for (Tecton tecton : map.getTectons()) {
+            System.out.println("Tecton: " + tecton.getId());
+            System.out.println("Type: " + tecton.getType());
+
+            // Print mushroom information
+            if (tecton.getMushroom() != null) {
+                System.out.println("Mushroom: " + tecton.getMushroom().getId());
+            } else {
+                System.out.println("Mushroom: none");
+            }
+
+            // Print insect information
+            if (tecton.getInsects().isEmpty()) {
+                System.out.println("Insects: none");
+            } else {
+                StringBuilder insectString = new StringBuilder("Insects: ");
+                for (Insect insect : tecton.getInsects()) {
+                    insectString.append(insect.getId()).append(" ");
+                }
+                System.out.println(insectString.toString().trim());
+            }
+
+            // Print yarn information
+            if (tecton.getYarns().isEmpty()) {
+                System.out.println("Yarns: none");
+            } else {
+                StringBuilder yarnString = new StringBuilder("Yarns: ");
+                for (Yarn yarn : tecton.getYarns()) {
+                    yarnString.append(yarn.getI()).append(" ");
+                }
+                System.out.println(yarnString.toString().trim());
+            }
+
+            // Print neighbor information
+            if (tecton.getNeighbours().isEmpty()) {
+                System.out.println("Neighbours: none");
+            } else {
+                StringBuilder neighbourString = new StringBuilder("Neighbours: ");
+                for (Tecton neighbour : tecton.getNeighbours()) {
+                    neighbourString.append(neighbour.getId()).append(" ");
+                }
+                System.out.println(neighbourString.toString().trim());
+            }
+
+            // Print spore information
+            if (tecton.getSpores().isEmpty()) {
+                System.out.println("Spores: none");
+            } else {
+                StringBuilder sporeString = new StringBuilder("Spores: ");
+                for (Spore spore : tecton.getSpores()) {
+                    sporeString.append(spore.getId()).append(" ");
+                }
+                System.out.println(sporeString.toString().trim());
+            }
+
+            System.out.println();
+        }
+
+        // Print information about yarns (if any exist)
+        List<Yarn> allYarns = getAllYarnsInGame();
+        for (Yarn yarn : allYarns) {
+            System.out.println("Yarn: " + yarn.getId());
+            System.out.println("Type: " + yarn.getName()); //TODO Implement type name
+
+            // Print tectons connected by yarn
+            StringBuilder tectonsInYarn = new StringBuilder("Tectons in yarn: ");
+            for (Tecton tecton : yarn.getTectons()) {
+                tectonsInYarn.append(tecton.getId()).append(" ");
+            }
+            System.out.println(tectonsInYarn.toString().trim());
+            System.out.println();
+        }
+
+        // Print information about mushrooms
+        List<Mushroom> allMushrooms = getAllMushroomsInGame();
+        for (Mushroom mushroom : allMushrooms) {
+            System.out.println("Mushroom: " + mushroom.getId());
+            System.out.println("HasSpore: " + mushroom.hasSpore());
+            System.out.println("Place: " + mushroom.getPlace().getName()); //TODO implement getPlace()
+            System.out.println("Owner: " + mushroom.getOwner().getName()); // TODO implement getOwner()
+            System.out.println();
+        }
+
+        // Print information about insects (if any exist)
+        List<Insect> allInsects = getAllInsectsInGame();
+        for (Insect insect : allInsects) {
+            System.out.println("Insect: " + insect.getId());
+            System.out.println("Current Effect: " + (insect.getCurrentEffect() != null ? insect.getCurrentEffect() : "none"));
+            System.out.println("Place: " + insect.getPlace().getId());
+            System.out.println("Owner: " + insect.getOwner().getName());
+            System.out.println();
+        }
+
+        // Print information about players
+        for (Player player : game.getPlayers()) {
+            System.out.println("Player: " + player.getName());
+            System.out.println("Type: " + getPlayerType(player));
+            System.out.println("Points: " + player.getPoints());
+            System.out.println();
+        }
+    }
+
+    /**
+     * Helper method to get all yarns in the game
+     */
+    private static List<Yarn> getAllYarnsInGame() {
+        List<Yarn> allYarns = new ArrayList<>();
+        for (Tecton tecton : map.getTectons()) {
+            for (Yarn yarn : tecton.getYarns()) {
+                if (!allYarns.contains(yarn)) {
+                    allYarns.add(yarn);
+                }
+            }
+        }
+        return allYarns;
+    }
+
+    /**
+     * Helper method to get all mushrooms in the game
+     */
+    private static List<Mushroom> getAllMushroomsInGame() {
+        List<Mushroom> allMushrooms = new ArrayList<>();
+        for (Tecton tecton : map.getTectons()) {
+            if (tecton.getMushroom() != null && !allMushrooms.contains(tecton.getMushroom())) {
+                allMushrooms.add(tecton.getMushroom());
+            }
+        }
+        return allMushrooms;
+    }
+
+    /**
+     * Helper method to get all insects in the game
+     */
+    private static List<Insect> getAllInsectsInGame() {
+        List<Insect> allInsects = new ArrayList<>();
+        for (Tecton tecton : map.getTectons()) {
+            for (Insect insect : tecton.getInsects()) {
+                if (!allInsects.contains(insect)) {
+                    allInsects.add(insect);
+                }
+            }
+        }
+        return allInsects;
+    }
+
+    /**
+     * Helper method to get player type string
+     */
+    private static String getPlayerType(Player player) {
+        if (player instanceof Entomologist) {
+            return "Entomologist";
+        } else if (player instanceof MushroomPicker) {
+            return "MushroomPicker";
+        } else {
+            return "Unknown";
+        }
+    }
+
+
+
+
+    /**
+     * Saves the current game state to a file.
+     * Command syntax: save <filename>
+     *
+     * @param args Command arguments: filename
+     */
+    private static void save(String[] args) {
+        // Check if we have exactly one argument (the filename)
+        if (handleArgCount(args, 2)) {
+            return;
+        }
+
+        String filename = args[1];
+
+        // Add .ser extension if not present
+        if (!filename.endsWith(".ser")) {
+            filename += ".ser";
+        }
+
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
+            // Create a container object to hold both game and map
+            GameState gameState = new GameState(game, map);
+
+            // Write the game state to the file
+            out.writeObject(gameState);
+            System.out.println("Game state successfully saved to " + filename);
+        } catch (IOException e) {
+            System.out.println("Error saving game state: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Loads a previously saved game state from a file.
+     * Command syntax: load <filename>
+     *
+     * @param args Command arguments: filename
+     */
+    private static void load(String[] args) {
+        // Check if we have exactly one argument (the filename)
+        if (handleArgCount(args, 2)) {
+            return;
+        }
+
+        String filename = args[1];
+
+        // Add .ser extension if not present
+        if (!filename.endsWith(".ser")) {
+            filename += ".ser";
+        }
+
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
+            // Read the game state from the file
+            GameState gameState = (GameState) in.readObject();
+
+            // Update the static game and map references
+            game = gameState.getGame();
+            map = gameState.getMap();
+
+            System.out.println("Game state successfully loaded from " + filename);
+
+            // Optional: Print a summary of the loaded state
+            System.out.println("Game loaded with " + game.getPlayers().size() + " players and "
+                    + map.getTectons().size() + " tectons.");
+        } catch (FileNotFoundException e) {
+            System.out.println("Save file not found: " + filename);
+        } catch (IOException e) {
+            System.out.println("Error loading game state: " + e.getMessage());
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            System.out.println("Error loading game state: Class not found - " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * A container class to hold both Game and Map objects for serialization.
+     * This class must be Serializable, as must all objects it references.
+     */
+    private static class GameState implements Serializable {
+        private static final long serialVersionUID = 1L;
+
+        private final Game game;
+        private final Map map;
+
+        public GameState(Game game, Map map) {
+            this.game = game;
+            this.map = map;
+        }
+
+        public Game getGame() {
+            return game;
+        }
+
+        public Map getMap() {
+            return map;
+        }
+    }
+    /**
+     * A parancsokat értelmezi és feldolgozza.
+     * @param is az input stream, amelyről olvas.
+     */
+    public static void start(InputStream is) {
+        // Using try-with-resources to automatically close the Scanner.
+        try (Scanner sc = new Scanner(is)) {
+            while (sc.hasNextLine()) {
+                String cmd = sc.nextLine();
+                parse(cmd);
+            }
+        }
+    }
+
+    /**
+     * Egy paraméterben meghatározott teszteset futtatása.
+     * @param args a tesztesethez tartozó bemeneti file.
+     */
+    private static void run(String[] args) {
+        if (handleArgCount(args, 2)) {
+            return;
+        }
+
+        String fileName = args[1];
+        // Using try-with-resources to automatically close the FileInputStream.
+        try (FileInputStream fis = new FileInputStream(fileName)) {
+            start(fis);
+        } catch (FileNotFoundException e) {
+            System.out.println("Nincs ilyen fajl!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private static void randomize(String[] args) {
+        //TODO implement
+    }
+
+    private static void game_end(String[] args) {
+        //nem hasznaljuk
+    }
+
+    private static void action_phase_end(String[] args) {
+        game.nextPlayer();
+    }
+
+    private static void next_round(String[] args) {
+        game.nextTurn();
+    }
+
+    /**
+     * Executes the spore dispersion action.
+     * Command syntax: action_spore_dispersion <target_tecton_ID> <mushroom_ID>
+     *
+     * Leírás: A gombász spórakilövés akciót hajt végre a körben a megadott tektonra
+     * a megadott gombatestből.
+     *
+     * @param args Command arguments: target_tecton_ID, mushroom_ID
+     */
+    private static void action_spore_dispersion(String[] args) {
+        // Ensure exactly 2 arguments are provided.
+        if (handleArgCount(args, 2)) {
+            return;
+        }
+
+        String targetTectonId = args[0];
+        String mushroomId = args[1];
+
+        // Locate the target tecton by its ID.
+        Tecton targetTecton = findTectonById(targetTectonId);
+        if (targetTecton == null) {
+            System.out.println("Hiba: Nem található tecton azonosítóval: " + targetTectonId);
+            return;
+        }
+
+        // Locate the mushroom globally using its ID.
+        Mushroom mushroom = findMushroomById(mushroomId);
+        if (mushroom == null) {
+            System.out.println("Hiba: Nem található gombatest azonosítóval: " + mushroomId);
+            return;
+        }
+
+        // Determine the MushroomPicker that owns the mushroom.
+        MushroomPicker picker = findMushroomPickerByMushroom(mushroom);
+        if (picker == null) {
+            System.out.println("Hiba: Nem található gombász a megadott gombával (" + mushroomId + ").");
+            return;
+        }
+
+        // Execute the spore dispersion action.
+        picker.actionSporeDispersion(targetTecton, mushroom);
+    }
+
+    /**
+     * Searches for the MushroomPicker player who owns the specified Mushroom.
+     *
+     * @param mushroom The Mushroom for which to find the owning MushroomPicker.
+     * @return The MushroomPicker if found; otherwise, null.
+     */
+    private static MushroomPicker findMushroomPickerByMushroom(Mushroom mushroom) {
+        if (mushroom == null) {
+            return null;
+        }
+        for (Player player : game.getPlayers()) {
+            if (player instanceof MushroomPicker) {
+                MushroomPicker picker = (MushroomPicker) player;
+                if (picker.getOwnedMushrooms().contains(mushroom)) {
+                    return picker;
+                }
+            }
+        }
+        return null;
     }
 
     /**
