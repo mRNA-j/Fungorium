@@ -693,7 +693,7 @@ public class CmdParser {
         }
 
         // Find the mushroom picker (actor) among the players
-        MushroomPicker mushroomPicker = findMushroomPickerById(yarn.getPlayer().getId()); //szerintem ez így megoldható
+        MushroomPicker mushroomPicker = findMushroomPickerById(yarn.getPlayer().getId()); //szerintem ez így megoldható- Erna
         if (mushroomPicker == null) {
             System.out.println("Hiba: Nem található gombász játékos!");
             return;

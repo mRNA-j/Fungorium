@@ -171,35 +171,10 @@ public class MushroomPicker extends Player {
      *
      * @param targetTecton A cél tecton.
      * @param selectedYarn A kiválasztott fonal, amelyet felhasználunk.
-     * //@param sourceTecton A forrás tekton - ha végül így implementáljuk : Erna
+     * @param sourceTecton A forrás tekton - ha végül így implementáljuk : Erna
      */
-    public void actionGrowYarn( Tecton targetTecton, Yarn selectedYarn) {
-        // Ellenőrzi, hogy a kiválasztott fonal egyik pontja szomszédos-e a cél tektonnal
-        //System.out.print("Fonal tektonjai: " + selectedYarn.getTectons() + "\n\n");
-        for(int i = 0; i < selectedYarn.getTectons().size(); i++) {
-            if(selectedYarn.getTectons().get(i).isNeighbour(targetTecton)){
-                // Ellenőrzi, hogy a tecton meghódítható-e és ez az első próbálkozás
-                if (canIConquerTecton(targetTecton)) {
-                    targetTecton.growYarn(selectedYarn); // Elindítja a fonal növesztését a kiválasztott fonallal
-                    return;
-                } else {
-                    System.out.println("Mas jatekosnak mar van a fonala ezen  a tektonon");
-                    return;
-                }
-            }
-            else {
-                System.out.println("The selected tecton does not neighbour the yarn");
-            }
 
-        }
-        System.out.println("A kivalasztott yarn-hoz tartozot tektonok kozul egyk se szomszedos a kivalasztott tektonnal, \nNem lehet fonalal növeszteni");
-
-    }
-
-
-    //**ha sourceTectonnal akarjuk */
-
-   /* public void actionGrowYarn(Tecton sourceTecton, Tecton targetTecton, Yarn selectedYarn) {
+   public void actionGrowYarn(Tecton sourceTecton, Tecton targetTecton, Yarn selectedYarn) {
         // Ellenőrzi, hogy a kiválasztott fonal egyik pontja szomszédos-e a cél tektonnal
         //System.out.print("Fonal tektonjai: " + selectedYarn.getTectons() + "\n\n");
         if(selectedYarn.getTectons().contains(sourceTecton)) {
@@ -219,7 +194,7 @@ public class MushroomPicker extends Player {
         else {
                 System.out.println("The selected tecton does not neighbour the yarn");
         }
-    }*/
+    }
 
     public boolean sporeCheck(Tecton targetTecton) {
         if(!targetTecton.getSpores().isEmpty()){
