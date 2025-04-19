@@ -28,7 +28,7 @@ public class Yarn {
      */
     public Yarn() {
         this.tectons = new ArrayList<>();
-        id = "" + new Random().nextInt();
+        id = "Yarn" + new Random().nextInt();
         name="normal";
     }
 
