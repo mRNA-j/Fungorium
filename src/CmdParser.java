@@ -19,7 +19,7 @@ public class CmdParser {
             return null;
         }
         for (Player player : game.getPlayers()) {
-            if (player instanceof MushroomPicker && player.getId().equals(id)) {
+            if (player.getId().equals(id)) {
                 return (MushroomPicker) player;
             }
         }
