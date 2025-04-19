@@ -1,5 +1,7 @@
+package model;
+
 /**
- * Az AcceleratorSpore osztály a Spore osztályból származik, és a gyorsító típusú spórát reprezentálja.
+ * Az Model.AcceleratorSpore osztály a Model.Spore osztályból származik, és a gyorsító típusú spórát reprezentálja.
  * Ez a spóra hatással van a rovarokra, és képes gyorsítani azok mozgását.
  * A spóra kétféle konstruktorral is létrehozható: egy alapértelmezett konstruktorral és egy paraméterezett konstruktorral.
  *
@@ -20,10 +22,10 @@ public class AcceleratorSpore extends Spore {
         super(1, "accelerator", testID);
     }
     /**
-     * Paraméterezett konstruktor, amely létrehozza a gyorsító spórát egy Tecton objektummal.
+     * Paraméterezett konstruktor, amely létrehozza a gyorsító spórát egy Model.Tecton objektummal.
      * A tápanyag értéke 1, és a hatás neve "accelerating".
      *
-     * @param tecton A Tecton objektum, amely szükséges a spóra inicializálásához.
+     * @param tecton A Model.Tecton objektum, amely szükséges a spóra inicializálásához.
      */
     public AcceleratorSpore(Tecton tecton) {
         super(1,"accelerator");

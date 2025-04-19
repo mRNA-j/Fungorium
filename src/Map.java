@@ -1,3 +1,5 @@
+import model.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -56,11 +58,11 @@ public class Map {
      * kettéhasítja a kiválasztott Tectont. Implementáció: Létre kell hozni két új Tectont, és a régit
      * el kell távolítani. Az új Tectonoknak be kell állítani a szomszédait.
      *
-     * @param tecton A kettéhasítandó Tecton.
+     * @param tecton A kettéhasítandó Model.Tecton.
      */
     public void splitting(Tecton tecton) {
         if (!tectons.contains(tecton)) {
-            System.out.println("Tecton not found on the map.");
+            System.out.println("Model.Tecton not found on the map.");
             return;
         }
 
@@ -100,7 +102,7 @@ public class Map {
             tecton.removeInsect(tecton.getInsects().get(i));
         }
 
-        // Beállítjuk az új Tectonok szomszédságát (a régi Tecton szomszédai + egymás)
+        // Beállítjuk az új Tectonok szomszédságát (a régi Model.Tecton szomszédai + egymás)
         List<Tecton> originalNeighbours = new ArrayList<>(tecton.getNeighbours());
         for (Tecton neighbour : originalNeighbours) {
             neighbour.removeNeighbour(tecton);
@@ -117,7 +119,7 @@ public class Map {
 
     /*   // A régi Tectonon lévő gombákat, rovarokat, spórákat átrakjuk az új Tectonokra
 
-        for (Insect insect : new ArrayList<>(tecton.getInsects())) {
+        for (Model.Insect insect : new ArrayList<>(tecton.getInsects())) {
             tecton.removeInsect(insect);
 
             // Eldönthetjük, hogy melyikre kerüljön (random)
@@ -145,12 +147,12 @@ public class Map {
     }
 
     /**
-     * Frissíti a pálya állapotát (pl. felszívja a gombafonalakat a YarnAbsorbantTecton-okról).
+     * Frissíti a pálya állapotát (pl. felszívja a gombafonalakat a Model.YarnAbsorbantTecton-okról).
      * Implementáció: Implementáció: végigmegy a Tectonokon, és frissíti az állapotukat.
      */
     public void refresh() {
         for (Tecton tecton : tectons) {
-            // Példa: végigmegyünk a gombafonalakon, és futtatjuk a Tecton hatását rájuk
+            // Példa: végigmegyünk a gombafonalakon, és futtatjuk a Model.Tecton hatását rájuk
             for (Yarn yarn : new ArrayList<>(tecton.getYarns())) {
                 yarn.runEffect();
                 tecton.runEffect(yarn);

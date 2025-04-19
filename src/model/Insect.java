@@ -1,5 +1,7 @@
+package model;
+
 /**
- * Az Insect osztály egy rovart reprezentál, amely egy adott tectonon helyezkedik el,
+ * Az Model.Insect osztály egy rovart reprezentál, amely egy adott tectonon helyezkedik el,
  * és különböző állapotváltozásokat szenvedhet el spórák hatására.
  */
 public class Insect {

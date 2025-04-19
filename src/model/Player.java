@@ -1,3 +1,5 @@
+package model;
+
 /**
  * Absztrakt osztály a játékosok reprezentálására.
  * Kezeli a játékos nevét és pontszámát.

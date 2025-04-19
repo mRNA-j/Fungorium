@@ -1,8 +1,10 @@
+package model;
+
 /**
- * A Spore osztály egy absztrakt osztály, amely a spórákat reprezentálja.
+ * A Model.Spore osztály egy absztrakt osztály, amely a spórákat reprezentálja.
  * A spórák rendelkeznek tápanyag értékkel és hatásnévvel, amelyek különböző rovarokra kifejtett hatásokkal járhatnak.
  *
- * A Spore osztály példányosítható a tápanyag és a hatásnév paraméterek megadásával.
+ * A Model.Spore osztály példányosítható a tápanyag és a hatásnév paraméterek megadásával.
  * Az osztály tartalmaz getter és setter metódusokat, valamint egy absztrakt metódust a hatások alkalmazására.
  *
  * A spórák hatásokat adhatnak hozzá különböző rovarokhoz az addEffect metódus segítségével.

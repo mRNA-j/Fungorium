@@ -1,5 +1,7 @@
+package model;
+
 /**
-* A CutPreventingSpore osztály a Spore osztályból származik, és a vágásgátló spórát reprezentálja.
+* A Model.CutPreventingSpore osztály a Model.Spore osztályból származik, és a vágásgátló spórát reprezentálja.
 * Ez a spóra képes megakadályozni a rovarokat a gombafoonalak elvágásában.
 *
 * A spóra alapértelmezett tápanyag értéke 2, és a hatás neve "cutpreventing".

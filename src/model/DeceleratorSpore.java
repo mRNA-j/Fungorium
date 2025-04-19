@@ -1,5 +1,7 @@
+package model;
+
 /**
- * A DeceleratorSpore osztály a Spore osztályból származik, és a lassító típusú spórát reprezentálja.
+ * A Model.DeceleratorSpore osztály a Model.Spore osztályból származik, és a lassító típusú spórát reprezentálja.
  * Ez a spóra képes lelassítani a rovarokat.
  * A spóra alapértelmezett tápanyag értéke 3, és a hatás neve "decelerator".
  *

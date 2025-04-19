@@ -1,5 +1,7 @@
+package model;
+
 /**
- * A InsectDuplicatingSpore osztály a Spore osztályból származik, és a rovarduplikáló típusú spórát reprezentálja.
+ * A Model.InsectDuplicatingSpore osztály a Model.Spore osztályból származik, és a rovarduplikáló típusú spórát reprezentálja.
  * Ez a spóra képes létrehozni egy új rovart.
  * A spóra alapértelmezett tápanyag értéke 1, és a hatás neve "insectDuplicating".
  *

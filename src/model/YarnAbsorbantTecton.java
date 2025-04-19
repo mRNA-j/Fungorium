@@ -1,14 +1,13 @@
-import java.util.Random;
-import java.util.List;
+package model;
 
-/** A YarnAbsorbantTecton class egy speciális Tecton, ami felszívja a gombafonalakat. */
+/** A Model.YarnAbsorbantTecton class egy speciális Model.Tecton, ami felszívja a gombafonalakat. */
 public class YarnAbsorbantTecton extends Tecton {
 
 
 
     private boolean yarnAbsorption = true;
     /**
-     * A YarnAbsorbantTecton class konstruktora.
+     * A Model.YarnAbsorbantTecton class konstruktora.
      *
      * @param yarnLimit A maximális gombafonal szám, ami a Tectonon lehet.
      * @param mushroomPrevent A  jelzés, hogy a Tectonon nem lehet gomba.

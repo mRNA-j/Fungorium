@@ -1,18 +1,16 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+package model;
+
 import java.util.*;
 
 /**
- * Az Entomologist osztály a játékos egyik lehetséges szereplőjét reprezentálja,
- * aki egy rovart (Insect) irányít a játék során.
+ * Az Model.Entomologist osztály a játékos egyik lehetséges szereplőjét reprezentálja,
+ * aki egy rovart (Model.Insect) irányít a játék során.
  */
 public class Entomologist extends Player{
     private List<Insect> insects; // a rovarász játékos rovarja
 
     /**
-     * Konstruktor az Entomologist példány létrehozásához.
+     * Konstruktor az Model.Entomologist példány létrehozásához.
      *
      * @param name   A játékos neve.
      * @param insect A játékoshoz tartozó rovar.
@@ -30,7 +28,7 @@ public class Entomologist extends Player{
     /**
      * Visszaadja az entomológushoz tartozó rovart.
      *
-     * @return A rovar (Insect) objektum.
+     * @return A rovar (Model.Insect) objektum.
      */
     public List<Insect> getInsect(){
       return insects;

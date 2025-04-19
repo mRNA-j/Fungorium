@@ -1,3 +1,5 @@
+package model;
+
 /**
  * A gomba entitást reprezentáló osztály.
  * Kezeli a gomba korát, spóráit és a tectonhoz való kapcsolódását.
@@ -141,7 +143,7 @@ public class Mushroom {
  * létrehozza a megfelelő spórát és hozzáadja a tectonhoz.
  * @param tecton A tecton, amire a spórát kilövi.
  */
-    /*public void disperseSpore(Tecton tecton) {
+    /*public void disperseSpore(Model.Tecton tecton) {
         System.out.println("Melyik sporat akarod kiloni?");
         System.out.println("1. Accelrator");
         System.out.println("2. Paralyzing");
@@ -151,20 +153,20 @@ public class Mushroom {
         Scanner scanner = new Scanner(System.in);
 
         String spore = scanner.nextLine();
-        Spore sp;
+        Model.Spore sp;
 
         switch (spore) {
             case "1":
-                sp = new AcceleratorSpore();
+                sp = new Model.AcceleratorSpore();
                 break;
             case "2":
-                sp = new ParalyzingSpore();
+                sp = new Model.ParalyzingSpore();
                 break;
             case "3":
-                sp = new DeceleratorSpore();
+                sp = new Model.DeceleratorSpore();
                 break;
             case "4":
-                sp = new CutPreventingSpore();
+                sp = new Model.CutPreventingSpore();
                 break;
             default:
                 System.out.println("Invalid spore type selected!");

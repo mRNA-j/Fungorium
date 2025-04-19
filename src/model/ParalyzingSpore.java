@@ -1,5 +1,7 @@
+package model;
+
 /**
- * A ParalyzingSpore osztály a Spore osztályból származik, és a bénító típusú spórát reprezentálja.
+ * A Model.ParalyzingSpore osztály a Model.Spore osztályból származik, és a bénító típusú spórát reprezentálja.
  * Ez a spóra képes megbénítani a rovarokat, megakadályozva azok bármilyen tevékenységét.
  * A spóra alapértelmezett tápanyag értéke 4, és a hatás neve "paralyzing".
  *
