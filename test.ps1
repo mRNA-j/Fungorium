@@ -10,7 +10,7 @@ function compile_and_build {
     }
 
     # Compile Java files
-    javac src\*.java -d out
+    javac -cp src -d out src\*.java src\model\*.java src\view\*.java
 
     if ($LASTEXITCODE -ne 0) {
         Write-Output "Compilation failed!"
