@@ -158,7 +158,6 @@ public class Map {
         }
 
         noConnection();
-        System.out.println("Map refreshed.");
     }
 
     /**
@@ -205,6 +204,5 @@ public class Map {
                 tecton.removeYarn(yarn);
             }
         }
-        System.out.println("Unconnected yarns removed from the map.");
     }
 }

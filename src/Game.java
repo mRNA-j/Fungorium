@@ -111,7 +111,6 @@ public class Game {
         if(currentTurn == numberOfTurns) {
             end();
         }
-        System.out.println("Kovetkezo kor");
     }
 
     /**

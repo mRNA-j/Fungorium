@@ -15,10 +15,7 @@ public abstract class Player {
      * @param name A játékos neve.
      * @param points A játékos kezdeti pontszáma.
      */
-    public Player(String name, int points) {
-        this.name = name;
-        this.points = points;
-    }
+
     public Player(String name, int points, String testID) {
         this.name = name;
         this.points = points;

@@ -50,13 +50,13 @@ public class Insect {
         currentPlace = place;
         place.addInsect(this);
     }
-    public Insect(Tecton place, String testID){
+    public Insect(Tecton place,Entomologist owner ,String testID){
         decelerated = false;
         paralized = false;
         accelerated = false;
         cutPrevented = false;
         this.testID = testID;
-
+        this.owner = owner;
         currentPlace = place;
         place.addInsect(this);
     }

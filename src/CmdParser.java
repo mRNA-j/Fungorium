@@ -2,6 +2,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class CmdParser {
     private static Game game = new Game();
@@ -140,14 +141,14 @@ public class CmdParser {
      * @param name The name of the Entomologist to find
      * @return The Entomologist object if found, null otherwise
      */
-    private static Entomologist findEntomologistByName(String name) {
+    private static Player findPlayerByName(String name) {
         if (name == null || name.isEmpty()) {
             return null;
         }
 
         for (Player player : game.getPlayers()) {
-            if (player instanceof Entomologist && player.getName().equals(name)) {
-                return (Entomologist) player;
+            if (player.getName().equals(name)) {
+                return  player;
             }
         }
 
@@ -267,109 +268,74 @@ public class CmdParser {
      * @param args Command arguments (none expected)
      */
     private static void stat(String[] args) {
-        if (handleArgCount(args, 1)) {
-            return;
-        }
+        if (handleArgCount(args, 1)) return;
 
-        // Print information about all tectons
+        /* ----------  TECTONS  ---------- */
         for (Tecton tecton : map.getTectons()) {
-            System.out.println("Tecton: " + tecton.getId());
-            System.out.println("Type: " + tecton.getType());
+            System.out.println("Tecton: "   + tecton.getId());
+            System.out.println("Type: "     + tecton.getType());
 
-            // Print mushroom information
-            if (tecton.getMushroom() != null) {
-                System.out.println("Mushroom: " + tecton.getMushroom().getId());
-            } else {
-                System.out.println("Mushroom: none");
-            }
+            System.out.println("Mushroom: " + (tecton.getMushroom() != null
+                    ? tecton.getMushroom().getId()
+                    : "none"));
 
-            // Print insect information
-            if (tecton.getInsects().isEmpty()) {
-                System.out.println("Insects: none");
-            } else {
-                StringBuilder insectString = new StringBuilder("Insects: ");
-                for (Insect insect : tecton.getInsects()) {
-                    insectString.append(insect.getId()).append(" ");
-                }
-                System.out.println(insectString.toString().trim());
-            }
+            System.out.println("Insects: "  + (tecton.getInsects().isEmpty()
+                    ? "none"
+                    : tecton.getInsects()
+                    .stream()
+                    .map(Insect::getId)
+                    .collect(Collectors.joining(" "))));
 
-            // Print yarn information
-            if (tecton.getYarns().isEmpty()) {
-                System.out.println("Yarns: none");
-            } else {
-                StringBuilder yarnString = new StringBuilder("Yarns: ");
-                for (Yarn yarn : tecton.getYarns()) {
-                    yarnString.append(yarn.getId()).append(" ");//Luca: getId???
-                }
-                System.out.println(yarnString.toString().trim());
-            }
+            System.out.println("Yarns: "    + (tecton.getYarns().isEmpty()
+                    ? "none"
+                    : tecton.getYarns()
+                    .stream()
+                    .map(Yarn::getId)
+                    .collect(Collectors.joining(" "))));
 
-            // Print neighbor information
-            if (tecton.getNeighbours().isEmpty()) {
-                System.out.println("Neighbours: none");
-            } else {
-                StringBuilder neighbourString = new StringBuilder("Neighbours: ");
-                for (Tecton neighbour : tecton.getNeighbours()) {
-                    neighbourString.append(neighbour.getId()).append(" ");
-                }
-                System.out.println(neighbourString.toString().trim());
-            }
+            System.out.println("Neighbours: "+ (tecton.getNeighbours().isEmpty()
+                    ? "none"
+                    : tecton.getNeighbours()
+                    .stream()
+                    .map(Tecton::getId)
+                    .collect(Collectors.joining(" "))));
 
-            // Print spore information
-            if (tecton.getSpores().isEmpty()) {
-                System.out.println("Spores: none");
-            } else {
-                StringBuilder sporeString = new StringBuilder("Spores: ");
-                for (Spore spore : tecton.getSpores()) {
-                    sporeString.append(spore.getId()).append(" ");
-                }
-                System.out.println(sporeString.toString().trim());
-            }
-
+            System.out.println("Spores: "   + (tecton.getSpores().isEmpty()
+                    ? "none"
+                    : tecton.getSpores()
+                    .stream()
+                    .map(Spore::getId)
+                    .collect(Collectors.joining(" "))));
             System.out.println();
         }
 
-        // Print information about yarns (if any exist)
-        List<Yarn> allYarns = getAllYarnsInGame();
-        for (Yarn yarn : allYarns) {
-            System.out.println("Yarn: " + yarn.getId());
-            System.out.println("Type: " + yarn.getName()); //TODO Implement type name - technically implementáltam, gyakorlatilag spagetti- Erna
-
-            // Print tectons connected by yarn
-            StringBuilder tectonsInYarn = new StringBuilder("Tectons in yarn: ");
-            for (Tecton tecton : yarn.getTectons()) {
-                tectonsInYarn.append(tecton.getId()).append(" ");
-            }
-            System.out.println(tectonsInYarn.toString().trim());
+        /* ----------  MUSHROOMS  ---------- */
+        for (Mushroom m : getAllMushroomsInGame()) {
+            System.out.println("Mushroom: " + m.getId());
+            System.out.println("HasSpore: " + m.getHasSpore());
+            System.out.println("Place: "    + m.getTecton().getId());
+            MushroomPicker owner = findMushroomPickerByMushroom(m);
+            System.out.println("Owner: "    + (owner == null ? "none" : owner.getName()));
             System.out.println();
         }
 
-        // Print information about mushrooms
-        List<Mushroom> allMushrooms = getAllMushroomsInGame();
-        for (Mushroom mushroom : allMushrooms) {
-            System.out.println("Mushroom: " + mushroom.getId());
-            System.out.println("HasSpore: " + mushroom.getHasSpore());
-            System.out.println("Place: " + mushroom.getTecton().getId()); //TODO implement : itt nem getId() kéne? - Erna
-            System.out.println("Owner: " + findMushroomPickerById(mushroom.getId()).getName()); // TODO implement getOwner(): sztem ez így működőképes, nem?
+        /* ----------  YARNS  ---------- */
+        for (Yarn y : getAllYarnsInGame()) {
+            System.out.println("Yarn: " + y.getId());
+            System.out.println("Type: " + y.getName());            //  ←  kill / protect / …
+            System.out.print  ("Tectons in yarn: ");
+            System.out.println(y.getTectons().stream()
+                    .map(Tecton::getId)
+                    .collect(Collectors.joining(" ")));
             System.out.println();
         }
 
-        // Print information about insects (if any exist)
-        List<Insect> allInsects = getAllInsectsInGame();
-        for (Insect insect : allInsects) {
-            System.out.println("Insect: " + insect.getId());
-            System.out.println("Current Effect: " + (insect.getCurrentEffect() != null ? insect.getCurrentEffect() : "none"));
-            System.out.println("Place: " + insect.getPlace().getId());
-            System.out.println("Owner: " + insect.getOwner().getName());
-            System.out.println();
-        }
-
-        // Print information about players
-        for (Player player : game.getPlayers()) {
-            System.out.println("Player: " + player.getName());
-            System.out.println("Type: " + getPlayerType(player));
-            System.out.println("Points: " + player.getPoints());
+        /* ----------  PLAYERS  ---------- */
+        for (Player p : game.getPlayers()) {
+            System.out.println("Player: " + p.getName());
+            System.out.println("Type: "   + getPlayerType(p));
+            System.out.println();                       //  ← blank line before Points
+            System.out.println("Points: " + p.getPoints());
             System.out.println();
         }
     }
@@ -656,13 +622,13 @@ public class CmdParser {
      */
     private static void action_grow_yarn(String[] args) {
         // Ensure exactly 3 arguments are provided.
-        if (handleArgCount(args, 3)) {
+        if (handleArgCount(args, 4)) {
             return;
         }
 
-        String fromTectonId = args[0];
-        String targetTectonId = args[1];
-        String yarnId = args[2];
+        String fromTectonId = args[1];
+        String targetTectonId = args[2];
+        String yarnId = args[3];
 
         // Find the "from" tecton.
         Tecton fromTecton = findTectonById(fromTectonId);
@@ -970,7 +936,7 @@ public class CmdParser {
             case "accelerator":
                 newSpore = new AcceleratorSpore();
                 break;
-            case "paralyzing":
+            case "paralyze":
                 newSpore = new ParalyzingSpore();
                 break;
             case "decelerator":
@@ -985,7 +951,7 @@ public class CmdParser {
                 break;
             default:
                 System.out.println("Ismeretlen spóra típus: " + sporeType);
-                System.out.println("Támogatott típusok: accelerator, paralyzing, decelerator, insectDuplicating, cutPreventing");
+                System.out.println("Támogatott típusok: accelerator, paralyze, decelerator, insectDuplicating, cutPreventing");
                 return;
         }
 
@@ -1024,7 +990,7 @@ public class CmdParser {
             case "accelerator":
                 targetInsect.setAccelerated(true);
                 break;
-            case "paralyzing":
+            case "paralyze":
                 targetInsect.setParalized(true);
                 break;
             case "decelerator":
@@ -1039,7 +1005,7 @@ public class CmdParser {
                 break;
             default:
                 System.out.println("Ismeretlen spóra típus: " + sporeType);
-                System.out.println("Támogatott típusok: accelerator, paralyzing, decelerator, insectDuplicating, cutPreventing");
+                System.out.println("Támogatott típusok: accelerator, paralyze, decelerator, insectDuplicating, cutPreventing");
                 break;
         }
     }
@@ -1158,10 +1124,10 @@ public class CmdParser {
             return;
         }
 
-        // Használjuk a findEntomologistByName metódust a rovarász megkereséséhez
-        Entomologist entomologist = findEntomologistByName(entomologistName);
+        Entomologist entomologist = (Entomologist) findPlayerByName(entomologistName);
 
         if (entomologist == null) {
+            System.out.println("Nincs entomologist");
             return;
         }
 
@@ -1169,8 +1135,9 @@ public class CmdParser {
         players.add(entomologist);
         game.setPlayers(players);
 
+
         // Létrehozzuk a rovart a megadott tectonon
-        Insect newInsect = new Insect(targetTecton, nameId);
+        Insect newInsect = new Insect(targetTecton,  entomologist, nameId);
 
         // Hozzáadjuk a rovart a rovarászhoz
         entomologist.addInsect(newInsect);
@@ -1206,7 +1173,7 @@ public class CmdParser {
 
         // Létrehozzuk a megfelelő típusú spórát
         switch (sporeType) {
-            case "paralyzing":
+            case "paralyze":
                 newSpore = new ParalyzingSpore();
                 break;
             case "decelerator":
@@ -1217,7 +1184,7 @@ public class CmdParser {
                 break;
             default:
                 System.out.println("Ismeretlen spóra típus: " + sporeType);
-                System.out.println("Támogatott típusok: paralyzing, decelerator, cutpreventing");
+                System.out.println("Támogatott típusok: paralyze, decelerator, cutpreventing");
                 return;
         }
 
@@ -1248,22 +1215,27 @@ public class CmdParser {
             System.out.println("Nem található gomba a megadott azonosítóval: " + mushroomId);
             return;
         }
+        MushroomPicker mp = findMushroomPickerByMushroom(targetMushroom);
+        if (mp == null)
+            System.out.println("Nem található mushroom picker ezzel a gombaval: " + targetMushroom.getId());
 
         Yarn newYarn = null;
         switch (yarnType) {
             case "normal":
-                newYarn = new Yarn(targetMushroom);
+                newYarn = new Yarn(targetMushroom,mp ,nameId);
                 break;
-            case "killer":
+            case "kill":
                 // KillerYarn subclass implementation would be needed
-                // newYarn = new KillerYarn(targetMushroom);
-                return;
+                newYarn = new KillerYarn(targetMushroom, mp,nameId);
+                break;
             default:
                 System.out.println("Ismeretlen gombafonal típus: " + yarnType);
-                System.out.println("Támogatott típusok: normal, killer");
+                System.out.println("Támogatott típusok: normal, kill");
                 return;
         }
+        Tecton targetTecton = findTectonById(targetMushroom.getTecton().getId());
 
+        targetTecton.addYarn(newYarn);
         // A 'Yarn(Mushroom mushroom)' konstruktor már hozzáadja a Yarn-t a mushroom Tectonjához
         // és beállítja a gombafonalat a gombához is
     }
@@ -1283,7 +1255,7 @@ public class CmdParser {
         String nameId = args[2];
 
         // Default values
-        int yarnLimit = 5; // Alapértelmezett érték
+        int yarnLimit = 1; // Alapértelmezett érték
         boolean mushroomPrevent = false;
 
         Tecton newTecton = null;
@@ -1314,7 +1286,6 @@ public class CmdParser {
 
         // Hozzáadjuk a létrehozott Tecton-t a térképhez
         map.addTecton(newTecton);
-        System.out.println("Tecton sikeresen létrehozva és hozzáadva a térképhez. ID: " + nameId + ", Név: " + nameId);
     }
     /**
      * Creates a new Mushroom on a specified Tecton.
@@ -1323,11 +1294,12 @@ public class CmdParser {
      */
     private static void create_mushroom(String[] args) {
         // Check for correct number of arguments (command name + 1 argument)
-        if (handleArgCount(args, 2)) {
+        if (handleArgCount(args, 4)) {
             return;
         }
-
-        String tectonId = args[1];
+        String mushroomId = args[3];
+        String tectonId = args[2];
+        String ownerName = args[1];
 
         // Use findTectonById method to find the tecton
         Tecton targetTecton = findTectonById(tectonId);
@@ -1350,9 +1322,12 @@ public class CmdParser {
         }
 
         // Create the mushroom on the tecton
-        Mushroom mushroom = new Mushroom(targetTecton);
+        Mushroom mushroom = new Mushroom(targetTecton, mushroomId);
         targetTecton.addMushroom(mushroom);
-        System.out.println("Mushroom created successfully on tecton with ID: " + tectonId);
+
+        MushroomPicker mp = (MushroomPicker) findPlayerByName(ownerName);
+        mp.addMushroom(mushroom);
+
     }
 
     /**
@@ -1367,17 +1342,11 @@ public class CmdParser {
         }
 
         String name = args[1];
-        int mushroomId;
+        String mushroomPickerId = args[2];
 
-        try {
-            mushroomId = Integer.parseInt(args[2]);
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid mushroom ID format: " + args[2]);
-            return;
-        }
 
         // Create the mushroom picker
-        MushroomPicker mushroomPicker = new MushroomPicker(name);
+        MushroomPicker mushroomPicker = new MushroomPicker(name, mushroomPickerId);
 
         
         List<Player> players = game.getPlayers();
@@ -1398,19 +1367,13 @@ public class CmdParser {
         }
 
         String name = args[1];
-        String insectId = args[2];
+        String entomologistId = args[2];
 
 
-        // Find the insect with the given ID
-        Insect targetInsect = findInsectById(insectId);
 
-        if (targetInsect == null) {
-            System.out.println("Insect with ID " + insectId + " not found.");
-            return;
-        }
 
         // Create the entomologist
-        Entomologist entomologist = new Entomologist(name, targetInsect);
+        Entomologist entomologist = new Entomologist(name, entomologistId);
 
         // Add the entomologist to the game's player list
         List<Player> players = game.getPlayers();

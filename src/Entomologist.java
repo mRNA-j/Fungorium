@@ -17,13 +17,15 @@ public class Entomologist extends Player{
      * @param name   A játékos neve.
      * @param insect A játékoshoz tartozó rovar.
      */
-    public Entomologist(String name, Insect insect){
-        super(name, 0);
+    public Entomologist(String name, Insect insect, String testId){
+        super(name, 0, testId);
         insects = new ArrayList<>();
         insects.add(insect);
     }
-    public Entomologist(String name){
-        super(name, 0);
+    public Entomologist(String name, String testId){
+
+        super(name, 0, testId);
+        insects = new ArrayList<>();
     }
     /**
      * Visszaadja az entomológushoz tartozó rovart.

@@ -9,7 +9,7 @@ public class Yarn {
     protected Mushroom mushroom;
     protected MushroomPicker player;
     private String id;
-    protected String name;
+    protected String name = "yarn";
 
     public String getId() {
         return id;
@@ -42,11 +42,13 @@ public class Yarn {
      * A Yarn class konstruktora.
      * @param mushroom A gomba, amihez a gombafonal tartozik.
      */
-    public Yarn(Mushroom mushroom) {
+    public Yarn(Mushroom mushroom, MushroomPicker picker,String id) {
         this.tectons = new ArrayList<>();
         tectons.add(mushroom.getTecton());
         tectons.get(0).growYarn(this);
         this.mushroom = mushroom;
+        this.id = id;
+        this.player = picker;
     }
 
     /**
@@ -133,7 +135,6 @@ public class Yarn {
     public void addTecton(Tecton t) {
         if (!tectons.contains(t)) {
             this.tectons.add(t);
-            System.out.println("Adding tecton to yarn: " + t);
         }
     }
 

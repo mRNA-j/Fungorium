@@ -23,22 +23,12 @@ public class Tecton {
 
     public boolean getIsKeepAlive(){ return isKeepAlive; }
 
-    public String getType(){ // ezt valahogy szebben kéne
-        if(isKeepAlive){
-            return "Keep Alive Tecton";
-        }
-        if(mushroomPrevent){
-            return "Mushroom Preventing Tecton";
-        }
-        if(yarnAbsorption){
-            return "Yarn Absorbing Tecton";
-        }
-        if(yarnLimit>1){
-            return "Multiple Yarn Tecton";
-        }
-        else{
-            return "Single Yarn Tecton";
-        }
+    public String getType() {
+        if (isKeepAlive)        return "Keep Alive Tecton";
+        if (mushroomPrevent)    return "Mushroom Preventing Tecton";
+        if (yarnAbsorption)     return "Yarn Absorbing Tecton";
+        return yarnLimit > 1 ? "Multiple Yarn Tecton"
+                : "normal";
     }
 
     /**
@@ -59,7 +49,9 @@ public class Tecton {
         this.spores = new ArrayList<>();
         this.neighbours = new ArrayList<>(); // Inicializáljuk a listát
     }
-
+    public void addYarn(Yarn y){
+        yarns.add(y);
+    }
     /**
      * Hozzáad egy gombát a Tectonhoz.
      *
@@ -67,7 +59,6 @@ public class Tecton {
      */
     public void addMushroom(Mushroom mushroom) {
         this.mushroom = mushroom;
-        System.out.println("Mushroom added: " + mushroom);
     }
 
     /**
@@ -88,7 +79,6 @@ public class Tecton {
     public void addInsect(Insect insect) {
         this.insects.add(insect);
         insect.setCurrentPlace(this);
-        System.out.println("Insect added: " + insect);
     }
 
     /**
@@ -108,7 +98,6 @@ public class Tecton {
      * @return true, ha a Tecton szomszédos, false egyébként.
      */
     public boolean isNeighbour(Tecton targetTecton) {
-        System.out.println("Checking if " + targetTecton + " is neighbour.");
         return this.neighbours.contains(targetTecton); // Egyszerű ellenőrzés
     }
 
@@ -121,7 +110,6 @@ public class Tecton {
         //yarnhoz hozzadjuk a tectont
         yarn.addTecton(this);
         yarns.add(yarn);
-        System.out.println("Yarn added: " + yarn);
     }
 
     /**

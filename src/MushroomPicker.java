@@ -20,22 +20,28 @@ public class MushroomPicker extends Player {
      */
     private static List<Yarn> ownedYarns;
 
+    public void addMushroom(Mushroom mushroom){
+        ownedMushrooms.add(mushroom);
+    }
+
+
+
     /**
      * Konstruktor a MushroomPicker példány létrehozásához.
      *
      * @param name     A játékos neve.
      * @param mushroom Az induló gomba, amelyet a játékos birtokol.
      */
-    public MushroomPicker(String name, Mushroom mushroom) {
-        super(name, 0); // A szülő (Player) osztály konstruktorának meghívása a játékos névvel és induló értékkel (0)
+    public MushroomPicker(String name, Mushroom mushroom, String testId) {
+        super(name, 0, testId); // A szülő (Player) osztály konstruktorának meghívása a játékos névvel és induló értékkel (0)
         ownedMushrooms = new ArrayList<>(); // A ownedMushrooms lista inicializálása egy új ArrayList példánnyal
         ownedMushrooms.add(mushroom); // Az induló gomba hozzáadása a gombák listájához
         ownedYarns = new ArrayList<Yarn>(); // A statikus ownedYarns lista inicializálása egy új ArrayList példánnyal
     }
 
 
-    public MushroomPicker(String name) {
-        super(name, 0); // A szülő (Player) osztály konstruktorának meghívása a játékos névvel és induló értékkel (0)
+    public MushroomPicker(String name, String testId) {
+        super(name, 0, testId); // A szülő (Player) osztály konstruktorának meghívása a játékos névvel és induló értékkel (0)
         ownedMushrooms = new ArrayList<>(); // A ownedMushrooms lista inicializálása egy új ArrayList példánnyal
         ownedYarns = new ArrayList<Yarn>(); // A statikus ownedYarns lista inicializálása egy új ArrayList példánnyal
     }

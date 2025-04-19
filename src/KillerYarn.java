@@ -1,8 +1,18 @@
 public class KillerYarn extends Yarn {
+  private String id;
 
-  public KillerYarn (Mushroom mushroom) {
-    super(mushroom);
+  public KillerYarn (Mushroom mushroom, MushroomPicker mp,String id) {
+    super(mushroom, mp,id);
     name = "KillerYarn";
+    this.id = id;
+  }
+  @Override
+  public String getName() {          // ← this is what @Override belongs to
+    return "kill";
+  }
+  @Override
+  public String getId() {
+    return id;
   }
 
   @Override
@@ -15,6 +25,7 @@ public class KillerYarn extends Yarn {
 
             //Eltávolítja a tectonról
             tecton.removeInsect(insect);
+
 
             //Gombatest nő, ha az adott tektonon eddig nem volt
             if(!tecton.isMushroomPrevent() && tecton.getMushroom() == null) {
