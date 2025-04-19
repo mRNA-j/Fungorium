@@ -2,9 +2,6 @@ package model;
 
 /** A Model.YarnAbsorbantTecton class egy speciális Model.Tecton, ami felszívja a gombafonalakat. */
 public class YarnAbsorbantTecton extends Tecton {
-
-
-
     private boolean yarnAbsorption = true;
     /**
      * A Model.YarnAbsorbantTecton class konstruktora.

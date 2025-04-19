@@ -1,9 +1,10 @@
 package view;
+import model.*;
 
-import model.Tecton;
-import model.Yarn;
-
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class YarnView implements View{
 
@@ -16,7 +17,7 @@ public class YarnView implements View{
   @Override
   public void printObject() {
     System.out.println("Model.Yarn: " + yarn.getId());
-    System.out.println("Type: " + yarn.getName()); //TODO Implement type name - technically implementáltam, gyakorlatilag spagetti- Erna
+    System.out.println("Type: " + yarn.getName());
 
     // Print tectons connected by yarn
     StringBuilder tectonsInYarn = new StringBuilder("Tectons in yarn: ");
@@ -29,6 +30,24 @@ public class YarnView implements View{
 
   @Override
   public void printToFile(File f) {
-    //TODO - fajl kiiras megvalositas
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(f, true))) {
+
+      writer.write("Model.Yarn: " + yarn.getId());
+      writer.newLine();
+
+      writer.write("Type: " + yarn.getName());
+      writer.newLine();
+
+      StringBuilder tectonsInYarn = new StringBuilder("Tectons in yarn: ");
+      for (Tecton tecton : yarn.getTectons()) {
+        tectonsInYarn.append(tecton.getId()).append(" ");
+      }
+      writer.write(tectonsInYarn.toString().trim());
+      writer.newLine();
+      writer.newLine();
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }

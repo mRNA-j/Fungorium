@@ -1,3 +1,5 @@
+package model;
+
 public class KillerYarn extends Yarn {
   private String id;
 
