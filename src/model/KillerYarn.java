@@ -4,7 +4,7 @@ public class KillerYarn extends Yarn {
   private String id;
 
   public KillerYarn (Mushroom mushroom, MushroomPicker mp,String id) {
-    super(mushroom, mp,id);
+    super(mushroom, mp, id);
     name = "KillerYarn";
     this.id = id;
   }
@@ -20,6 +20,9 @@ public class KillerYarn extends Yarn {
   @Override
     public void runEffect() {
       for (Tecton tecton : tectons) {
+        if(tecton.getInsects().isEmpty()) {
+          return;
+        }
         for (Insect insect : tecton.getInsects()) {
           if(insect.getParalized()) {
             //Eltávolítja a rovarász rovarjai közül
@@ -31,7 +34,8 @@ public class KillerYarn extends Yarn {
 
             //Gombatest nő, ha az adott tektonon eddig nem volt
             if(!tecton.isMushroomPrevent() && tecton.getMushroom() == null) {
-              new Mushroom(tecton);
+              new Mushroom(tecton, "sajt"); //TODO: idvel kezdeni kell valami vmi egyedi naming conventiont szuljunk neki
+              this.getPlayer().addPoints(1);//sztem kell -Luca
             }
           }
         }

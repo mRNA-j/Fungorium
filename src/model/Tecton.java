@@ -94,7 +94,7 @@ public class Tecton {
      */
     public void removeInsect(Insect insect) {
         this.insects.remove(insect);
-        System.out.println("Insect removed: " + insect);
+        //System.out.println("Insect removed: " + insect);
     }
 
     /**

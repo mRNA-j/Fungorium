@@ -1,9 +1,17 @@
 Tecton: t1
 Type: normal
 Mushroom: m1
-Insects: i1
-Yarns: none
+Insects: none
+Yarns: y1
 Neighbours: none
+Spores: none
+
+Tecton: t2
+Type: normal
+Mushroom: none
+Insects: none
+Yarns: y1
+Neighbours: t1
 Spores: none
 
 Mushroom: m1
@@ -11,11 +19,15 @@ HasSpore: false
 Place: t1
 Owner: Bob
 
-Player: Alice
-Type: Entomologist
-Points: 0
+Yarn: y1
+Type: kill
+Tectons in yarn: t1 t2
 
 Player: Bob
 Type: MushroomPicker
+Points: 0
+
+Player: Alice
+Type: Entomologist
 Points: 0
 

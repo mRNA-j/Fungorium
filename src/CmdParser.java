@@ -1233,7 +1233,7 @@ public class CmdParser {
                 break;
             case "kill":
                 // KillerYarn subclass implementation would be needed
-                newYarn = new KillerYarn(targetMushroom, mp,nameId);
+                newYarn = new KillerYarn(targetMushroom, mp, nameId);
                 break;
             default:
                 System.out.println("Ismeretlen gombafonal típus: " + yarnType);
