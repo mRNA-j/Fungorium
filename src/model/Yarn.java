@@ -6,7 +6,6 @@ import java.util.Random;
 
 /** A Yarn class a gombafonal reprezentációja. */
 public class Yarn {
-
     protected List<Tecton> tectons;
     protected Mushroom mushroom;
     protected MushroomPicker player;
@@ -47,10 +46,12 @@ public class Yarn {
     public Yarn(Mushroom mushroom, MushroomPicker picker,String id) {
         this.tectons = new ArrayList<>();
         tectons.add(mushroom.getTecton());
-        tectons.get(0).growYarn(this);
+        //System.out.println(this);
         this.mushroom = mushroom;
         this.id = id;
         this.player = picker;
+        //tectons.get(0).growYarn(this);
+        mushroom.getTecton().addYarn(this);
     }
 
     /**

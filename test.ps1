@@ -43,6 +43,16 @@ function run {
 
     # Compare results
     if (Test-Path $out) {
+        if (-not (Test-Path $out) -or -not (Test-Path $exp)) {
+            Write-Output "Error: Missing test output or expected file."
+            return
+        }
+
+        if ((Get-Content $out).Count -eq 0 -or (Get-Content $exp).Count -eq 0) {
+            Write-Output "Error: One of the test files is empty."
+            return
+        }
+
         $res = Compare-Object -SyncWindow 0 (Get-Content $out) (Get-Content $exp)
         if ([string]::IsNullOrEmpty($res)) {
             Write-Output "Test successful."

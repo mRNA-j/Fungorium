@@ -56,6 +56,7 @@ public class Tecton {
         this.neighbours = new ArrayList<>(); // Inicializáljuk a listát
     }
     public void addYarn(Yarn y){
+        System.out.println(y.getId());
         yarns.add(y);
     }
     /**
@@ -74,7 +75,7 @@ public class Tecton {
      */
     public void removeMushroom(Mushroom mushroom) {
         this.mushroom = null;
-        System.out.println("Mushroom removed: " + mushroom);
+        //System.out.println("Mushroom removed: " + mushroom);
     }
 
     /**
@@ -114,8 +115,17 @@ public class Tecton {
      */
     public void growYarn(Yarn yarn) {
         //yarnhoz hozzadjuk a tectont
-        yarn.addTecton(this);
-        yarns.add(yarn);
+        //System.out.println(yarn);
+        System.out.println("beleeptt " + yarn.getId());
+        if (yarn != null) {
+            if(yarns.contains(yarn)) {
+                //System.out.println("tartalmazza");
+                return;
+            }
+            //System.out.println("nem tartalmazza");
+            yarn.addTecton(this);
+            yarns.add(yarn);
+        }
     }
 
     /**
@@ -126,7 +136,7 @@ public class Tecton {
     public void removeYarn(Yarn yarn) {
         yarn.split(this);
         yarns.remove(yarn);
-        System.out.println("Yarn removed: " + yarn);
+        //System.out.println("Yarn removed: " + yarn);
     }
 
     /**
@@ -136,7 +146,7 @@ public class Tecton {
      */
     public void addSpore(Spore spore) {
         this.spores.add(spore);
-        System.out.println("Spore added: " + spore);
+        //System.out.println("Spore added: " + spore);
     }
 
     /**
@@ -146,7 +156,7 @@ public class Tecton {
      */
     public void removeSpore(Spore spore) {
         this.spores.remove(spore);
-        System.out.println("Spore removed: " + spore);
+        //System.out.println("Spore removed: " + spore);
     }
 
     /**
@@ -161,8 +171,6 @@ public class Tecton {
 
     /**
      * Módosítja a Tectonhoz tartozó maximális gombafonal limitet.
-     *
-     *
      */
     public void setYarnLimit(int yl) {
         yarnLimit=yl;

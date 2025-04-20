@@ -292,12 +292,8 @@ public class CmdParser {
                     .collect(Collectors.joining(" "))));
 
             /* ----------  YARNS  ---------- */
-            System.out.println("Yarns: "    + (tecton.getYarns().isEmpty()
-                    ? "none"
-                    : tecton.getYarns()
-                    .stream()
-                    .map(Yarn::getId)
-                    .collect(Collectors.joining(" "))));
+            /*System.out.println("\n\n\nYarns: "    );*/
+            System.out.println("Yarn: " +  tecton.getYarns().size());
 
             /* ----------  NEIGHBOURS  ---------- */
             System.out.println("Neighbours: "+ (tecton.getNeighbours().isEmpty()
@@ -315,7 +311,10 @@ public class CmdParser {
                     .map(Spore::getId)
                     .collect(Collectors.joining(" "))));
             System.out.println();
+
+
         }
+
 
         /* ----------  MUSHROOMS  ---------- */
         for (Mushroom m : getAllMushroomsInGame()) {
@@ -406,9 +405,6 @@ public class CmdParser {
         }
     }
 
-
-
-
     /**
      * Saves the current game state to a file.
      * Command syntax: save <filename>
@@ -430,7 +426,7 @@ public class CmdParser {
 
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
             // Create a container object to hold both game and map
-            GameState gameState = new GameState(game, map);
+            GameState gameState = new GameState(game);
 
             // Write the game state to the file
             out.writeObject(gameState);
@@ -494,9 +490,9 @@ public class CmdParser {
         private final Game game;
         private final Map map;
 
-        public GameState(Game game, Map map) {
+        public GameState(Game game) {
             this.game = game;
-            this.map = map;
+            map = game.getPlayField();
         }
 
         public Game getGame() {
@@ -1226,13 +1222,15 @@ public class CmdParser {
         if (mp == null)
             System.out.println("Nem található mushroom picker ezzel a gombaval: " + targetMushroom.getId());
 
-        Yarn newYarn = null;
+        Yarn newYarn;
         switch (yarnType) {
             case "normal":
                 newYarn = new Yarn(targetMushroom,mp ,nameId);
+                //System.out.println("nromal");
                 break;
             case "kill":
                 // KillerYarn subclass implementation would be needed
+                //System.out.println("killer");
                 newYarn = new KillerYarn(targetMushroom, mp, nameId);
                 break;
             default:
