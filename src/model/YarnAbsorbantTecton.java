@@ -11,7 +11,7 @@ public class YarnAbsorbantTecton extends Tecton {
      */
     public YarnAbsorbantTecton(String id, int yarnLimit, boolean mushroomPrevent, boolean isKeepAlive) {
         super(id, yarnLimit, mushroomPrevent, isKeepAlive);
-
+        super.setYarnAbsorption(true);
     }
 
 

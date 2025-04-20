@@ -25,6 +25,10 @@ public class Tecton {
 
     public boolean getIsKeepAlive(){ return isKeepAlive; }
 
+    public void setYarnAbsorption(boolean yarnAbsorption){
+        this.yarnAbsorption = yarnAbsorption;
+    }
+
     public String getType() {
         if (isKeepAlive)        return "Keep Alive Tecton";
         if (mushroomPrevent)    return "Mushroom Preventing Tecton";

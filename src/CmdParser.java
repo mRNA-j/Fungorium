@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 
 public class CmdParser {
     private static Game game = new Game();
-    private static Map map = new Map();
-
+    //private static Map map = new Map();
+    private static Map map = game.getPlayField();
     /**
      * Searches for a MushroomPicker player among the game players using the provided ID.
      *
@@ -273,14 +273,17 @@ public class CmdParser {
         if (handleArgCount(args, 1)) return;
 
         /* ----------  TECTONS  ---------- */
+
         for (Tecton tecton : map.getTectons()) {
             System.out.println("Tecton: "   + tecton.getId());
             System.out.println("Type: "     + tecton.getType());
 
+            /* ----------  MUSHROOM  ---------- */
             System.out.println("Mushroom: " + (tecton.getMushroom() != null
                     ? tecton.getMushroom().getId()
                     : "none"));
 
+            /* ----------  INSECTS  ---------- */
             System.out.println("Insects: "  + (tecton.getInsects().isEmpty()
                     ? "none"
                     : tecton.getInsects()
@@ -288,6 +291,7 @@ public class CmdParser {
                     .map(Insect::getId)
                     .collect(Collectors.joining(" "))));
 
+            /* ----------  YARNS  ---------- */
             System.out.println("Yarns: "    + (tecton.getYarns().isEmpty()
                     ? "none"
                     : tecton.getYarns()
@@ -295,6 +299,7 @@ public class CmdParser {
                     .map(Yarn::getId)
                     .collect(Collectors.joining(" "))));
 
+            /* ----------  NEIGHBOURS  ---------- */
             System.out.println("Neighbours: "+ (tecton.getNeighbours().isEmpty()
                     ? "none"
                     : tecton.getNeighbours()
@@ -302,6 +307,7 @@ public class CmdParser {
                     .map(Tecton::getId)
                     .collect(Collectors.joining(" "))));
 
+            /* ----------  SPORES  ---------- */
             System.out.println("Spores: "   + (tecton.getSpores().isEmpty()
                     ? "none"
                     : tecton.getSpores()
@@ -333,13 +339,15 @@ public class CmdParser {
         }
 
         /* ----------  PLAYERS  ---------- */
+
         for (Player p : game.getPlayers()) {
             System.out.println("Player: " + p.getName());
-            System.out.println("Type: "   + getPlayerType(p));
-            System.out.println();                       //  ← blank line before Points
+            System.out.println("Type: " + getPlayerType(p));
+            //System.out.println();                       //  ← blank line before Points
             System.out.println("Points: " + p.getPoints());
             System.out.println();
         }
+
     }
 
     /**
@@ -1132,20 +1140,17 @@ public class CmdParser {
             System.out.println("Nincs entomologist");
             return;
         }
-
+        /*
         List<Player> players = game.getPlayers();
         players.add(entomologist);
         game.setPlayers(players);
-
+        */
 
         // Létrehozzuk a rovart a megadott tectonon
         Insect newInsect = new Insect(targetTecton,  entomologist, nameId);
 
         // Hozzáadjuk a rovart a rovarászhoz
         entomologist.addInsect(newInsect);
-
-        // Hozzáadjuk a rovart a tectonhoz
-        targetTecton.addInsect(newInsect);
     }
 
     //**
@@ -1267,16 +1272,16 @@ public class CmdParser {
                 break;
             case "keepalive":
                 // KeepAliveTecton subclass implementation would be needed
-                //newTecton = new Tecton(nameId, yarnLimit, mushroomPrevent, true);//Luca sztem így kell
-                return;
+                newTecton = new Tecton(nameId, yarnLimit, mushroomPrevent, true);//Luca sztem így kell
+                break;
             case "yarnabsorbant":
                 newTecton = new YarnAbsorbantTecton(nameId, yarnLimit, mushroomPrevent, false);
                 break;
             case "multipleplayer":
                 // MultiplePlayerTecton subclass implementation would be needed
-                // newTecton = new MultiplePlayerTecton(id, yarnLimit, mushroomPrevent);
-                System.out.println("MultiplePlayer Tecton létrehozása még nem implementált.");
-                return;
+                newTecton = new Tecton(nameId, 2, mushroomPrevent, false);//sztem igy kell-Luca
+                //System.out.println("MultiplePlayer Tecton létrehozása még nem implementált.");
+                break;
             case "mushroomprevent":
                 newTecton = new Tecton(nameId, yarnLimit, true, false); // mushroomPrevent = true
                 break;
@@ -1370,17 +1375,20 @@ public class CmdParser {
 
         String name = args[1];
         String entomologistId = args[2];
-
-
-
+        //System.out.println("Név: " + name + "ID: " + entomologistId);
 
         // Create the entomologist
         Entomologist entomologist = new Entomologist(name, entomologistId);
 
         // Add the entomologist to the game's player list
         List<Player> players = game.getPlayers();
-        players.add(entomologist);
-        game.setPlayers(players);
+        if(players == null){
+            System.out.println(players);
+        }
+        else {
+            players.add(entomologist);
+            game.setPlayers(players);
+        }
     }
 
 }
