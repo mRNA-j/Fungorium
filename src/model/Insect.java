@@ -171,8 +171,6 @@ public class Insect {
      */
     public void cutYarn(Yarn yarn, Tecton errefeleVagunk) {
 
-        //TODO - ez csak akkor mukodik ha a currentplace a yarn egyk vegen van
-
         int index = yarn.tectons.indexOf(currentPlace);
         if(index == 0 || index == yarn.getTectons().size()-1) {
             currentPlace.removeYarn(yarn, errefeleVagunk);
