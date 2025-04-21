@@ -157,16 +157,16 @@ public class MushroomPicker extends Player {
                         targetTecton.removeSpore(targetTecton.getSpores().remove(0)); // Harmadik spóra eltávolítása
                         addPoints(3);
                     } else {
-                        System.out.println(errorMessage + " Nem erheto el fonalakkal");
+                        //System.out.println(errorMessage + " Nem erheto el fonalakkal");
                     }
                 } else {
-                    System.out.println(errorMessage + " Nincs eleg spora a tektonon");
+                    //System.out.println(errorMessage + " Nincs eleg spora a tektonon");
                 }
             } else {
-                System.out.println(errorMessage + " Van mar gomba a tektonon");
+                //System.out.println(errorMessage + " Van mar gomba a tektonon");
             }
         } else {
-            System.out.println(errorMessage + " Nem lehet gombat noveszteni a tektonon");
+            //System.out.println(errorMessage + " Nem lehet gombat noveszteni a tektonon");
         }
 
     }

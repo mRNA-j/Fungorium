@@ -1,12 +1,13 @@
-create_mushroom_picker Bob mp1
+randomize false
+create_mushroom_picker Bob m1
+create_entomologist Alice e1
 create_tecton normal t1
 create_tecton normal t2
-create_tecton normal t3
 add_neighbour_to_tecton t1 t2
-add_neighbour_to_tecton t3 t2
 create_mushroom Bob t1 m1
-create_spore_on_tecton t2 accelerator a1
 create_yarn m1 normal y1
 action_grow_yarn t1 t2 y1
-action_grow_yarn t2 t3 y1
+create_insect Alice t1 i1
+add_effect_to_insect paralyze i1
+action_move i1 t2
 stat

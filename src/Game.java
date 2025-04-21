@@ -1,4 +1,5 @@
 import model.Player;
+import model.Tecton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,6 +114,10 @@ public class Game {
         if(currentTurn == numberOfTurns) {
             end();
         }
+        for(Tecton tecton: playField.getTectons()){
+
+        }
+
     }
 
     /**

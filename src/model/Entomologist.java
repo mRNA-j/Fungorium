@@ -53,7 +53,7 @@ public class Entomologist extends Player{
     public void actionMove(Tecton targetTecton, Insect insect) {
         Tecton currentTecton = insect.getCurrentPlace();
         if(insect.getParalized()){
-            System.out.println("A rovar bénítóspóra hatása alatt van, a mozgás nem lehetéges");
+            //System.out.println("A rovar bénítóspóra hatása alatt van, a mozgás nem lehetéges");
             return;
         }
         if(insect.getDecelerated()){
@@ -73,7 +73,7 @@ public class Entomologist extends Player{
      */
     public void actionEatSpore(Spore spore, Insect insect) {
         if(insect.getParalized()){
-            System.out.println("A rovar bénítóspóra hatása alatt van, az evés nem lehetéges");
+           // System.out.println("A rovar bénítóspóra hatása alatt van, az evés nem lehetéges");
             return;
         }
         insect.eatSpore(spore);
@@ -92,7 +92,7 @@ public class Entomologist extends Player{
             return;
         }
         if(insect.getCutPrevented()){
-            System.out.println("A rovar vágásgátló spóra hatása alatt van, a fonalvágás nem lehetéges");
+            //System.out.println("A rovar vágásgátló spóra hatása alatt van, a fonalvágás nem lehetéges");
             actionWait(insect);
             return;
         }

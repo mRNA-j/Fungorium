@@ -194,7 +194,7 @@ public class Insect {
             currentPlace.removeInsect(this);
             targetTecton.addInsect(this);
             currentPlace = targetTecton;
-            System.out.println("A választott tektonra vezet gombafonal. A mozgás végrehajtva");
+            //System.out.println("A választott tektonra vezet gombafonal. A mozgás végrehajtva");
             return true;
         }
         else{

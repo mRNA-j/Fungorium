@@ -1,0 +1,25 @@
+Tecton: t1
+Type: normal
+Mushroom: m1
+Insects: i1
+Yarns: none
+Neighbours: none
+Spores: none
+
+Mushroom: m1
+HasSpore: false
+Place: t1
+Owner: Bob
+
+Insect: i1
+Current Effect: accelerated
+Owner: Alice
+
+Player: Bob
+Type: MushroomPicker
+Points: 0
+
+Player: Alice
+Type: Entomologist
+Points: 1
+

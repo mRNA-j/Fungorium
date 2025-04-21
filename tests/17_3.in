@@ -1,6 +1,7 @@
+randomize false
 create_mushroom_picker Bob mp1
 create_tecton normal t1
-create_tecton normal t2
+create_tecton mushroomPrevent t2
 add_neighbour_to_tecton t1 t2
 create_mushroom Bob t1 m1
 create_yarn m1 normal y1

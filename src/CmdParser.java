@@ -810,12 +810,12 @@ public class CmdParser {
      */
     private static void action_eat_spore(String[] args) {
         // Check if we have exactly two arguments (insect ID and spore ID)
-        if (handleArgCount(args, 2)) {
+        if (handleArgCount(args, 3)) {
             return;
         }
 
-        String insectId = args[0];
-        String sporeId = args[1];
+        String insectId = args[1];
+        String sporeId = args[2];
 
         // Find the insect with the specified ID
         Insect targetInsect = findInsectById(insectId);
@@ -864,12 +864,12 @@ public class CmdParser {
      */
     private static void action_move(String[] args) {
         // Check if we have exactly two arguments (insect ID and target Tecton ID)
-        if (handleArgCount(args, 2)) {
+        if (handleArgCount(args, 3)) {
             return;
         }
 
-        String insectId = args[0];
-        String targetTectonId = args[1];
+        String insectId = args[1];
+        String targetTectonId = args[2];
 
         // Find the insect with the specified ID
         Insect targetInsect = findInsectById(insectId);
@@ -1214,14 +1214,15 @@ public class CmdParser {
  * @param args A parancs argumentumai (tecton_id, spore_type)
  */
     private static void create_spore_on_tecton(String[] args) {
-        // Ellenőrizzük, hogy pontosan 3 argumentum van-e (beleértve a parancs nevét)
-        if (handleArgCount(args, 3)) {
-            System.out.println("Használat: create_spore_on_tecton <tecton_id> <spore_type>");
+        // Ellenőrizzük, hogy pontosan 4 argumentum van-e (beleértve a parancs nevét)
+        if (handleArgCount(args, 4)) {
+            System.out.println("Használat: create_spore_on_tecton <tecton_id> <spore_type> <spore_id>");
             return;
         }
 
         String tectonId = args[1];
         String sporeType = args[2].toLowerCase();
+        String sporeId = args[3];
 
         // Használjuk a findTectonById metódust a tecton megkereséséhez
         Tecton targetTecton = findTectonById(tectonId);
@@ -1236,20 +1237,20 @@ public class CmdParser {
         // Létrehozzuk a megfelelő típusú spórát
         switch (sporeType) {
             case "paralyze":
-                newSpore = new ParalyzingSpore("Paralyzing1");
+                newSpore = new ParalyzingSpore(sporeId);
                 break;
             case "accelerator":
-                newSpore = new AcceleratorSpore("Accelerator1");
+                newSpore = new AcceleratorSpore(sporeId);
                 break;
             case "decelerator":
-                newSpore = new DeceleratorSpore("Decelerator1");
+                newSpore = new DeceleratorSpore(sporeId);
                 break;
             case "cutpreventing":
-                newSpore = new CutPreventingSpore("CutPreventing1");
+                newSpore = new CutPreventingSpore(sporeId);
                 break;
             default:
                 System.out.println("Ismeretlen spóra típus: " + sporeType);
-                System.out.println("Támogatott típusok: paralyze, decelerator, cutpreventing");
+                System.out.println("Támogatott típusok: accelerator, paralyze, decelerator, cutpreventing");
                 return;
         }
 

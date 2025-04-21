@@ -1,0 +1,29 @@
+Tecton: t1
+Type: normal
+Mushroom: m1
+Insects: none
+Yarns: y1
+Neighbours: t2
+Spores: none
+
+Tecton: t2
+Type: mushroomPrevent
+Mushroom: none
+Insects: none
+Yarns: y1
+Neighbours: t1
+Spores: a1 a2 a3
+
+Mushroom: m1
+HasSpore: false
+Place: t1
+Owner: Bob
+
+Yarn: y1
+Type: normal
+Tectons in yarn: t1 t2
+
+Player: Bob
+Type: MushroomPicker
+Points: 0
+
