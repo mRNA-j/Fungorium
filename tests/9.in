@@ -1,0 +1,6 @@
+randomize false
+create_tecton normal Tecton1
+create_tecton normal Tecton2
+add_neighbour_to_tecton Tecton1 Tecton2
+split_tecton Tecton2
+stat

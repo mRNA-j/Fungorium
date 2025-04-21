@@ -8,7 +8,7 @@ Spores: none
 
 Tecton: t2
 Type: normal
-Mushroom: none
+Mushroom: m2
 Insects: none
 Yarns: y1
 Neighbours: t1
@@ -19,15 +19,16 @@ HasSpore: false
 Place: t1
 Owner: Bob
 
+Mushroom: m2
+HasSpore: false
+Place: t2
+Owner: Bob
+
 Yarn: y1
-Type: killerYarn
+Type: normal
 Tectons in yarn: t1 t2
 
 Player: Bob
 Type: MushroomPicker
-Points: 0
-
-Player: Alice
-Type: Entomologist
-Points: 0
+Points: 3
 

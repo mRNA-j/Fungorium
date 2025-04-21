@@ -14,6 +14,10 @@ public class CutPreventingSpore extends Spore {
     public CutPreventingSpore(){
         super(2, "cutpreventing");
     }
+
+    public CutPreventingSpore(String testId){
+        super(2, "cutpreventing", testId);
+    }
     /**
      * Alkalmazza a vágásgátló hatást a megadott rovarra.
      * A metódus beállítja a rovar állapotát ennek megfelelően.

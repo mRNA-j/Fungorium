@@ -1,15 +1,15 @@
 import model.*;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class CmdParser {
     private static Game game = new Game();
-    //private static Map map = new Map();
+
     private static Map map = game.getPlayField();
+    private static boolean isRandomized = true;
+
     /**
      * Searches for a MushroomPicker player among the game players using the provided ID.
      *
@@ -171,8 +171,10 @@ public class CmdParser {
         for (Player player : game.getPlayers()) {
             if (player instanceof Entomologist) {
                 Entomologist entomologist = (Entomologist) player;
-                if (entomologist.getInsect() == insect) {
-                    return entomologist;
+                for (Insect i : entomologist.getInsect()) {
+                    if(i.getId().equals(insect.getId())) {
+                        return entomologist;
+                    }
                 }
             }
         }
@@ -292,8 +294,12 @@ public class CmdParser {
                     .collect(Collectors.joining(" "))));
 
             /* ----------  YARNS  ---------- */
-            /*System.out.println("\n\n\nYarns: "    );*/
-            System.out.println("Yarn: " +  tecton.getYarns().size());
+            System.out.println("Yarns: "+ (tecton.getYarns().isEmpty()
+              ? "none"
+              : tecton.getYarns()
+              .stream()
+              .map(Yarn::getId)
+              .collect(Collectors.joining(" "))));
 
             /* ----------  NEIGHBOURS  ---------- */
             System.out.println("Neighbours: "+ (tecton.getNeighbours().isEmpty()
@@ -304,7 +310,9 @@ public class CmdParser {
                     .collect(Collectors.joining(" "))));
 
             /* ----------  SPORES  ---------- */
-            System.out.println("Spores: "   + (tecton.getSpores().isEmpty()
+
+            //System.out.println("SPORATOMB " + tecton.getSpores().size());
+            System.out.println("Spores: "   + (tecton.getSpores().isEmpty() || tecton.getSpores() == null
                     ? "none"
                     : tecton.getSpores()
                     .stream()
@@ -315,7 +323,6 @@ public class CmdParser {
 
         }
 
-
         /* ----------  MUSHROOMS  ---------- */
         for (Mushroom m : getAllMushroomsInGame()) {
             System.out.println("Mushroom: " + m.getId());
@@ -323,6 +330,14 @@ public class CmdParser {
             System.out.println("Place: "    + m.getTecton().getId());
             MushroomPicker owner = findMushroomPickerByMushroom(m);
             System.out.println("Owner: "    + (owner == null ? "none" : owner.getName()));
+            System.out.println();
+        }
+
+        /* ----------  INSECT  ---------- */
+        for (Insect i : getAllInsectsInGame()) {
+            System.out.println("Insect: " + i.getId());
+            System.out.println("Current Effect: " + (i.getCurrentEffect() == null ? "none" : i.getCurrentEffect()));
+            System.out.println("Owner: " + i.getOwner().getName());
             System.out.println();
         }
 
@@ -539,7 +554,18 @@ public class CmdParser {
 
 
     private static void randomize(String[] args) {
-        //TODO implement
+        if (handleArgCount(args, 2)) {
+            return;
+        }
+        if(Objects.equals(args[1], "false")) {
+            isRandomized = false;
+            return;
+        }
+        if(Objects.equals(args[1], "true")) {
+            isRandomized = true;
+            return;
+        }
+        System.out.println("Nem megfelelo ertek. Lehetsges erteke: true, false");
     }
 
     private static void game_end(String[] args) {
@@ -565,12 +591,12 @@ public class CmdParser {
      */
     private static void action_spore_dispersion(String[] args) {
         // Ensure exactly 2 arguments are provided.
-        if (handleArgCount(args, 2)) {
+        if (handleArgCount(args, 3)) {
             return;
         }
 
-        String targetTectonId = args[0];
-        String mushroomId = args[1];
+        String targetTectonId = args[1];
+        String mushroomId = args[2];
 
         // Locate the target tecton by its ID.
         Tecton targetTecton = findTectonById(targetTectonId);
@@ -651,7 +677,7 @@ public class CmdParser {
         }
 
         // Ensure that the yarn is located on the specified "from" tecton.
-        Tecton yarnTecton = findTectonByYarn(yarn);
+        Tecton yarnTecton = findTectonByYarn(yarn, fromTectonId);
         if (yarnTecton == null || !yarnTecton.getId().equals(fromTectonId)) {
             System.out.println("Hiba: A gombafonal (" + yarnId + ") nem található a megadott forrás tectonban (" + fromTectonId + ").");
             return;
@@ -679,6 +705,29 @@ public class CmdParser {
 
     private static void action_grow_mushroom(String[] args) {
         //senki nem hasznalja
+        if (handleArgCount(args, 4)) {
+            return;
+        }
+
+        String tectonId = args[1];
+        String pickerName = args[2];
+        String mushroomId = args[3];
+
+        MushroomPicker picker = findMushroomPickerById(pickerName);
+
+        if (picker == null) {
+            System.out.println("picker null");
+            return;
+        }
+
+        Tecton targetTecton = findTectonById(tectonId);
+
+        if (targetTecton == null) {
+            System.out.println("tecton null");
+            return;
+        }
+
+        picker.actionGrowMushroom(targetTecton, mushroomId);
     }
 
     /**
@@ -691,13 +740,13 @@ public class CmdParser {
      */
     private static void action_cut_yarn(String[] args) {
         // Ensure exactly 3 arguments are passed: insect_ID, yarn_ID, target_tecton_ID
-        if (handleArgCount(args, 3)) {
+        if (handleArgCount(args, 4)) {
             return;
         }
 
-        String insectId = args[0];
-        String yarnId = args[1];
-        String tectonId = args[2];
+        String insectId = args[1];
+        String yarnId = args[2];
+        String tectonId = args[3];
 
         // Look up the insect by its ID.
         Insect targetInsect = findInsectById(insectId);
@@ -714,7 +763,7 @@ public class CmdParser {
         }
 
         // Verify that the yarn is located on the tecton with the given target_tecton_ID.
-        Tecton yarnTecton = findTectonByYarn(targetYarn);
+        Tecton yarnTecton = findTectonByYarn(targetYarn, tectonId);
         if (yarnTecton == null || !yarnTecton.getId().equals(tectonId)) {
             System.out.println("Hiba: A gombafonal (" + yarnId + ") nincs a megadott tectonban (" + tectonId + ").");
             return;
@@ -739,12 +788,13 @@ public class CmdParser {
      * @param yarn The Yarn whose parent tecton is to be determined.
      * @return The Tecton that contains the Yarn, or null if not found.
      */
-    private static Tecton findTectonByYarn(Yarn yarn) {
+    private static Tecton findTectonByYarn(Yarn yarn, String id) {
         if (yarn == null) {
             return null;
         }
         for (Tecton tecton : map.getTectons()) {
-            if (tecton.getYarns().contains(yarn)) {
+            if (tecton.getId().equals(id) && tecton.getYarns().contains(yarn)) {
+                //System.out.println("Tecton: " + tecton.getId());
                 return tecton;
             }
         }
@@ -890,21 +940,30 @@ public class CmdParser {
      */
     private static void split_tecton(String[] args) {
         // Check if we have exactly one argument (the Tecton ID)
-        if (handleArgCount(args, 1)) {
+        if (handleArgCount(args, 2)) {
             return;
         }
 
-        String targetId = args[0];
-
-        // Find the Tecton with the specified ID
-        Tecton targetTecton = findTectonById(targetId);
-        if (targetTecton == null) {
-            System.out.println("Error: Tecton with ID " + targetId + " not found.");
-            return;
+        if (isRandomized) {
+            System.out.println("Randomizacio bekapcsolva maradt");
+        } else {
+            String targetId = args[1];
+            // Find the Tecton with the specified ID
+            Tecton targetTecton = findTectonById(targetId);
+            if (targetTecton == null) {
+                System.out.println("Error: Tecton with ID " + targetId + " not found.");
+                return;
+            }
+            if(targetTecton.getInsects().isEmpty()) {
+                // Split the Tecton using the existing splitting method
+                map.splitting(targetTecton);
+            } else {
+                //Mivel rovar van a tektonon, nem tehető random valahova, hanem mindig ugyan arra a tektonra kerül
+                map.notRandomizedSplitting(targetTecton);
+            }
         }
 
-        // Split the Tecton using the existing splitting method
-        map.splitting(targetTecton);
+
     }
 
 
@@ -1177,13 +1236,16 @@ public class CmdParser {
         // Létrehozzuk a megfelelő típusú spórát
         switch (sporeType) {
             case "paralyze":
-                newSpore = new ParalyzingSpore();
+                newSpore = new ParalyzingSpore("Paralyzing1");
+                break;
+            case "accelerator":
+                newSpore = new AcceleratorSpore("Accelerator1");
                 break;
             case "decelerator":
-                newSpore = new DeceleratorSpore();
+                newSpore = new DeceleratorSpore("Decelerator1");
                 break;
             case "cutpreventing":
-                newSpore = new CutPreventingSpore();
+                newSpore = new CutPreventingSpore("CutPreventing1");
                 break;
             default:
                 System.out.println("Ismeretlen spóra típus: " + sporeType);
@@ -1240,7 +1302,7 @@ public class CmdParser {
         }
         Tecton targetTecton = findTectonById(targetMushroom.getTecton().getId());
 
-        targetTecton.addYarn(newYarn);
+        //targetTecton.addYarn(newYarn);
         // A 'Yarn(Mushroom mushroom)' konstruktor már hozzáadja a Yarn-t a mushroom Tectonjához
         // és beállítja a gombafonalat a gombához is
     }

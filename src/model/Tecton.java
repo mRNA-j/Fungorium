@@ -30,10 +30,10 @@ public class Tecton {
     }
 
     public String getType() {
-        if (isKeepAlive)        return "Keep Alive Tecton";
-        if (mushroomPrevent)    return "Mushroom Preventing Tecton";
-        if (yarnAbsorption)     return "Yarn Absorbing Tecton";
-        return yarnLimit > 1 ? "Multiple Yarn Tecton"
+        if (isKeepAlive)        return "KeepAlive";
+        if (mushroomPrevent)    return "MushroomPrevent";
+        if (yarnAbsorption)     return "YarnAbsorbing";
+        return yarnLimit > 1 ? "MultipleYarn"
                 : "normal";
     }
 
@@ -56,7 +56,7 @@ public class Tecton {
         this.neighbours = new ArrayList<>(); // Inicializáljuk a listát
     }
     public void addYarn(Yarn y){
-        System.out.println(y.getId());
+        //System.out.println(y.getId());
         yarns.add(y);
     }
     /**
@@ -114,15 +114,10 @@ public class Tecton {
      * @param yarn A hozzáadandó gombafonal.
      */
     public void growYarn(Yarn yarn) {
-        //yarnhoz hozzadjuk a tectont
-        //System.out.println(yarn);
-        System.out.println("beleeptt " + yarn.getId());
+        if(yarns.contains(yarn)) {
+            return;
+        }
         if (yarn != null) {
-            if(yarns.contains(yarn)) {
-                //System.out.println("tartalmazza");
-                return;
-            }
-            //System.out.println("nem tartalmazza");
             yarn.addTecton(this);
             yarns.add(yarn);
         }

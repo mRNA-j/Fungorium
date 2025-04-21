@@ -1,0 +1,8 @@
+randomize false
+create_tecton normal Tecton1
+create_tecton normal Tecton2
+add_neighbour_to_tecton Tecton1 Tecton2
+create_mushroom_picker Bob Mp1
+create_mushroom Bob Tecton2 Muhsroom1
+split_tecton Tecton2
+stat

@@ -74,14 +74,12 @@ public class MushroomPicker extends Player {
      * @return Igaz, ha a tecton elérhető, különben hamis.
      */
     private static boolean isTectonInRange(Tecton tecton) {
-        // Végigiterál a birtokolt fonalak listáján
-        for (int i = 0; i < ownedYarns.size(); i++) { // Ciklus a fonalak listáján
-            // Ellenőrzi, hogy az aktuális fonalhoz tartozó tectonok között szerepel-e a megadott tecton
-            if (ownedYarns.get(i).getTectons().contains(tecton)) {
-                return true; // Ha megtalálja, visszatérünk true értékkel
+        for (Yarn yarn : ownedYarns) {
+            if (yarn.getTectons().contains(tecton)) {
+                return true;
             }
         }
-        return false; // Ha egyik fonal sem tartalmazza a tectont, visszatérünk false értékkel
+        return false;
     }
 
     /**
@@ -101,7 +99,7 @@ public class MushroomPicker extends Player {
         if (limit == 1 && tecton.getYarns().get(0).getPlayer() == this){ //tipus lekerdezes??
             return true;
         }
-        System.out.println("The tecton has been conquered already");
+        //System.out.println("The tecton has been conquered already");
         return false;
     }
 
@@ -137,9 +135,10 @@ public class MushroomPicker extends Player {
      *
      * @param targetTecton A cél tecton, ahol a gombát növeszteni szeretnénk.
      */
-    public void actionGrowMushroom(Tecton targetTecton) {
+    public void actionGrowMushroom(Tecton targetTecton, String tesztId) {
         final String errorMessage = "Feltetelek nem teljesultek,";
 
+        //System.out.println("HELLO");
         // Ellenőrzi, hogy a cél tecton nem gátolja-e a gomba növekedést
         if (!targetTecton.getMushroomPrevent()) {
             // Ellenőrzi, hogy a tecton már tartalmaz-e gombát
@@ -149,13 +148,14 @@ public class MushroomPicker extends Player {
                 if (targetTecton.getSpores().size() >= 3) {
                     // Ellenőrzi, hogy a tecton elérhető-e a birtokolt fonalakkal
                     if (isTectonInRange(targetTecton)) {
-                        Mushroom newMushroom = new Mushroom(targetTecton); // Új gomba létrehozása a cél tecton alapján
+                        //System.out.println("Novesztek");
+                        Mushroom newMushroom = new Mushroom(targetTecton, tesztId); // Új gomba létrehozása a cél tecton alapján
                         ownedMushrooms.add(newMushroom); // Új gomba hozzáadása a játékos gombáihoz
                         // Három spóra eltávolítása a tectonról
                         targetTecton.removeSpore(targetTecton.getSpores().remove(0)); // Első spóra eltávolítása
                         targetTecton.removeSpore(targetTecton.getSpores().remove(0)); // Második spóra eltávolítása
                         targetTecton.removeSpore(targetTecton.getSpores().remove(0)); // Harmadik spóra eltávolítása
-                        this.addPoints(1);
+                        addPoints(3);
                     } else {
                         System.out.println(errorMessage + " Nem erheto el fonalakkal");
                     }
@@ -168,6 +168,7 @@ public class MushroomPicker extends Player {
         } else {
             System.out.println(errorMessage + " Nem lehet gombat noveszteni a tektonon");
         }
+
     }
     /**
      * A fonal növesztésének akciója a cél tectonon a kiválasztott fonallal.
@@ -179,23 +180,24 @@ public class MushroomPicker extends Player {
 
    public void actionGrowYarn(Tecton sourceTecton, Tecton targetTecton, Yarn selectedYarn) {
         // Ellenőrzi, hogy a kiválasztott fonal egyik pontja szomszédos-e a cél tektonnal
-        //System.out.print("Fonal tektonjai: " + selectedYarn.getTectons() + "\n\n");
         if(selectedYarn.getTectons().contains(sourceTecton)) {
             if (sourceTecton.isNeighbour(targetTecton)) {
                 // Ellenőrzi, hogy a tecton meghódítható-e és ez az első próbálkozás
                 if (canIConquerTecton(targetTecton)) {
                     targetTecton.growYarn(selectedYarn); // Elindítja a fonal növesztését a kiválasztott fonallal
-                    return;
+                    if(!targetTecton.getSpores().isEmpty()) {
+                        targetTecton.getSpores().remove(targetTecton.getSpores().size() - 1); // utolsó sporat toroljuk ha volt a tektonon spora}
+                    return;}
                 } else {
-                    System.out.println("Mas jatekosnak mar van a fonala ezen  a tektonon");
+                    //System.out.println("Mas jatekosnak mar van a fonala ezen  a tektonon");
                     return;
                 }
             } else {
-                System.out.println("A tektonok nem szomszédosak");
+                //System.out.println("A tektonok nem szomszédosak");
             }
         }
         else {
-                System.out.println("The selected tecton does not neighbour the yarn");
+                //System.out.println("The selected tecton does not neighbour the yarn");
         }
     }
 
@@ -222,7 +224,7 @@ public class MushroomPicker extends Player {
     public void actionSporeDispersion(Tecton targetTecton, Mushroom mushroom) {
         // Ellenőrzi, hogy a gombának van-e spórája
         if (!mushroom.getHasSpore()) {
-            System.out.println("Nincs spóra a gombatestben"); // Kiírja, hogy nincs spóra
+            //System.out.println("Nincs spóra a gombatestben"); // Kiírja, hogy nincs spóra
             return; // Kilép a metódusból
         }
 
@@ -231,7 +233,6 @@ public class MushroomPicker extends Player {
             // Ellenőrzi, hogy a cél tecton szerepel-e a szomszédok között
             //Ha nem, akkor visszatér a függvény
             if (!mushroom.getTecton().getNeighbours().contains(targetTecton)) {
-                System.out.println("a target tekton nem elérhető");
                 return;
             }
             //Ha szerepel, akkor elindítja a szórást
@@ -244,7 +245,7 @@ public class MushroomPicker extends Player {
             // Ellenőrzi, hogy a cél tecton szerepel-e a szomszédok között
             //Ha nem, akkor visszatér a függvény
             if (!addSecondNeighbours(mushroom.getTecton()).contains(targetTecton)) {
-                System.out.println("A target tekton nem elérhető");
+                //System.out.println("A target tekton nem elérhető");
                 return;
             }
             //Ha szerepel, akkor elindítja a szórást

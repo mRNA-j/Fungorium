@@ -10,7 +10,7 @@ public class Yarn {
     protected Mushroom mushroom;
     protected MushroomPicker player;
     private String id;
-    protected String name = "yarn";
+    protected String name = "normal";
 
     public String getId() {
         return id;
@@ -50,6 +50,7 @@ public class Yarn {
         this.mushroom = mushroom;
         this.id = id;
         this.player = picker;
+        picker.addYarn(this);
         //tectons.get(0).growYarn(this);
         mushroom.getTecton().addYarn(this);
     }
@@ -81,13 +82,13 @@ public class Yarn {
      */
     public void split(Tecton tecton) {
         if (!tectons.contains(tecton)) {
-            System.out.println("Tecton is not part of this Yarn.");
+            //System.out.println("Tecton is not part of this Yarn.");
             return;
         }
 
         int index = tectons.indexOf(tecton);
         if (index == 0 || index == tectons.size() - 1) {
-            System.out.println("Splitting yarn on an edge Tecton, removing");
+            //System.out.println("Splitting yarn on an edge Tecton, removing");
             tectons.remove(tecton);
             tecton.getYarns().remove(this);  // Direct removal without calling removeYarn
             return;

@@ -62,7 +62,6 @@ public class Map {
      */
     public void splitting(Tecton tecton) {
         if (!tectons.contains(tecton)) {
-            System.out.println("Model.Tecton not found on the map.");
             return;
         }
 
@@ -76,18 +75,16 @@ public class Map {
 
         Random random = new Random();
         List<Insect> templist = tecton.getInsects();
-        // A régi Tectonon lévő gombafonalakat el kell vágni
         for (Yarn yarn : new ArrayList<>(tecton.getYarns())) {
             tecton.removeYarn(yarn);
         }
 
         // Létrehozunk két új Tectont
-        Tecton newTecton1 = new Tecton("t".concat(Integer.toString(this.random.nextInt())), tecton.getYarnLimit(), tecton.isMushroomPrevent(), tecton.getIsKeepAlive());
-        Tecton newTecton2 = new Tecton("t".concat(Integer.toString(this.random.nextInt())), tecton.getYarnLimit(), tecton.isMushroomPrevent(), tecton.getIsKeepAlive());
+        Tecton newTecton1 = new Tecton(tecton.getId()+ "_1", tecton.getYarnLimit(), tecton.isMushroomPrevent(), tecton.getIsKeepAlive());
+        Tecton newTecton2 = new Tecton(tecton.getId()+ "_2", tecton.getYarnLimit(), tecton.isMushroomPrevent(), tecton.getIsKeepAlive());
 
         // A rovarokat átrakjuk random tektonra
         for(Insect insect : templist) {
-            //System.out.println("HOZZAADAS");
 
             // Eldönthetjük, hogy melyikre kerüljön (random)
             if (random.nextBoolean()) {
@@ -98,7 +95,6 @@ public class Map {
         }
 
         for(int i=0;i<templist.size();i++) {
-            //System.out.println("KITORLEEEES");
             tecton.removeInsect(tecton.getInsects().get(i));
         }
 
@@ -117,33 +113,77 @@ public class Map {
         newTecton1.addNeighbour(newTecton2);
         newTecton2.addNeighbour(newTecton1);
 
-    /*   // A régi Tectonon lévő gombákat, rovarokat, spórákat átrakjuk az új Tectonokra
+        // A régi Tectont eltávolítjuk, az újakat hozzáadjuk a tectons listához
+        tectons.remove(tecton);
+        tectons.add(newTecton1);
+        tectons.add(newTecton2);
+    }
 
-        for (Model.Insect insect : new ArrayList<>(tecton.getInsects())) {
-            tecton.removeInsect(insect);
+
+
+    /**
+     * CSAK TESZTELÉSNÉL VAN HASZNÁLVA, mivel a rovar is egy random tektonra kerülne,
+     * de mivel nincs randomozáió így biztosan az újonnan léttrejött tektonok közül az elsőre kerül
+     * A teszt teljesen megegyezik a rendes randolmizást splittingel, csak a rovar áttevésben különbözik
+     * kettéhasítja a kiválasztott Tectont. Implementáció: Létre kell hozni két új Tectont, és a régit
+     * el kell távolítani. Az új Tectonoknak be kell állítani a szomszédait.
+     *
+     * @param tecton A kettéhasítandó Model.Tecton.
+     */
+
+    public void notRandomizedSplitting(Tecton tecton) {
+        if (!tectons.contains(tecton)) {
+            return;
+        }
+
+        if(tecton.getMushroom() != null) {
+            tecton.removeMushroom(tecton.getMushroom());
+        }
+
+        for (Spore spore : new ArrayList<>(tecton.getSpores())) {
+            tecton.removeSpore(spore);
+        }
+
+        Random random = new Random();
+        List<Insect> templist = tecton.getInsects();
+        for (Yarn yarn : new ArrayList<>(tecton.getYarns())) {
+            tecton.removeYarn(yarn);
+        }
+
+        // Létrehozunk két új Tectont
+        Tecton newTecton1 = new Tecton(tecton.getId()+ "_1", tecton.getYarnLimit(), tecton.isMushroomPrevent(), tecton.getIsKeepAlive());
+        Tecton newTecton2 = new Tecton(tecton.getId()+ "_2", tecton.getYarnLimit(), tecton.isMushroomPrevent(), tecton.getIsKeepAlive());
+
+        // A rovarokat átrakjuk random tektonra
+        for(Insect insect : templist) {
 
             // Eldönthetjük, hogy melyikre kerüljön (random)
-            if (random.nextBoolean()) {
-                newTecton1.addInsect(insect);
-            } else {
-                newTecton2.addInsect(insect);
-            }
-        }*/
+            newTecton1.addInsect(insect);
+        }
 
+        for(int i=0;i<templist.size();i++) {
+            tecton.removeInsect(tecton.getInsects().get(i));
+        }
 
+        // Beállítjuk az új Tectonok szomszédságát (a régi Model.Tecton szomszédai + egymás)
+        List<Tecton> originalNeighbours = new ArrayList<>(tecton.getNeighbours());
+        for (Tecton neighbour : originalNeighbours) {
+            neighbour.removeNeighbour(tecton);
+            neighbour.addNeighbour(newTecton1);
+            neighbour.addNeighbour(newTecton2);
+
+            newTecton1.addNeighbour(neighbour);
+            newTecton2.addNeighbour(neighbour);
+        }
+
+        // Egymás szomszédai is
+        newTecton1.addNeighbour(newTecton2);
+        newTecton2.addNeighbour(newTecton1);
 
         // A régi Tectont eltávolítjuk, az újakat hozzáadjuk a tectons listához
         tectons.remove(tecton);
         tectons.add(newTecton1);
         tectons.add(newTecton2);
-
-        System.out.println(
-                "Splitting selected tecton: "
-                        + tecton
-                        + " into "
-                        + newTecton1
-                        + " and "
-                        + newTecton2);
     }
 
     /**
@@ -156,6 +196,10 @@ public class Map {
             for (Yarn yarn : new ArrayList<>(tecton.getYarns())) {
                 yarn.runEffect();
                 tecton.runEffect(yarn);
+            }
+
+            if(tecton.getMushroom() != null) {
+                tecton.getMushroom().setNewSporeGrowth(tecton.getMushroom().getNewSporeGrowth()-1);
             }
         }
 

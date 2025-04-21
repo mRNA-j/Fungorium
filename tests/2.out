@@ -1,7 +1,7 @@
 Tecton: t1
 Type: normal
 Mushroom: m1
-Insects: none
+Insects: insect1
 Yarns: y1
 Neighbours: t2
 Spores: none
@@ -19,8 +19,12 @@ HasSpore: false
 Place: t1
 Owner: Bob
 
+Insect: insect1
+Current Effect: none
+Owner: Alice
+
 Yarn: y1
-Type: killerYarn
+Type: KillerYarn
 Tectons in yarn: t1 t2
 
 Player: Bob

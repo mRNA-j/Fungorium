@@ -11,7 +11,15 @@ Type: normal
 Mushroom: none
 Insects: none
 Yarns: y1
-Neighbours: t1
+Neighbours: t1 t3
+Spores: none
+
+Tecton: t3
+Type: normal
+Mushroom: none
+Insects: none
+Yarns: y1
+Neighbours: t2
 Spores: none
 
 Mushroom: m1
@@ -20,14 +28,10 @@ Place: t1
 Owner: Bob
 
 Yarn: y1
-Type: killerYarn
-Tectons in yarn: t1 t2
+Type: normal
+Tectons in yarn: t1 t2 t3
 
 Player: Bob
 Type: MushroomPicker
-Points: 0
-
-Player: Alice
-Type: Entomologist
 Points: 0
 

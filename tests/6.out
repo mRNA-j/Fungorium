@@ -1,0 +1,54 @@
+Tecton: Tecton1
+Type: normal
+Mushroom: Mushroom1
+Insects: none
+Yarns: Yarn1
+Neighbours: Tecton2_1 Tecton2_2
+Spores: none
+
+Tecton: Tecton3
+Type: normal
+Mushroom: Mushroom2
+Insects: none
+Yarns: Yarn2
+Neighbours: Tecton2_1 Tecton2_2
+Spores: none
+
+Tecton: Tecton2_1
+Type: normal
+Mushroom: none
+Insects: none
+Yarns: none
+Neighbours: Tecton1 Tecton3 Tecton2_2
+Spores: none
+
+Tecton: Tecton2_2
+Type: normal
+Mushroom: none
+Insects: none
+Yarns: none
+Neighbours: Tecton1 Tecton3 Tecton2_1
+Spores: none
+
+Mushroom: Mushroom1
+HasSpore: false
+Place: Tecton1
+Owner: Bob
+
+Mushroom: Mushroom2
+HasSpore: false
+Place: Tecton3
+Owner: Bob
+
+Yarn: Yarn1
+Type: normal
+Tectons in yarn: Tecton1
+
+Yarn: Yarn2
+Type: normal
+Tectons in yarn: Tecton3
+
+Player: Bob
+Type: MushroomPicker
+Points: 0
+

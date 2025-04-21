@@ -1,0 +1,12 @@
+create_mushroom_picker Bob mp1
+create_tecton normal t1
+create_tecton normal t2
+add_neighbour_to_tecton t1 t2
+create_mushroom Bob t1 m1
+next_round
+next_round
+next_round
+next_round
+next_round
+action_spore_dispersion t2 m1
+stat

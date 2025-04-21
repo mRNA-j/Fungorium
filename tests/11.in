@@ -1,0 +1,14 @@
+create_mushroom_picker Bob mp1
+create_mushroom_picker Dave mp2
+create_tecton normal t1
+create_tecton normal t2
+create_tecton normal t3
+add_neighbour_to_tecton t1 t2
+add_neighbour_to_tecton t3 t2
+create_mushroom Bob t1 m1
+create_mushroom Dave t3 m2
+create_yarn m1 normal y1
+create_yarn m2 normal y2
+action_grow_yarn t3 t2 y2
+action_grow_yarn t1 t2 y1
+stat

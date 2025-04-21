@@ -1,0 +1,41 @@
+Tecton: Tecton1
+Type: normal
+Mushroom: Mushroom1
+Insects: none
+Yarns: none
+Neighbours: Tecton2_1 Tecton2_2
+Spores: none
+
+Tecton: Tecton2_1
+Type: normal
+Mushroom: none
+Insects: Insect1
+Yarns: none
+Neighbours: Tecton1 Tecton2_2
+Spores: none
+
+Tecton: Tecton2_2
+Type: normal
+Mushroom: none
+Insects: none
+Yarns: none
+Neighbours: Tecton1 Tecton2_1
+Spores: none
+
+Mushroom: Mushroom1
+HasSpore: false
+Place: Tecton1
+Owner: Bob
+
+Insect: Insect1
+Current Effect: none
+Owner: John
+
+Player: Bob
+Type: MushroomPicker
+Points: 0
+
+Player: John
+Type: Entomologist
+Points: 0
+

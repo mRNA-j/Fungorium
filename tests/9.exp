@@ -1,0 +1,24 @@
+Tecton: Tecton1
+Type: normal
+Mushroom: none
+Insects: none
+Yarns: none
+Neighbours: Tecton2_1 Tecton2_2
+Spores: none
+
+Tecton: Tecton2_1
+Type: normal
+Mushroom: none
+Insects: none
+Yarns: none
+Neighbours: Tecton1 Tecton2_2
+Spores: none
+
+Tecton: Tecton2_2
+Type: normal
+Mushroom: none
+Insects: none
+Yarns: none
+Neighbours: Tecton1 Tecton2_1
+Spores: none
+

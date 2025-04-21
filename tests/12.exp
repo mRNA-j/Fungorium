@@ -1,0 +1,50 @@
+Tecton: t1
+Type: normal
+Mushroom: m1
+Insects: none
+Yarns: y1
+Neighbours: t2
+Spores: none
+
+Tecton: t2
+Type: MultipleYarn
+Mushroom: none
+Insects: none
+Yarns: y2 y1
+Neighbours: t1 t3
+Spores: none
+
+Tecton: t3
+Type: normal
+Mushroom: m2
+Insects: none
+Yarns: y2
+Neighbours: t2
+Spores: none
+
+Mushroom: m1
+HasSpore: false
+Place: t1
+Owner: Bob
+
+Mushroom: m2
+HasSpore: false
+Place: t3
+Owner: Dave
+
+Yarn: y1
+Type: normal
+Tectons in yarn: t1 t2
+
+Yarn: y2
+Type: normal
+Tectons in yarn: t3 t2
+
+Player: Bob
+Type: MushroomPicker
+Points: 0
+
+Player: Dave
+Type: MushroomPicker
+Points: 0
+

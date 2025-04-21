@@ -27,6 +27,8 @@ public class Mushroom {
         currentSpore = null;
     }
 
+
+
     public Mushroom(Tecton tecton, String testID) {
         this.tecton = tecton;
         tecton.addMushroom(this);
@@ -36,6 +38,21 @@ public class Mushroom {
         hasSpore = false;
         currentSpore = null;
         this.id = testID;
+    }
+
+    public int getNewSporeGrowth() {
+        return newSporeGrowth;
+    }
+
+    public void setNewSporeGrowth(int newSporeGrowth) {
+        if(newSporeGrowth < 0) {
+            return;
+        }
+        if(newSporeGrowth == 0) {
+            setHasSpore(true);
+        }
+
+        this.newSporeGrowth = newSporeGrowth;
     }
 
     /**
@@ -86,8 +103,6 @@ public class Mushroom {
         return currentSpore;
     }
 
-
-
     /**
      * Spórát növeszt a gombában.
      * @param spore A növesztendő spóra.
@@ -96,9 +111,6 @@ public class Mushroom {
         if (!hasSpore) {
             this.currentSpore = spore;
             this.hasSpore = true;
-            System.out.println("Spóra sikeresen megnövesztve a gombában.");
-        } else {
-            System.out.println("A gombának már van spórája, nem lehet újat növeszteni.");
         }
     }
 
@@ -108,15 +120,16 @@ public class Mushroom {
      * @param tecton A tecton, amire a spórát kilövi.
      */
     public void disperseSpore(Tecton tecton) {
+        //growSpore(new AcceleratorSpore(tecton, "Spore1"));
+        currentSpore = new AcceleratorSpore(tecton, "Spore1");
+        //System.out.println("BELEPTEM");
         if (hasSpore && currentSpore != null) {
-            System.out.println("Spóra kilőve");
             tecton.addSpore(currentSpore);
             numberOfDispersions++;
             hasSpore = false;
             currentSpore = null;
             restartSporeGrowth();
-        } else {
-            System.out.println("Nincs spóra a gombában, amit ki lehetne lőni.");
+            // System.out.println("VANESPORA: " + hasSpore);
         }
     }
 
@@ -126,7 +139,10 @@ public class Mushroom {
      */
     public void restartSporeGrowth() {
         newSporeGrowth = 5;
+        setHasSpore(false);
     }
+
+
 
     /**
      * Visszaadja a tectont, amelyen a gomba található.
@@ -136,45 +152,3 @@ public class Mushroom {
         return tecton;
     }
 }
-
-/**
- * Spóra kilövését kezeli.
- * A felhasználótól bekéri a kilövendő spóra típusát,
- * létrehozza a megfelelő spórát és hozzáadja a tectonhoz.
- * @param tecton A tecton, amire a spórát kilövi.
- */
-    /*public void disperseSpore(Model.Tecton tecton) {
-        System.out.println("Melyik sporat akarod kiloni?");
-        System.out.println("1. Accelrator");
-        System.out.println("2. Paralyzing");
-        System.out.println("3. Declerator");
-        System.out.println("4. CutPreventing");
-
-        Scanner scanner = new Scanner(System.in);
-
-        String spore = scanner.nextLine();
-        Model.Spore sp;
-
-        switch (spore) {
-            case "1":
-                sp = new Model.AcceleratorSpore();
-                break;
-            case "2":
-                sp = new Model.ParalyzingSpore();
-                break;
-            case "3":
-                sp = new Model.DeceleratorSpore();
-                break;
-            case "4":
-                sp = new Model.CutPreventingSpore();
-                break;
-            default:
-                System.out.println("Invalid spore type selected!");
-                return;
-        }
-
-
-        System.out.println("Spora kilove");
-        tecton.addSpore(sp);
-        numberOfDispersions++;
-    }*/

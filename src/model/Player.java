@@ -55,7 +55,6 @@ public abstract class Player {
      */
     public void addPoints(int numOfPoints) {
         points += numOfPoints;
-        System.out.println("Points added: " + numOfPoints);
     }
     public String getId(){
         return testID;

@@ -1,0 +1,15 @@
+randomize false
+create_mushroom_picker Bob Mp1
+create_tecton normal Tecton1
+create_tecton normal Tecton2
+create_tecton normal Tecton3
+create_mushroom Bob Tecton1 Mushroom1
+create_mushroom Bob Tecton3 Mushroom2
+add_neighbour_to_tecton Tecton1 Tecton2
+add_neighbour_to_tecton Tecton2 Tecton3
+create_yarn Mushroom1 normal Yarn1
+create_yarn Mushroom2 normal Yarn2
+action_grow_yarn Tecton1 Tecton2 Yarn1
+action_grow_yarn Tecton3 Tecton2 Yarn2
+split_tecton Tecton2
+stat
