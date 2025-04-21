@@ -57,12 +57,12 @@ public class Entomologist extends Player{
             return;
         }
         if(insect.getDecelerated()){
-            System.out.println("A rovar lassító spóra hatása alatt van, a mozgás nem lehetséges");
+            //System.out.println("A rovar lassító spóra hatása alatt van, a mozgás nem lehetséges");
             return;
         }
         boolean sikeres = insect.move(targetTecton);
         if(!sikeres){
-            System.out.println("Mozgás végrehajtása sikertelen");
+            //System.out.println("Mozgás végrehajtása sikertelen");
         }
     }
 

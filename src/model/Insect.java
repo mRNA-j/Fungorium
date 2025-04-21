@@ -206,7 +206,7 @@ public class Insect {
             return true;
         }
         else{
-            System.out.println("A választott tektonra erről a tektonról nem vezet gombafonal. A mozgás nem lehetséges.");
+            //System.out.println("A választott tektonra erről a tektonról nem vezet gombafonal. A mozgás nem lehetséges.");
             return false;
         }
     }
