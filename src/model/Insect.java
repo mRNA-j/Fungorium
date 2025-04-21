@@ -52,6 +52,7 @@ public class Insect {
         currentPlace = place;
         place.addInsect(this);
     }
+
     public Insect(Tecton place,Entomologist owner ,String testID){
         decelerated = false;
         paralized = false;
@@ -180,6 +181,13 @@ public class Insect {
     public void eatSpore(Spore spore) {
         currentPlace.removeSpore(spore);
         spore.addEffect(this);
+    }
+
+    public void resetEffect() {
+        setAccelerated(false);
+        setDecelerated(false);
+        setParalized(false);
+        setCutPrevented(false);
     }
 
     /**

@@ -114,10 +114,6 @@ public class Game {
         if(currentTurn == numberOfTurns) {
             end();
         }
-        for(Tecton tecton: playField.getTectons()){
-
-        }
-
     }
 
     /**

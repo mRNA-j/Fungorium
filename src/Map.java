@@ -198,11 +198,18 @@ public class Map {
                 tecton.runEffect(yarn);
             }
 
+            //Spóra növesztési idejét csökkenti
             if(tecton.getMushroom() != null) {
                 tecton.getMushroom().setNewSporeGrowth(tecton.getMushroom().getNewSporeGrowth()-1);
             }
+
+            //Rovarokról az effectet eltünteti
+            for (Insect insect : tecton.getInsects()) {
+                insect.resetEffect();
+            }
         }
 
+        //Fonalakat szívja fel
         noConnection();
     }
 
