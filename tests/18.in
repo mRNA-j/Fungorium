@@ -1,0 +1,4 @@
+create_mushroom_picker Bob Mp1
+create_entomologist John El1
+action_phase_end
+statRound

@@ -33,7 +33,7 @@ public class Game {
      */
     public Game() {
         activePlayerIndex = 0;
-        currentTurn = 0;
+        currentTurn = 1;
         playField = new Map();
         numberOfTurns = 50;
         players = new ArrayList<>();
@@ -82,7 +82,7 @@ public class Game {
     public void nextPlayer() {
         activePlayerIndex++;
         activePlayer = players.get(activePlayerIndex);
-        System.out.println("Kovetkezo jatekos jon");
+        //System.out.println("Kovetkezo jatekos jon");
     }
 
     /**
