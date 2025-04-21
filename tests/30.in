@@ -1,0 +1,23 @@
+create_mushroom_picker Bob mp1
+create_entomologist Alice e1
+create_tecton normal t1
+create_tecton normal t2
+create_tecton keepAlive t3
+add_neighbour_to_tecton t1 t2
+add_neighbour_to_tecton t2 t3
+create_mushroom Bob t1 m1
+create_yarn m1 normal y1
+action_grow_yarn t1 t2 y1
+action_grow_yarn t2 t3 y1
+create_insect Alice t2 i1
+next_round
+next_round
+next_round
+next_round
+next_round
+action_spore_dispersion t2 m1
+action_cut_yarn i1 y1 t1
+next_round
+action_grow_mushroom t2 mp1 m2
+action_move i1 t3
+stat

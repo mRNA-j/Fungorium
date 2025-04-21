@@ -51,7 +51,6 @@ public class Entomologist extends Player{
      * @param targetTecton A cél tecton, ahová a rovar mozogni próbál.
      */
     public void actionMove(Tecton targetTecton, Insect insect) {
-        Tecton currentTecton = insect.getCurrentPlace();
         if(insect.getParalized()){
             //System.out.println("A rovar bénítóspóra hatása alatt van, a mozgás nem lehetéges");
             return;
@@ -77,6 +76,9 @@ public class Entomologist extends Player{
             return;
         }
         insect.eatSpore(spore);
+
+        //Pontadás a megevett spora alapjan
+        //TODO - pontadas megcsinalasa
         this.addPoints(spore.getNutrition());
     }
 
@@ -85,9 +87,9 @@ public class Entomologist extends Player{
      *
      * @param yarn A vágni kívánt fonal.
      */
-    public void actionCutYarn(Yarn yarn, Insect insect) {
+    public void actionCutYarn(Yarn yarn, Insect insect, Tecton amerreVagunk) {
         if(insect.getParalized()){
-            System.out.println("A rovar bénítóspóra hatása alatt van, a fonalvágás nem lehetéges");
+            //System.out.println("A rovar bénítóspóra hatása alatt van, a fonalvágás nem lehetéges");
             actionWait(insect);
             return;
         }
@@ -96,7 +98,6 @@ public class Entomologist extends Player{
             actionWait(insect);
             return;
         }
-        insect.cutYarn(yarn);
-
+        insect.cutYarn(yarn, amerreVagunk);
     }
 }

@@ -9,6 +9,11 @@ public class Yarn {
     protected List<Tecton> tectons;
     protected Mushroom mushroom;
     protected MushroomPicker player;
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     private String id;
     protected String name = "normal";
 
@@ -46,12 +51,10 @@ public class Yarn {
     public Yarn(Mushroom mushroom, MushroomPicker picker,String id) {
         this.tectons = new ArrayList<>();
         tectons.add(mushroom.getTecton());
-        //System.out.println(this);
         this.mushroom = mushroom;
         this.id = id;
         this.player = picker;
         picker.addYarn(this);
-        //tectons.get(0).growYarn(this);
         mushroom.getTecton().addYarn(this);
     }
 
@@ -80,28 +83,57 @@ public class Yarn {
      *
      * @param tecton A Tecton, ahol a gombafonalat ketté kell hasítani.
      */
-    public void split(Tecton tecton) {
+    public void split(Tecton tecton, Tecton iranyAmerreSzakad) {
         if (!tectons.contains(tecton)) {
-            //System.out.println("Tecton is not part of this Yarn.");
             return;
         }
 
         int index = tectons.indexOf(tecton);
-        if (index == 0 || index == tectons.size() - 1) {
-            //System.out.println("Splitting yarn on an edge Tecton, removing");
+        /*if (index == 0 || index == tectons.size() - 1) {
             tectons.remove(tecton);
             tecton.getYarns().remove(this);  // Direct removal without calling removeYarn
             return;
-        }
+        }*/
 
-        // 1. Create two new Yarn objects
-        Yarn newYarn1 = new Yarn();
-        Yarn newYarn2 = new Yarn();
-
+        //Nem vegpont a tecton
         int mushroomIndex = 0;
         for (int i = 0; i < tectons.size(); i++) {
             if(tectons.get(i).getMushroom() == mushroom)
                 mushroomIndex = i;
+        }
+
+        Yarn newYarn1 = new Yarn();
+        Yarn newYarn2 = new Yarn();
+
+        newYarn1.setId(getId() + "_1");
+        newYarn2.setId(getId()  + "_2");
+
+        //Keressuk meg melyik iranyba vagunk
+        int iranyIndex = tectons.indexOf(iranyAmerreSzakad);
+
+        if(iranyIndex < index) {
+            // 2. Add Tectons to the first yarn up to the cutting point
+            for (int i = 0; i < index; i++) {
+                Tecton t = tectons.get(i);
+                t.growYarn(newYarn1);
+            }
+
+            // 3. Add Tectons to the second yarn after the cutting point
+            for (int i = index; i < tectons.size(); i++) {
+                Tecton t = tectons.get(i);
+                t.growYarn(newYarn2);
+            }
+        } else {
+            for (int i = 0; i <= index; i++) {
+                Tecton t = tectons.get(i);
+                t.growYarn(newYarn1);
+            }
+
+            // 3. Add Tectons to the second yarn after the cutting point
+            for (int i = index+1; i < tectons.size(); i++) {
+                Tecton t = tectons.get(i);
+                t.growYarn(newYarn2);
+            }
         }
 
         if(mushroomIndex < index) {
@@ -110,17 +142,7 @@ public class Yarn {
             newYarn2.mushroom = mushroom;
         }
 
-        // 2. Add Tectons to the first yarn up to the cutting point
-        for (int i = 0; i < index; i++) {
-            Tecton t = tectons.get(i);
-            t.growYarn(newYarn1);
-        }
 
-        // 3. Add Tectons to the second yarn after the cutting point
-        for (int i = index + 1; i < tectons.size(); i++) {
-            Tecton t = tectons.get(i);
-            t.growYarn(newYarn2);
-        }
 
         // 4. Finally, remove this yarn from all tectons' yarn lists
         for (Tecton t : new ArrayList<>(tectons)) {
@@ -128,7 +150,6 @@ public class Yarn {
         }
 
         tectons.clear();  // Clear the list of tectons in this yarn
-        System.out.println("Yarn split into two.");
     }
 
     /**
@@ -142,18 +163,6 @@ public class Yarn {
         }
     }
 
-    /**
-     * Eltávolít egy tectont a gombafonaltól.
-     *
-     * @param t Az eltávolítandó tecton.
-     */
-    public void removeTecton(Tecton t) {
-        this.tectons.remove(t);
-        if (t.getYarns().contains(this)) {
-            t.removeYarn(this);
-        }
-        System.out.println("Removing tecton from yarn: " + t);
-    }
 
     /**
      * Visszaadja a gombafonalhoz tartozó Tectonok listáját.
@@ -183,6 +192,5 @@ public class Yarn {
      * Mivel az alap fonálnak nincs speciális hatása, nem történik semmi
      */
     public void runEffect() {
-        return;
     }
 }

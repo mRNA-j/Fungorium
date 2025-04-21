@@ -30,9 +30,8 @@ public class AcceleratorSpore extends Spore {
     public AcceleratorSpore(Tecton tecton) {
         super(1,"accelerator");
     }
-    public AcceleratorSpore(Tecton tecton, String testID) {
-        super(1,"accelerator", testID);
-    }
+
+
     /**
      * Alkalmazza a gyorsító hatást a megadott rovarra.
      * A metódus beállítja a rovar gyorsított állapotát.

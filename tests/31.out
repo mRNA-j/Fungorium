@@ -9,7 +9,7 @@ Spores: none
 Tecton: t2
 Type: normal
 Mushroom: none
-Insects: none
+Insects: i1
 Yarns: y1
 Neighbours: t1 t3
 Spores: none
@@ -17,8 +17,8 @@ Spores: none
 Tecton: t3
 Type: normal
 Mushroom: none
-Insects: i1
-Yarns: y1
+Insects: none
+Yarns: none
 Neighbours: t2
 Spores: none
 
@@ -33,7 +33,7 @@ Owner: Alice
 
 Yarn: y1
 Type: normal
-Tectons in yarn: t1 t2 t3
+Tectons in yarn: t1 t2
 
 Player: Bob
 Type: MushroomPicker
@@ -41,5 +41,5 @@ Points: 0
 
 Player: Alice
 Type: Entomologist
-Points: 0
+Points: 1
 

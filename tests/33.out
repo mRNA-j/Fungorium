@@ -1,8 +1,8 @@
 Tecton: t1
 Type: normal
 Mushroom: m1
-Insects: none
-Yarns: y1
+Insects: i1
+Yarns: y1_1
 Neighbours: t2
 Spores: none
 
@@ -10,15 +10,15 @@ Tecton: t2
 Type: normal
 Mushroom: none
 Insects: none
-Yarns: y1
+Yarns: y1_2
 Neighbours: t1 t3
 Spores: none
 
 Tecton: t3
 Type: normal
-Mushroom: none
-Insects: i1
-Yarns: y1
+Mushroom: m2
+Insects: none
+Yarns: y1_2
 Neighbours: t2
 Spores: none
 
@@ -27,17 +27,26 @@ HasSpore: false
 Place: t1
 Owner: Bob
 
+Mushroom: m2
+HasSpore: false
+Place: t3
+Owner: Bob
+
 Insect: i1
-Current Effect: accelerated
+Current Effect: none
 Owner: Alice
 
-Yarn: y1
+Yarn: y1_1
 Type: normal
-Tectons in yarn: t1 t2 t3
+Tectons in yarn: t1
+
+Yarn: y1_2
+Type: normal
+Tectons in yarn: t2 t3
 
 Player: Bob
 Type: MushroomPicker
-Points: 0
+Points: 3
 
 Player: Alice
 Type: Entomologist

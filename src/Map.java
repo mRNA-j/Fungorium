@@ -75,8 +75,11 @@ public class Map {
 
         Random random = new Random();
         List<Insect> templist = tecton.getInsects();
+
+        //Fonalakat eltavolitjuk
         for (Yarn yarn : new ArrayList<>(tecton.getYarns())) {
-            tecton.removeYarn(yarn);
+            yarn.getTectons().remove(tecton);
+            tecton.getYarns().remove(yarn);
         }
 
         // Létrehozunk két új Tectont
@@ -147,7 +150,7 @@ public class Map {
         Random random = new Random();
         List<Insect> templist = tecton.getInsects();
         for (Yarn yarn : new ArrayList<>(tecton.getYarns())) {
-            tecton.removeYarn(yarn);
+            tecton.removeYarn(yarn, tecton);
         }
 
         // Létrehozunk két új Tectont
@@ -254,7 +257,7 @@ public class Map {
             }
 
             for (Yarn yarn : yarnsToRemove) {
-                tecton.removeYarn(yarn);
+                tecton.getYarns().remove(yarn);
             }
         }
     }

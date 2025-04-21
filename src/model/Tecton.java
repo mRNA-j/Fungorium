@@ -128,8 +128,8 @@ public class Tecton {
      *
      * @param yarn Az eltávolítandó gombafonal.
      */
-    public void removeYarn(Yarn yarn) {
-        yarn.split(this);
+    public void removeYarn(Yarn yarn, Tecton masik) {
+        yarn.split(this, masik);
         yarns.remove(yarn);
         //System.out.println("Yarn removed: " + yarn);
     }

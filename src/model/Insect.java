@@ -30,7 +30,7 @@ public class Insect {
         } else if (decelerated) {
             return "decelerated";
         } else if (paralized) {
-            return "paralized";
+            return "paralyzed";
         } else if (cutPrevented) {
             return "cutPrevented";
         } else {
@@ -169,8 +169,23 @@ public class Insect {
      *
      * @param yarn Az eltávolítandó fonal.
      */
-    public void cutYarn(Yarn yarn) {
-        currentPlace.removeYarn(yarn);
+    public void cutYarn(Yarn yarn, Tecton errefeleVagunk) {
+
+        //TODO - ez csak akkor mukodik ha a currentplace a yarn egyk vegen van
+
+        int index = yarn.tectons.indexOf(currentPlace);
+        if(index == 0 || index == yarn.getTectons().size()-1) {
+            currentPlace.removeYarn(yarn, errefeleVagunk);
+            errefeleVagunk.removeYarn(yarn, errefeleVagunk);
+        } else {
+            currentPlace.removeYarn(yarn, errefeleVagunk);
+        }
+
+
+
+        //ITT Nem a vegen van a tecton ahol all a cucc
+
+
     }
 
     /**

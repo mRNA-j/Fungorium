@@ -777,7 +777,7 @@ public class CmdParser {
         }
 
         // Execute the yarn cutting action.
-        entomologist.actionCutYarn(targetYarn, targetInsect); //Luca: kell az insect második bemenetnek
+        entomologist.actionCutYarn(targetYarn, targetInsect, yarnTecton); //Luca: kell az insect második bemenetnek
     }
 
 

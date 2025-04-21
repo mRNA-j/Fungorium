@@ -121,7 +121,7 @@ public class Mushroom {
      */
     public void disperseSpore(Tecton tecton) {
         //growSpore(new AcceleratorSpore(tecton, "Spore1"));
-        currentSpore = new AcceleratorSpore(tecton, "Spore1");
+        currentSpore = new AcceleratorSpore("Spore1");
         //System.out.println("BELEPTEM");
         if (hasSpore && currentSpore != null) {
             tecton.addSpore(currentSpore);
