@@ -325,41 +325,49 @@ public class CmdParser {
 
         /* ----------  MUSHROOMS  ---------- */
         for (Mushroom m : getAllMushroomsInGame()) {
-            System.out.println("Mushroom: " + m.getId());
+            MushroomPicker owner = findMushroomPickerByMushroom(m);
+            m.getMushroomView().setOwner(owner);
+            m.getMushroomView().printObject();
+
+            /*System.out.println("Mushroom: " + m.getId());
             System.out.println("HasSpore: " + m.getHasSpore());
             System.out.println("Place: "    + m.getTecton().getId());
             MushroomPicker owner = findMushroomPickerByMushroom(m);
             System.out.println("Owner: "    + (owner == null ? "none" : owner.getName()));
-            System.out.println();
+            System.out.println();*/
         }
 
         /* ----------  INSECT  ---------- */
         for (Insect i : getAllInsectsInGame()) {
-            System.out.println("Insect: " + i.getId());
+            i.getInsectView().printObject();
+            /*System.out.println("Insect: " + i.getId());
             System.out.println("Current Effect: " + (i.getCurrentEffect() == null ? "none" : i.getCurrentEffect()));
             System.out.println("Owner: " + i.getOwner().getName());
-            System.out.println();
+            System.out.println();*/
         }
 
         /* ----------  YARNS  ---------- */
         for (Yarn y : getAllYarnsInGame()) {
-            System.out.println("Yarn: " + y.getId());
+
+            /*System.out.println("Yarn: " + y.getId());
             System.out.println("Type: " + y.getName());            //  ←  kill / protect / …
             System.out.print  ("Tectons in yarn: ");
             System.out.println(y.getTectons().stream()
                     .map(Tecton::getId)
                     .collect(Collectors.joining(" ")));
-            System.out.println();
+            System.out.println();*/
         }
 
         /* ----------  PLAYERS  ---------- */
 
         for (Player p : game.getPlayers()) {
-            System.out.println("Player: " + p.getName());
+            p.getPlayerView().printObject();
+            //System.out.println("NEV::: "+ p.getPlayerView());
+            /*System.out.println("Player: " + p.getName());
             System.out.println("Type: " + getPlayerType(p));
             //System.out.println();                       //  ← blank line before Points
             System.out.println("Points: " + p.getPoints());
-            System.out.println();
+            System.out.println();*/
         }
 
     }

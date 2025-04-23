@@ -1,10 +1,14 @@
 package model;
 
+import view.InsectView;
+
 /**
  * Az Model.Insect osztály egy rovart reprezentál, amely egy adott tectonon helyezkedik el,
  * és különböző állapotváltozásokat szenvedhet el spórák hatására.
  */
 public class Insect {
+    private InsectView insectView;
+
     private Tecton currentPlace; // Az aktuális tecton, ahol a rovar tartózkodik
     private Entomologist owner; //visszadja melyik rovarász játékoshoz tartozik a rovar
     // A rovarra ható spóra effektusok
@@ -44,6 +48,8 @@ public class Insect {
      * @param place A tecton, ahol a rovar elhelyezkedik kezdetben.
      */
     public Insect(Tecton place){
+        insectView = new InsectView(this);
+
         decelerated = false;
         paralized = false;
         accelerated = false;
@@ -54,6 +60,8 @@ public class Insect {
     }
 
     public Insect(Tecton place,Entomologist owner ,String testID){
+        insectView = new InsectView(this);
+
         decelerated = false;
         paralized = false;
         accelerated = false;
@@ -65,6 +73,15 @@ public class Insect {
     }
 
     // Getter és setter metódusok a spóra effektusokhoz
+
+    /**
+     * Visszaadja, a rovar view modell részéért felelő osztályt.
+     *
+     * @return a tagváltozó a rovar view interfacet megvalósító osztályához.
+     */
+    public InsectView getInsectView() {
+        return insectView;
+    }
 
     /**
      * Beállítja, hogy a rovar lassító spóra hatása alatt áll-e.

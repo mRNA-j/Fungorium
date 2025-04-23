@@ -1,5 +1,7 @@
 package model;
 
+import view.EntomologistView;
+
 import java.util.*;
 
 /**
@@ -17,12 +19,16 @@ public class Entomologist extends Player{
      */
     public Entomologist(String name, Insect insect, String testId){
         super(name, 0, testId);
+        EntomologistView entomologistView = new EntomologistView(this);
+        super.setPlayerView(entomologistView);
         insects = new ArrayList<>();
         insects.add(insect);
     }
     public Entomologist(String name, String testId){
 
         super(name, 0, testId);
+        EntomologistView entomologistView = new EntomologistView(this);
+        super.setPlayerView(entomologistView);
         insects = new ArrayList<>();
     }
     /**

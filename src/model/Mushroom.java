@@ -1,10 +1,14 @@
 package model;
 
+import view.MushroomView;
+
 /**
  * A gomba entitást reprezentáló osztály.
  * Kezeli a gomba korát, spóráit és a tectonhoz való kapcsolódását.
  */
 public class Mushroom {
+    MushroomView mushroomView;
+
     private String id; // Hozzáadott ID mező
     private int numberOfDispersions;
     private int newSporeGrowth;
@@ -18,6 +22,8 @@ public class Mushroom {
      * @param tecton A tecton, amin a gomba elhelyezkedik.
      */
     public Mushroom(Tecton tecton) {
+        mushroomView = new MushroomView(this);
+
         this.tecton = tecton;
         tecton.addMushroom(this);
         age = 0;
@@ -30,6 +36,8 @@ public class Mushroom {
 
 
     public Mushroom(Tecton tecton, String testID) {
+        mushroomView = new MushroomView(this);
+
         this.tecton = tecton;
         tecton.addMushroom(this);
         age = 0;
@@ -38,6 +46,10 @@ public class Mushroom {
         hasSpore = false;
         currentSpore = null;
         this.id = testID;
+    }
+
+    public MushroomView getMushroomView() {
+        return mushroomView;
     }
 
     public int getNewSporeGrowth() {
@@ -104,7 +116,7 @@ public class Mushroom {
     }
 
     /**
-     * Spórát növeszt a gombában.
+     * Spórát növe szt a gombában.
      * @param spore A növesztendő spóra.
      */
     public void growSpore(Spore spore) {

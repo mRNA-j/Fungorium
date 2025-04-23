@@ -1,4 +1,6 @@
 package model;
+import view.MushroomPickerView;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -31,6 +33,8 @@ public class MushroomPicker extends Player {
      */
     public MushroomPicker(String name, Mushroom mushroom, String testId) {
         super(name, 0, testId); // A szülő (Player) osztály konstruktorának meghívása a játékos névvel és induló értékkel (0)
+        MushroomPickerView mushroomPickerView = new MushroomPickerView(this);
+        super.setPlayerView(mushroomPickerView);
         ownedMushrooms = new ArrayList<>(); // A ownedMushrooms lista inicializálása egy új ArrayList példánnyal
         ownedMushrooms.add(mushroom); // Az induló gomba hozzáadása a gombák listájához
         ownedYarns = new ArrayList<Yarn>(); // A statikus ownedYarns lista inicializálása egy új ArrayList példánnyal
@@ -39,6 +43,8 @@ public class MushroomPicker extends Player {
 
     public MushroomPicker(String name, String testId) {
         super(name, 0, testId); // A szülő (Player) osztály konstruktorának meghívása a játékos névvel és induló értékkel (0)
+        MushroomPickerView mushroomPickerView = new MushroomPickerView(this);
+        super.setPlayerView(mushroomPickerView);
         ownedMushrooms = new ArrayList<>(); // A ownedMushrooms lista inicializálása egy új ArrayList példánnyal
         ownedYarns = new ArrayList<Yarn>(); // A statikus ownedYarns lista inicializálása egy új ArrayList példánnyal
     }

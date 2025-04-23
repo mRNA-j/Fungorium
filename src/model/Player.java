@@ -1,4 +1,6 @@
 package model;
+import view.PlayerView;
+import view.View;
 
 /**
  * Absztrakt osztály a játékosok reprezentálására.
@@ -6,6 +8,8 @@ package model;
  * Az osztályból származtatott konkrét játékos osztályokat kell létrehozni.
  */
 public abstract class Player {
+    private PlayerView playerView;
+
     /** A játékos neve */
     private String name;
 
@@ -17,11 +21,25 @@ public abstract class Player {
      * @param name A játékos neve.
      * @param points A játékos kezdeti pontszáma.
      */
+    public Player(String name, int points) {
+        this.name = name;
+        this.points = points;
+        this.testID = null;
+        this.playerView = null;
+    }
 
     public Player(String name, int points, String testID) {
         this.name = name;
         this.points = points;
         this.testID = testID;
+        this.playerView = null;
+    }
+    public void setPlayerView(PlayerView view) {
+        this.playerView = view;
+    }
+
+    public PlayerView getPlayerView() {
+        return playerView;
     }
 
     /**

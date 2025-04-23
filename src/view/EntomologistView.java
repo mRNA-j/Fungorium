@@ -14,22 +14,15 @@ import java.io.IOException;
 public class EntomologistView extends PlayerView {
     private final Entomologist entomologist;
 
-    EntomologistView(Entomologist entomologist) {
+    public EntomologistView(Entomologist entomologist) {
         this.entomologist = entomologist;
     }
 
     @Override
     public void printObject(){
-        System.out.println("Model.Entomologist: " + entomologist.getId());
-        System.out.println("Name: " + entomologist.getName());
-        System.out.println("Points: "+entomologist.getPoints());
-
-        // Print insects owned by yarn
-        StringBuilder insectsOwned = new StringBuilder("Insects owned: ");
-        for (Insect insect :  entomologist.getInsect()) {
-            insectsOwned.append(insect.getId()).append(" ");
-        }
-        System.out.println(insectsOwned.toString().trim());
+        System.out.println("Player: " + entomologist.getName());
+        System.out.println("Type: Entomologist");
+        System.out.println("Points: "+ entomologist.getPoints());
         System.out.println();
     }
     @Override
@@ -37,20 +30,13 @@ public class EntomologistView extends PlayerView {
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(f, true))) {
 
-            writer.write("Model.Entomologist: " + entomologist.getId());
+            writer.write("Player: " + entomologist.getName());
             writer.newLine();
 
-            writer.write("Name: " + entomologist.getName());
+            writer.write("Name: Entomologist");
             writer.newLine();
 
             writer.write("Points: "+entomologist.getPoints());
-            writer.newLine();
-
-            StringBuilder ownedInsects = new StringBuilder("Insects owned: ");
-            for (Insect insect :  entomologist.getInsect()) {
-                ownedInsects.append(insect.getId()).append(" ");
-            }
-            writer.write(ownedInsects.toString().trim());
             writer.newLine();
             writer.newLine();
 

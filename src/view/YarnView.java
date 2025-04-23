@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 public class YarnView implements View{
 
@@ -16,7 +17,7 @@ public class YarnView implements View{
 
   @Override
   public void printObject() {
-    System.out.println("Model.Yarn: " + yarn.getId());
+    System.out.println("Yarn: " + yarn.getId());
     System.out.println("Type: " + yarn.getName());
 
     // Print tectons connected by yarn
@@ -32,7 +33,7 @@ public class YarnView implements View{
   public void printToFile(File f) {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(f, true))) {
 
-      writer.write("Model.Yarn: " + yarn.getId());
+      writer.write("Yarn: " + yarn.getId());
       writer.newLine();
 
       writer.write("Type: " + yarn.getName());

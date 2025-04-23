@@ -1,11 +1,15 @@
 package model;
 
+import view.YarnView;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 /** A Yarn class a gombafonal reprezentációja. */
 public class Yarn {
+    private YarnView yarnView;
+
     protected List<Tecton> tectons;
     protected Mushroom mushroom;
     protected MushroomPicker player;
@@ -31,6 +35,7 @@ public class Yarn {
      * A Yarn class konstruktora.
      */
     public Yarn() {
+        yarnView = new YarnView(this);
         this.tectons = new ArrayList<>();
         id = "Yarn" + new Random().nextInt();
         name="normal";
@@ -40,6 +45,7 @@ public class Yarn {
      * A Yarn class konstruktora.
      */
     public Yarn(List<Tecton> tectons) {
+        yarnView = new YarnView(this);
         this.tectons = tectons;
         id = "" + new Random().nextInt();
     }
