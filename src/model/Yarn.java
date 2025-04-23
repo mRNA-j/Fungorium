@@ -55,6 +55,7 @@ public class Yarn {
      * @param mushroom A gomba, amihez a gombafonal tartozik.
      */
     public Yarn(Mushroom mushroom, MushroomPicker picker,String id) {
+        yarnView = new YarnView(this);
         this.tectons = new ArrayList<>();
         tectons.add(mushroom.getTecton());
         this.mushroom = mushroom;
@@ -64,6 +65,13 @@ public class Yarn {
         mushroom.getTecton().addYarn(this);
     }
 
+    public YarnView getYarnView() {
+        return yarnView;
+    }
+
+    public void setYarnView(YarnView yarnView) {
+        this.yarnView = yarnView;
+    }
     /**
      * Ellenőrzi, hogy a gombafonal kapcsolódik-e gombatesthez. Implementáció: ellenőrzi, hogy a
      * gombatest Tectonja szerepel-e a gombafonalhoz tartozó Tectonok listájában.

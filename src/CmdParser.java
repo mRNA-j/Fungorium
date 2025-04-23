@@ -277,50 +277,7 @@ public class CmdParser {
         /* ----------  TECTONS  ---------- */
 
         for (Tecton tecton : map.getTectons()) {
-            System.out.println("Tecton: "   + tecton.getId());
-            System.out.println("Type: "     + tecton.getType());
-
-            /* ----------  MUSHROOM  ---------- */
-            System.out.println("Mushroom: " + (tecton.getMushroom() != null
-                    ? tecton.getMushroom().getId()
-                    : "none"));
-
-            /* ----------  INSECTS  ---------- */
-            System.out.println("Insects: "  + (tecton.getInsects().isEmpty()
-                    ? "none"
-                    : tecton.getInsects()
-                    .stream()
-                    .map(Insect::getId)
-                    .collect(Collectors.joining(" "))));
-
-            /* ----------  YARNS  ---------- */
-            System.out.println("Yarns: "+ (tecton.getYarns().isEmpty()
-              ? "none"
-              : tecton.getYarns()
-              .stream()
-              .map(Yarn::getId)
-              .collect(Collectors.joining(" "))));
-
-            /* ----------  NEIGHBOURS  ---------- */
-            System.out.println("Neighbours: "+ (tecton.getNeighbours().isEmpty()
-                    ? "none"
-                    : tecton.getNeighbours()
-                    .stream()
-                    .map(Tecton::getId)
-                    .collect(Collectors.joining(" "))));
-
-            /* ----------  SPORES  ---------- */
-
-            //System.out.println("SPORATOMB " + tecton.getSpores().size());
-            System.out.println("Spores: "   + (tecton.getSpores().isEmpty() || tecton.getSpores() == null
-                    ? "none"
-                    : tecton.getSpores()
-                    .stream()
-                    .map(Spore::getId)
-                    .collect(Collectors.joining(" "))));
-            System.out.println();
-
-
+            tecton.getTectonView().printObject();
         }
 
         /* ----------  MUSHROOMS  ---------- */
@@ -328,46 +285,22 @@ public class CmdParser {
             MushroomPicker owner = findMushroomPickerByMushroom(m);
             m.getMushroomView().setOwner(owner);
             m.getMushroomView().printObject();
-
-            /*System.out.println("Mushroom: " + m.getId());
-            System.out.println("HasSpore: " + m.getHasSpore());
-            System.out.println("Place: "    + m.getTecton().getId());
-            MushroomPicker owner = findMushroomPickerByMushroom(m);
-            System.out.println("Owner: "    + (owner == null ? "none" : owner.getName()));
-            System.out.println();*/
         }
 
         /* ----------  INSECT  ---------- */
         for (Insect i : getAllInsectsInGame()) {
             i.getInsectView().printObject();
-            /*System.out.println("Insect: " + i.getId());
-            System.out.println("Current Effect: " + (i.getCurrentEffect() == null ? "none" : i.getCurrentEffect()));
-            System.out.println("Owner: " + i.getOwner().getName());
-            System.out.println();*/
         }
 
         /* ----------  YARNS  ---------- */
         for (Yarn y : getAllYarnsInGame()) {
-
-            /*System.out.println("Yarn: " + y.getId());
-            System.out.println("Type: " + y.getName());            //  ←  kill / protect / …
-            System.out.print  ("Tectons in yarn: ");
-            System.out.println(y.getTectons().stream()
-                    .map(Tecton::getId)
-                    .collect(Collectors.joining(" ")));
-            System.out.println();*/
+            y.getYarnView().printObject();
         }
 
         /* ----------  PLAYERS  ---------- */
 
         for (Player p : game.getPlayers()) {
             p.getPlayerView().printObject();
-            //System.out.println("NEV::: "+ p.getPlayerView());
-            /*System.out.println("Player: " + p.getName());
-            System.out.println("Type: " + getPlayerType(p));
-            //System.out.println();                       //  ← blank line before Points
-            System.out.println("Points: " + p.getPoints());
-            System.out.println();*/
         }
 
     }
@@ -413,19 +346,6 @@ public class CmdParser {
             }
         }
         return allInsects;
-    }
-
-    /**
-     * Helper method to get player type string
-     */
-    private static String getPlayerType(Player player) {
-        if (player instanceof Entomologist) {
-            return "Entomologist";
-        } else if (player instanceof MushroomPicker) {
-            return "MushroomPicker";
-        } else {
-            return "Unknown";
-        }
     }
 
     /**

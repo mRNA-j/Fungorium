@@ -1,10 +1,13 @@
 package model;
 
+import view.TectonView;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /** A Tecton class a játéktér egy területi egységének reprezentációja. */
 public class Tecton {
+    private TectonView tectonView;
 
     private String id;
     private int yarnLimit;
@@ -16,6 +19,13 @@ public class Tecton {
     private List<Spore> spores;
     private List<Tecton> neighbours;
     private boolean yarnAbsorption = false;
+
+    public TectonView getTectonView() {
+        return tectonView;
+    }
+    public void setTectonView(TectonView tectonView) {
+        this.tectonView = tectonView;
+    }
 
     public boolean getMushroomPrevent(){
         return mushroomPrevent;
@@ -45,6 +55,8 @@ public class Tecton {
      * @param isKeepAlive true, ha a tekton életbentartó.
      */
     public Tecton(String id, int yarnLimit, boolean mushroomPrevent, boolean isKeepAlive) {
+        tectonView = new TectonView(this);
+
         this.id = id;
         this.yarnLimit = yarnLimit;
         this.mushroomPrevent = mushroomPrevent;
