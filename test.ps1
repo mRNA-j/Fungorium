@@ -21,9 +21,9 @@ function compile_and_build {
 
 function run {
     param ($name)
-    $in = "tests/$name.in"
-    $out = "tests/$name.out"
-    $exp = "tests/$name.exp"
+    $in = "tests/$name/$name.in"
+    $out = "tests/$name/$name.out"
+    $exp = "tests/$name/$name.exp"
 
     # Check if files exist
     if (-not (Test-Path $in)) {
