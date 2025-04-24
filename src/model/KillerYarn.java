@@ -35,11 +35,12 @@ public class KillerYarn extends Yarn implements Serializable {
             //Eltávolítja a tectonról
             tecton.removeInsect(insect);
 
-
             //Gombatest nő, ha az adott tektonon eddig nem volt
             if(!tecton.isMushroomPrevent() && tecton.getMushroom() == null) {
-              new Mushroom(tecton, "sajt"); //TODO: idvel kezdeni kell valami vmi egyedi naming conventiont szuljunk neki
-              this.getPlayer().addPoints(1);//sztem kell -Luca
+              Mushroom m = new Mushroom(tecton, player,"Mushroom_"+this.getId());
+              //tecton.addMushroom(m);
+              player.addMushroom(m);
+              this.getPlayer().addPoints(3);
             }
           }
         }

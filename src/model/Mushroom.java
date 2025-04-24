@@ -11,6 +11,9 @@ import java.io.Serializable;
 public class Mushroom implements Serializable {
     MushroomView mushroomView;
 
+
+
+    private MushroomPicker owner;
     private String id; // Hozzáadott ID mező
     private int numberOfDispersions;
     private int newSporeGrowth;
@@ -23,11 +26,11 @@ public class Mushroom implements Serializable {
      * Létrehoz egy új gomba objektumot a megadott tectonon.
      * @param tecton A tecton, amin a gomba elhelyezkedik.
      */
-    public Mushroom(Tecton tecton) {
+    public Mushroom(Tecton tecton, MushroomPicker picker) {
         mushroomView = new MushroomView(this);
-
         this.tecton = tecton;
         tecton.addMushroom(this);
+        owner = picker;
         age = 0;
         numberOfDispersions = 0;
         newSporeGrowth = 5;
@@ -37,9 +40,9 @@ public class Mushroom implements Serializable {
 
 
 
-    public Mushroom(Tecton tecton, String testID) {
+    public Mushroom(Tecton tecton,MushroomPicker picker , String testID) {
         mushroomView = new MushroomView(this);
-
+        owner = picker;
         this.tecton = tecton;
         tecton.addMushroom(this);
         age = 0;
@@ -48,6 +51,14 @@ public class Mushroom implements Serializable {
         hasSpore = false;
         currentSpore = null;
         this.id = testID;
+    }
+
+    public MushroomPicker getOwner() {
+        return owner;
+    }
+
+    public void setOwner(MushroomPicker owner) {
+        this.owner = owner;
     }
 
     public MushroomView getMushroomView() {

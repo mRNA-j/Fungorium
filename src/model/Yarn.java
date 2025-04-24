@@ -10,7 +10,6 @@ import java.util.Random;
 /** A Yarn class a gombafonal reprezentációja. */
 public class Yarn implements Serializable {
     private YarnView yarnView;
-
     protected List<Tecton> tectons;
     protected Mushroom mushroom;
     protected MushroomPicker player;

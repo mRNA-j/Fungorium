@@ -156,7 +156,7 @@ public class MushroomPicker extends Player implements Serializable {
                     // Ellenőrzi, hogy a tecton elérhető-e a birtokolt fonalakkal
                     if (isTectonInRange(targetTecton)) {
                         //System.out.println("Novesztek");
-                        Mushroom newMushroom = new Mushroom(targetTecton, tesztId); // Új gomba létrehozása a cél tecton alapján
+                        Mushroom newMushroom = new Mushroom(targetTecton,this ,tesztId); // Új gomba létrehozása a cél tecton alapján
                         ownedMushrooms.add(newMushroom); // Új gomba hozzáadása a játékos gombáihoz
                         // Három spóra eltávolítása a tectonról
                         targetTecton.removeSpore(targetTecton.getSpores().remove(0)); // Első spóra eltávolítása

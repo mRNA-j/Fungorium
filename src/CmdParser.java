@@ -168,18 +168,7 @@ public class CmdParser {
             return null;
         }
 
-        for (Player player : game.getPlayers()) {
-            if (player instanceof Entomologist) {
-                Entomologist entomologist = (Entomologist) player;
-                for (Insect i : entomologist.getInsect()) {
-                    if(i.getId().equals(insect.getId())) {
-                        return entomologist;
-                    }
-                }
-            }
-        }
-
-        return null;
+        return insect.getOwner();
     }
 
     /**
@@ -557,15 +546,7 @@ public class CmdParser {
         if (mushroom == null) {
             return null;
         }
-        for (Player player : game.getPlayers()) {
-            if (player instanceof MushroomPicker) {
-                MushroomPicker picker = (MushroomPicker) player;
-                if (picker.getOwnedMushrooms().contains(mushroom)) {
-                    return picker;
-                }
-            }
-        }
-        return null;
+        return mushroom.getOwner();
     }
 
     /**
@@ -1034,10 +1015,11 @@ public class CmdParser {
         }
 
         // Új gomba létrehozása a megadott ID-vel és hozzáadása a tectonhoz
-        Mushroom newMushroom = new Mushroom(targetTecton, mushroomId);
+        //Mushroom newMushroom = new Mushroom(targetTecton, mushroomId);
 
+        //TODO - Hasznaljuk ezt egyaltalan?
         // Hozzáadjuk a gombát a tectonhoz
-        targetTecton.addMushroom(newMushroom);
+        //targetTecton.addMushroom(newMushroom);
     }
 
     private static void add_insect_to_tecton(String[] args) {
@@ -1313,11 +1295,10 @@ public class CmdParser {
             return;
         }
 
-        // Create the mushroom on the tecton
-        Mushroom mushroom = new Mushroom(targetTecton, mushroomId);
-        targetTecton.addMushroom(mushroom);
-
         MushroomPicker mp = (MushroomPicker) findPlayerByName(ownerName);
+        // Create the mushroom on the tecton
+        Mushroom mushroom = new Mushroom(targetTecton, mp ,mushroomId);
+        targetTecton.addMushroom(mushroom);
         mp.addMushroom(mushroom);
 
     }
