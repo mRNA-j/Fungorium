@@ -1,0 +1,8 @@
+create_entomologist Alice e1
+create_tecton normal t1
+create_tecton normal t2
+add_neighbour_to_tecton t1 t2
+create_insect Alice t1 i1
+create_spore_on_tecton t1 insectduplicate s1
+action_eat_spore i1 s1
+stat

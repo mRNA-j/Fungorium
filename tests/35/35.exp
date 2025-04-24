@@ -1,0 +1,28 @@
+Tecton: t1
+Type: normal
+Mushroom: none
+Insects: i1 i1_dup
+Yarns: none
+Neighbours: t2
+Spores: none
+
+Tecton: t2
+Type: normal
+Mushroom: none
+Insects: none
+Yarns: none
+Neighbours: t1
+Spores: none
+
+Insect: i1
+Current Effect: none
+Owner: Alice
+
+Insect: i1_dup
+Current Effect: none
+Owner: Alice
+
+Player: Alice
+Type: Entomologist
+Points: 1
+

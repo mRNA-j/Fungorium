@@ -1154,6 +1154,9 @@ public class CmdParser {
             case "cutpreventing":
                 newSpore = new CutPreventingSpore(sporeId);
                 break;
+            case "insectduplicate":
+                newSpore = new InsectDuplicatingSpore(sporeId);
+                break;
             default:
                 System.out.println("Ismeretlen spóra típus: " + sporeType);
                 System.out.println("Támogatott típusok: accelerator, paralyze, decelerator, cutpreventing");

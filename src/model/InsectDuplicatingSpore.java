@@ -25,8 +25,7 @@ public class InsectDuplicatingSpore extends Spore implements Serializable {
 
     @Override
     public void addEffect(Insect insect) {
-        Insect newInsect = new Insect(insect.getCurrentPlace());
+        Insect newInsect = new Insect(insect.getPlace(), insect.getOwner(), insect.getId()+"_dup");
         insect.getOwner().addInsect(newInsect);
-        insect.getCurrentPlace().addInsect(newInsect);
     }
 }

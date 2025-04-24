@@ -51,19 +51,16 @@ public class Insect implements Serializable {
      */
     public Insect(Tecton place){
         insectView = new InsectView(this);
-
         decelerated = false;
         paralized = false;
         accelerated = false;
         cutPrevented = false;
-
         currentPlace = place;
         place.addInsect(this);
     }
 
     public Insect(Tecton place,Entomologist owner ,String testID){
         insectView = new InsectView(this);
-
         decelerated = false;
         paralized = false;
         accelerated = false;
