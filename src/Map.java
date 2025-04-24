@@ -1,11 +1,12 @@
 import model.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 /** A Map class a játéktér reprezentációja. */
-public class Map {
+public class Map implements Serializable {
     private List<Tecton> tectons;
     private Random random; // Random szám generátor
 

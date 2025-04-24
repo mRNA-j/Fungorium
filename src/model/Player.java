@@ -2,12 +2,14 @@ package model;
 import view.PlayerView;
 import view.View;
 
+import java.io.Serializable;
+
 /**
  * Absztrakt osztály a játékosok reprezentálására.
  * Kezeli a játékos nevét és pontszámát.
  * Az osztályból származtatott konkrét játékos osztályokat kell létrehozni.
  */
-public abstract class Player {
+public abstract class Player implements Serializable {
     private PlayerView playerView;
 
     /** A játékos neve */

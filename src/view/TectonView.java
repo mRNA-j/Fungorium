@@ -2,13 +2,10 @@ package view;
 
 import model.*;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.stream.Collectors;
 
-public class TectonView implements View {
+public class TectonView implements View, Serializable {
     private final Tecton tecton;
 
     public TectonView(Tecton tecton) {this.tecton = tecton; }

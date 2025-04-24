@@ -1,7 +1,9 @@
 package model;
 
+import java.io.Serializable;
+
 /** A Model.YarnAbsorbantTecton class egy speciális Model.Tecton, ami felszívja a gombafonalakat. */
-public class YarnAbsorbantTecton extends Tecton {
+public class YarnAbsorbantTecton extends Tecton implements Serializable {
     private boolean yarnAbsorption = true;
     /**
      * A Model.YarnAbsorbantTecton class konstruktora.

@@ -2,12 +2,13 @@ package model;
 
 import view.YarnView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 /** A Yarn class a gombafonal reprezentációja. */
-public class Yarn {
+public class Yarn implements Serializable {
     private YarnView yarnView;
 
     protected List<Tecton> tectons;

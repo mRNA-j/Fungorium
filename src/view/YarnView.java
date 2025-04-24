@@ -1,13 +1,10 @@
 package view;
 import model.*;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.stream.Collectors;
 
-public class YarnView implements View{
+public class YarnView implements View, Serializable {
 
   private final Yarn yarn;
 

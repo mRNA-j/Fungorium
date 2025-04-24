@@ -9,7 +9,7 @@ function compile_and_build {
     }
 
     # Compile Java files with specific source and target version
-    javac  -cp src -d out src\*.java src\model\*.java src\view\*.java
+    javac -cp src -d out src\*.java src\model\*.java src\view\*.java
     if ($LASTEXITCODE -ne 0) {
         Write-Output "Compilation failed!"
         return $false
@@ -21,6 +21,26 @@ function compile_and_build {
 
 function run {
     param ($name)
+
+    # Handle "all_test" case differently - it should run the numbered tests
+    if ($name -eq "all_test") {
+        $testDirs = Get-ChildItem -Path "tests" -Directory | Where-Object { $_.Name -match '^\d+$' } |
+                Sort-Object { [int]($_.Name) } # Sort numerically
+        foreach ($testDir in $testDirs) {
+            $testNum = $testDir.Name
+            Write-Output "-------------------------------"
+            Write-Output "Test: $testNum"
+            run_single_test $testNum
+        }
+        return
+    }
+
+    run_single_test $name
+}
+
+function run_single_test {
+    param ($name)
+
     $in = "tests/$name/$name.in"
     $out = "tests/$name/$name.out"
     $exp = "tests/$name/$name.exp"
@@ -30,6 +50,7 @@ function run {
         Write-Output "Error: Input file $in does not exist."
         return
     }
+
     if (-not (Test-Path $exp)) {
         Write-Output "Error: Expected output file $exp does not exist."
         return
@@ -80,16 +101,22 @@ if (-not $buildSuccess) {
 
 # Run tests
 if ($in -eq "all_tests") {
-    $names = (Get-ChildItem -Path "tests" -Filter "*.in" | ForEach-Object { $_.BaseName }) | Select-Object -Unique
-    if ($names.Count -eq 0) {
-        Write-Output "No test files found in the tests directory."
+    # Look for numbered test directories and sort them numerically
+    $testDirs = Get-ChildItem -Path "tests" -Directory | Where-Object { $_.Name -match '^\d+$' } |
+            Sort-Object { [int]($_.Name) }
+
+    if ($testDirs.Count -eq 0) {
+        Write-Output "No test directories found in the tests directory."
     } else {
-        foreach ($n in $names) {
+        foreach ($testDir in $testDirs) {
+            $testNum = $testDir.Name
             Write-Output "-------------------------------"
-            Write-Output "Test: $n"
-            run $n
+            Write-Output "Test: $testNum"
+            run_single_test $testNum
         }
     }
-} else {
+} elseif ($in -eq "all_test") {
     run $in
+} else {
+    run_single_test $in
 }

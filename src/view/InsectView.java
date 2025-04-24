@@ -3,12 +3,9 @@ package view;
 import model.Insect;
 import model.Tecton;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
-public class InsectView implements View{
+public class InsectView implements View, Serializable {
     private final Insect insect;
 
     public InsectView(Insect i) {

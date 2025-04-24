@@ -1,5 +1,7 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * A Model.Spore osztály egy absztrakt osztály, amely a spórákat reprezentálja.
  * A spórák rendelkeznek tápanyag értékkel és hatásnévvel, amelyek különböző rovarokra kifejtett hatásokkal járhatnak.
@@ -9,7 +11,7 @@ package model;
  *
  * A spórák hatásokat adhatnak hozzá különböző rovarokhoz az addEffect metódus segítségével.
  */
-public abstract class Spore {
+public abstract class Spore implements Serializable {
     /** A spóra tápanyaga, amely meghatározza a spóra étkezési értékét. */
     private int nutrition;
     /** A spóra hatásának neve, amely megadja a spóra hatás típusát. */

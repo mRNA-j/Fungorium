@@ -373,7 +373,6 @@ public class CmdParser {
 
             // Write the game state to the file
             out.writeObject(gameState);
-            System.out.println("Game state successfully saved to " + filename);
         } catch (IOException e) {
             System.out.println("Error saving game state: " + e.getMessage());
             e.printStackTrace();
@@ -407,11 +406,8 @@ public class CmdParser {
             game = gameState.getGame();
             map = gameState.getMap();
 
-            System.out.println("Game state successfully loaded from " + filename);
 
-            // Optional: Print a summary of the loaded state
-            System.out.println("Game loaded with " + game.getPlayers().size() + " players and "
-                    + map.getTectons().size() + " tectons.");
+
         } catch (FileNotFoundException e) {
             System.out.println("Save file not found: " + filename);
         } catch (IOException e) {

@@ -1,5 +1,7 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * Az Model.AcceleratorSpore osztály a Model.Spore osztályból származik, és a gyorsító típusú spórát reprezentálja.
  * Ez a spóra hatással van a rovarokra, és képes gyorsítani azok mozgását.
@@ -8,7 +10,7 @@ package model;
  * A konstruktorok beállítják a spóra tápanyagértékét és a megfelelő hatásnevet.
  * Az addEffect metódus alkalmazza a gyorsító hatást a rovaron.
  */
-public class AcceleratorSpore extends Spore {
+public class AcceleratorSpore extends Spore implements Serializable {
     /**
      * Alapértelmezett konstruktor, amely létrehozza a gyorsító spórát.
      * Az alapértelmezett tápanyag érték 1, a hatás neve pedig "accelerator".

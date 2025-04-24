@@ -1,6 +1,7 @@
 import model.Player;
 import model.Tecton;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
  * A játék alapvető működését kezelő osztály.
  * Tartalmazza a játék állapotát, a játékosokat és a játékteret.
  */
-public class Game {
+public class Game implements Serializable {
     /** Az aktuális kör száma */
     private int currentTurn;
 

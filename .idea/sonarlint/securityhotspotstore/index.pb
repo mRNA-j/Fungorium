@@ -10,16 +10,12 @@ readme.txt,4\5\451685e9efac4a6dc1fee73ec53ffb6b2c4c38b5
 src/Insect.java,5\d\5de8cbb51d46996afc1a6551382d6619e0f4c52b
 ?
 src/Player.java,0\a\0af1b8fac2070a86d1131ba15e93dd7b384d4b84
-=
-src/Game.java,b\8\b8792f7569afb04e93ae07d923c5005933c47d72
 E
 src/Entomologist.java,4\b\4be9de309a7de5c8ac83da4a57b5b4eee36c3178
 ?
 src/Tecton.java,a\c\ac1cc9d35aefa84c6b984feb40eab27a4f9921be
 L
 src/YarnAbsorbantTecton.java,1\2\12a830c76e2d0602c6c0e360f701efd670fa6d34
-=
-src/Main.java,9\2\924f089edb4af5ee45c8a9d1129cd28e2b368138
 C
 src/KillerYarn.java,3\a\3a1589f0a04770cdfa47f0a56bf0a36e1e73797a
 =

@@ -6,12 +6,9 @@ import model.MushroomPicker;
 import model.Yarn;
 
 import javax.swing.text.PlainView;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
-public class MushroomPickerView extends PlayerView {
+public class MushroomPickerView extends PlayerView implements Serializable {
     private final MushroomPicker mp;
 
     public MushroomPickerView(MushroomPicker mp) {this.mp = mp; }

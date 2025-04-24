@@ -2,11 +2,13 @@ package model;
 
 import view.MushroomView;
 
+import java.io.Serializable;
+
 /**
  * A gomba entitást reprezentáló osztály.
  * Kezeli a gomba korát, spóráit és a tectonhoz való kapcsolódását.
  */
-public class Mushroom {
+public class Mushroom implements Serializable {
     MushroomView mushroomView;
 
     private String id; // Hozzáadott ID mező

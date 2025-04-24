@@ -1,6 +1,8 @@
 package model;
 
-public class KillerYarn extends Yarn {
+import java.io.Serializable;
+
+public class KillerYarn extends Yarn implements Serializable {
   private String id;
 
   public KillerYarn (Mushroom mushroom, MushroomPicker mp,String id) {

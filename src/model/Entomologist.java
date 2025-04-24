@@ -2,13 +2,14 @@ package model;
 
 import view.EntomologistView;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Az Model.Entomologist osztály a játékos egyik lehetséges szereplőjét reprezentálja,
  * aki egy rovart (Model.Insect) irányít a játék során.
  */
-public class Entomologist extends Player{
+public class Entomologist extends Player implements Serializable {
     private List<Insect> insects; // a rovarász játékos rovarja
 
     /**

@@ -3,12 +3,9 @@ package view;
 import model.Mushroom;
 import model.MushroomPicker;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
-public class MushroomView implements View {
+public class MushroomView implements View, Serializable {
     private final Mushroom mushroom;
     private MushroomPicker owner;
 

@@ -1,6 +1,7 @@
 package model;
 import view.MushroomPickerView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -9,7 +10,7 @@ import java.util.Objects;
  * A MushroomPicker osztály a Player osztályt kiterjeszti,
  * és a gombaszedő játékos speciális képességeit valósítja meg.
  */
-public class MushroomPicker extends Player {
+public class MushroomPicker extends Player implements Serializable {
     /**
      * A játékos által birtokolt gombák listája.
      */

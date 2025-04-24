@@ -2,11 +2,12 @@ package model;
 
 import view.TectonView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /** A Tecton class a játéktér egy területi egységének reprezentációja. */
-public class Tecton {
+public class Tecton implements Serializable {
     private TectonView tectonView;
 
     private String id;

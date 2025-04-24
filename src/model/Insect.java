@@ -2,11 +2,13 @@ package model;
 
 import view.InsectView;
 
+import java.io.Serializable;
+
 /**
  * Az Model.Insect osztály egy rovart reprezentál, amely egy adott tectonon helyezkedik el,
  * és különböző állapotváltozásokat szenvedhet el spórák hatására.
  */
-public class Insect {
+public class Insect implements Serializable {
     private InsectView insectView;
 
     private Tecton currentPlace; // Az aktuális tecton, ahol a rovar tartózkodik

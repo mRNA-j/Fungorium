@@ -6,12 +6,9 @@ import model.Tecton;
 import model.Insect;
 
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
-public class EntomologistView extends PlayerView {
+public class EntomologistView extends PlayerView implements Serializable {
     private final Entomologist entomologist;
 
     public EntomologistView(Entomologist entomologist) {

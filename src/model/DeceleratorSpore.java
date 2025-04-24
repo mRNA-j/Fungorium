@@ -1,5 +1,7 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * A Model.DeceleratorSpore osztály a Model.Spore osztályból származik, és a lassító típusú spórát reprezentálja.
  * Ez a spóra képes lelassítani a rovarokat.
@@ -7,7 +9,7 @@ package model;
  *
  * A spóra alkalmazza a lassító hatást a rovarokra, ezzel csökkentve azok mozgékonyságát.
  */
-public class DeceleratorSpore extends Spore {
+public class DeceleratorSpore extends Spore implements Serializable {
     /**
      * Alapértelmezett konstruktor, amely létrehozza a lassító spórát.
      * Az alapértelmezett tápanyag érték 3, a hatás neve pedig "decelerator".
