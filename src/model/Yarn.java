@@ -13,14 +13,53 @@ public class Yarn implements Serializable {
     protected List<Tecton> tectons;
     protected Mushroom mushroom;
     protected MushroomPicker player;
+    private String id; //tesztelésnél használt azonosító
+    protected String name = "normal";
+
+    /**
+     * A Yarn class konstruktora.
+     */
+    public Yarn() {
+        yarnView = new YarnView(this);
+        this.tectons = new ArrayList<>();
+        id = "Yarn" + new Random().nextInt();
+        name="normal";
+    }
+
+    /**
+     * Alapértelmezett konstruktor.
+     * @param mushroom A gomba, amihez a gombafonal tartozik.
+     * @param picker A gombász akinek  fonala
+     */
+    public Yarn(Mushroom mushroom, MushroomPicker picker) {
+        yarnView = new YarnView(this);
+        this.tectons = new ArrayList<>();
+        tectons.add(mushroom.getTecton());
+        this.player = picker;
+        picker.addYarn(this);
+        mushroom.getTecton().addYarn(this);
+    }
+
+    /**
+     * Tesztelésnél használt konstruktor.
+     * @param mushroom A gomba, amihez a gombafonal tartozik.
+     * @param picker A gombász akinek  fonala
+     * @param id a teszteléshez hazsnált azonosító
+     */
+    public Yarn(Mushroom mushroom, MushroomPicker picker,String id) {
+        yarnView = new YarnView(this);
+        this.tectons = new ArrayList<>();
+        tectons.add(mushroom.getTecton());
+        this.mushroom = mushroom;
+        this.id = id;
+        this.player = picker;
+        picker.addYarn(this);
+        mushroom.getTecton().addYarn(this);
+    }
 
     public void setId(String id) {
         this.id = id;
     }
-
-    private String id;
-    protected String name = "normal";
-
     public String getId() {
         return id;
     }
@@ -35,30 +74,7 @@ public class Yarn implements Serializable {
 
     public String getName(){return name;}
 
-    /**
-     * A Yarn class konstruktora.
-     */
-    public Yarn() {
-        yarnView = new YarnView(this);
-        this.tectons = new ArrayList<>();
-        id = "Yarn" + new Random().nextInt();
-        name="normal";
-    }
 
-    /**
-     * A Yarn class konstruktora.
-     * @param mushroom A gomba, amihez a gombafonal tartozik.
-     */
-    public Yarn(Mushroom mushroom, MushroomPicker picker,String id) {
-        yarnView = new YarnView(this);
-        this.tectons = new ArrayList<>();
-        tectons.add(mushroom.getTecton());
-        this.mushroom = mushroom;
-        this.id = id;
-        this.player = picker;
-        picker.addYarn(this);
-        mushroom.getTecton().addYarn(this);
-    }
 
     public YarnView getYarnView() {
         return yarnView;
@@ -116,24 +132,25 @@ public class Yarn implements Serializable {
         int iranyIndex = tectons.indexOf(iranyAmerreSzakad);
 
         if(iranyIndex < index) {
-            // 2. Add Tectons to the first yarn up to the cutting point
+            // Tektonokat hozzáadjuk a első fonalhoz
             for (int i = 0; i < index; i++) {
                 Tecton t = tectons.get(i);
                 t.growYarn(newYarn1);
             }
 
-            // 3. Add Tectons to the second yarn after the cutting point
+            // Tektonokat hozzáadjuk a második fonalhoz
             for (int i = index; i < tectons.size(); i++) {
                 Tecton t = tectons.get(i);
                 t.growYarn(newYarn2);
             }
         } else {
+            // Tektonokat hozzáadjuk a első fonalhoz
             for (int i = 0; i <= index; i++) {
                 Tecton t = tectons.get(i);
                 t.growYarn(newYarn1);
             }
 
-            // 3. Add Tectons to the second yarn after the cutting point
+            // Tektonokat hozzáadjuk a második fonalhoz
             for (int i = index+1; i < tectons.size(); i++) {
                 Tecton t = tectons.get(i);
                 t.growYarn(newYarn2);
@@ -146,12 +163,13 @@ public class Yarn implements Serializable {
             newYarn2.mushroom = mushroom;
         }
 
-        // 4. Finally, remove this yarn from all tectons' yarn lists
+        // Eltávolítjuk a yarn-t az összes tektonból ami tartalmazta
         for (Tecton t : new ArrayList<>(tectons)) {
             t.getYarns().remove(this);  // Direct removal
         }
 
-        tectons.clear();  // Clear the list of tectons in this yarn
+        //Tekton listáját kitöröljük
+        tectons.clear();
     }
 
     /**

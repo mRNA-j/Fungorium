@@ -24,6 +24,7 @@ public class MushroomPicker extends Player implements Serializable {
      *
      * @param name     A játékos neve.
      * @param mushroom Az induló gomba, amelyet a játékos birtokol.
+     * @param testId A tesztelésnál használt azonosító
      */
     public MushroomPicker(String name, Mushroom mushroom, String testId) {
         super(name, 0, testId); // A szülő (Player) osztály konstruktorának meghívása a játékos névvel és induló értékkel (0)
@@ -34,7 +35,12 @@ public class MushroomPicker extends Player implements Serializable {
         ownedYarns = new ArrayList<>(); // A statikus ownedYarns lista inicializálása egy új ArrayList példánnyal
     }
 
-
+    /**
+     * Konstruktor a MushroomPicker példány létrehozásához.
+     *
+     * @param name     A játékos neve.
+     * @param testId A tesztelésnál használt azonosító
+     */
     public MushroomPicker(String name, String testId) {
         super(name, 0, testId); // A szülő (Player) osztály konstruktorának meghívása a játékos névvel és induló értékkel (0)
         MushroomPickerView mushroomPickerView = new MushroomPickerView(this);
@@ -66,6 +72,11 @@ public class MushroomPicker extends Player implements Serializable {
         return ownedYarns;
     }
 
+    /**
+     * Hozzáad egy fonalat az által birtokolt fonalakhoz
+     *
+     * @param y A hozzáadandó fonál
+     * */
     public void addYarn(Yarn y) {
         ownedYarns.add(y);
     }
@@ -168,6 +179,8 @@ public class MushroomPicker extends Player implements Serializable {
             //System.out.println(errorMessage + " Nem lehet gombat noveszteni a tektonon");
         }
     }
+
+
     /**
      * A fonal növesztésének akciója a cél tectonon a kiválasztott fonallal.
      *
@@ -175,7 +188,6 @@ public class MushroomPicker extends Player implements Serializable {
      * @param selectedYarn A kiválasztott fonal, amelyet felhasználunk.
      * @param sourceTecton A forrás tekton - ha végül így implementáljuk : Erna
      */
-
    public void actionGrowYarn(Tecton sourceTecton, Tecton targetTecton, Yarn selectedYarn) {
         // Ellenőrzi, hogy a kiválasztott fonal egyik pontja szomszédos-e a cél tektonnal
         if(selectedYarn.getTectons().contains(sourceTecton)) {

@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Kezeli a gomba korát, spóráit és a tectonhoz való kapcsolódását.
  */
 public class Mushroom implements Serializable {
-    MushroomView mushroomView;
+    private MushroomView mushroomView;
     private MushroomPicker owner;
     private String id; // Hozzáadott ID mező
     private int numberOfDispersions;
@@ -22,6 +22,7 @@ public class Mushroom implements Serializable {
     /**
      * Létrehoz egy új gomba objektumot a megadott tectonon.
      * @param tecton A tecton, amin a gomba elhelyezkedik.
+     * @param picker A gombász akihez a gomba tartozik
      */
     public Mushroom(Tecton tecton, MushroomPicker picker) {
         mushroomView = new MushroomView(this);
@@ -36,7 +37,12 @@ public class Mushroom implements Serializable {
     }
 
 
-
+    /**
+     * Létrehoz egy új gomba objektumot a megadott tectonon.
+     * @param tecton A tecton, amin a gomba elhelyezkedik.
+     * @param picker A gombász akihez a gomba tartozik
+     * @param testID a teszteléshez használt azonosító
+     */
     public Mushroom(Tecton tecton,MushroomPicker picker , String testID) {
         mushroomView = new MushroomView(this);
         owner = picker;
@@ -50,10 +56,17 @@ public class Mushroom implements Serializable {
         this.id = testID;
     }
 
+    /**
+     * Visszadja a gomba owner-ét.
+     * */
     public MushroomPicker getOwner() {
         return owner;
     }
 
+    /**
+     * Beállítja a gomba owner-ét.
+     * @param owner a gombász akihez tartozni fog.
+     */
     public void setOwner(MushroomPicker owner) {
         this.owner = owner;
     }
@@ -66,6 +79,10 @@ public class Mushroom implements Serializable {
         return newSporeGrowth;
     }
 
+    /**
+     * Beállítja a sporatermelés időtartamát a paraméterként kapott értékre.
+     * @param newSporeGrowth az érték amire bállítja a spóranövekedés idejét-
+     * */
     public void setNewSporeGrowth(int newSporeGrowth) {
         if(newSporeGrowth < 0) {
             return;

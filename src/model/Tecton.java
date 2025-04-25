@@ -9,7 +9,7 @@ import java.util.List;
 /** A Tecton class a játéktér egy területi egységének reprezentációja. */
 public class Tecton implements Serializable {
     private TectonView tectonView;
-    private final String id;
+    private String id; //teszteléshez használt azonosító
     private final int yarnLimit;
     private final boolean mushroomPrevent;
     private final boolean isKeepAlive;
@@ -20,25 +20,62 @@ public class Tecton implements Serializable {
     private List<Tecton> neighbours;
     private boolean yarnAbsorption = false;
 
+    /**
+     * Visszaadja a jelenlegi TectonView objektumot, amely a Tecton megjelenítését kezeli.
+     *
+     * @return A TectonView objektum.
+     */
     public TectonView getTectonView() {
         return tectonView;
     }
+
+    /**
+     * Beállítja a Tecton nézetét a megadott TectonView objektummal.
+     *
+     * @param tectonView Az új TectonView.
+     */
     public void setTectonView(TectonView tectonView) {
         this.tectonView = tectonView;
     }
 
-    public boolean getMushroomPrevent(){
+    /**
+     * Visszajelzést ad arról, hogy az tectonon lehet-e gombát növeszteni.
+     *
+     * @return true, ha gombát nem lehet nöeszteni, különben false.
+     */
+    public boolean getMushroomPrevent() {
         return mushroomPrevent;
     }
 
-    public boolean getYarnAbsorption(){ return yarnAbsorption; }
+    /**
+     * Visszajelzést ad arról, hogy az élőlény képes-e a fonalak felszívására.
+     *
+     * @return true, ha képes felszíni a fonalakat, különben false.
+     */
+    public boolean getYarnAbsorption() {
+        return yarnAbsorption;
+    }
 
-    public boolean getIsKeepAlive(){ return isKeepAlive; }
+    /**
+     * Visszaadja, hogy az tecton fonaléletben tartó-e.
+     *
+     * @return true ha igen, false ha nem.
+     */
+    public boolean getIsKeepAlive() {
+        return isKeepAlive;
+    }
 
-    public void setYarnAbsorption(boolean yarnAbsorption){
+    /**
+     * Beállítja, hogy az élőlény képes-e fonalak felszívására.
+     *
+     * @param yarnAbsorption true, ha képes, különben false.
+     */
+    public void setYarnAbsorption(boolean yarnAbsorption) {
         this.yarnAbsorption = yarnAbsorption;
     }
 
+
+    //Tecton típusát adja meg, tesztelésnál hazsnáljuk csak.
     public String getType() {
         if (isKeepAlive)        return "KeepAlive";
         if (mushroomPrevent)    return "MushroomPrevent";
@@ -50,6 +87,26 @@ public class Tecton implements Serializable {
     /**
      * A Tecton class konstruktora.
      *
+     * @param yarnLimit A maximális gombafonal szám, ami a Tectonon lehet.
+     * @param mushroomPrevent true, ha a Tectonon nem lehet gomba.
+     * @param isKeepAlive true, ha a tekton életbentartó.
+     */
+    public Tecton( int yarnLimit, boolean mushroomPrevent, boolean isKeepAlive) {
+        tectonView = new TectonView(this);
+        this.yarnLimit = yarnLimit;
+        this.mushroomPrevent = mushroomPrevent;
+        this.isKeepAlive = isKeepAlive;
+        this.mushroom = null;
+        this.insects = new ArrayList<>();
+        this.yarns = new ArrayList<>();
+        this.spores = new ArrayList<>();
+        this.neighbours = new ArrayList<>(); // Inicializáljuk a listát
+    }
+
+    /**
+     * A Tecton class konstruktora.
+     *
+     * @param id teszteléshez használt azonosító
      * @param yarnLimit A maximális gombafonal szám, ami a Tectonon lehet.
      * @param mushroomPrevent true, ha a Tectonon nem lehet gomba.
      * @param isKeepAlive true, ha a tekton életbentartó.
@@ -259,10 +316,21 @@ public class Tecton implements Serializable {
         //Nincs különleges effectje, ezért üres
     }
 
+    /**
+     * Visszaadja az tecton egyedi azonosítóját.
+     *
+     * @return Az azonosító.
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Megállapítja, hogy ez a  Tecton össze van-e kötve egy másik tectonnal fonálon kereztül.
+     *
+     * @param other A másik Tecton, amelyhez való kapcsolódást vizsgáljuk.
+     * @return true, ha üssze vannak kötve, különben false.
+     */
     public boolean isConnectedWithYarn(Tecton other) {
         for (Yarn yarn : yarns) {
             if (yarn.getTectons().contains(other)) {

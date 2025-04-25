@@ -10,6 +10,7 @@ import java.io.Serializable;
  * Az osztályból származtatott konkrét játékos osztályokat kell létrehozni.
  */
 public abstract class Player implements Serializable {
+    /** Az objektumhoz tartozó View, ami az objektum kiírásáért felel (később a megjelenítést fogja végezni)*/
     private PlayerView playerView;
 
     /** A játékos neve */
@@ -17,25 +18,36 @@ public abstract class Player implements Serializable {
 
     /** A játékos által összegyűjtött pontok */
     private int points;
-    private String testID;
+    private final String testID; //Csak teszteléshez használt azonosító
+
+
     /**
      * Létrehoz egy új játékos objektumot a megadott névvel és kezdeti pontszámmal.
      * @param name A játékos neve.
      * @param points A játékos kezdeti pontszáma.
      */
-    public Player(String name, int points) {
+    protected Player(String name, int points) {
         this.name = name;
         this.points = points;
         this.testID = null;
         this.playerView = null;
     }
 
-    public Player(String name, int points, String testID) {
+    /**
+     * Csak teszteláshez használt konstruktor, megegyezik a tényleges konstruktorral.
+     * Abban különbözik, hogy a tesztelés sorén használt id-t is megkapja és beállítja
+     * @param name A játékos neve.
+     * @param points A játékos kezdeti pontszáma.
+     * @param testID A játákos azonosítója
+     */
+    protected Player(String name, int points, String testID) {
         this.name = name;
         this.points = points;
         this.testID = testID;
         this.playerView = null;
     }
+
+
     public void setPlayerView(PlayerView view) {
         this.playerView = view;
     }
@@ -76,6 +88,8 @@ public abstract class Player implements Serializable {
     public void addPoints(int numOfPoints) {
         points += numOfPoints;
     }
+
+    /** Vissszaadja a tesztelésnél használt id-t */
     public String getId(){
         return testID;
     }

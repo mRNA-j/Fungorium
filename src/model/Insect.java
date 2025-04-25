@@ -9,7 +9,7 @@ import java.io.Serializable;
  * és különböző állapotváltozásokat szenvedhet el spórák hatására.
  */
 public class Insect implements Serializable {
-    private InsectView insectView;
+    private final InsectView insectView;
     private Tecton currentPlace; // Az aktuális tecton, ahol a rovar tartózkodik
     private Entomologist owner; //visszadja melyik rovarász játékoshoz tartozik a rovar
     // A rovarra ható spóra effektusok
@@ -18,16 +18,20 @@ public class Insect implements Serializable {
     private boolean accelerated;   // Gyorsító spóra hatása
     private boolean cutPrevented;  // Vágásgátló spóra hatása
 
-    private String testID;
+    private String testID; //Csak tesztelésnél használt azonosító
 
+    /**
+     * Visszaadja a rovar aktuálisan melyik tektonon van
+     *
+     * @return a tecton ahol található
+     */
     public  Tecton getPlace(){
         return currentPlace;
     }
     /**
-     * Gets the current effect acting on the insect.
-     * Returns the name of the effect or "none" if no effect is active.
+     * Megadja egy string formájában, hogy a rovar milyen effect alatt áll
      *
-     * @return String representing the current effect (accelerated, decelerated, paralized, cutPrevented) or "none"
+     * @return egy string ami megadja az effect nevát, vagy "none"-t ha noncs rajta éppen semmilyen effect
      */
     public String getCurrentEffect() {
         if (accelerated) {
@@ -43,6 +47,29 @@ public class Insect implements Serializable {
         }
     }
 
+    /**
+     * Konstruktor egy új Insect objektum létrehozásához.
+     * A konstruktor inicializálja az élőlény nézetét, beállítja az alapértelmezett
+     * állapotokat (nem gyorsított, nem lassított, nem bénult, vágás elleni védelem nincs aktiválva),
+     * majd hozzárendeli az élőlényt a megadott helyhez.
+     * @param place A {@code Tecton} típusú hely, ahol az élőlény megjelenik.
+     * @param owner Az {@code Entomologist}, akihez az élőlény tartozik.
+     */
+    public Insect(Tecton place,Entomologist owner){
+        insectView = new InsectView(this);
+        decelerated = false;
+        paralized = false;
+        accelerated = false;
+        cutPrevented = false;
+        this.owner = owner;
+        currentPlace = place;
+        place.addInsect(this);
+    }
+
+    /**
+     * Teszteláshez használt kontruktor, megegyezik a rendes kontruktorral,
+     * csak annyiban tér el, hogy a tesztelésnél használ azonosítót is beállítja
+     */
     public Insect(Tecton place,Entomologist owner ,String testID){
         insectView = new InsectView(this);
         decelerated = false;
@@ -168,6 +195,7 @@ public class Insect implements Serializable {
      * Eltávolítja a megadott fonalat az aktuális tectonról.
      *
      * @param yarn Az eltávolítandó fonal.
+     * @param errefeleVagunk az aktualis irány, hogy melyik tekton fele kell vágni a fonalat
      */
     public void cutYarn(Yarn yarn, Tecton errefeleVagunk) {
 
@@ -178,12 +206,6 @@ public class Insect implements Serializable {
         } else {
             currentPlace.removeYarn(yarn, errefeleVagunk);
         }
-
-
-
-        //ITT Nem a vegen van a tecton ahol all a cucc
-
-
     }
 
     /**
@@ -196,6 +218,9 @@ public class Insect implements Serializable {
         spore.addEffect(this);
     }
 
+    /**
+     * Vissazálítja a rovaron lévő effektusokat semmire, minden kör végén meghívódik
+     * */
     public void resetEffect() {
         setAccelerated(false);
         setDecelerated(false);
@@ -224,6 +249,7 @@ public class Insect implements Serializable {
         }
     }
 
+    /** Vissszaadja a tesztelésnél használt id-t */
     public String getId(){
         return testID;
     }

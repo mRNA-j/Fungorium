@@ -14,9 +14,9 @@ public class Entomologist extends Player implements Serializable {
 
     /**
      * Konstruktor az Model.Entomologist példány létrehozásához.
-     *
      * @param name   A játékos neve.
      * @param insect A játékoshoz tartozó rovar.
+     * @param testId A tesztelésnél hasznélt azonosító
      */
     public Entomologist(String name, Insect insect, String testId){
         super(name, 0, testId);
@@ -25,6 +25,12 @@ public class Entomologist extends Player implements Serializable {
         insects = new ArrayList<>();
         insects.add(insect);
     }
+
+    /**
+     * Konstruktor az Model.Entomologist példány létrehozásához.
+     * @param name   A játékos neve.
+     * @param testId A tesztelésnél hasznélt azonosító
+     */
     public Entomologist(String name, String testId){
 
         super(name, 0, testId);
@@ -35,7 +41,7 @@ public class Entomologist extends Player implements Serializable {
     /**
      * Visszaadja az entomológushoz tartozó rovart.
      *
-     * @return A rovar (Model.Insect) objektum.
+     * @return A rovarok (Model.Insect) listáját.
      */
     public List<Insect> getInsect(){
       return insects;

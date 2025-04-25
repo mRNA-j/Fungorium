@@ -17,6 +17,13 @@ public class ParalyzingSpore extends Spore implements Serializable {
     public ParalyzingSpore(){
         super(4, "paralyzing");
     }
+
+    /**
+     * A tesztelésnél használt konstruktor, amely létrehozza a bénító spórát és beállítja a tesztelésnél használt azonosítót.
+     * Az alapértelmezett tápanyag érték 4, a hatás neve pedig "paralyzing".
+     *
+     * @param testID a tesztelésnél használt azonosító
+     */
     public ParalyzingSpore(String testID){
         super(4, "paralyzing", testID);
     }

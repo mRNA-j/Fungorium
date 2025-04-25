@@ -16,7 +16,7 @@ public abstract class Spore implements Serializable {
     private int nutrition;
     /** A spóra hatásának neve, amely megadja a spóra hatás típusát. */
     private String effectName;
-    public String testID;
+    private String testID;
 
     /**
      * Konstruktor, amely inicializálja a spórát tápanyaggal és hatásnévvel.
@@ -24,15 +24,22 @@ public abstract class Spore implements Serializable {
      * @param nutrition A spóra tápanyaga, amely meghatározza a tápértéket.
      * @param effectName A spóra hatásának neve.
      */
-    public Spore(int nutrition, String effectName, String testID){
+    protected Spore(int nutrition, String effectName){
+        this.nutrition = nutrition;
+        this.effectName = effectName;
+    }
+
+    /**
+     * A tesztelésnél használt konstruktor, amely inicializálja a spórát tápanyaggal és hatásnévvel.
+     *  Mindenben egyezik az eredeti kontruktorral, csak beállítja a tesztelésnél használt azonosítót is
+     *  @param nutrition A spóra tápanyaga, amely meghatározza a tápértéket.
+     *  @param effectName A spóra hatásának neve.
+     * @param testID A tesztelásnál használt azonosító
+     */
+    protected Spore(int nutrition, String effectName, String testID){
         this.nutrition = nutrition;
         this.effectName = effectName;
         this.testID = testID;
-    }
-    public Spore(int nutrition, String effectName){
-        this.nutrition = nutrition;
-        this.effectName = effectName;
-        this.testID = null;
     }
 
     /**
@@ -76,6 +83,7 @@ public abstract class Spore implements Serializable {
      */
     public abstract void addEffect(Insect insect);
 
+    /** Vissszaadja a tesztelésnél használt id-t */
     public String getId(){
         return testID;
     }

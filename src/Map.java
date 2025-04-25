@@ -8,7 +8,7 @@ import java.util.Random;
 /** A Map class a játéktér reprezentációja. */
 public class Map implements Serializable {
     private List<Tecton> tectons;
-    private Random random; // Random szám generátor
+    private final Random random; // Random szám generátor
 
     /** Konstruktor */
     public Map() {
@@ -16,12 +16,16 @@ public class Map implements Serializable {
         this.random = new Random();
     }
 
-    //new
+    /**
+     * Hozzáadja a paramáterként kapott tectont a pályához
+     * @param t A hozzáadandó Model.Tecton.
+     */
     public void addTecton(Tecton t){
         tectons.add(t);
     }
     /**
      * Generálja a Tectonokat és beállítja a szomszédos Tectonokat.
+     * Tesztelásnál manuálisan van minden pálya feléptve, nem ezzel a függvénnyel
      */
     public void generate() {
         // Példa implementáció: kézzel létrehozott gráf
@@ -74,7 +78,7 @@ public class Map implements Serializable {
             tecton.removeSpore(spore);
         }
 
-        Random random = new Random();
+        //Random random = new Random();
         List<Insect> templist = tecton.getInsects();
 
         //Fonalakat eltavolitjuk
@@ -125,10 +129,10 @@ public class Map implements Serializable {
 
     /**
      * CSAK TESZTELÉSNÉL VAN HASZNÁLVA, mivel a rovar is egy random tektonra kerülne,
-     * de mivel nincs randomozáió így biztosan az újonnan léttrejött tektonok közül az elsőre kerül
-     * A teszt teljesen megegyezik a rendes randolmizást splittingel, csak a rovar áttevésben különbözik
+     * de mivel nincs randomozáció így biztosan az újonnan léttrejött tektonok közül az elsőre kerül
+     * A teszt teljesen megegyezik a rendes randomizált splittingel, csak a rovar áttevésben különbözik
      * kettéhasítja a kiválasztott Tectont. Implementáció: Létre kell hozni két új Tectont, és a régit
-     * el kell távolítani. Az új Tectonoknak be kell állítani a szomszédait.
+     * el kell távolítani. Az új Tectonoknak be kell állítani a szomszédait és minden más tulajdonságát.
      *
      * @param tecton A kettéhasítandó Model.Tecton.
      */
@@ -228,6 +232,10 @@ public class Map implements Serializable {
         tectons = ts;
     }
 
+    /**
+     * A pályán a kör végén megkeresi azokat a fonalakat, amik nem csatlakoznak gombához vagy életbentartó tectonhoz.
+     * Eltávolítja ezeket a fonalakat a pályáról.
+     */
     public void noConnection() {
         for (Tecton tecton : tectons) {
             List<Yarn> yarnsToRemove = new ArrayList<>();
@@ -235,8 +243,7 @@ public class Map implements Serializable {
 
             for (Yarn yarn : tecton.getYarns()) {
                 // Ellenőrizzük, hogy a fonal nincs-e csatlakoztatva gombához
-                if (!yarnsToRemove.contains(yarn) && !yarnsToKeepAlive.contains(yarn)) {
-                    if (!yarn.isConnected()) {
+                if (!yarnsToRemove.contains(yarn) && !yarnsToKeepAlive.contains(yarn) && !yarn.isConnected()) {
                         // Ellenőrizzük, hogy a fonal tektonjai között van-e életbentartó tekton
                         boolean hasKeepAliveTecton = false;
                         for (Tecton yarnTecton : yarn.getTectons()) {
@@ -252,7 +259,7 @@ public class Map implements Serializable {
                             yarnsToRemove.add(yarn);
                         }
                     }
-                }
+
             }
 
             for (Yarn yarn : yarnsToRemove) {

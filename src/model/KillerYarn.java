@@ -1,15 +1,31 @@
 package model;
 
+import view.YarnView;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class KillerYarn extends Yarn implements Serializable {
+  /**
+   * Alapértelmezett konstruktor. Beállítja a name-et is.
+   * @param mushroom A gomba, amihez a gombafonal tartozik.
+   * @param mp A gombász akinek  fonala
+   */
+  public KillerYarn (Mushroom mushroom, MushroomPicker mp) {
+    super(mushroom, mp);
+    name = "KillerYarn";
+  }
+
+  /**
+   * Tesztelésnél használt konstruktor. Beállítja a name-et is.
+   * Megegyezik az eredeti kontruktorral, csak pluszba kap egy tesztelésnél használt id-t
+   * @param mushroom A gomba, amihez a gombafonal tartozik.
+   * @param mp A gombász akinek  fonala
+   * @param id a teszteléshez hazsnált azonosító
+   */
   public KillerYarn (Mushroom mushroom, MushroomPicker mp,String id) {
     super(mushroom, mp, id);
     name = "KillerYarn";
-  }
-  @Override
-  public String getName() {          // ← this is what @Override belongs to
-    return name;
   }
 
   @Override

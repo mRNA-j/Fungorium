@@ -17,6 +17,14 @@ public class DeceleratorSpore extends Spore implements Serializable {
     public DeceleratorSpore(){
         super(3, "decelerator");
     }
+
+    /**
+     * A tesztelésnél használt konstruktor, amely létrehozza a gyorsító spórát és beállítja a tesztelásnál használt azonosítót.
+     * Teljesen egyezik az eredeti konstruktorral, az id beállítást leszámítva.
+     * Az alapértelmezett tápanyag érték 1, a hatás neve pedig "decelerator".
+     *
+     * @param testID a tesztelásnál használt azonosító
+     */
     public DeceleratorSpore(String testID){
         super(3, "decelerator", testID);
     }

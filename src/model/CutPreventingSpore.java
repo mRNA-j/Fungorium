@@ -17,9 +17,17 @@ public class CutPreventingSpore extends Spore implements Serializable {
         super(2, "cutpreventing");
     }
 
+    /**
+     * A tesztelésnél használt konstruktor, amely létrehozza a gyorsító spórát és beállítja a tesztelásnál használt azonosítót.
+     * Teljesen egyezik az eredeti konstruktorral, az id beállítást leszámítva.
+     * Az alapértelmezett tápanyag érték 1, a hatás neve pedig "cutpreventing".
+     *
+     * @param testId a tesztelásnál használt azonosító
+     */
     public CutPreventingSpore(String testId){
         super(2, "cutpreventing", testId);
     }
+
     /**
      * Alkalmazza a vágásgátló hatást a megadott rovarra.
      * A metódus beállítja a rovar állapotát ennek megfelelően.

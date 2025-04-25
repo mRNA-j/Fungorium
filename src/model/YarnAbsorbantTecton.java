@@ -9,6 +9,21 @@ public class YarnAbsorbantTecton extends Tecton implements Serializable {
      *
      * @param yarnLimit A maximális gombafonal szám, ami a Tectonon lehet.
      * @param mushroomPrevent A  jelzés, hogy a Tectonon nem lehet gomba.
+     * @param isKeepAlive megadja hogy fonaléletbentartó-e
+     */
+    public YarnAbsorbantTecton( int yarnLimit, boolean mushroomPrevent, boolean isKeepAlive) {
+        super(yarnLimit, mushroomPrevent, isKeepAlive);
+        super.setYarnAbsorption(true);
+    }
+
+
+    /**
+     * A Model.YarnAbsorbantTecton class konstruktora.
+     *
+     * @param id a teszteléshez használt kontruktor
+     * @param yarnLimit A maximális gombafonal szám, ami a Tectonon lehet.
+     * @param mushroomPrevent A  jelzés, hogy a Tectonon nem lehet gomba.
+     * @param isKeepAlive megadja hogy fonaléletbentartó-e
      */
     public YarnAbsorbantTecton(String id, int yarnLimit, boolean mushroomPrevent, boolean isKeepAlive) {
         super(id, yarnLimit, mushroomPrevent, isKeepAlive);
