@@ -123,8 +123,6 @@ public class Map implements Serializable {
         tectons.add(newTecton2);
     }
 
-
-
     /**
      * CSAK TESZTELÉSNÉL VAN HASZNÁLVA, mivel a rovar is egy random tektonra kerülne,
      * de mivel nincs randomozáió így biztosan az újonnan léttrejött tektonok közül az elsőre kerül

@@ -19,13 +19,6 @@ public class MushroomPicker extends Player implements Serializable {
      * Statikus lista, amely minden példány számára közös birtokolt fonalakat tartalmazza.
      */
     private static List<Yarn> ownedYarns;
-
-    public void addMushroom(Mushroom mushroom){
-        ownedMushrooms.add(mushroom);
-    }
-
-
-
     /**
      * Konstruktor a MushroomPicker példány létrehozásához.
      *
@@ -38,7 +31,7 @@ public class MushroomPicker extends Player implements Serializable {
         super.setPlayerView(mushroomPickerView);
         ownedMushrooms = new ArrayList<>(); // A ownedMushrooms lista inicializálása egy új ArrayList példánnyal
         ownedMushrooms.add(mushroom); // Az induló gomba hozzáadása a gombák listájához
-        ownedYarns = new ArrayList<Yarn>(); // A statikus ownedYarns lista inicializálása egy új ArrayList példánnyal
+        ownedYarns = new ArrayList<>(); // A statikus ownedYarns lista inicializálása egy új ArrayList példánnyal
     }
 
 
@@ -47,7 +40,7 @@ public class MushroomPicker extends Player implements Serializable {
         MushroomPickerView mushroomPickerView = new MushroomPickerView(this);
         super.setPlayerView(mushroomPickerView);
         ownedMushrooms = new ArrayList<>(); // A ownedMushrooms lista inicializálása egy új ArrayList példánnyal
-        ownedYarns = new ArrayList<Yarn>(); // A statikus ownedYarns lista inicializálása egy új ArrayList példánnyal
+        ownedYarns = new ArrayList<>(); // A statikus ownedYarns lista inicializálása egy új ArrayList példánnyal
     }
 
     /**
@@ -57,6 +50,11 @@ public class MushroomPicker extends Player implements Serializable {
      */
     public List<Mushroom> getOwnedMushrooms() {
         return ownedMushrooms;
+    }
+
+
+    public void addMushroom(Mushroom mushroom){
+        ownedMushrooms.add(mushroom);
     }
 
     /**
@@ -71,8 +69,6 @@ public class MushroomPicker extends Player implements Serializable {
     public void addYarn(Yarn y) {
         ownedYarns.add(y);
     }
-
-
 
     /**
      * Ellenőrzi, hogy a megadott tecton elérhető-e a birtokolt fonalak alapján.
@@ -116,7 +112,7 @@ public class MushroomPicker extends Player implements Serializable {
      * @param tecton A kiinduló tekton.
      * @return A másodfokú szomszédok listája.
      */
-        private List<Tecton> addSecondNeighbours(Tecton tecton) {
+    private List<Tecton> addSecondNeighbours(Tecton tecton) {
         List<Tecton> secondNeighbours = new ArrayList<>(); // Másolat készítése az első szintű szomszédok listájáról
         List<Tecton> firstNeighbours = tecton.getNeighbours();
         for (int i = 0; i < firstNeighbours.size(); i++) { // Iterálás az első szintű szomszédokon
@@ -135,7 +131,6 @@ public class MushroomPicker extends Player implements Serializable {
         }
         return secondNeighbours; // Visszaadja a másodfokú szomszédok listáját
     }
-
 
     /**
      * A gomba növesztésének akciója a cél tectonon, ha a feltételek teljesülnek.
@@ -172,7 +167,6 @@ public class MushroomPicker extends Player implements Serializable {
         } else {
             //System.out.println(errorMessage + " Nem lehet gombat noveszteni a tektonon");
         }
-
     }
     /**
      * A fonal növesztésének akciója a cél tectonon a kiválasztott fonallal.
@@ -194,30 +188,15 @@ public class MushroomPicker extends Player implements Serializable {
                     }
                 } else {
                     //System.out.println("Mas jatekosnak mar van a fonala ezen  a tektonon");
-                    return;
                 }
             } else {
                 //System.out.println("A tektonok nem szomszédosak");
             }
         }
         else {
-                //System.out.println("The selected tecton does not neighbour the yarn");
+            //System.out.println("The selected tecton does not neighbour the yarn");
         }
     }
-
-    public boolean sporeCheck(Tecton targetTecton) {
-        if(!targetTecton.getSpores().isEmpty()){
-            targetTecton.getSpores().remove(0);
-            for(int i=1; i<targetTecton.getSpores().size(); i++){
-                targetTecton.getSpores().set(i-1, targetTecton.getSpores().get(i));
-            }
-            return true;
-        }
-       return false;
-    }
-
-
-
 
     /**
      * A spóra szórásának akciója, mely során a megadott gombából spórát próbál eljuttatni a cél tectonra.
@@ -228,19 +207,14 @@ public class MushroomPicker extends Player implements Serializable {
     public void actionSporeDispersion(Tecton targetTecton, Mushroom mushroom) {
         // Ellenőrzi, hogy a gombának van-e spórája
         if (!mushroom.getHasSpore()) {
-            //System.out.println("Nincs spóra a gombatestben"); // Kiírja, hogy nincs spóra
-            return; // Kilép a metódusból
+            return;
         }
 
         int age = mushroom.getAge(); // Lekérdezi a gomba korát
         if(age <= 10) {
             // Ellenőrzi, hogy a cél tecton szerepel-e a szomszédok között
             //Ha nem, akkor visszatér a függvény
-            if (!mushroom.getTecton().getNeighbours().contains(targetTecton)) {
-                return;
-            }
-            //Ha szerepel, akkor elindítja a szórást
-            else{
+            if (mushroom.getTecton().getNeighbours().contains(targetTecton)) {
                 mushroom.disperseSpore(targetTecton);   // Elindítja a spóra szórását a cél tectonra
             }
         }
@@ -248,13 +222,8 @@ public class MushroomPicker extends Player implements Serializable {
         else {
             // Ellenőrzi, hogy a cél tecton szerepel-e a szomszédok között
             //Ha nem, akkor visszatér a függvény
-            if (!addSecondNeighbours(mushroom.getTecton()).contains(targetTecton)) {
-                //System.out.println("A target tekton nem elérhető");
-                return;
-            }
-            //Ha szerepel, akkor elindítja a szórást
-            else{
-                mushroom.disperseSpore(targetTecton);   // Elindítja a spóra szórását a cél tectonra
+            if (addSecondNeighbours(mushroom.getTecton()).contains(targetTecton)) {
+                mushroom.disperseSpore(targetTecton);
             }
         }
     }

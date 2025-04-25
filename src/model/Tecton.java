@@ -9,11 +9,10 @@ import java.util.List;
 /** A Tecton class a játéktér egy területi egységének reprezentációja. */
 public class Tecton implements Serializable {
     private TectonView tectonView;
-
-    private String id;
-    private int yarnLimit;
-    private boolean mushroomPrevent;
-    private boolean isKeepAlive;
+    private final String id;
+    private final int yarnLimit;
+    private final boolean mushroomPrevent;
+    private final boolean isKeepAlive;
     private Mushroom mushroom;
     private List<Insect> insects;
     private List<Yarn> yarns;
@@ -57,7 +56,6 @@ public class Tecton implements Serializable {
      */
     public Tecton(String id, int yarnLimit, boolean mushroomPrevent, boolean isKeepAlive) {
         tectonView = new TectonView(this);
-
         this.id = id;
         this.yarnLimit = yarnLimit;
         this.mushroomPrevent = mushroomPrevent;
@@ -69,7 +67,6 @@ public class Tecton implements Serializable {
         this.neighbours = new ArrayList<>(); // Inicializáljuk a listát
     }
     public void addYarn(Yarn y){
-        //System.out.println(y.getId());
         yarns.add(y);
     }
     /**
@@ -88,7 +85,6 @@ public class Tecton implements Serializable {
      */
     public void removeMushroom(Mushroom mushroom) {
         this.mushroom = null;
-        //System.out.println("Mushroom removed: " + mushroom);
     }
 
     /**
@@ -108,7 +104,6 @@ public class Tecton implements Serializable {
      */
     public void removeInsect(Insect insect) {
         this.insects.remove(insect);
-        //System.out.println("Insect removed: " + insect);
     }
 
     /**
@@ -144,7 +139,6 @@ public class Tecton implements Serializable {
     public void removeYarn(Yarn yarn, Tecton masik) {
         yarn.split(this, masik);
         yarns.remove(yarn);
-        //System.out.println("Yarn removed: " + yarn);
     }
 
     /**
@@ -154,7 +148,6 @@ public class Tecton implements Serializable {
      */
     public void addSpore(Spore spore) {
         this.spores.add(spore);
-        //System.out.println("Spore added: " + spore);
     }
 
     /**
@@ -164,7 +157,6 @@ public class Tecton implements Serializable {
      */
     public void removeSpore(Spore spore) {
         this.spores.remove(spore);
-        //System.out.println("Spore removed: " + spore);
     }
 
     /**
@@ -176,13 +168,6 @@ public class Tecton implements Serializable {
         return yarnLimit;
     }
 
-
-    /**
-     * Módosítja a Tectonhoz tartozó maximális gombafonal limitet.
-     */
-    public void setYarnLimit(int yl) {
-        yarnLimit=yl;
-    }
 
     /**
      * Visszaadja, hogy a Tectonon lehet-e gomba.
@@ -263,10 +248,6 @@ public class Tecton implements Serializable {
         return neighbours;
     }
 
-    public void printfNameAndId() {
-        System.out.print("Tecton" + id);
-    }
-
     /**
      * Futtatja a Tecton speciális hatását.
      * Implementáció: a Tecton típusától függően
@@ -274,7 +255,9 @@ public class Tecton implements Serializable {
      *
      * @param yarn A gombafonal, amire a hatást kifejti.
      */
-    public void runEffect(Yarn yarn) {}
+    public void runEffect(Yarn yarn) {
+        //Nincs különleges effectje, ezért üres
+    }
 
     public String getId() {
         return id;

@@ -3,21 +3,13 @@ package model;
 import java.io.Serializable;
 
 public class KillerYarn extends Yarn implements Serializable {
-  private String id;
-
   public KillerYarn (Mushroom mushroom, MushroomPicker mp,String id) {
     super(mushroom, mp, id);
-    //System.out.println(id);
     name = "KillerYarn";
-    this.id = id;
   }
   @Override
   public String getName() {          // ← this is what @Override belongs to
     return name;
-  }
-  @Override
-  public String getId() {
-    return id;
   }
 
   @Override

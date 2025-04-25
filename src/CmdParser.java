@@ -978,11 +978,6 @@ public class CmdParser {
             System.out.println("Nincs entomologist");
             return;
         }
-        /*
-        List<Player> players = game.getPlayers();
-        players.add(entomologist);
-        game.setPlayers(players);
-        */
 
         // Létrehozzuk a rovart a megadott tectonon
         Insect newInsect = new Insect(targetTecton,  entomologist, nameId);
@@ -1075,11 +1070,8 @@ public class CmdParser {
         switch (yarnType) {
             case "normal":
                 newYarn = new Yarn(targetMushroom,mp ,nameId);
-                //System.out.println("nromal");
                 break;
             case "kill":
-                // KillerYarn subclass implementation would be needed
-                //System.out.println("killer");
                 newYarn = new KillerYarn(targetMushroom, mp, nameId);
                 break;
             default:

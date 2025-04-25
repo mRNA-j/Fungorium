@@ -10,7 +10,6 @@ import java.io.Serializable;
  */
 public class Insect implements Serializable {
     private InsectView insectView;
-
     private Tecton currentPlace; // Az aktuális tecton, ahol a rovar tartózkodik
     private Entomologist owner; //visszadja melyik rovarász játékoshoz tartozik a rovar
     // A rovarra ható spóra effektusok
@@ -42,21 +41,6 @@ public class Insect implements Serializable {
         } else {
             return null;
         }
-    }
-
-    /**
-     * Konstruktor, amely létrehoz egy rovart egy adott tectonon.
-     *
-     * @param place A tecton, ahol a rovar elhelyezkedik kezdetben.
-     */
-    public Insect(Tecton place){
-        insectView = new InsectView(this);
-        decelerated = false;
-        paralized = false;
-        accelerated = false;
-        cutPrevented = false;
-        currentPlace = place;
-        place.addInsect(this);
     }
 
     public Insect(Tecton place,Entomologist owner ,String testID){

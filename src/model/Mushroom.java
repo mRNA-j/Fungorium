@@ -10,16 +10,13 @@ import java.io.Serializable;
  */
 public class Mushroom implements Serializable {
     MushroomView mushroomView;
-
-
-
     private MushroomPicker owner;
     private String id; // Hozzáadott ID mező
     private int numberOfDispersions;
     private int newSporeGrowth;
     private int age;
     private boolean hasSpore;
-    private Tecton tecton;
+    private final Tecton tecton;
     private Spore currentSpore; // Hozzáadott mező a jelenlegi spóra tárolására
 
     /**
@@ -126,7 +123,6 @@ public class Mushroom implements Serializable {
     public Spore getCurrentSpore() {
         return currentSpore;
     }
-
 
     /**
      * Spóra kilövését kezeli.

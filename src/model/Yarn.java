@@ -29,6 +29,10 @@ public class Yarn implements Serializable {
         return player;
     }
 
+    public void setPlayer(MushroomPicker e) {
+        player = e;
+    }
+
     public String getName(){return name;}
 
     /**
@@ -39,15 +43,6 @@ public class Yarn implements Serializable {
         this.tectons = new ArrayList<>();
         id = "Yarn" + new Random().nextInt();
         name="normal";
-    }
-
-    /**
-     * A Yarn class konstruktora.
-     */
-    public Yarn(List<Tecton> tectons) {
-        yarnView = new YarnView(this);
-        this.tectons = tectons;
-        id = "" + new Random().nextInt();
     }
 
     /**
@@ -85,9 +80,6 @@ public class Yarn implements Serializable {
                 return true; // Ha a gomba Tectonja benne van a listában, akkor connected
             }
         }
-
-
-
         return false; // Ha a gomba Tectonja nincs benne a listában, akkor nem connected
     }
 
@@ -103,11 +95,6 @@ public class Yarn implements Serializable {
         }
 
         int index = tectons.indexOf(tecton);
-        /*if (index == 0 || index == tectons.size() - 1) {
-            tectons.remove(tecton);
-            tecton.getYarns().remove(this);  // Direct removal without calling removeYarn
-            return;
-        }*/
 
         //Nem vegpont a tecton
         int mushroomIndex = 0;
@@ -121,6 +108,9 @@ public class Yarn implements Serializable {
 
         newYarn1.setId(getId() + "_1");
         newYarn2.setId(getId()  + "_2");
+
+        newYarn1.setPlayer(getPlayer());
+        newYarn2.setPlayer(getPlayer());
 
         //Keressuk meg melyik iranyba vagunk
         int iranyIndex = tectons.indexOf(iranyAmerreSzakad);
@@ -156,8 +146,6 @@ public class Yarn implements Serializable {
             newYarn2.mushroom = mushroom;
         }
 
-
-
         // 4. Finally, remove this yarn from all tectons' yarn lists
         for (Tecton t : new ArrayList<>(tectons)) {
             t.getYarns().remove(this);  // Direct removal
@@ -176,7 +164,6 @@ public class Yarn implements Serializable {
             this.tectons.add(t);
         }
     }
-
 
     /**
      * Visszaadja a gombafonalhoz tartozó Tectonok listáját.

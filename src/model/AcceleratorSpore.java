@@ -23,16 +23,6 @@ public class AcceleratorSpore extends Spore implements Serializable {
 
         super(1, "accelerator", testID);
     }
-    /**
-     * Paraméterezett konstruktor, amely létrehozza a gyorsító spórát egy Model.Tecton objektummal.
-     * A tápanyag értéke 1, és a hatás neve "accelerating".
-     *
-     * @param tecton A Model.Tecton objektum, amely szükséges a spóra inicializálásához.
-     */
-    public AcceleratorSpore(Tecton tecton) {
-        super(1,"accelerator");
-    }
-
 
     /**
      * Alkalmazza a gyorsító hatást a megadott rovarra.

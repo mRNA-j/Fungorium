@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 /** A Model.YarnAbsorbantTecton class egy speciális Model.Tecton, ami felszívja a gombafonalakat. */
 public class YarnAbsorbantTecton extends Tecton implements Serializable {
-    private boolean yarnAbsorption = true;
     /**
      * A Model.YarnAbsorbantTecton class konstruktora.
      *
@@ -16,7 +15,6 @@ public class YarnAbsorbantTecton extends Tecton implements Serializable {
         super.setYarnAbsorption(true);
     }
 
-
     /**
      * Híváskor eltávolítja magáról a gombafonalat.
      *
@@ -24,11 +22,8 @@ public class YarnAbsorbantTecton extends Tecton implements Serializable {
      */
     @Override
     public void runEffect(Yarn yarn) {
-        System.out.println("Running absorbant effect on yarn: " + yarn);
         removeYarn(yarn, this);
         yarn.getTectons().remove(this);
     }
 
-
-    public boolean getYarnAbsorption(){return yarnAbsorption;}
 }
