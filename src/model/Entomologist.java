@@ -79,13 +79,10 @@ public class Entomologist extends Player implements Serializable {
      */
     public void actionEatSpore(Spore spore, Insect insect) {
         if(insect.getParalized()){
-           // System.out.println("A rovar bénítóspóra hatása alatt van, az evés nem lehetéges");
             return;
         }
         insect.eatSpore(spore);
 
-        //Pontadás a megevett spora alapjan
-        //TODO - pontadas megcsinalasa
         this.addPoints(spore.getNutrition());
     }
 

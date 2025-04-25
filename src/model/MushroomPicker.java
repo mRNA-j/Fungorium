@@ -145,17 +145,14 @@ public class MushroomPicker extends Player implements Serializable {
     public void actionGrowMushroom(Tecton targetTecton, String tesztId) {
         final String errorMessage = "Feltetelek nem teljesultek,";
 
-        //System.out.println("HELLO");
         // Ellenőrzi, hogy a cél tecton nem gátolja-e a gomba növekedést
         if (!targetTecton.getMushroomPrevent()) {
             // Ellenőrzi, hogy a tecton már tartalmaz-e gombát
             if (!Objects.nonNull(targetTecton.getMushroom())) {
                 // Ellenőrzi, hogy legalább 3 spóra van-e a tectonon
-                //System.out.println(targetTecton.getSpores().size());
                 if (targetTecton.getSpores().size() >= 3) {
                     // Ellenőrzi, hogy a tecton elérhető-e a birtokolt fonalakkal
                     if (isTectonInRange(targetTecton)) {
-                        //System.out.println("Novesztek");
                         Mushroom newMushroom = new Mushroom(targetTecton,this ,tesztId); // Új gomba létrehozása a cél tecton alapján
                         ownedMushrooms.add(newMushroom); // Új gomba hozzáadása a játékos gombáihoz
                         // Három spóra eltávolítása a tectonról
@@ -194,7 +191,7 @@ public class MushroomPicker extends Player implements Serializable {
                     targetTecton.growYarn(selectedYarn); // Elindítja a fonal növesztését a kiválasztott fonallal
                     if(!targetTecton.getSpores().isEmpty()) {
                         targetTecton.getSpores().remove(targetTecton.getSpores().size() - 1); // utolsó sporat toroljuk ha volt a tektonon spora}
-                    return;}
+                    }
                 } else {
                     //System.out.println("Mas jatekosnak mar van a fonala ezen  a tektonon");
                     return;

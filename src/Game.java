@@ -83,7 +83,6 @@ public class Game implements Serializable {
     public void nextPlayer() {
         activePlayerIndex++;
         activePlayer = players.get(activePlayerIndex);
-        //System.out.println("Kovetkezo jatekos jon");
     }
 
     /**

@@ -76,7 +76,6 @@ public class Mushroom implements Serializable {
         if(newSporeGrowth == 0) {
             setHasSpore(true);
         }
-
         this.newSporeGrowth = newSporeGrowth;
     }
 
@@ -128,16 +127,6 @@ public class Mushroom implements Serializable {
         return currentSpore;
     }
 
-    /**
-     * Spórát növe szt a gombában.
-     * @param spore A növesztendő spóra.
-     */
-    public void growSpore(Spore spore) {
-        if (!hasSpore) {
-            this.currentSpore = spore;
-            this.hasSpore = true;
-        }
-    }
 
     /**
      * Spóra kilövését kezeli.
@@ -145,16 +134,15 @@ public class Mushroom implements Serializable {
      * @param tecton A tecton, amire a spórát kilövi.
      */
     public void disperseSpore(Tecton tecton) {
-        //growSpore(new AcceleratorSpore(tecton, "Spore1"));
         currentSpore = new AcceleratorSpore("Spore1");
-        //System.out.println("BELEPTEM");
-        if (hasSpore && currentSpore != null) {
+
+        //Akkor lehet csak kilőni, ha nincs
+        if (hasSpore && currentSpore != null && numberOfDispersions<5) {
             tecton.addSpore(currentSpore);
             numberOfDispersions++;
             hasSpore = false;
             currentSpore = null;
             restartSporeGrowth();
-            // System.out.println("VANESPORA: " + hasSpore);
         }
     }
 
@@ -166,8 +154,6 @@ public class Mushroom implements Serializable {
         newSporeGrowth = 5;
         setHasSpore(false);
     }
-
-
 
     /**
      * Visszaadja a tectont, amelyen a gomba található.
