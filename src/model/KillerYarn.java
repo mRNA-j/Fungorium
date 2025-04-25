@@ -1,11 +1,9 @@
 package model;
-
-import view.YarnView;
-
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class KillerYarn extends Yarn implements Serializable {
+
+
   /**
    * Alapértelmezett konstruktor. Beállítja a name-et is.
    * @param mushroom A gomba, amihez a gombafonal tartozik.

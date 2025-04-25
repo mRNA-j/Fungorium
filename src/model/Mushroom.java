@@ -36,7 +36,6 @@ public class Mushroom implements Serializable {
         currentSpore = null;
     }
 
-
     /**
      * Létrehoz egy új gomba objektumot a megadott tectonon.
      * @param tecton A tecton, amin a gomba elhelyezkedik.

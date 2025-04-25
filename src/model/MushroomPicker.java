@@ -11,6 +11,7 @@ import java.util.Objects;
  * és a gombaszedő játékos speciális képességeit valósítja meg.
  */
 public class MushroomPicker extends Player implements Serializable {
+
     /**
      * A játékos által birtokolt gombák listája.
      */
