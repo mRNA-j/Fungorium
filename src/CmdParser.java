@@ -258,7 +258,6 @@ public class CmdParser {
         if (handleArgCount(args, 1)) return;
 
         /* ----------  TECTONS  ---------- */
-
         for (Tecton tecton : map.getTectons()) {
             tecton.getTectonView().printObject();
         }
@@ -986,11 +985,11 @@ public class CmdParser {
         entomologist.addInsect(newInsect);
     }
 
-    //**
- /* Létrehoz egy spórát a megadott tectonon.
-            * Spóra típusok: paralyzing, decelerator, cutpreventing
- * @param args A parancs argumentumai (tecton_id, spore_type)
- */
+    /**
+     * Létrehoz egy spórát a megadott tectonon.
+     * Spóra típusok: paralyzing, decelerator, cutpreventing
+     * @param args A parancs argumentumai (tecton_id, spore_type)
+    */
     private static void create_spore_on_tecton(String[] args) {
         // Ellenőrizzük, hogy pontosan 4 argumentum van-e (beleértve a parancs nevét)
         if (handleArgCount(args, 4)) {
@@ -1080,10 +1079,6 @@ public class CmdParser {
                 return;
         }
         Tecton targetTecton = findTectonById(targetMushroom.getTecton().getId());
-
-        //targetTecton.addYarn(newYarn);
-        // A 'Yarn(Mushroom mushroom)' konstruktor már hozzáadja a Yarn-t a mushroom Tectonjához
-        // és beállítja a gombafonalat a gombához is
     }
     /**
      * Létrehoz egy tektont a megadott típusból és hozzáadja a térképhez.
