@@ -13,6 +13,8 @@ public class MushroomPickerView extends PlayerView implements Serializable {
 
     public MushroomPickerView(MushroomPicker mp) {this.mp = mp; }
 
+
+
     @Override
     public void printObject(){
         System.out.println("Player: " + mp.getName());
