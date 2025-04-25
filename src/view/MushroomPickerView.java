@@ -20,23 +20,4 @@ public class MushroomPickerView extends PlayerView implements Serializable {
         System.out.println("Points: "+mp.getPoints());
         System.out.println();
     }
-    @Override
-    public void printToFile(File f){
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(f, true))) {
-
-            writer.write("Player: " + mp.getName());
-            writer.newLine();
-
-            writer.write("Type: MushroomPicker");
-            writer.newLine();
-
-            writer.write("Points: "+ mp.getPoints());
-            writer.newLine();
-            writer.newLine();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

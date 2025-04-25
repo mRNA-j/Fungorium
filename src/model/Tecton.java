@@ -75,7 +75,7 @@ public class Tecton implements Serializable {
     }
 
 
-    //Tecton típusát adja meg, tesztelésnál hazsnáljuk csak.
+    //Tecton típusát adja meg, CSAK tesztelésnál hazsnáljuk.
     public String getType() {
         if (isKeepAlive)        return "KeepAlive";
         if (mushroomPrevent)    return "MushroomPrevent";

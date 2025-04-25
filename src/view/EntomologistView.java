@@ -22,23 +22,4 @@ public class EntomologistView extends PlayerView implements Serializable {
         System.out.println("Points: "+ entomologist.getPoints());
         System.out.println();
     }
-    @Override
-    public void printToFile(File f){
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(f, true))) {
-
-            writer.write("Player: " + entomologist.getName());
-            writer.newLine();
-
-            writer.write("Name: Entomologist");
-            writer.newLine();
-
-            writer.write("Points: "+entomologist.getPoints());
-            writer.newLine();
-            writer.newLine();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

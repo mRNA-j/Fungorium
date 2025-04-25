@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Kezeli a gomba korát, spóráit és a tectonhoz való kapcsolódását.
  */
 public class Mushroom implements Serializable {
-    private MushroomView mushroomView;
+    private final MushroomView mushroomView;
     private MushroomPicker owner;
     private String id; // Hozzáadott ID mező
     private int numberOfDispersions;
