@@ -136,9 +136,9 @@ public class Mushroom implements Serializable {
      * Visszaadja a gombában lévő jelenlegi spórát.
      * @return A jelenlegi spóra, vagy null ha nincs.
      */
-    public Spore getCurrentSpore() {
+    /*public Spore getCurrentSpore() {
         return currentSpore;
-    }
+    }*/
 
     /**
      * Spóra kilövését kezeli.

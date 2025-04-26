@@ -48,7 +48,7 @@ public class Tecton implements Serializable {
     }
 
     /**
-     * Visszajelzést ad arról, hogy az élőlény képes-e a fonalak felszívására.
+     * Visszajelzést ad arról, hogy a tecton képes-e a fonalak felszívására.
      *
      * @return true, ha képes felszíni a fonalakat, különben false.
      */
@@ -66,7 +66,7 @@ public class Tecton implements Serializable {
     }
 
     /**
-     * Beállítja, hogy az élőlény képes-e fonalak felszívására.
+     * Beállítja, hogy a tecton képes-e fonalak felszívására.
      *
      * @param yarnAbsorption true, ha képes, különben false.
      */
@@ -75,7 +75,7 @@ public class Tecton implements Serializable {
     }
 
 
-    //Tecton típusát adja meg, CSAK tesztelésnál hazsnáljuk.
+    //Tecton típusának nevét adja vissza, CSAK tesztelésnál hazsnáljuk.
     public String getType() {
         if (isKeepAlive)        return "KeepAlive";
         if (mushroomPrevent)    return "MushroomPrevent";
@@ -263,7 +263,7 @@ public class Tecton implements Serializable {
     }
 
     /**
-     * Visszaadja a Tectonon lévő bogarakat.
+     * Visszaadja a Tectonon lévő rovarokat.
      *
      * @return A bogarak listája.
      */

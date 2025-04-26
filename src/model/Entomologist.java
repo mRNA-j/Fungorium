@@ -15,6 +15,19 @@ public class Entomologist extends Player implements Serializable {
     /**
      * Konstruktor az Model.Entomologist példány létrehozásához.
      * @param name   A játékos neve.
+     * @param insect A játékoshoz tartozó rovar
+     */
+    public Entomologist(String name, Insect insect){
+        super(name, 0);
+        EntomologistView entomologistView = new EntomologistView(this);
+        super.setPlayerView(entomologistView);
+        insects = new ArrayList<>();
+        insects.add(insect);
+    }
+
+    /**
+     * Konstruktor az Model.Entomologist példány létrehozásához.
+     * @param name   A játékos neve.
      * @param insect A játékoshoz tartozó rovar.
      * @param testId A tesztelésnél hasznélt azonosító
      */
