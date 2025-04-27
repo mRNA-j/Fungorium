@@ -1,0 +1,35 @@
+Teszt1  - A KillerYarn megöli a rovart
+Teszt2  - A killerYarn nem öl meg rovart, mert nincs rajta effekt
+Teszt3  - Spóra kilövés olyan tektonra, amit elér a gomba
+Teszt4  - Spóra kilövés, de a tekton nem szomszédos
+Teszt5  - Spóra kilövés, de nincs spóra termelve
+Teszt6  - Tekton kettétörése, ha van rajta gombafonal
+Teszt7  - Tekton kettétörése, rovar van a tektonon
+Teszt8  - Tekton ketttörése, gombatest van a tektonon
+Teszt9  - Tekton kettétörése, tektonon nincsen semmi
+Teszt10 - Gombafonal növesztése nem szomszédos tektonra
+Teszt11 - Gombafonal növesztése más játékos fonala van a tektonon (csak egyafjta fonal növeszthető a tektonra)
+Teszt12 - Gombafonal növesztése többfonalas tektonon
+Teszt13 - Gombafonal növesztése olyan tektonra, ahol van spóra
+Teszt14 - Gombafonal növesztése egyfonalas tektonra (nincs rajta más játékos fonala)
+Teszt15 - Gombafonal felszívása
+Teszt16 - Gomba növesztése, feltételek teljesülnek
+Teszt17 - Gomba növesztése, nem teljesülnek a feltételek (altesztek)
+Teszt18 - Következő játékos jön
+Teszt19 - Játékban eltelik egy kör
+Teszt20 - Rovar fonalvágás akciója sikeres esetben
+Teszt21 - Rovar fonalvágás akciója vágásgátló spóra hatása alatt
+Teszt22 - Rovar spóraevés akciója sikeresen végrehajtva
+Teszt23 - Rovar spóraevés akciója bénító spóra hatása alatt
+Teszt24 - Rovar mozgatása gyorsító spóra hatása alatt
+Teszt25 - Rovar mozgatása bénító spóra hatása alatt
+Teszt26 - Rovar mozgatása spóra hatása nélkül sikeresen
+Teszt27 - Rovar mozgatása két olyan tekton között amelyek között nem vezet gombafonal
+Teszt28 - Rovar mozgatása lassító spóra hatása alatt
+Teszt29 - Rovar fonalvágás akciója bénító spóra hatása alatt
+Teszt30 - Életbentartó tekton tesztelése
+Teszt31 - Rovar mozgása és spóraevése
+Teszt32 - Rovar mozgás, illetve fonalnövesztés
+Teszt33 - Rovar fonalvágás, illetve gombanövesztés
+Teszt34 - Teszt beolvasás és betöltés
+Teszt35 - Duplikált spóra
