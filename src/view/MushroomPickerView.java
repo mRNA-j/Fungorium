@@ -11,10 +11,18 @@ import java.io.*;
 public class MushroomPickerView extends PlayerView implements Serializable {
     private final MushroomPicker mp;
 
+    /**
+     * A MushroomPickerView konstruktora.
+     * @param mp A Gombász Model
+     */
     public MushroomPickerView(MushroomPicker mp) {this.mp = mp; }
 
-
-
+    /**
+     * A Model konzolra való kiírásáért felelős függvény.
+     * - Player: [mushroomPicker.name]
+     * - Type: MushroomPicker
+     * - Points: [mushroomPicker.points]
+     */
     @Override
     public void printObject(){
         System.out.println("Player: " + mp.getName());

@@ -59,7 +59,10 @@ public class MushroomPicker extends Player implements Serializable {
         return ownedMushrooms;
     }
 
-
+    /**
+     * Hozzáad egy gombát a gombászhoz.
+     * @param mushroom A gomba
+     */
     public void addMushroom(Mushroom mushroom){
         ownedMushrooms.add(mushroom);
     }

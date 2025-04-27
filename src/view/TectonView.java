@@ -8,7 +8,22 @@ import java.util.stream.Collectors;
 public class TectonView implements View, Serializable {
     private final Tecton tecton;
 
+    /**
+     * A TectonView konstruktora.
+     * @param tecton A tekton Model.
+     */
     public TectonView(Tecton tecton) {this.tecton = tecton; }
+
+    /**
+     * A Model konzolra való kiírásáért felelős függvény.
+     * - Tecton: [tecton.id]
+     * - Type: [tecton.type]
+     * - Mushroom: [mushroom1.id] [mushroom2.id] ...
+     * - Insects: [insect1.id] [insect1.id] ...
+     * - Yarns: [yarn1.id] [yarn2.id] ...
+     * - Neighbours: [tecton1.id] [tecton2.id] ...
+     * - Spores: [spore1.id] [spore2.id] ...
+     */
     @Override
     public void printObject() {
         System.out.println("Tecton: "   + tecton.getId());

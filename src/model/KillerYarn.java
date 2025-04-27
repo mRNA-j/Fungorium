@@ -1,8 +1,11 @@
 package model;
 import java.io.Serializable;
 
+/*
+  A Model.KillerYarn a Yarn osztály leszármazottja. Speciális képessége, hogyha kör végén a fonálon
+  tartózkodik egy rovar és meg van bénulva, akkor eltávolítja azt.
+ */
 public class KillerYarn extends Yarn implements Serializable {
-
 
   /**
    * Alapértelmezett konstruktor. Beállítja a name-et is.
@@ -26,6 +29,9 @@ public class KillerYarn extends Yarn implements Serializable {
     name = "KillerYarn";
   }
 
+  /*
+    A KillerYarn speciális képessége. Hogyha egy bogár a fonálon tartózkodik és le van bénulva, akkor eltávolítja azt.
+   */
   @Override
     public void runEffect() {
       for (Tecton tecton : tectons) {

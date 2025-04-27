@@ -8,10 +8,20 @@ public class YarnView implements View, Serializable {
 
   private final Yarn yarn;
 
+  /**
+   * A YarnView konstruktora.
+   * @param y A yarn Model.
+   */
   public YarnView(Yarn y) {
     yarn = y;
   }
 
+  /**
+   * A Model konzolra való kiírásáért felelős függvény.
+   * - Yarn: [yarn.id]
+   * - Type: [yarn.type]
+   * - Tectons in yarn: [tecton1.id] [tecton2.id] ...
+   */
   @Override
   public void printObject() {
     System.out.println("Yarn: " + yarn.getId());

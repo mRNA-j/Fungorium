@@ -57,6 +57,7 @@ public class Mushroom implements Serializable {
 
     /**
      * Visszadja a gomba owner-ét.
+     * @return MushroomPicker A gomba tulajdonosa
      * */
     public MushroomPicker getOwner() {
         return owner;
@@ -70,10 +71,18 @@ public class Mushroom implements Serializable {
         this.owner = owner;
     }
 
+    /**
+     * Visszaadja a nézetet
+     * @return MushroomView
+     */
     public MushroomView getMushroomView() {
         return mushroomView;
     }
 
+    /**
+     * Visszaadja, hogy hány körig tart a spórát kinöveszteni
+     * @return int
+     */
     public int getNewSporeGrowth() {
         return newSporeGrowth;
     }
