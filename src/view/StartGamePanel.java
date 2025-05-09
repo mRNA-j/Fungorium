@@ -18,9 +18,12 @@ public class StartGamePanel extends JPanel {
         this.add(backButton);
         for(int i=0;i<4;i++){
             inputs[i]=new JTextField();
+            inputs[i].setEditable(true);
+            inputs[i].setHorizontalAlignment(JTextField.RIGHT);
             labels[i]=new JLabel();
             labels[i].setHorizontalAlignment(JLabel.LEFT);
             labels[i].setText(labelNames[i]);
+            this.add(labels[i], inputs[i]);
         }
     }
 
