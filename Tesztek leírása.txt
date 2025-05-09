@@ -2,7 +2,7 @@
 2:  Teszt2 - Spóra kilövés, de a tekton nem szomszédos
 3:  Teszt3 - Spóra kilövés, de nincs spóra termelve
 4:  Teszt4 - Tekton kettétörése, ha van rajta gombafonal
-5:  Teszt5 - Tekton kettétörése,rovar an a tektonon
+5:  Teszt5 - Tekton kettétörése,rovar an a tektonong
 6:  Teszt6 - Tekton ketttörése, gombatest van a tektonon
 7:  Teszt7 - Tekton ketttörése, tektonon nincsen semmi
 8:  Teszt8 - Gombafonal növesztése nem szomszédos tektonra

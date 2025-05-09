@@ -208,7 +208,7 @@ public class Yarn implements Serializable {
     }
 
     /**
-     * Mivel az alap fonálnak nincs speciális hatása, nem történik semmi
+     * Az alapértelmezett fonálnak nincs speciális hatása, nem történik semmi
      */
     public void runEffect() {
     }
