@@ -14,6 +14,7 @@ public class MapG extends JComponent implements UpdateListener {
     private int width;
     private Map map;
 
+    MapG(Map map) {}
 @Override
-public void update(){}
+    public void update(){}
 }
