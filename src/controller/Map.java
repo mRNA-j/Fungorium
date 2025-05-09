@@ -1,3 +1,5 @@
+package controller;
+
 import model.*;
 
 import java.io.Serializable;
@@ -5,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-/** A Map class a játéktér reprezentációja. */
+/** A controller.Map class a játéktér reprezentációja. */
 public class Map implements Serializable {
     private List<Tecton> tectons;
     private final Random random; // Random szám generátor
@@ -56,7 +58,7 @@ public class Map implements Serializable {
         tecton6.addNeighbour(tecton5);
         tecton5.addNeighbour(tecton6);
 
-        System.out.println("Map generated with " + tectons.size() + " tectons.");
+        System.out.println("controller.Map generated with " + tectons.size() + " tectons.");
     }
 
     /**

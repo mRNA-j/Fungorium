@@ -1,8 +1,9 @@
+package controller;
+
 import model.*;
 
 import java.io.*;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class CmdParser {
     private static Game game = new Game();
@@ -400,7 +401,7 @@ public class CmdParser {
     }
 
     /**
-     * A container class to hold both Game and Map objects for serialization.
+     * A container class to hold both controller.Game and controller.Map objects for serialization.
      * This class must be Serializable, as must all objects it references.
      */
     private static class GameState implements Serializable {
@@ -821,7 +822,7 @@ public class CmdParser {
 
     /**
      * Splits a Tecton into two separate Tectons.
-     * This method finds the target Tecton by ID and uses the Map's splitting method.
+     * This method finds the target Tecton by ID and uses the controller.Map's splitting method.
      *
      * @param args Command arguments, where args[0] is the ID of the Tecton to split
      */

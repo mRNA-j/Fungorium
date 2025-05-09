@@ -1,5 +1,6 @@
+package controller;
+
 import model.Player;
-import model.Tecton;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -121,6 +122,6 @@ public class Game implements Serializable {
      * Kiírja, hogy a játék véget ért.
      */
     public void end() {
-        System.out.println("Game ended");
+        System.out.println("controller.Game ended");
     }
 }
