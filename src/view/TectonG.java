@@ -16,5 +16,12 @@ public class TectonG extends JComponent implements UpdateListener {
     @Override
     public void update(){}
 
-    public void draw(Graphics g){}
+    public void draw(Graphics g){
+
+        /* x, y panel jobb felső sarkának a koordinátái
+        drawOval(int x, int y, int width, int height)
+        kitölti az oválist
+        fillOval(int x, int y, int width, int height)
+        */
+    }
 }
