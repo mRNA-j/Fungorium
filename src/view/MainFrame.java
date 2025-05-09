@@ -28,9 +28,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
         cardLayout.show(cardPanel,"startPanel");
         setVisible(true);
-
     }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
