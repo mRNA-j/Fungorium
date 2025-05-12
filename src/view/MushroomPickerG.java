@@ -1,13 +1,111 @@
 package view;
 
 import controller.UpdateListener;
+import model.*;
 
 import javax.swing.*;
-import model.MushroomPicker;
-
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
-public class MushroomPickerG extends JComponent implements UpdateListener {
+public class MushroomPickerG extends JPanel implements UpdateListener {
+  private MushroomPicker mushroomPicker;
+  private JLabel nameLabel = new JLabel();
+
+  private final JButton growYarnButton = new JButton("Grow Yarn");
+  private final JButton growMushroomButton = new JButton("Grow Mushroom");
+  private final JButton disperseButton = new JButton("Disperse Spore");
+  private final JButton skipButton = new JButton("Skip");
+
+  private TectonPanel upperStrip;
+  private TectonPanel lowerStrip;
+  private JScrollPane upperScroll;
+  private JScrollPane lowerScroll;
+  public final List<TectonG> upperTectons = new ArrayList<>();
+  public final List<TectonG> lowerTectons = new ArrayList<>();
+
+  Set<String> addedTectonIds = new HashSet<>();
+
+
+  public MushroomPickerG(MushroomPicker picker) {
+    this.mushroomPicker = picker;
+    nameLabel.setText(picker.getName());
+
+    setLayout(new BorderLayout());
+
+    // === Name Label ===
+    nameLabel.setFont(new Font("SansSerif", Font.PLAIN, 16));
+    nameLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
+    JPanel topPanel = new JPanel(new BorderLayout());
+    topPanel.add(Box.createHorizontalGlue(), BorderLayout.CENTER);
+    topPanel.add(nameLabel, BorderLayout.EAST);
+    topPanel.setOpaque(false);
+    add(topPanel, BorderLayout.NORTH);
+
+    // === Upper Tectons from Owned Mushrooms ===
+    for (int i = 0; i < picker.getOwnedMushrooms().size(); i++) {
+      Mushroom mushroom = picker.getOwnedMushrooms().get(i);
+      Tecton t = mushroom.getTecton();
+      if(t.getId() != null&& addedTectonIds.add(t.getId())) {
+        upperTectons.add(new TectonG(i * 80 + 10, 40, 30, t.getId(), t));
+      }
+    }
+
+    for (int i = 0; i < picker.getOwnedYarns().size(); i++) {
+      Yarn yarn = picker.getOwnedYarns().get(i);
+      for(int j=0;j<yarn.getTectons().size();j++){
+        Tecton t = yarn.getTectons().get(j);
+
+        if(t.getId() != null&& addedTectonIds.add(t.getId())){
+          upperTectons.add(new TectonG(i * 80 + 10, 40, 30, t.getId(), t));
+        }
+
+      }
+
+    }
+
+    upperStrip = new TectonPanel(upperTectons, true, this::updateLowerStrip);
+    lowerStrip = new TectonPanel(lowerTectons, false, null);
+
+    upperScroll = new JScrollPane(upperStrip);
+    lowerScroll = new JScrollPane(lowerStrip);
+    upperScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+    upperScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+    lowerScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+    lowerScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+
+    // === Button Panel ===
+    JPanel buttonPanel = new JPanel(new GridLayout(4, 1, 5, 5));
+    buttonPanel.add(growMushroomButton);
+    buttonPanel.add(growYarnButton);
+    buttonPanel.add(disperseButton);
+    buttonPanel.add(skipButton);
+
+    // === Center Panel ===
+    JPanel centerPanel = new JPanel(new BorderLayout());
+    centerPanel.add(upperScroll, BorderLayout.NORTH);
+    centerPanel.add(lowerScroll, BorderLayout.CENTER);
+
+    add(centerPanel, BorderLayout.CENTER);
+    add(buttonPanel, BorderLayout.EAST);
+  }
+
+  private void updateLowerStrip(Tecton selectedTecton) {
+    lowerTectons.clear();
+    List<Tecton> neighbors = selectedTecton.getNeighbours();
+
+    for (int i = 0; i < neighbors.size(); i++) {
+      Tecton neighbor = neighbors.get(i);
+      lowerTectons.add(new TectonG(i * 80 + 10, 40, 30, neighbor.getId(), neighbor));
+    }
+
+    lowerStrip.repaint();
+  }
+
+  public MushroomPickerG() {}
+
   public MushroomPicker getMushroomPicker() {
     return mushroomPicker;
   }
@@ -16,84 +114,8 @@ public class MushroomPickerG extends JComponent implements UpdateListener {
     this.mushroomPicker = mushroomPicker;
   }
 
-  private MushroomPicker mushroomPicker;
-    JLabel nameLabel = new JLabel();
-    JButton growYarnButton=new JButton("Grow Yarn");
-    JButton growMushroomButton=new JButton("Grow Mushroom");
-    JButton disperseButton=new JButton("Disperse Spore");
-    JButton skipButton=new JButton("Skip");
-
-   public MushroomPickerG(MushroomPicker mushroomPicker){
-     this.mushroomPicker = mushroomPicker;
-     nameLabel.setText(mushroomPicker.getName());
-     //this.mushroomPicker = new MushroomPicker("semmi", "semmi");
-     this.setLayout(new BorderLayout());
-
-     // Title label
-     nameLabel.setFont(new Font("SansSerif", Font.PLAIN, 16));
-     nameLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
-     this.add(nameLabel, BorderLayout.NORTH);
-
-     // Start button centered
-     growMushroomButton.setPreferredSize(new Dimension(160, 80));
-     disperseButton.setPreferredSize(new Dimension(100, 40));
-     growYarnButton.setPreferredSize(new Dimension(100, 40));
-     skipButton.setPreferredSize(new Dimension(100,40));
-     // Create a vertical panel for the buttons
-
-    // === Horizontal scrollable tecton panel ===
-     JPanel tectonContainer = new JPanel();
-     tectonContainer.setLayout(new BoxLayout(tectonContainer, BoxLayout.X_AXIS));
-
-    // Add TectonG for each owned mushroom's place
-     mushroomPicker.getOwnedMushrooms().forEach(mushroom -> {
-       tectonContainer.add(new TectonG(mushroom.getTecton()));
-       tectonContainer.add(Box.createHorizontalStrut(10)); // spacing
-     });
-
-    // Add TectonG for each tecton in every yarn
-     mushroomPicker.getOwnedYarns().forEach(yarn -> {
-       yarn.getTectons().forEach(tecton -> {
-         tectonContainer.add(new TectonG(tecton));
-         tectonContainer.add(Box.createHorizontalStrut(10));
-       });
-     });
-
-    // Scroll pane for tectonContainer
-     JScrollPane scrollPane = new JScrollPane(tectonContainer);
-     scrollPane.setPreferredSize(new Dimension(500, 120));
-     scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-     scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-     scrollPane.setBorder(BorderFactory.createTitledBorder("Tectons"));
-
-    // Add to the bottom of the main panel
-     this.add(scrollPane, BorderLayout.SOUTH);
-
-
-     JPanel centerPanel = new JPanel();
-     centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
-     centerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Optional padding
-
-     growMushroomButton.setAlignmentX(Component.RIGHT_ALIGNMENT);
-     growYarnButton.setAlignmentX(Component.RIGHT_ALIGNMENT);
-     skipButton.setAlignmentX(Component.RIGHT_ALIGNMENT);
-     disperseButton.setAlignmentX(Component.RIGHT_ALIGNMENT);
-
-     centerPanel.add(growMushroomButton);
-     centerPanel.add(Box.createVerticalStrut(10));
-     centerPanel.add(growYarnButton);
-     centerPanel.add(Box.createVerticalStrut(10));
-     centerPanel.add(skipButton);
-     centerPanel.add(Box.createVerticalStrut(10));
-     centerPanel.add(disperseButton);
-
-// Add the button panel to the right side
-     this.add(centerPanel, BorderLayout.EAST);
-
-   }
-
-   public MushroomPickerG() {
-
-   }
-    public void update(){}
+  @Override
+  public void update() {
+    repaint();
+  }
 }

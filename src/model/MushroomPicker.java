@@ -20,6 +20,9 @@ public class MushroomPicker extends Player implements Serializable {
      * Statikus lista, amely minden példány számára közös birtokolt fonalakat tartalmazza.
      */
     private static List<Yarn> ownedYarns;
+
+
+
     /**
      * Konstruktor a MushroomPicker példány létrehozásához.
      *
@@ -34,6 +37,8 @@ public class MushroomPicker extends Player implements Serializable {
         ownedMushrooms = new ArrayList<>(); // A ownedMushrooms lista inicializálása egy új ArrayList példánnyal
         ownedMushrooms.add(mushroom); // Az induló gomba hozzáadása a gombák listájához
         ownedYarns = new ArrayList<>(); // A statikus ownedYarns lista inicializálása egy új ArrayList példánnyal
+
+
     }
 
     /**
@@ -48,6 +53,17 @@ public class MushroomPicker extends Player implements Serializable {
         super.setPlayerView(mushroomPickerView);
         ownedMushrooms = new ArrayList<>(); // A ownedMushrooms lista inicializálása egy új ArrayList példánnyal
         ownedYarns = new ArrayList<>(); // A statikus ownedYarns lista inicializálása egy új ArrayList példánnyal
+
+        //hard coded
+        Tecton t1 = new Tecton("t1", 2, false, false);
+        Tecton t2 = new Tecton("t2", 2, false, false);
+        Tecton t3 = new Tecton("t3", 2, false, false);
+        Mushroom m1 = new Mushroom(t1,this, "m1");
+        Yarn y1=new Yarn(m1,this,"y1");
+        ownedMushrooms.add(m1);
+        ownedYarns.add(y1);
+        t1.addNeighbour(t2);
+        t1.addNeighbour(t3);
     }
 
     /**

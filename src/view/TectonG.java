@@ -5,32 +5,72 @@ import model.Tecton;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TectonG extends JComponent {
 
-    private int height;
-    private int width;
-    private Tecton tecton;
 
-    public TectonG(Tecton tecton) {
-        height =10;
-        width = 10;
-        this.tecton = tecton;
-        // Set red background
-        this.setBackground(Color.RED);
+    int x, y, radius;
+    String id;
+    Tecton t;
+    boolean hasMushroom;
+    boolean hasInsect;
+    boolean hasYarn;
+    int sporeCount;
 
-        // Set fixed size (square)
-        this.setPreferredSize(new Dimension(100, 100));
+    public TectonG(int x, int y, int radius, String id, Tecton t) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.id = id;
+        this.t = t;
 
-        // Centered label
-        JLabel idLabel = new JLabel(tecton.getId());
-        idLabel.setForeground(Color.WHITE); // Text color
-        idLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
-        idLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        idLabel.setVerticalAlignment(SwingConstants.CENTER);
+        hasMushroom = t.getMushroom() != null;
+        hasInsect = !t.getInsects().isEmpty();
+        hasYarn = !t.getYarns().isEmpty();
+        sporeCount = t.getSpores().size();
+    }
 
-        // Use BorderLayout to center the label
-        this.setLayout(new BorderLayout());
-        this.add(idLabel, BorderLayout.CENTER);
+    public boolean contains(Point p) {
+        return p.distance(x, y) <= radius;
+    }
+
+    public void draw(Graphics g, boolean selected) {
+        // Background color
+        if (selected) {
+            g.setColor(new Color(255, 150, 150));  // Red
+        } else if (hasInsect) {
+            g.setColor(Color.CYAN); // Blue
+        } else {
+            g.setColor(new Color(180, 255, 180)); // Light green
+        }
+
+        g.fillOval(x - radius, y - radius, radius * 2, radius * 2);
+        g.setColor(Color.BLACK);
+        g.drawOval(x - radius, y - radius, radius * 2, radius * 2);
+
+        // Spore count
+        g.drawString(sporeCount > 0 ? "+" + sporeCount : "0", x - 5, y + 5);
+
+        // Mushroom marker
+        if (hasMushroom) {
+            g.drawString("+", x - 3, y - radius - 10);
+        }
+
+        // Yarn indicator
+        if (hasYarn) {
+            g.fillRect(x + radius - 10, y + radius - 10, 5, 5);
+        }
+
+        // Tecton ID
+        g.drawString(id, x - 5, y + radius + 15);
     }
 }
+
+
+
+
+

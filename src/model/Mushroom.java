@@ -34,6 +34,7 @@ public class Mushroom implements Serializable {
         newSporeGrowth = 5;
         hasSpore = false;
         currentSpore = null;
+        id = picker.getId();
     }
 
     /**

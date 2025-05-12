@@ -17,6 +17,7 @@ public class MainFrame extends JFrame implements ActionListener {
     MushroomPickerG mpPanel1 = new MushroomPickerG();
     MushroomPickerG mpPanel2;
     EntomologistG ePanel1 = new EntomologistG();
+    EntomologistG ePanel2;
     Game game;
 
     public MainFrame(){
@@ -58,19 +59,22 @@ public class MainFrame extends JFrame implements ActionListener {
             game.setEnts(startGamePanel.createEnts());
 
 
-            //mpPanel1 = new MushroomPickerG(game.getMps().get(0));
-            //cardPanel.add(mpPanel1, "mp1Panel");
+            mpPanel1 = new MushroomPickerG(game.getMps().get(0));
+            cardPanel.add(mpPanel1, "mp1Panel");
             //cardLayout.show(cardPanel, "mp1Panel");
-            //System.out.println(game.getMps().get(0).getOwnedMushrooms().getFirst().getTecton());
+            System.out.println(game.getMps().get(0).getOwnedMushrooms().get(0).getTecton());
+
+            mpPanel2 = new MushroomPickerG(game.getMps().get(0));
+            cardPanel.add(mpPanel2, "mp2Panel");
 
 
-
-            ePanel1 = new EntomologistG(game.getEnts().getFirst());
+            ePanel1 = new EntomologistG(game.getEnts().get(0));
             cardPanel.add(ePanel1, "entPanel1");
-            cardLayout.show(cardPanel, "entPanel1");
 
-            revalidate();  // Forces layout to update
-            repaint();
+            ePanel2 = new EntomologistG(game.getEnts().get(1));
+            cardPanel.add(ePanel2, "entPanel2");
+            cardLayout.show(cardPanel, "mp1Panel");
+
         }
     }
 }
