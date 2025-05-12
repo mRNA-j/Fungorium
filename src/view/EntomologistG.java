@@ -20,7 +20,7 @@ public class EntomologistG extends JPanel implements UpdateListener {
     }
 
     private Entomologist entomologist;
-
+    private JLabel nameLabel = new JLabel();
     private final JButton eatButton = new JButton("eat Spore");
     private final JButton moveButton = new JButton("move Insect");
     private final JButton cutButton = new JButton("cut Yarn");
@@ -39,6 +39,19 @@ public class EntomologistG extends JPanel implements UpdateListener {
 
     public EntomologistG(Entomologist e) {
         this.entomologist = e;
+        nameLabel.setText(entomologist.getName() + " - " + entomologist.getPoints());
+
+        // Title label
+        nameLabel.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        nameLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
+        this.add(nameLabel, BorderLayout.NORTH);
+
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.add(Box.createHorizontalGlue(), BorderLayout.CENTER); // Push to right
+        topPanel.add(nameLabel, BorderLayout.EAST);
+        topPanel.setOpaque(false); // Optional: make it transparent
+        this.add(topPanel, BorderLayout.NORTH);
+
         setLayout(new BorderLayout());
 
         // Prepare upper tectons from insects
