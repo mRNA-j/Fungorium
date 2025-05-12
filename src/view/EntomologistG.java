@@ -26,6 +26,7 @@ public class EntomologistG extends JPanel implements UpdateListener {
     private final JButton moveButton = new JButton("move Insect");
     private final JButton cutButton = new JButton("cut Yarn");
     private final JButton skipButton = new JButton("Skip");
+    private final JButton nextPlayerButton = new JButton("NEXT Player");
 
     private TectonPanel upperStrip;
     private TectonPanel lowerStrip;
@@ -33,11 +34,18 @@ public class EntomologistG extends JPanel implements UpdateListener {
     private JScrollPane lowerScroll;
     public final List<TectonG> upperTectons = new ArrayList<>();
     public final List<TectonG> lowerTectons = new ArrayList<>();
+    private String nextPanelName;
 
-    public EntomologistG(Entomologist e) {
-        this.entomologist = e;
+    private PanelSwitcher panelSwitcher;
+
+    public void setPanelSwitcher(PanelSwitcher panelSwitcher) {
+        this.panelSwitcher = panelSwitcher;
+    }
+
+    public EntomologistG(Entomologist ento, String panelName) {
+        this.entomologist = ento;
         nameLabel.setText(entomologist.getName() + " - " + entomologist.getPoints());
-
+        nextPanelName=panelName;
         // Title label
         nameLabel.setFont(new Font("SansSerif", Font.PLAIN, 16));
         nameLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
@@ -52,8 +60,8 @@ public class EntomologistG extends JPanel implements UpdateListener {
         setLayout(new BorderLayout());
 
         // Prepare upper tectons from insects
-        for (int i = 0; i < e.getInsect().size(); i++) {
-            Insect insect = e.getInsect().get(i);
+        for (int i = 0; i < ento.getInsect().size(); i++) {
+            Insect insect = ento.getInsect().get(i);
             String id = insect.getId();
             upperTectons.add(new TectonG(i * 80 + 10, 40, 30, id, insect.getCurrentPlace()));
         }
@@ -75,7 +83,13 @@ public class EntomologistG extends JPanel implements UpdateListener {
         buttonPanel.add(moveButton);
         buttonPanel.add(cutButton);
         buttonPanel.add(skipButton);
+        nextPlayerButton.addActionListener(e -> {
+            if (panelSwitcher != null) {
+                panelSwitcher.showPanel(nextPanelName); // Or logic to decide which comes next
+            }
+        });
 
+        buttonPanel.add(nextPlayerButton);
         // Center panel for tecton views
         JPanel centerPanel = new JPanel(new BorderLayout());
         centerPanel.add(upperScroll, BorderLayout.NORTH);

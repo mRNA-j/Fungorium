@@ -18,7 +18,17 @@ public class StartGamePanel extends JPanel {
     Entomologist e1;
     Entomologist e2;
 
+    private PanelSwitcher panelSwitcher;
 
+    public void setPanelSwitcher(PanelSwitcher panelSwitcher) {
+        this.panelSwitcher = panelSwitcher;
+    }
+
+    private MainFrame mainFrame;
+
+    public void setMainFrame(MainFrame mainFrame) {
+        this.mainFrame = mainFrame;
+    }
     public StartGamePanel() {
         this.setLayout(new BorderLayout());
 
@@ -27,6 +37,8 @@ public class StartGamePanel extends JPanel {
         contentPanel.setBorder(BorderFactory.createEmptyBorder(30, 50, 30, 50));
 
         JPanel inputPanel = new JPanel(new GridLayout(4, 2, 8, 8));
+
+
         for (int i = 0; i < 4; i++) {
             inputs[i] = new JTextField();
             inputs[i].setPreferredSize(new Dimension(200, 30));
@@ -49,16 +61,28 @@ public class StartGamePanel extends JPanel {
         contentPanel.add(Box.createVerticalStrut(15));
         contentPanel.add(buttonPanel);
 
+        startButton.addActionListener(e -> {
+            if (panelSwitcher != null&&mainFrame != null) {
+
+                    Game game = new Game(createPlayers());
+                    game.setMps(createMps());
+                    game.setEnts(createEnts());
+                    mainFrame.setGame(game);
+                    mainFrame.setUpPlayers();
+                    mainFrame.showPanel("mp1Panel");
+
+            }
+        });
+        backButton.addActionListener(e -> {
+            if (panelSwitcher != null) {
+                panelSwitcher.showPanel("startPanel"); // Or logic to decide which comes next
+            }
+        });
+
         this.add(contentPanel, BorderLayout.CENTER);
     }
 
-    public JButton getBackButton() {
-        return backButton;
-    }
 
-    public JButton getStartButton() {
-        return startButton;
-    }
 
     public ArrayList<Player> createPlayers() {
         //mp 1-2

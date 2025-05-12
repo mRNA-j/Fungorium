@@ -18,6 +18,7 @@ public class MushroomPickerG extends JPanel implements UpdateListener {
   private final JButton growMushroomButton = new JButton("Grow Mushroom");
   private final JButton disperseButton = new JButton("Disperse Spore");
   private final JButton skipButton = new JButton("Skip");
+  private final JButton nextPlayerButton = new JButton("nextPlayer");
 
   private TectonPanel upperStrip;
   private TectonPanel lowerStrip;
@@ -25,14 +26,21 @@ public class MushroomPickerG extends JPanel implements UpdateListener {
   private JScrollPane lowerScroll;
   public final List<TectonG> upperTectons = new ArrayList<>();
   public final List<TectonG> lowerTectons = new ArrayList<>();
+  private String nextPanelName;
 
   Set<String> addedTectonIds = new HashSet<>();
 
+  private PanelSwitcher panelSwitcher;
 
-  public MushroomPickerG(MushroomPicker picker) {
+  public void setPanelSwitcher(PanelSwitcher panelSwitcher) {
+    this.panelSwitcher = panelSwitcher;
+  }
+
+
+  public MushroomPickerG(MushroomPicker picker,String panelName) {
     this.mushroomPicker = picker;
     nameLabel.setText(picker.getName());
-
+    this.nextPanelName = panelName;
     setLayout(new BorderLayout());
 
     // === Name Label ===
@@ -82,6 +90,14 @@ public class MushroomPickerG extends JPanel implements UpdateListener {
     buttonPanel.add(growYarnButton);
     buttonPanel.add(disperseButton);
     buttonPanel.add(skipButton);
+
+    nextPlayerButton.addActionListener(e -> {
+      if (panelSwitcher != null) {
+        panelSwitcher.showPanel(nextPanelName); // Or logic to decide which comes next
+      }
+    });
+
+    buttonPanel.add(nextPlayerButton);
 
     // === Center Panel ===
     JPanel centerPanel = new JPanel(new BorderLayout());

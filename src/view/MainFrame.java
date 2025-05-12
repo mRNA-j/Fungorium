@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class MainFrame extends JFrame implements ActionListener {
+public class MainFrame extends JFrame implements PanelSwitcher {
     CardLayout cardLayout = new CardLayout();
     JPanel cardPanel = new JPanel(cardLayout);
     StartPanel startPanel = new StartPanel();
@@ -26,12 +26,16 @@ public class MainFrame extends JFrame implements ActionListener {
         setSize(800, 600);
         setMinimumSize(new Dimension(800,600));
 
-        startPanel.getStartButton().addActionListener(this);
-        startGamePanel.getBackButton().addActionListener(this);
-        startGamePanel.getStartButton().addActionListener(this);
+
+
+        startPanel.setPanelSwitcher(this);
+        startGamePanel.setPanelSwitcher(this);
+        startGamePanel.setMainFrame(this);
 
         cardPanel.add(startPanel, "startPanel");
         cardPanel.add(startGamePanel, "startGamePanel");
+
+
 
         add(cardPanel);
 
@@ -39,42 +43,32 @@ public class MainFrame extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if(e.getSource()==startPanel.getStartButton()){
-            cardLayout.show(cardPanel,"startGamePanel");
-            revalidate();  // Forces layout to update
-            repaint();
-        }
-        if(e.getSource()==startGamePanel.getBackButton()){
-            cardLayout.show(cardPanel,"startPanel");
-            revalidate();  // Forces layout to update
-            repaint();
-        }
-
-        //Ez inditja el a jatekot
-        if(e.getSource() == startGamePanel.getStartButton()) {
-            game = new Game(startGamePanel.createPlayers());
-            game.setMps(startGamePanel.createMps());
-            game.setEnts(startGamePanel.createEnts());
-
-
-            mpPanel1 = new MushroomPickerG(game.getMps().get(0));
-            cardPanel.add(mpPanel1, "mp1Panel");
-            //cardLayout.show(cardPanel, "mp1Panel");
-            System.out.println(game.getMps().get(0).getOwnedMushrooms().get(0).getTecton());
-
-            mpPanel2 = new MushroomPickerG(game.getMps().get(0));
-            cardPanel.add(mpPanel2, "mp2Panel");
-
-
-            ePanel1 = new EntomologistG(game.getEnts().get(0));
-            cardPanel.add(ePanel1, "entPanel1");
-
-            ePanel2 = new EntomologistG(game.getEnts().get(1));
-            cardPanel.add(ePanel2, "entPanel2");
-            cardLayout.show(cardPanel, "mp1Panel");
-
-        }
+    public void showPanel(String panelName) {
+        cardLayout.show(cardPanel, panelName);
+        revalidate();
+        repaint();
     }
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public void setUpPlayers(){
+        mpPanel1 = new MushroomPickerG(game.getMps().get(0),"ent1Panel");
+        mpPanel1.setPanelSwitcher(this);
+        cardPanel.add(mpPanel1, "mp1Panel");
+
+        mpPanel2 = new MushroomPickerG(game.getMps().get(1),"ent2Panel");
+        mpPanel2.setPanelSwitcher(this);
+        cardPanel.add(mpPanel2, "mp2Panel");
+
+        ePanel1 = new EntomologistG(game.getEnts().get(0),"mp2Panel");
+        ePanel1.setPanelSwitcher(this);
+        cardPanel.add(ePanel1, "ent1Panel");
+
+        ePanel2 = new EntomologistG(game.getEnts().get(1),"mp1Panel");
+        ePanel2.setPanelSwitcher(this);
+        cardPanel.add(ePanel2, "ent2Panel");
+    }
+
+
 }
