@@ -26,7 +26,7 @@ public class MushroomPickerG extends JComponent implements UpdateListener {
    public MushroomPickerG(MushroomPicker mushroomPicker){
      this.mushroomPicker = mushroomPicker;
      nameLabel.setText(mushroomPicker.getName());
-     this.mushroomPicker = new MushroomPicker("semmi", "semmi");
+     //this.mushroomPicker = new MushroomPicker("semmi", "semmi");
      this.setLayout(new BorderLayout());
 
      // Title label
@@ -40,11 +40,40 @@ public class MushroomPickerG extends JComponent implements UpdateListener {
      growYarnButton.setPreferredSize(new Dimension(100, 40));
      skipButton.setPreferredSize(new Dimension(100,40));
      // Create a vertical panel for the buttons
+
+    // === Horizontal scrollable tecton panel ===
+     JPanel tectonContainer = new JPanel();
+     tectonContainer.setLayout(new BoxLayout(tectonContainer, BoxLayout.X_AXIS));
+
+    // Add TectonG for each owned mushroom's place
+     mushroomPicker.getOwnedMushrooms().forEach(mushroom -> {
+       tectonContainer.add(new TectonG(mushroom.getTecton()));
+       tectonContainer.add(Box.createHorizontalStrut(10)); // spacing
+     });
+
+    // Add TectonG for each tecton in every yarn
+     mushroomPicker.getOwnedYarns().forEach(yarn -> {
+       yarn.getTectons().forEach(tecton -> {
+         tectonContainer.add(new TectonG(tecton));
+         tectonContainer.add(Box.createHorizontalStrut(10));
+       });
+     });
+
+    // Scroll pane for tectonContainer
+     JScrollPane scrollPane = new JScrollPane(tectonContainer);
+     scrollPane.setPreferredSize(new Dimension(500, 120));
+     scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+     scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+     scrollPane.setBorder(BorderFactory.createTitledBorder("Tectons"));
+
+    // Add to the bottom of the main panel
+     this.add(scrollPane, BorderLayout.SOUTH);
+
+
      JPanel centerPanel = new JPanel();
      centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
      centerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Optional padding
 
-// Align buttons to the right and add spacing
      growMushroomButton.setAlignmentX(Component.RIGHT_ALIGNMENT);
      growYarnButton.setAlignmentX(Component.RIGHT_ALIGNMENT);
      skipButton.setAlignmentX(Component.RIGHT_ALIGNMENT);

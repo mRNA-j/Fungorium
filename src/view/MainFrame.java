@@ -58,13 +58,13 @@ public class MainFrame extends JFrame implements ActionListener {
             game.setEnts(startGamePanel.createEnts());
 
 
-            //mpPanel1 = new MushroomPickerG(game.getMps().getFirst());
-            //cardPanel.add(mpPanel1, "mp1Panel");
-            //cardLayout.show(cardPanel, "mp1Panel");
+            mpPanel1 = new MushroomPickerG(game.getMps().getFirst());
+            cardPanel.add(mpPanel1, "mp1Panel");
+            cardLayout.show(cardPanel, "mp1Panel");
 
-            ePanel1 = new EntomologistG(game.getEnts().getFirst());
-            cardPanel.add(ePanel1, "entPanel1");
-            cardLayout.show(cardPanel, "entPanel1");
+            //ePanel1 = new EntomologistG(game.getEnts().getFirst());
+            //cardPanel.add(ePanel1, "entPanel1");
+            //cardLayout.show(cardPanel, "entPanel1");
 
             revalidate();  // Forces layout to update
             repaint();

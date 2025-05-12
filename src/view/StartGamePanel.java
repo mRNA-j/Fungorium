@@ -1,9 +1,7 @@
 package view;
 
 import controller.Game;
-import model.Entomologist;
-import model.MushroomPicker;
-import model.Player;
+import model.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -80,6 +78,8 @@ public class StartGamePanel extends JPanel {
 
     public ArrayList<MushroomPicker> createMps() {
         ArrayList<MushroomPicker> mps = new ArrayList<>();
+        Mushroom mushroom = new Mushroom(new Tecton(2,false,false),mp1);
+        mp1.addMushroom(mushroom);
         mps.add(mp1);
         mps.add(mp2);
         return mps;
