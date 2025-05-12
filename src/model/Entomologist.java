@@ -50,6 +50,9 @@ public class Entomologist extends Player implements Serializable {
         EntomologistView entomologistView = new EntomologistView(this);
         super.setPlayerView(entomologistView);
         insects = new ArrayList<>();
+        //hard coded
+        Insect i = new Insect(new Tecton(2, false, false),this);
+        insects.add(i);
     }
     /**
      * Visszaadja az entomológushoz tartozó rovart.

@@ -1,7 +1,13 @@
 package view;
 
+import controller.Game;
+import model.Entomologist;
+import model.MushroomPicker;
+import model.Player;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class StartGamePanel extends JPanel {
     JButton startButton = new JButton("Start");
@@ -9,6 +15,11 @@ public class StartGamePanel extends JPanel {
     JTextField[] inputs = new JTextField[4];
     JLabel[] labels = new JLabel[4];
     static String[] labelNames = {"MushroomPicker1", "MushroomPicker2", "Entomologist1", "Entomologist2"};
+    MushroomPicker mp1;
+    MushroomPicker mp2;
+    Entomologist e1;
+    Entomologist e2;
+
 
     public StartGamePanel() {
         this.setLayout(new BorderLayout());
@@ -20,7 +31,6 @@ public class StartGamePanel extends JPanel {
         JPanel inputPanel = new JPanel(new GridLayout(4, 2, 8, 8));
         for (int i = 0; i < 4; i++) {
             inputs[i] = new JTextField();
-            inputs[i].setHorizontalAlignment(JTextField.RIGHT);
             inputs[i].setPreferredSize(new Dimension(200, 30));
 
             labels[i] = new JLabel(labelNames[i]);
@@ -46,5 +56,39 @@ public class StartGamePanel extends JPanel {
 
     public JButton getBackButton() {
         return backButton;
+    }
+
+    public JButton getStartButton() {
+        return startButton;
+    }
+
+    public ArrayList<Player> createPlayers() {
+        //mp 1-2
+        mp1 = new MushroomPicker(inputs[0].getText(), "sdbfsdjfbifbdsip");
+        mp2 = new MushroomPicker(inputs[1].getText(), "dnudnbcicncnsdocncpisnmc");
+        e1 = new Entomologist(inputs[2].getText(), "aichseocnw");
+        e2 = new Entomologist(inputs[3].getText(), "jfnsdijvnewpivenveo");
+
+        ArrayList<Player> players = new ArrayList<>();
+        players.add(mp1);
+        players.add(mp2);
+        players.add(e1);
+        players.add(e2);
+
+        return players;
+    }
+
+    public ArrayList<MushroomPicker> createMps() {
+        ArrayList<MushroomPicker> mps = new ArrayList<>();
+        mps.add(mp1);
+        mps.add(mp2);
+        return mps;
+    }
+
+    public ArrayList<Entomologist> createEnts() {
+        ArrayList<Entomologist> mps = new ArrayList<>();
+        mps.add(e1);
+        mps.add(e2);
+        return mps;
     }
 }

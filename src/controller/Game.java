@@ -1,5 +1,7 @@
 package controller;
 
+import model.Entomologist;
+import model.MushroomPicker;
 import model.Player;
 
 import java.io.Serializable;
@@ -29,6 +31,18 @@ public class Game implements Serializable {
     /** A játéktér, amin a játék zajlik */
     private final Map playField;
 
+    private ArrayList<MushroomPicker> mps;
+
+    public ArrayList<Entomologist> getEnts() {
+        return ents;
+    }
+
+    public void setEnts(ArrayList<Entomologist> ents) {
+        this.ents = ents;
+    }
+
+    private ArrayList<Entomologist> ents;
+
     /**
      * Alapértelmezett konstruktor a játék inicializálásához.
      * Beállítja a kezdő értékeket és létrehozza a játékteret.
@@ -39,6 +53,26 @@ public class Game implements Serializable {
         playField = new Map();
         numberOfTurns = 50;
         players = new ArrayList<>();
+        mps = new ArrayList<>();
+        ents = new ArrayList<>();
+    }
+
+    public void setMps(ArrayList<MushroomPicker> input) {
+        mps = input;
+    }
+
+    public ArrayList<MushroomPicker> getMps() {
+        return mps;
+    }
+
+    public Game(List<Player> inputPlayers) {
+        activePlayerIndex = 0;
+        currentTurn = 1;
+        playField = new Map();
+        numberOfTurns = 50;
+        players = inputPlayers;
+        mps = new ArrayList<>();
+        ents = new ArrayList<>();
     }
 
     public List<Player> getPlayers(){return players;}
