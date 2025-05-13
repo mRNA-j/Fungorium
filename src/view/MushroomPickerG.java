@@ -135,9 +135,9 @@ public class MushroomPickerG extends JPanel implements UpdateListener {
 
     growMushroomButton.addActionListener(e -> {
       GM_tectonSelector.setVisible(true);
-      GM_tectonSelector.setEditable(false);
+      GM_tectonSelector.setEnabled(false);
       GM_yarnSelector.setVisible(true);
-      GM_yarnSelector.setEditable(true);
+      GM_yarnSelector.setEnabled(true);
       growYarnButton.setEnabled(false);
       disperseButton.setEnabled(false);
       skipButton.setEnabled(false);
@@ -145,8 +145,8 @@ public class MushroomPickerG extends JPanel implements UpdateListener {
     });
 
     GM_yarnSelector.addActionListener(e -> {
-      GM_yarnSelector.setEditable(false);
-      GM_tectonSelector.setEditable(true);
+      GM_yarnSelector.setEnabled(false);
+      GM_tectonSelector.setEnabled(true);
     });
 
     GM_tectonSelector.addActionListener(e -> {
@@ -159,9 +159,9 @@ public class MushroomPickerG extends JPanel implements UpdateListener {
 
     disperseButton.addActionListener(e -> {
       DS_mushroomSelector.setVisible(true);
-      DS_mushroomSelector.setEditable(false);
+      DS_mushroomSelector.setEnabled(true);
       DS_tectonSelector.setVisible(true);
-      DS_tectonSelector.setEditable(true);
+      DS_tectonSelector.setEnabled(false);
       growYarnButton.setEnabled(false);
       growMushroomButton.setEnabled(false);
       skipButton.setEnabled(false);
@@ -169,11 +169,13 @@ public class MushroomPickerG extends JPanel implements UpdateListener {
     });
 
     DS_mushroomSelector.addActionListener(e -> {
-      DS_mushroomSelector.setEditable(false);
-      DS_tectonSelector.setEditable(true);
+      
+      DS_mushroomSelector.setEnabled(false);
+      DS_tectonSelector.setEnabled(true);
     });
 
     DS_tectonSelector.addActionListener(e -> {
+      
       Object mushroomSelected = DS_mushroomSelector.getSelectedItem();
       Object tectonSelected = DS_tectonSelector.getSelectedItem();
 
@@ -183,10 +185,11 @@ public class MushroomPickerG extends JPanel implements UpdateListener {
 
     growYarnButton.addActionListener(e -> {
       GY_yarnSelector.setVisible(true);
-      GY_yarnSelector.setEditable(false);
+      GY_yarnSelector.setEnabled(true);
       GY_srcTectonSelector.setVisible(true);
-      GY_srcTectonSelector.setEditable(true);
-      GY_tgtTectonSelector.setVisible(false); // Initially hidden
+      GY_srcTectonSelector.setEnabled(false);
+      GY_tgtTectonSelector.setVisible(true); // Initially hidden
+      GY_tgtTectonSelector.setEnabled(false);
       growMushroomButton.setEnabled(false);
       disperseButton.setEnabled(false);
       skipButton.setEnabled(false);
@@ -194,14 +197,14 @@ public class MushroomPickerG extends JPanel implements UpdateListener {
     });
 
     GY_yarnSelector.addActionListener(e -> {
-      GY_yarnSelector.setEditable(false);
-      GY_srcTectonSelector.setEditable(true);
+      GY_yarnSelector.setEnabled(false);
+      GY_srcTectonSelector.setEnabled(true);
     });
 
     GY_srcTectonSelector.addActionListener(e -> {
-      GY_srcTectonSelector.setEditable(false);
+      GY_srcTectonSelector.setEnabled(false);
       GY_tgtTectonSelector.setVisible(true);
-      GY_tgtTectonSelector.setEditable(true);
+      GY_tgtTectonSelector.setEnabled(true);
 
       // You might want to populate target tectons based on source selection
     });
