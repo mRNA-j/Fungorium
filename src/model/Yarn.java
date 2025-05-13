@@ -212,4 +212,9 @@ public class Yarn implements Serializable {
      */
     public void runEffect() {
     }
+
+    @Override
+    public String toString(){
+        return id;
+    }
 }

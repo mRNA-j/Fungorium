@@ -87,4 +87,9 @@ public abstract class Spore implements Serializable {
     public String getId(){
         return testID;
     }
+
+    @Override
+    public String toString() {
+        return testID;
+    }
 }

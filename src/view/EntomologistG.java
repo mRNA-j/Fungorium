@@ -28,14 +28,14 @@ public class EntomologistG extends JPanel implements UpdateListener {
     private final JButton skipButton = new JButton("Skip");
     private final JButton nextPlayerButton = new JButton("NEXT Player");
 
-    private JComboBox<String> MI_insectSelect;
-    private JComboBox<String> MI_tgtTectonSelect;
-    private JComboBox<String> MI_yarnSelect;
-    private JComboBox<String> ES_insectSelect;
-    private JComboBox<String> ES_sporeSelect;
-    private JComboBox<String> CY_insectSelect;
-    private JComboBox<String> CY_yarnSelect;
-    private JComboBox<String> CY_tgtTectonSelect;
+    private JComboBox<Insect> MI_insectSelect;
+    private JComboBox<Tecton> MI_tgtTectonSelect;
+    private JComboBox<Yarn> MI_yarnSelect;
+    private JComboBox<Insect> ES_insectSelect;
+    private JComboBox<Spore> ES_sporeSelect;
+    private JComboBox<Insect> CY_insectSelect;
+    private JComboBox<Yarn> CY_yarnSelect;
+    private JComboBox<Tecton> CY_tgtTectonSelect;
 
     private TectonPanel upperStrip;
     private TectonPanel lowerStrip;
@@ -46,6 +46,11 @@ public class EntomologistG extends JPanel implements UpdateListener {
     private String nextPanelName;
 
     private PanelSwitcher panelSwitcher;
+
+    private Insect chosenInsect;
+    private Tecton chosenTecton;
+    private Yarn chosenYarn;
+    private Spore chosenSpore;
 
     public void setPanelSwitcher(PanelSwitcher panelSwitcher) {
         this.panelSwitcher = panelSwitcher;
@@ -91,18 +96,19 @@ public class EntomologistG extends JPanel implements UpdateListener {
         JPanel comboPanel = new JPanel();
         comboPanel.setLayout(new GridLayout(7, 1, 5, 5));
 
-
-        MI_insectSelect = new JComboBox<>(new String[] {"Insect 1", "Insect 2"});
-        MI_tgtTectonSelect = new JComboBox<>(new String[] {"Target Tecton A", "Target Tecton B"});
-        MI_yarnSelect = new JComboBox<>(new String[] {"Yarn 1", "Yarn 2"});
-        ES_insectSelect = new JComboBox<>(new String[] {"Insect 1", "Insect 2"});
-        ES_sporeSelect = new JComboBox<>(new String[] {"Spore 1", "Spore 2"});
-        CY_insectSelect = new JComboBox<>(new String[] {"Insect 1", "Insect 2"});
-        CY_yarnSelect = new JComboBox<>(new String[] {"Yarn 1", "Yarn 2"});
-        CY_tgtTectonSelect = new JComboBox<>(new String[] {"Target Tecton A", "Target Tecton B"});
+        int insectSize = entomologist.getInsect().size();
+        Insect[] insects = entomologist.getInsect().toArray(new Insect[insectSize]);
+        MI_insectSelect = new JComboBox<Insect>(insects);
+        MI_tgtTectonSelect = new JComboBox<Tecton>();
+        MI_yarnSelect = new JComboBox<Yarn>();
+        ES_insectSelect = new JComboBox<Insect>(insects);
+        ES_sporeSelect = new JComboBox<Spore>();
+        CY_insectSelect = new JComboBox<Insect>(insects);
+        CY_yarnSelect = new JComboBox<Yarn>();
+        CY_tgtTectonSelect = new JComboBox<Tecton>();
 
 // Set all invisible initially
-        MI_insectSelect.setVisible(false);
+       MI_insectSelect.setVisible(false);
         MI_tgtTectonSelect.setVisible(false);
         MI_yarnSelect.setVisible(false);
         ES_insectSelect.setVisible(false);
@@ -112,14 +118,14 @@ public class EntomologistG extends JPanel implements UpdateListener {
         CY_tgtTectonSelect.setVisible(false);
 
 // === Add them to your comboPanel ===
-        comboPanel.add(MI_insectSelect);
-        comboPanel.add(MI_tgtTectonSelect);
-        comboPanel.add(MI_yarnSelect);
-        comboPanel.add(ES_insectSelect);
-        comboPanel.add(ES_sporeSelect);
-        comboPanel.add(CY_insectSelect);
-        comboPanel.add(CY_yarnSelect);
-        comboPanel.add(CY_tgtTectonSelect);
+        comboPanel.add(MI_insectSelect, 0);
+        comboPanel.add(MI_tgtTectonSelect, 1);
+        comboPanel.add(MI_yarnSelect, 2);
+        comboPanel.add(ES_insectSelect, 3);
+        comboPanel.add(ES_sporeSelect, 4);
+        comboPanel.add(CY_insectSelect, 5);
+        comboPanel.add(CY_yarnSelect, 6);
+        comboPanel.add(CY_tgtTectonSelect, 7);
 
 
 
@@ -129,82 +135,98 @@ public class EntomologistG extends JPanel implements UpdateListener {
         moveButton.addActionListener(e -> {
             MI_insectSelect.setVisible(true);
             MI_insectSelect.setEnabled(true);
-            MI_yarnSelect.setVisible(true);
+            MI_yarnSelect.setVisible(false);
             MI_yarnSelect.setEnabled(false);
-            MI_tgtTectonSelect.setVisible(true);
             MI_tgtTectonSelect.setVisible(false);
+            MI_tgtTectonSelect.setEnabled(false);
             disableOtherButtons(moveButton);
         });
 
         MI_insectSelect.addActionListener(e -> {
-            MI_insectSelect.setEnabled(false);
-            MI_yarnSelect.setEnabled(true);
-        });
+            chosenInsect = (Insect) MI_insectSelect.getSelectedItem();
+            int tectonSize = chosenInsect.getPlace().tectonsConnectedWithYarn().size();
+            MI_tgtTectonSelect = new JComboBox<Tecton>(chosenInsect.getPlace().tectonsConnectedWithYarn().toArray(new Tecton[tectonSize]));
+            comboPanel.add(MI_tgtTectonSelect, 1);
+            revalidate();
+            repaint();
 
-        MI_yarnSelect.addActionListener(e -> {
-            MI_yarnSelect.setEnabled(false);
+            MI_tgtTectonSelect.setVisible(true);
             MI_tgtTectonSelect.setEnabled(true);
-
-
+            MI_insectSelect.setEnabled(false);
         });
 
         MI_tgtTectonSelect.addActionListener(e -> {
-            Object insectSelected = MI_insectSelect.getSelectedItem();
-            Object yarnSelected = MI_yarnSelect.getSelectedItem();
-            Object tectonSelected = MI_tgtTectonSelect.getSelectedItem();
-            // Call move insect action
-            // mushroomPicker.actionMoveInsect(...);
+            MI_tgtTectonSelect.setEnabled(false);
+            chosenTecton = (Tecton) MI_tgtTectonSelect.getSelectedItem();
+            entomologist.actionMove(chosenTecton, chosenInsect);
         });
-
 // Eat Spore
         eatButton.addActionListener(e -> {
             ES_insectSelect.setVisible(true);
             ES_insectSelect.setEnabled(true);
-            ES_sporeSelect.setVisible(true);
+            ES_sporeSelect.setVisible(false);
             ES_sporeSelect.setEnabled(false);
             disableOtherButtons(eatButton);
         });
 
         ES_insectSelect.addActionListener(e -> {
             ES_insectSelect.setEnabled(false);
+            chosenInsect = (Insect) ES_insectSelect.getSelectedItem();
+            ES_sporeSelect.setEnabled(true);
+            int sporeSize = chosenInsect.getPlace().getSpores().size();
+            ES_sporeSelect = new JComboBox<Spore>(chosenInsect.getPlace().getSpores().toArray(new Spore[sporeSize]));
+            comboPanel.add(ES_sporeSelect, 4);
+            revalidate();
+            repaint();
+            ES_sporeSelect.setVisible(true);
             ES_sporeSelect.setEnabled(true);
         });
 
         ES_sporeSelect.addActionListener(e -> {
-            Object insectSelected = ES_insectSelect.getSelectedItem();
-            Object sporeSelected = ES_sporeSelect.getSelectedItem();
-            // Call eat spore action
-            // mushroomPicker.actionEatSpore(...);
+            chosenSpore = (Spore) ES_sporeSelect.getSelectedItem();
+           entomologist.actionEatSpore(chosenSpore, chosenInsect);
         });
 
 // Cut Yarn
         cutButton.addActionListener(e -> {
             CY_insectSelect.setVisible(true);
             CY_insectSelect.setEnabled(true);
-            CY_yarnSelect.setVisible(true);
+            CY_yarnSelect.setVisible(false);
             CY_yarnSelect.setEnabled(false);
-            CY_tgtTectonSelect.setVisible(true); // Initially hidden
+            CY_tgtTectonSelect.setVisible(false); // Initially hidden
             CY_tgtTectonSelect.setEnabled(false);
             disableOtherButtons(cutButton);
         });
 
         CY_insectSelect.addActionListener(e -> {
             CY_insectSelect.setEnabled(false);
+            chosenInsect = (Insect) CY_insectSelect.getSelectedItem();
+            int YarnSize = chosenInsect.getPlace().getYarns().size();
+            CY_yarnSelect = new JComboBox<Yarn>(chosenInsect.getPlace().getYarns().toArray(new Yarn[YarnSize]));
+            comboPanel.add(CY_yarnSelect, 6);
+            revalidate();
+            repaint();
+            CY_yarnSelect.setVisible(true);
             CY_yarnSelect.setEnabled(true);
         });
 
         CY_yarnSelect.addActionListener(e -> {
+            System.out.println("meg vagyok hivva");
+            chosenYarn = (Yarn) CY_yarnSelect.getSelectedItem();
             CY_yarnSelect.setEnabled(false);
+            int tectonSize = chosenInsect.getPlace().tectonsConnectedByTheYarn(chosenYarn).size();
+            Tecton[] tectons = chosenInsect.getPlace().tectonsConnectedByTheYarn(chosenYarn).toArray(new Tecton[tectonSize]);
+            CY_tgtTectonSelect = new JComboBox<Tecton>(tectons);
+            comboPanel.add(CY_tgtTectonSelect, 7);
+            revalidate();
+            repaint();
+            CY_tgtTectonSelect.setVisible(true);
             CY_tgtTectonSelect.setEnabled(true);
-            // Populate target tectons based on yarn selection if needed
         });
 
         CY_tgtTectonSelect.addActionListener(e -> {
-            Object insectSelected = CY_insectSelect.getSelectedItem();
-            Object yarnSelected = CY_yarnSelect.getSelectedItem();
-            Object tectonSelected = CY_tgtTectonSelect.getSelectedItem();
-            // Call cut yarn action
-            // mushroomPicker.actionCutYarn(...);
+            chosenTecton = (Tecton) CY_tgtTectonSelect.getSelectedItem();
+            entomologist.actionCutYarn(chosenYarn, chosenInsect, chosenTecton);
         });
 
 // Update skip button to handle new combo boxes

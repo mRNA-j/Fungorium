@@ -125,6 +125,7 @@ public class Tecton implements Serializable {
     }
     public void addYarn(Yarn y){
         yarns.add(y);
+        y.addTecton(this);
     }
     /**
      * Hozzáad egy gombát a Tectonhoz.
@@ -184,7 +185,9 @@ public class Tecton implements Serializable {
         }
         if (yarn != null) {
             yarn.addTecton(this);
-            yarns.add(yarn);
+            if(!yarns.contains(yarn)) {
+                yarns.add(yarn);
+            }
         }
     }
 
@@ -338,5 +341,29 @@ public class Tecton implements Serializable {
             }
         }
         return false;
+    }
+
+    public List<Tecton> tectonsConnectedWithYarn(){
+        List<Tecton> yarnNeighbours = new ArrayList<>();
+        for(Tecton t :neighbours){
+            if(isConnectedWithYarn(t)){
+                yarnNeighbours.add(t);
+            }
+        }
+        return yarnNeighbours;
+    }
+
+    public List<Tecton> tectonsConnectedByTheYarn(Yarn y){
+        List<Tecton> tectons = new ArrayList<>();
+        for(Tecton t: neighbours){
+            if(t.yarns.contains(y)&&!tectons.contains(t)){
+                tectons.add(t);
+            }
+        }
+        return tectons;
+    }
+    @Override
+    public String toString(){
+        return id;
     }
 }

@@ -253,4 +253,9 @@ public class Insect implements Serializable {
     public String getId(){
         return testID;
     }
+
+    @Override
+    public String toString(){
+        return this.testID;
+    }
 }

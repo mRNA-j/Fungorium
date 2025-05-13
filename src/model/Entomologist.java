@@ -53,13 +53,31 @@ public class Entomologist extends Player implements Serializable {
         //hard coded
         Tecton t1 = new Tecton("t1", 2, false, false);
         Tecton t2 = new Tecton("t2", 2, false, false);
-        Insect i = new Insect(t1,this, "i1");
-        Insect i1 = new Insect(t2,this, "i2");
-        insects.add(i);
-        insects.add(i1);
         Tecton t3 = new Tecton("t3", 2, false, false);
+        Tecton t4 = new Tecton("t4", 2, false, false);
+        Tecton t5 = new Tecton("t5", 2, false, false);
         t1.addNeighbour(t2);
-        t1.addNeighbour(t3);
+        t1.addNeighbour(t5);
+        t4.addNeighbour(t3);
+
+        Insect i1 = new Insect(t1,this, "i1");
+        Insect i2 = new Insect(t3,this, "i2");
+        insects.add(i1);
+        insects.add(i2);
+
+        MushroomPicker mp = new MushroomPicker("pista", "mp1");
+        Mushroom m1 = new Mushroom(t1, mp, "m1");
+        Yarn y1 = new Yarn(m1,mp, "y1");
+        t1.addYarn(y1);
+        t2.addYarn(y1);
+        Yarn y2 = new Yarn(m1,mp, "y2");
+        t1.addYarn(y2);
+        t5.addYarn(y2);
+        Yarn y3 = new Yarn(m1,mp, "y3");
+        t3.addYarn(y3);
+        t4.addYarn(y3);
+
+
     }
     /**
      * Visszaadja az entomológushoz tartozó rovart.
