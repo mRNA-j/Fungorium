@@ -128,10 +128,11 @@ public class EntomologistG extends JPanel implements UpdateListener {
 // Move Insect
         moveButton.addActionListener(e -> {
             MI_insectSelect.setVisible(true);
-            MI_insectSelect.setEnabled(false);
+            MI_insectSelect.setEnabled(true);
             MI_yarnSelect.setVisible(true);
-            MI_yarnSelect.setEnabled(true);
-            MI_tgtTectonSelect.setVisible(false); // Initially hidden
+            MI_yarnSelect.setEnabled(false);
+            MI_tgtTectonSelect.setVisible(true);
+            MI_tgtTectonSelect.setVisible(false);
             disableOtherButtons(moveButton);
         });
 
@@ -142,9 +143,9 @@ public class EntomologistG extends JPanel implements UpdateListener {
 
         MI_yarnSelect.addActionListener(e -> {
             MI_yarnSelect.setEnabled(false);
-            MI_tgtTectonSelect.setVisible(true);
             MI_tgtTectonSelect.setEnabled(true);
-            // Populate target tectons based on yarn selection if needed
+
+
         });
 
         MI_tgtTectonSelect.addActionListener(e -> {
@@ -158,9 +159,9 @@ public class EntomologistG extends JPanel implements UpdateListener {
 // Eat Spore
         eatButton.addActionListener(e -> {
             ES_insectSelect.setVisible(true);
-            ES_insectSelect.setEnabled(false);
+            ES_insectSelect.setEnabled(true);
             ES_sporeSelect.setVisible(true);
-            ES_sporeSelect.setEnabled(true);
+            ES_sporeSelect.setEnabled(false);
             disableOtherButtons(eatButton);
         });
 
@@ -179,10 +180,11 @@ public class EntomologistG extends JPanel implements UpdateListener {
 // Cut Yarn
         cutButton.addActionListener(e -> {
             CY_insectSelect.setVisible(true);
-            CY_insectSelect.setEnabled(false);
+            CY_insectSelect.setEnabled(true);
             CY_yarnSelect.setVisible(true);
-            CY_yarnSelect.setEnabled(true);
-            CY_tgtTectonSelect.setVisible(false); // Initially hidden
+            CY_yarnSelect.setEnabled(false);
+            CY_tgtTectonSelect.setVisible(true); // Initially hidden
+            CY_tgtTectonSelect.setEnabled(false);
             disableOtherButtons(cutButton);
         });
 
@@ -193,8 +195,6 @@ public class EntomologistG extends JPanel implements UpdateListener {
 
         CY_yarnSelect.addActionListener(e -> {
             CY_yarnSelect.setEnabled(false);
-            CY_tgtTectonSelect.setVisible(true);
-            CY_tgtTectonSelect.setEnabled(true);
             CY_tgtTectonSelect.setEnabled(true);
             // Populate target tectons based on yarn selection if needed
         });
