@@ -10,20 +10,13 @@ import javax.swing.*;
  * Implementálja az UpdateListener interfészt, így a modell változásakor
  * automatikusan frissül a megjelenítés.
  */
-public abstract class BaseViewG extends JPanel {
+public interface BaseViewG {
     
-    /**
-     * Konstruktor a BaseViewG osztályhoz.
-     */
-    public BaseViewG() {
-        super();
-    }
+
     
     /**
      * Az UpdateListener interfész update metódusának implementációja.
      * Alapértelmezetten meghívja a repaint() metódust, hogy újrarajzolja a komponenst.
      */
-    public void update() {
-        repaint();
-    }
+    public void update() ;
 }

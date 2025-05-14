@@ -34,6 +34,7 @@ public abstract class BaseModel implements Serializable {
      * Értesíti az összes megfigyelőt a változásról
      */
     protected void notifyObservers() {
+        System.out.println("Notifying " + observers.size() + " observers");
         for (BaseViewG observer : observers) {
             observer.update();
         }

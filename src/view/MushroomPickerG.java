@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
 
-public class MushroomPickerG extends JPanel implements UpdateListener {
+public class MushroomPickerG extends JPanel implements BaseViewG {
   private MushroomPicker mushroomPicker;
   private JLabel nameLabel = new JLabel();
 

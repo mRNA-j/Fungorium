@@ -10,7 +10,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EntomologistG extends BaseViewG {
+public class EntomologistG extends JPanel implements BaseViewG {
     public Entomologist getEntomologist() {
         return entomologist;
     }
@@ -312,11 +312,42 @@ public class EntomologistG extends BaseViewG {
 
     @Override
     public void update() {
+        // Update the entomologist name and points display
+        nameLabel.setText(entomologist.getName() + " - " + entomologist.getPoints());
+
+        // Update the upper tectons based on current insects
+        upperTectons.clear();
+        for (int i = 0; i < entomologist.getInsect().size(); i++) {
+            Insect insect = entomologist.getInsect().get(i);
+            String id = insect.getId();
+            upperTectons.add(new TectonG(i * 80 + 10, 40, 30, id, insect.getCurrentPlace()));
+        }
+
+        // Update combobox models with current data
+        int insectSize = entomologist.getInsect().size();
+        Insect[] insects = entomologist.getInsect().toArray(new Insect[insectSize]);
+
+        MI_insectSelect.setModel(new DefaultComboBoxModel<>(insects));
+        ES_insectSelect.setModel(new DefaultComboBoxModel<>(insects));
+        CY_insectSelect.setModel(new DefaultComboBoxModel<>(insects));
+
+        // Update the lower tecton panel if there's a selection
+        if (upperStrip.getSelectedTecton() != null) {
+            updateLowerStrip(upperStrip.getSelectedTecton().t);
+        }
+
+        // Reset button states
+        enableAllButtons();
+        setAllComboBoxesVisible(false);
+
+        // Request visual update
+        upperStrip.update();
+        lowerStrip.update();
+        revalidate();
         repaint();
-    }
-
-
 
     }
+
+}
 
 

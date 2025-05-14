@@ -8,11 +8,21 @@
     import java.awt.event.MouseEvent;
     import java.util.List;
 
-    public class TectonPanel extends JPanel {
+    public class TectonPanel extends JPanel implements BaseViewG{
         private final List<TectonG> tectons;
         private final boolean selectable;
         private TectonG selectedTecton = null;
         private final TectonSelectionListener selectionListener;
+
+        @Override
+        public void update() {
+
+            // Update panel size based on current tectons list
+            setPreferredSize(new Dimension(Math.max(tectons.size() * 80, 400), 100));
+
+            // Request repaint to reflect updated state
+            repaint();
+        }
 
         public interface TectonSelectionListener {
             void onTectonSelected(Tecton selected);
