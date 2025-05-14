@@ -21,18 +21,24 @@ public class MushroomPickerG extends JPanel implements UpdateListener {
   private final JButton nextPlayerButton = new JButton("nextPlayer");
 
   //Disperse spore
-  private JComboBox<String> DS_mushroomSelector;
-  private JComboBox<String> DS_tectonSelector;
-  //private JComboBox<String> growMushroom_sporeSelector;
+  private JComboBox<Mushroom> DS_mushroomSelector;
+  private JComboBox<Tecton> DS_tectonSelector;
+  private JComboBox<String> DS_growMushroom_sporeSelector;
 
   //Grow Mushroom
-  private JComboBox<String> GM_yarnSelector;
-  private JComboBox<String> GM_tectonSelector;
+  private JComboBox<Yarn> GM_yarnSelector;
+  private JComboBox<Tecton> GM_tectonSelector;
 
   //Grow Yarn
-  private JComboBox<String> GY_yarnSelector;
-  private JComboBox<String> GY_srcTectonSelector;
-  private JComboBox<String> GY_tgtTectonSelector;
+  private JComboBox<Yarn> GY_yarnSelector;
+  private JComboBox<Tecton> GY_srcTectonSelector;
+  private JComboBox<Tecton> GY_tgtTectonSelector;
+
+  private Yarn chosenYarn;
+  private Tecton chosenTecton1;
+  private Tecton chosenTecton2;
+  private Mushroom chosenMushroom;
+  private String chosenSporeType;
 
 
   private TectonPanel upperStrip;
@@ -54,8 +60,8 @@ public class MushroomPickerG extends JPanel implements UpdateListener {
 
   public MushroomPickerG(MushroomPicker picker,String panelName) {
     this.mushroomPicker = picker;
-    nameLabel.setText(picker.getName());
-    this.nextPanelName = panelName;
+    nameLabel.setText(picker.getName() + " - "+ picker.getPoints());
+    nextPanelName = panelName;
     setLayout(new BorderLayout());
 
     // === Name Label ===
@@ -91,28 +97,31 @@ public class MushroomPickerG extends JPanel implements UpdateListener {
 
     // === Combo Box Panel ===
     JPanel comboPanel = new JPanel();
-    comboPanel.setLayout(new GridLayout(7, 1, 5, 5));
+    comboPanel.setLayout(new GridLayout(8, 1, 5, 5));
 
 
-    //itt kell az adatkötés, késő van, nincs kedvem
-    DS_mushroomSelector= new JComboBox<>(new String[] {"Mushroom 1", "Mushroom 2"});
+
+    DS_mushroomSelector= new JComboBox<>();
     DS_mushroomSelector.setVisible(false);
-    DS_tectonSelector = new JComboBox<>(new String[] {"Tecton A", "Tecton B"});
+    DS_tectonSelector = new JComboBox<>();
     DS_tectonSelector.setVisible(false);
-   // GM = new JComboBox<>(new String[] {"Spore Type 1", "Spore Type 2"});
-    GM_yarnSelector = new JComboBox<>(new String[] {"Yarn A", "Yarn B"});
+    DS_growMushroom_sporeSelector = new JComboBox<>();
+    DS_growMushroom_sporeSelector.setVisible(false);
+    //GM = new JComboBox<>(new String[] {"Spore Type 1", "Spore Type 2"});
+    GM_yarnSelector = new JComboBox<>();
     GM_yarnSelector.setVisible(false);
-    GM_tectonSelector= new JComboBox<>(new String[] {"Tecton X", "Tecton Y"});
+    GM_tectonSelector= new JComboBox<>();
     GM_tectonSelector.setVisible(false);
-    GY_yarnSelector=new JComboBox<>(new String[] {"Yarn A", "Yarn B"});
+    GY_yarnSelector=new JComboBox<>();
     GY_yarnSelector.setVisible(false);
-    GY_srcTectonSelector = new JComboBox<>(new String[] {"Start 1", "Start 2"});
+    GY_srcTectonSelector = new JComboBox<>();
     GY_srcTectonSelector.setVisible(false);
-    GY_tgtTectonSelector= new JComboBox<>(new String[] {"Target 1", "Target 2"});
+    GY_tgtTectonSelector= new JComboBox<>();
     GY_tgtTectonSelector.setVisible(false);
 
     comboPanel.add(DS_mushroomSelector);
     comboPanel.add(DS_tectonSelector);
+    comboPanel.add(DS_growMushroom_sporeSelector);
     comboPanel.add(GM_yarnSelector);
     comboPanel.add(GM_tectonSelector);
     comboPanel.add(GY_yarnSelector);
@@ -134,17 +143,17 @@ public class MushroomPickerG extends JPanel implements UpdateListener {
     JPanel buttonPanel = new JPanel(new GridLayout(4, 1, 5, 5));
 
     growMushroomButton.addActionListener(e -> {
-      GM_tectonSelector.setVisible(true);
+      GM_tectonSelector.setVisible(false);
       GM_tectonSelector.setEnabled(false);
       GM_yarnSelector.setVisible(true);
       GM_yarnSelector.setEnabled(true);
-      growYarnButton.setEnabled(false);
-      disperseButton.setEnabled(false);
-      skipButton.setEnabled(false);
-      growMushroomButton.setEnabled(false);
+      disableOtherButtons(growMushroomButton);
     });
 
     GM_yarnSelector.addActionListener(e -> {
+      chosenYarn = (Yarn) GY_yarnSelector.getSelectedItem();
+      //Tecton[] tectons =
+      GM_tectonSelector.setModel(new DefaultComboBoxModel<>());
       GM_yarnSelector.setEnabled(false);
       GM_tectonSelector.setEnabled(true);
     });
@@ -287,6 +296,21 @@ public class MushroomPickerG extends JPanel implements UpdateListener {
 
   public void setMushroomPicker(MushroomPicker mushroomPicker) {
     this.mushroomPicker = mushroomPicker;
+  }
+
+  private void enableAllButtons() {
+    growMushroomButton.setEnabled(true);
+    growYarnButton.setEnabled(true);
+    disperseButton.setEnabled(true);
+    skipButton.setEnabled(true);
+  }
+
+  private void disableOtherButtons(JButton activeButton) {
+    growMushroomButton.setEnabled(false);
+    growYarnButton.setEnabled(false);
+    disperseButton.setEnabled(false);
+    skipButton.setEnabled(false);
+    activeButton.setEnabled(false);
   }
 
   @Override

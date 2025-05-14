@@ -22,9 +22,9 @@ public class EntomologistG extends JPanel implements UpdateListener {
     private Entomologist entomologist;
     private JLabel nameLabel = new JLabel();
 
-    private final JButton eatButton = new JButton("eat Spore");
-    private final JButton moveButton = new JButton("move Insect");
-    private final JButton cutButton = new JButton("cut Yarn");
+    private final JButton eatButton = new JButton("Eat Spore");
+    private final JButton moveButton = new JButton("Move Insect");
+    private final JButton cutButton = new JButton("Cut Yarn");
     private final JButton skipButton = new JButton("Skip");
     private final JButton nextPlayerButton = new JButton("NEXT Player");
 
@@ -64,7 +64,6 @@ public class EntomologistG extends JPanel implements UpdateListener {
         nameLabel.setFont(new Font("SansSerif", Font.PLAIN, 16));
         nameLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
         this.add(nameLabel, BorderLayout.NORTH);
-
         JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.add(Box.createHorizontalGlue(), BorderLayout.CENTER); // Push to right
         topPanel.add(nameLabel, BorderLayout.EAST);
@@ -145,11 +144,9 @@ public class EntomologistG extends JPanel implements UpdateListener {
         MI_insectSelect.addActionListener(e -> {
             chosenInsect = (Insect) MI_insectSelect.getSelectedItem();
             int tectonSize = chosenInsect.getPlace().tectonsConnectedWithYarn().size();
-            MI_tgtTectonSelect = new JComboBox<Tecton>(chosenInsect.getPlace().tectonsConnectedWithYarn().toArray(new Tecton[tectonSize]));
-            comboPanel.add(MI_tgtTectonSelect, 1);
+            MI_tgtTectonSelect.setModel(new DefaultComboBoxModel<>(chosenInsect.getPlace().tectonsConnectedWithYarn().toArray(new Tecton[tectonSize])));
             revalidate();
             repaint();
-
             MI_tgtTectonSelect.setVisible(true);
             MI_tgtTectonSelect.setEnabled(true);
             MI_insectSelect.setEnabled(false);
@@ -174,8 +171,7 @@ public class EntomologistG extends JPanel implements UpdateListener {
             chosenInsect = (Insect) ES_insectSelect.getSelectedItem();
             ES_sporeSelect.setEnabled(true);
             int sporeSize = chosenInsect.getPlace().getSpores().size();
-            ES_sporeSelect = new JComboBox<Spore>(chosenInsect.getPlace().getSpores().toArray(new Spore[sporeSize]));
-            comboPanel.add(ES_sporeSelect, 4);
+            ES_sporeSelect.setModel(new DefaultComboBoxModel<>(chosenInsect.getPlace().getSpores().toArray(new Spore[sporeSize])));
             revalidate();
             repaint();
             ES_sporeSelect.setVisible(true);
@@ -199,29 +195,26 @@ public class EntomologistG extends JPanel implements UpdateListener {
         });
 
         CY_insectSelect.addActionListener(e -> {
-            CY_insectSelect.setEnabled(false);
             chosenInsect = (Insect) CY_insectSelect.getSelectedItem();
-            int YarnSize = chosenInsect.getPlace().getYarns().size();
-            CY_yarnSelect = new JComboBox<Yarn>(chosenInsect.getPlace().getYarns().toArray(new Yarn[YarnSize]));
-            comboPanel.add(CY_yarnSelect, 6);
+            int yarnSize = chosenInsect.getPlace().getYarns().size();
+            CY_yarnSelect.setModel(new DefaultComboBoxModel<>(chosenInsect.getPlace().getYarns().toArray(new Yarn[yarnSize])));
             revalidate();
             repaint();
             CY_yarnSelect.setVisible(true);
             CY_yarnSelect.setEnabled(true);
+            CY_insectSelect.setEnabled(false);
         });
 
         CY_yarnSelect.addActionListener(e -> {
-            System.out.println("meg vagyok hivva");
             chosenYarn = (Yarn) CY_yarnSelect.getSelectedItem();
-            CY_yarnSelect.setEnabled(false);
             int tectonSize = chosenInsect.getPlace().tectonsConnectedByTheYarn(chosenYarn).size();
             Tecton[] tectons = chosenInsect.getPlace().tectonsConnectedByTheYarn(chosenYarn).toArray(new Tecton[tectonSize]);
-            CY_tgtTectonSelect = new JComboBox<Tecton>(tectons);
-            comboPanel.add(CY_tgtTectonSelect, 7);
+            CY_tgtTectonSelect.setModel(new DefaultComboBoxModel<>(tectons));
             revalidate();
             repaint();
             CY_tgtTectonSelect.setVisible(true);
             CY_tgtTectonSelect.setEnabled(true);
+            CY_yarnSelect.setEnabled(false);
         });
 
         CY_tgtTectonSelect.addActionListener(e -> {
