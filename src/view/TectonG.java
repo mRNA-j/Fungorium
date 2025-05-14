@@ -1,6 +1,4 @@
 package view;
-
-import controller.UpdateListener;
 import model.Tecton;
 
 import javax.swing.*;
