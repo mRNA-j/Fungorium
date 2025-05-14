@@ -10,7 +10,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EntomologistG extends JPanel implements UpdateListener {
+public class EntomologistG extends BaseViewG {
     public Entomologist getEntomologist() {
         return entomologist;
     }
@@ -58,6 +58,7 @@ public class EntomologistG extends JPanel implements UpdateListener {
 
     public EntomologistG(Entomologist ento, String panelName) {
         this.entomologist = ento;
+        ento.addObserver(this);
         nameLabel.setText(entomologist.getName() + " - " + entomologist.getPoints());
         nextPanelName=panelName;
         // Title label
@@ -106,7 +107,7 @@ public class EntomologistG extends JPanel implements UpdateListener {
         CY_yarnSelect = new JComboBox<Yarn>();
         CY_tgtTectonSelect = new JComboBox<Tecton>();
 
-// Set all invisible initially
+        // Set all invisible initially
        MI_insectSelect.setVisible(false);
         MI_tgtTectonSelect.setVisible(false);
         MI_yarnSelect.setVisible(false);
@@ -116,7 +117,7 @@ public class EntomologistG extends JPanel implements UpdateListener {
         CY_yarnSelect.setVisible(false);
         CY_tgtTectonSelect.setVisible(false);
 
-// === Add them to your comboPanel ===
+        // === Add them to your comboPanel ===
         comboPanel.add(MI_insectSelect, 0);
         comboPanel.add(MI_tgtTectonSelect, 1);
         comboPanel.add(MI_yarnSelect, 2);
@@ -128,9 +129,9 @@ public class EntomologistG extends JPanel implements UpdateListener {
 
 
 
-// === Add the action listeners ===
+        // === Add the action listeners ===
 
-// Move Insect
+        // Move Insect
         moveButton.addActionListener(e -> {
             MI_insectSelect.setVisible(true);
             MI_insectSelect.setEnabled(true);
@@ -157,7 +158,8 @@ public class EntomologistG extends JPanel implements UpdateListener {
             chosenTecton = (Tecton) MI_tgtTectonSelect.getSelectedItem();
             entomologist.actionMove(chosenTecton, chosenInsect);
         });
-// Eat Spore
+
+        // Eat Spore
         eatButton.addActionListener(e -> {
             ES_insectSelect.setVisible(true);
             ES_insectSelect.setEnabled(true);
@@ -183,7 +185,7 @@ public class EntomologistG extends JPanel implements UpdateListener {
            entomologist.actionEatSpore(chosenSpore, chosenInsect);
         });
 
-// Cut Yarn
+        // Cut Yarn
         cutButton.addActionListener(e -> {
             CY_insectSelect.setVisible(true);
             CY_insectSelect.setEnabled(true);
@@ -222,14 +224,14 @@ public class EntomologistG extends JPanel implements UpdateListener {
             entomologist.actionCutYarn(chosenYarn, chosenInsect, chosenTecton);
         });
 
-// Update skip button to handle new combo boxes
+        // Update skip button to handle new combo boxes
         skipButton.addActionListener(e -> {
             eatButton.setEnabled(false);
             moveButton.setEnabled(false);
             cutButton.setEnabled(false);
         });
 
-// Update nextPlayerButton to handle new combo boxes
+        // Update nextPlayerButton to handle new combo boxes
         nextPlayerButton.addActionListener(e -> {
             if (panelSwitcher != null) {
                 setAllComboBoxesVisible(false);
@@ -238,7 +240,7 @@ public class EntomologistG extends JPanel implements UpdateListener {
             }
         });
 
-// === Add the new buttons to your button panel ===
+        // === Add the new buttons to your button panel ===
         buttonPanel.add(moveButton);
         buttonPanel.add(eatButton);
         buttonPanel.add(cutButton);

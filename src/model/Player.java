@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Kezeli a játékos nevét és pontszámát.
  * Az osztályból származtatott konkrét játékos osztályokat kell létrehozni.
  */
-public abstract class Player implements Serializable {
+public abstract class Player extends BaseModel implements Serializable {
     /** Az objektumhoz tartozó View, ami az objektum kiírásáért felel (később a megjelenítést fogja végezni)*/
     private PlayerView playerView;
 
@@ -87,6 +87,7 @@ public abstract class Player implements Serializable {
      */
     public void addPoints(int numOfPoints) {
         points += numOfPoints;
+        notifyObservers();
     }
 
     /** Vissszaadja a tesztelésnél használt id-t */
