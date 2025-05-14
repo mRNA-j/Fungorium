@@ -3,7 +3,6 @@
 //Kontroller csomagolás, ennek nem itt a helye
 package view;
 
-import controller.UpdateListener;
 import controller.Map;
 import javax.swing.*;
 

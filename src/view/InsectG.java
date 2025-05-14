@@ -1,7 +1,6 @@
 package view;
 
 import javax.swing.*;
-import controller.UpdateListener;
 import model.Insect;
 
 public class InsectG extends JComponent implements BaseViewG{

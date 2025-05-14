@@ -1,6 +1,5 @@
 package view;
 
-import controller.UpdateListener;
 import model.*;
 
 import javax.swing.*;
