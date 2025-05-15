@@ -19,7 +19,7 @@ public class MushroomPicker extends Player implements Serializable {
     /**
      * Statikus lista, amely minden példány számára közös birtokolt fonalakat tartalmazza.
      */
-    private static List<Yarn> ownedYarns;
+    private List<Yarn> ownedYarns;
 
 
 
@@ -96,7 +96,7 @@ public class MushroomPicker extends Player implements Serializable {
      * @param tecton A vizsgálandó tecton.
      * @return Igaz, ha a tecton elérhető, különben hamis.
      */
-    private static boolean isTectonInRange(Tecton tecton) {
+    private boolean isTectonInRange(Tecton tecton) {
         for (Yarn yarn : ownedYarns) {
             if (yarn.getTectons().contains(tecton)) {
                 return true;
