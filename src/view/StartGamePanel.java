@@ -1,5 +1,6 @@
 package view;
 
+import controller.Controller;
 import controller.Game;
 import model.*;
 
@@ -64,12 +65,15 @@ public class StartGamePanel extends JPanel {
         startButton.addActionListener(e -> {
             if (panelSwitcher != null&&mainFrame != null) {
 
-                    Game game = new Game(createPlayers());
-                    game.setMps(createMps());
-                    game.setEnts(createEnts());
-                    mainFrame.setGame(game);
+                    //Game game = new Game(createPlayers());
+                    Controller controller = new Controller(createPlayers());
+                    controller.getGame().setMps(createMps());
+                    controller.getGame().setEnts(createEnts());
+
+                    mainFrame.setGame(controller);
                     mainFrame.setUpPlayers();
                     mainFrame.showPanel("mp1Panel");
+                    controller.getGame().start();
 
             }
         });

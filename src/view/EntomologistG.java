@@ -20,7 +20,6 @@ public class EntomologistG extends JPanel implements BaseViewG {
     public void setEntomologist(Entomologist entomologist) {
         this.entomologist = entomologist;
     }
-
     private Entomologist entomologist;
     private JLabel nameLabel = new JLabel();
     private Controller controller;

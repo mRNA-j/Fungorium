@@ -6,17 +6,25 @@ import java.io.*;
 import java.util.*;
 
 public class Controller {
-    public static Game getGame() {
+    public Game getGame() {
         return game;
     }
 
-    public static void setGame(Game game) {
+    /*public static void setGame(Game game) {
         Controller.game = game;
+    }*/
+
+    private final Game game;
+
+    private final Map map;
+
+    public Controller(ArrayList<Player> players) {
+        game = new Game(players);
+        map = game.getPlayField();
     }
 
-    private static Game game = new Game();
 
-    private final Map map = game.getPlayField();
+
     //private static boolean isRandomized = true;
 
     /**
