@@ -69,11 +69,11 @@ public class StartGamePanel extends JPanel {
                     Controller controller = new Controller(createPlayers());
                     controller.getGame().setMps(createMps());
                     controller.getGame().setEnts(createEnts());
-
+                    controller.getGame().start();
                     mainFrame.setGame(controller);
                     mainFrame.setUpPlayers();
                     mainFrame.showPanel("mp1Panel");
-                    controller.getGame().start();
+
 
             }
         });

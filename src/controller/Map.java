@@ -38,6 +38,7 @@ public class Map implements Serializable {
         Tecton t3 = new Tecton("t3", 2, false, false);
         Tecton t4 = new Tecton("t4", 2, false, false);
         Tecton t5 = new Tecton("t5", 2, false, false);
+
         t1.addNeighbour(t2);
         t1.addNeighbour(t5);
         t4.addNeighbour(t3);
@@ -48,7 +49,6 @@ public class Map implements Serializable {
         ents.get(0).addInsect(i1);
         ents.get(1).addInsect(i2);
 
-        //MushroomPicker mp = new MushroomPicker("pista", "mp1");
         Mushroom m1 = new Mushroom(t1, mps.get(0), "m1");
         Yarn y1 = new Yarn(m1,mps.get(0), "y1");
         t1.addYarn(y1);
@@ -58,6 +58,12 @@ public class Map implements Serializable {
         Yarn y3 = new Yarn(m2,mps.get(1), "y3");
         t3.addYarn(y3);
         t4.addYarn(y3);
+
+        addTecton(t1);
+        addTecton(t2);
+        addTecton(t3);
+        addTecton(t4);
+        addTecton(t5);
     }
 
     /**

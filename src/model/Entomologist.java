@@ -63,6 +63,7 @@ public class Entomologist extends Player implements Serializable {
     }
 
     public void addInsect(Insect insect){
+        System.out.println("Insect added");
         insects.add(insect);
     }
 

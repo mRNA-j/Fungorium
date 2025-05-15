@@ -61,9 +61,10 @@ public class EntomologistG extends JPanel implements BaseViewG {
     }
 
     public EntomologistG(Entomologist ento, String panelName, Controller controllerIn) {
-        this.entomologist = ento;
+
         ento.addObserver(this);
         this.controller = controllerIn;
+        this.entomologist = controller.getGame().getEnts().get(0);
         this.tectonFactory = new TectonGFactory();
         this.nextPanelName = panelName;
         nameLabel.setText(entomologist.getName() + " - "+ entomologist.getPoints());
