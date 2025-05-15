@@ -491,7 +491,7 @@ public class Controller {
     }
 
 
-    public void action_spore_dispersion(Tecton targetTecton ,Mushroom mushroom) {
+    public void action_spore_dispersion(Tecton targetTecton ,Mushroom mushroom, String type, String id) {
         // Ensure exactly 2 arguments are provided.
         /*if (handleArgCount(args, 3)) {
             return;

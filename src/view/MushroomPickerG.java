@@ -231,7 +231,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
 
     DS_sporeSelector.addActionListener(e -> {
       chosenSporeType = (String) DS_sporeSelector.getSelectedItem();
-      mushroomPicker.actionSporeDispersion(chosenTecton1, chosenMushroom, chosenSporeType, "MEG KELL CSINALNI");
+      controller.action_spore_dispersion(chosenTecton1, chosenMushroom, chosenSporeType, "Meg kell csinalni");
     });
 
     growYarnButton.addActionListener(e -> {
