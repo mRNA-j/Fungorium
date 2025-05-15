@@ -27,11 +27,12 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
   private JComboBox<Mushroom> DS_mushroomSelector;
   private JComboBox<Tecton> DS_tectonSelector;
   private JComboBox<String> DS_sporeSelector;
+  private JTextField DS_sporeID;
 
   //Grow Mushroom
   private JComboBox<Yarn> GM_yarnSelector;
   private JComboBox<Tecton> GM_tectonSelector;
-  private JComboBox<String> GM_sporeSelector;
+  private JTextField GM_mushroomID;
 
   //Grow Yarn
   private JComboBox<Yarn> GY_yarnSelector;
@@ -53,6 +54,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
   public final List<TectonG> lowerTectons = new ArrayList<>();
   private String nextPanelName;
   private ITectonGFactory tectonFactory;
+
 
   Set<String> addedTectonIds = new HashSet<>();
 
@@ -104,7 +106,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
 
     // === Combo Box Panel ===
     JPanel comboPanel = new JPanel();
-    comboPanel.setLayout(new GridLayout(8, 1, 5, 5));
+    comboPanel.setLayout(new GridLayout(11, 1, 5, 5));
 
 
 
@@ -114,12 +116,14 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
     DS_tectonSelector.setVisible(false);
     DS_sporeSelector = new JComboBox<>(new String[] {"Accelerator", "Decelerator", "Cut Preventing", "Insect Duplicating", "Paralyzing"});
     DS_sporeSelector.setVisible(false);
-    GM_sporeSelector = new JComboBox<>(new String[] {"Accelerator", "Decelerator", "Cut Preventing", "Insect Duplicating", "Paralyzing"});
-    GM_sporeSelector.setVisible(false);
+    DS_sporeID = new JTextField("id");
+    DS_sporeSelector.setVisible(false);
     GM_yarnSelector = new JComboBox<>();
     GM_yarnSelector.setVisible(false);
     GM_tectonSelector= new JComboBox<>();
     GM_tectonSelector.setVisible(false);
+    GM_mushroomID = new JTextField("id");
+    GM_mushroomID.setVisible(false);
     GY_yarnSelector=new JComboBox<>();
     GY_yarnSelector.setVisible(false);
     GY_srcTectonSelector = new JComboBox<>();
@@ -130,9 +134,10 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
     comboPanel.add(DS_mushroomSelector);
     comboPanel.add(DS_tectonSelector);
     comboPanel.add(DS_sporeSelector);
+    comboPanel.add(DS_sporeID);
     comboPanel.add(GM_yarnSelector);
     comboPanel.add(GM_tectonSelector);
-    comboPanel.add(GM_sporeSelector);
+    comboPanel.add(GM_mushroomID);
     comboPanel.add(GY_yarnSelector);
     comboPanel.add(GY_tgtTectonSelector);
     comboPanel.add(GY_srcTectonSelector);
@@ -174,18 +179,20 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
       GM_tectonSelector.setModel(new DefaultComboBoxModel<>(tectons));
       GM_tectonSelector.setEnabled(true);
       GM_tectonSelector.setVisible(true);
-      GM_yarnSelector.setEnabled(false);
+      GM_yarnSelector.setVisible(false);
+      GM_mushroomID.setVisible(false);
     });
 
     GM_tectonSelector.addActionListener(e -> {
       chosenTecton1 = (Tecton) GM_tectonSelector.getSelectedItem();
-      mushroomPicker.actionGrowMushroom(chosenTecton1, "MEG KELL CSINÁNI A NÉVADÁST");
-      //TODO a névadásnak boxot
+      GM_mushroomID.setVisible(true);
+      GM_mushroomID.setEnabled(true);
+      GM_tectonSelector.setEnabled(false);
     });
 
-    GM_sporeSelector.addActionListener(e->{
-      chosenSporeType = (String) GM_sporeSelector.getSelectedItem();
-      controller.action_grow_mushroom(chosenTecton1, chosenSporeType);  //TODO nem kell yarn??
+    GM_mushroomID.addActionListener(e->{
+      String id = GM_mushroomID.getText();
+      controller.action_grow_mushroom(chosenTecton1, id);  //TODO nem kell yarn??
     });
 
     disperseButton.addActionListener(e -> {
@@ -231,7 +238,13 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
 
     DS_sporeSelector.addActionListener(e -> {
       chosenSporeType = (String) DS_sporeSelector.getSelectedItem();
-      controller.action_spore_dispersion(chosenTecton1, chosenMushroom, chosenSporeType, "Meg kell csinalni");
+      DS_sporeID.setEnabled(true);
+      DS_sporeID.setVisible(true);
+      DS_sporeSelector.setEnabled(false);
+    });
+    DS_sporeID.addActionListener(e->{
+      String id = DS_sporeID.getText();
+      controller.action_spore_dispersion(chosenTecton1, chosenMushroom, chosenSporeType, id);
     });
 
     growYarnButton.addActionListener(e -> {
@@ -440,7 +453,6 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
     DS_sporeSelector.setVisible(false);
     GM_yarnSelector.setVisible(false);
     GM_tectonSelector.setVisible(false);
-    GM_sporeSelector.setVisible(false);
     GY_yarnSelector.setVisible(false);
     GY_srcTectonSelector.setVisible(false);
     GY_tgtTectonSelector.setVisible(false);
