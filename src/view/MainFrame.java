@@ -21,7 +21,7 @@ public class MainFrame extends JFrame implements PanelSwitcher {
     EntomologistG ePanel1;
     EntomologistG ePanel2;
 
-    Controller controller = new Controller();
+    Controller controller;
 
     public MainFrame(){
         setTitle("Pentagon 98 Fungorium");
@@ -46,16 +46,17 @@ public class MainFrame extends JFrame implements PanelSwitcher {
         repaint();
     }
 
-    public void setGame(Game game) {
-        this.controller.setGame(game);
+    public void setGame(Controller controller) {
+        this.controller = controller;
+
     }
 
     public void setUpPlayers(){
         // Create all panels first before calling methods on them
-        ePanel1 = new EntomologistG(Controller.getGame().getEnts().get(0),"mp2Panel", controller);
-        ePanel2 = new EntomologistG(Controller.getGame().getEnts().get(1),"mp1Panel", controller);
-        mpPanel1 = new MushroomPickerG(Controller.getGame().getMps().get(0),"ent1Panel", controller);
-        mpPanel2 = new MushroomPickerG(Controller.getGame().getMps().get(1),"ent2Panel", controller);
+        ePanel1 = new EntomologistG(controller.getGame().getEnts().get(0),"mp2Panel", controller);
+        ePanel2 = new EntomologistG(controller.getGame().getEnts().get(1),"mp1Panel", controller);
+        mpPanel1 = new MushroomPickerG(controller.getGame().getMps().get(0),"ent1Panel", controller);
+        mpPanel2 = new MushroomPickerG(controller.getGame().getMps().get(1),"ent2Panel", controller);
 
         // Now set panel switchers after all panels are created
         ePanel1.setPanelSwitcher(this);

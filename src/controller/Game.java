@@ -138,7 +138,7 @@ public class Game implements Serializable {
      * Legenerálja a játékteret.
      */
     public void start() {
-        playField.generate();
+        playField.generate(mps, ents);
     }
 
     /**

@@ -29,36 +29,41 @@ public class Map implements Serializable {
      * Generálja a Tectonokat és beállítja a szomszédos Tectonokat.
      * Tesztelásnál manuálisan van minden pálya feléptve, nem ezzel a függvénnyel
      */
-    public void generate() {
+    public void generate(ArrayList<MushroomPicker> mps, ArrayList<Entomologist> ents) {
         // Példa implementáció: kézzel létrehozott gráf
         // Valós implementációban ezt valamilyen konfigurációból kell beolvasni!
 
-        Tecton tecton1 = new Tecton("t1", 1, false, false);
-        Tecton tecton2 = new Tecton("t2", 1, false, false);
-        Tecton tecton3 = new Tecton("t3", 2, true, false);
-        Tecton tecton4 = new Tecton("t4", 1, false, false);
-        Tecton tecton5 = new YarnAbsorbantTecton( "t5",1, false, false);
-        Tecton tecton6=new Tecton("t6",2,false, false);
+        Tecton t1 = new Tecton("t1", 2, false, false);
+        Tecton t2 = new Tecton("t2", 2, false, false);
+        Tecton t3 = new Tecton("t3", 2, false, false);
+        Tecton t4 = new Tecton("t4", 2, false, false);
+        Tecton t5 = new Tecton("t5", 2, false, false);
 
-        tectons.add(tecton1);
-        tectons.add(tecton2);
-        tectons.add(tecton3);
-        tectons.add(tecton4);
-        tectons.add(tecton5);
-        tectons.add(tecton6);
+        t1.addNeighbour(t2);
+        t1.addNeighbour(t5);
+        t4.addNeighbour(t3);
 
-        tecton1.addNeighbour(tecton2);
-        tecton2.addNeighbour(tecton1);
-        tecton2.addNeighbour(tecton3);
-        tecton3.addNeighbour(tecton2);
-        tecton3.addNeighbour(tecton4);
-        tecton4.addNeighbour(tecton3);
-        tecton5.addNeighbour(tecton4);
-        tecton4.addNeighbour(tecton5);
-        tecton6.addNeighbour(tecton5);
-        tecton5.addNeighbour(tecton6);
+        Insect i1 = new Insect(t1,ents.get(0), "i1");
+        Insect i2 = new Insect(t3,ents.get(1), "i2");
 
-        //System.out.println("controller.Map generated with " + tectons.size() + " tectons.");
+        ents.get(0).addInsect(i1);
+        ents.get(1).addInsect(i2);
+
+        Mushroom m1 = new Mushroom(t1, mps.get(0), "m1");
+        Yarn y1 = new Yarn(m1,mps.get(0), "y1");
+        t1.addYarn(y1);
+        t2.addYarn(y1);
+
+        Mushroom m2 = new Mushroom(t3, mps.get(1), "m2");
+        Yarn y3 = new Yarn(m2,mps.get(1), "y3");
+        t3.addYarn(y3);
+        t4.addYarn(y3);
+
+        addTecton(t1);
+        addTecton(t2);
+        addTecton(t3);
+        addTecton(t4);
+        addTecton(t5);
     }
 
     /**
