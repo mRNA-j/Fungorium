@@ -469,7 +469,11 @@ public class Controller {
 
 
     public void action_phase_end() {
-        game.nextPlayer();
+        if(game.getActivePlayerIndex() == 3) {
+            game.nextTurn();
+        } else {
+            game.nextPlayer();
+        }
     }
 
     public void next_round() {

@@ -20,6 +20,10 @@ public class Game implements Serializable {
     /** A játék maximális köreinek száma */
     private final int numberOfTurns;
 
+    public int getActivePlayerIndex() {
+        return activePlayerIndex;
+    }
+
     /** Az aktív játékos indexe a játékosok listájában */
     private int activePlayerIndex;
 

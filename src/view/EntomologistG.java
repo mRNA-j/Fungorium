@@ -259,6 +259,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
                 enableAllButtons();
                 panelSwitcher.showPanel(nextPanelName);
                 controller.action_phase_end();
+                //System.out.println(entomologist.getName() + "\n");
             }
         });
 

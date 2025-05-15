@@ -15,9 +15,9 @@ public class MainFrame extends JFrame implements PanelSwitcher {
     JPanel cardPanel = new JPanel(cardLayout);
     StartPanel startPanel = new StartPanel();
     StartGamePanel startGamePanel = new StartGamePanel();
-    MushroomPickerG mpPanel1 = new MushroomPickerG();
+    MushroomPickerG mpPanel1;// = new MushroomPickerG();
     MushroomPickerG mpPanel2;
-    EntomologistG ePanel1 = new EntomologistG();
+    EntomologistG ePanel1;// = new EntomologistG();
     EntomologistG ePanel2;
     Controller controller = new Controller();
 
@@ -49,19 +49,22 @@ public class MainFrame extends JFrame implements PanelSwitcher {
 
     public void setUpPlayers(){
         mpPanel1 = new MushroomPickerG(Controller.getGame().getMps().get(0),"ent1Panel", controller);
-        mpPanel1.setPanelSwitcher(this);
-        cardPanel.add(mpPanel1, "mp1Panel");
-
-        mpPanel2 = new MushroomPickerG(Controller.getGame().getMps().get(1),"ent2Panel",  controller);
-        mpPanel2.setPanelSwitcher(this);
-        cardPanel.add(mpPanel2, "mp2Panel");
-
-        ePanel1 = new EntomologistG(Controller.getGame().getEnts().get(0),"mp2Panel",  controller);
         ePanel1.setPanelSwitcher(this);
         cardPanel.add(ePanel1, "ent1Panel");
 
-        ePanel2 = new EntomologistG(Controller.getGame().getEnts().get(1),"mp1Panel",  controller);
+        mpPanel2 = new MushroomPickerG(Controller.getGame().getMps().get(1),"ent2Panel",  controller);
         ePanel2.setPanelSwitcher(this);
         cardPanel.add(ePanel2, "ent2Panel");
+
+
+        ePanel1 = new EntomologistG(Controller.getGame().getEnts().get(0),"mp2Panel",  controller);
+        mpPanel2.setPanelSwitcher(this);
+        cardPanel.add(mpPanel2, "mp2Panel");
+
+
+        ePanel2 = new EntomologistG(Controller.getGame().getEnts().get(1),"mp1Panel",  controller);
+        mpPanel1.setPanelSwitcher(this);
+        cardPanel.add(mpPanel1, "mp1Panel");
+
     }
 }
