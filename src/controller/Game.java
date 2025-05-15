@@ -3,6 +3,7 @@ package controller;
 import model.Entomologist;
 import model.MushroomPicker;
 import model.Player;
+import model.Tecton;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,6 +19,10 @@ public class Game implements Serializable {
 
     /** A játék maximális köreinek száma */
     private final int numberOfTurns;
+
+    public int getActivePlayerIndex() {
+        return activePlayerIndex;
+    }
 
     /** Az aktív játékos indexe a játékosok listájában */
     private int activePlayerIndex;
@@ -149,6 +154,8 @@ public class Game implements Serializable {
         if(currentTurn == numberOfTurns) {
             end();
         }
+
+
     }
 
     /**

@@ -1,5 +1,6 @@
 package view;
 
+import controller.Controller;
 import factory.TectonGFactory;
 import interfaces.ITectonGFactory;
 import model.*;
@@ -22,6 +23,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
 
     private Entomologist entomologist;
     private JLabel nameLabel = new JLabel();
+    private Controller controller;
 
     private final JButton eatButton = new JButton("Eat Spore");
     private final JButton moveButton = new JButton("Move Insect");
@@ -59,9 +61,10 @@ public class EntomologistG extends JPanel implements BaseViewG {
         this.panelSwitcher = panelSwitcher;
     }
 
-    public EntomologistG(Entomologist ento, String panelName) {
+    public EntomologistG(Entomologist ento, String panelName, Controller controllerIn) {
         this.entomologist = ento;
         ento.addObserver(this);
+        this.controller = controllerIn;
         this.tectonFactory = new TectonGFactory();
         this.nextPanelName = panelName;
         nameLabel.setText(entomologist.getName() + " - "+ entomologist.getPoints());
@@ -101,14 +104,12 @@ public class EntomologistG extends JPanel implements BaseViewG {
         JPanel comboPanel = new JPanel();
         comboPanel.setLayout(new GridLayout(7, 1, 5, 5));
 
-        int insectSize = entomologist.getInsect().size();
-        Insect[] insects = entomologist.getInsect().toArray(new Insect[insectSize]);
-        MI_insectSelect = new JComboBox<Insect>(insects);
+        MI_insectSelect = new JComboBox<Insect>();
         MI_tgtTectonSelect = new JComboBox<Tecton>();
         MI_yarnSelect = new JComboBox<Yarn>();
-        ES_insectSelect = new JComboBox<Insect>(insects);
+        ES_insectSelect = new JComboBox<Insect>();
         ES_sporeSelect = new JComboBox<Spore>();
-        CY_insectSelect = new JComboBox<Insect>(insects);
+        CY_insectSelect = new JComboBox<Insect>();
         CY_yarnSelect = new JComboBox<Yarn>();
         CY_tgtTectonSelect = new JComboBox<Tecton>();
 
@@ -138,6 +139,11 @@ public class EntomologistG extends JPanel implements BaseViewG {
 
         // Move Insect
         moveButton.addActionListener(e -> {
+            List<Insect> insectList = entomologist.getInsect();
+            insectList.removeIf(i -> i.getParalized());
+            int insectSize = insectList.size();
+            Insect[] insects = insectList.toArray(new Insect[insectSize]);
+            MI_insectSelect.setModel(new DefaultComboBoxModel<>(insects));
             MI_insectSelect.setVisible(true);
             MI_insectSelect.setEnabled(true);
             MI_yarnSelect.setVisible(false);
@@ -151,8 +157,8 @@ public class EntomologistG extends JPanel implements BaseViewG {
             chosenInsect = (Insect) MI_insectSelect.getSelectedItem();
             int tectonSize = chosenInsect.getPlace().tectonsConnectedWithYarn().size();
             MI_tgtTectonSelect.setModel(new DefaultComboBoxModel<>(chosenInsect.getPlace().tectonsConnectedWithYarn().toArray(new Tecton[tectonSize])));
-            revalidate();
-            repaint();
+            //revalidate();
+            //repaint();
             MI_tgtTectonSelect.setVisible(true);
             MI_tgtTectonSelect.setEnabled(true);
             MI_insectSelect.setEnabled(false);
@@ -161,11 +167,16 @@ public class EntomologistG extends JPanel implements BaseViewG {
         MI_tgtTectonSelect.addActionListener(e -> {
             MI_tgtTectonSelect.setEnabled(false);
             chosenTecton = (Tecton) MI_tgtTectonSelect.getSelectedItem();
-            entomologist.actionMove(chosenTecton, chosenInsect);
+            controller.action_move(chosenInsect, chosenTecton);
         });
 
         // Eat Spore
         eatButton.addActionListener(e -> {
+            List<Insect> insectList = entomologist.getInsect();
+            insectList.removeIf(i -> i.getParalized());
+            int insectSize = insectList.size();
+            Insect[] insects = insectList.toArray(new Insect[insectSize]);
+            ES_insectSelect.setModel(new DefaultComboBoxModel<>(insects));
             ES_insectSelect.setVisible(true);
             ES_insectSelect.setEnabled(true);
             ES_sporeSelect.setVisible(false);
@@ -179,19 +190,24 @@ public class EntomologistG extends JPanel implements BaseViewG {
             ES_sporeSelect.setEnabled(true);
             int sporeSize = chosenInsect.getPlace().getSpores().size();
             ES_sporeSelect.setModel(new DefaultComboBoxModel<>(chosenInsect.getPlace().getSpores().toArray(new Spore[sporeSize])));
-            revalidate();
-            repaint();
+            //revalidate();
+            //repaint();
             ES_sporeSelect.setVisible(true);
             ES_sporeSelect.setEnabled(true);
         });
 
         ES_sporeSelect.addActionListener(e -> {
             chosenSpore = (Spore) ES_sporeSelect.getSelectedItem();
-           entomologist.actionEatSpore(chosenSpore, chosenInsect);
+            controller.action_eat_spore(chosenSpore, chosenInsect);
         });
 
         // Cut Yarn
         cutButton.addActionListener(e -> {
+            List<Insect> insectList = entomologist.getInsect();
+            insectList.removeIf(i -> i.getParalized());
+            int insectSize = insectList.size();
+            Insect[] insects = insectList.toArray(new Insect[insectSize]);
+            CY_insectSelect.setModel(new DefaultComboBoxModel<>(insects));
             CY_insectSelect.setVisible(true);
             CY_insectSelect.setEnabled(true);
             CY_yarnSelect.setVisible(false);
@@ -205,8 +221,8 @@ public class EntomologistG extends JPanel implements BaseViewG {
             chosenInsect = (Insect) CY_insectSelect.getSelectedItem();
             int yarnSize = chosenInsect.getPlace().getYarns().size();
             CY_yarnSelect.setModel(new DefaultComboBoxModel<>(chosenInsect.getPlace().getYarns().toArray(new Yarn[yarnSize])));
-            revalidate();
-            repaint();
+            //revalidate();
+            //repaint();
             CY_yarnSelect.setVisible(true);
             CY_yarnSelect.setEnabled(true);
             CY_insectSelect.setEnabled(false);
@@ -217,8 +233,8 @@ public class EntomologistG extends JPanel implements BaseViewG {
             int tectonSize = chosenInsect.getPlace().tectonsConnectedByTheYarn(chosenYarn).size();
             Tecton[] tectons = chosenInsect.getPlace().tectonsConnectedByTheYarn(chosenYarn).toArray(new Tecton[tectonSize]);
             CY_tgtTectonSelect.setModel(new DefaultComboBoxModel<>(tectons));
-            revalidate();
-            repaint();
+            //revalidate();
+            //repaint();
             CY_tgtTectonSelect.setVisible(true);
             CY_tgtTectonSelect.setEnabled(true);
             CY_yarnSelect.setEnabled(false);
@@ -226,7 +242,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
 
         CY_tgtTectonSelect.addActionListener(e -> {
             chosenTecton = (Tecton) CY_tgtTectonSelect.getSelectedItem();
-            entomologist.actionCutYarn(chosenYarn, chosenInsect, chosenTecton);
+            controller.action_cut_yarn(chosenInsect, chosenYarn, chosenTecton);
         });
 
         // Update skip button to handle new combo boxes
@@ -242,6 +258,8 @@ public class EntomologistG extends JPanel implements BaseViewG {
                 setAllComboBoxesVisible(false);
                 enableAllButtons();
                 panelSwitcher.showPanel(nextPanelName);
+                controller.action_phase_end();
+                //System.out.println(entomologist.getName() + "\n");
             }
         });
 
@@ -334,13 +352,9 @@ public class EntomologistG extends JPanel implements BaseViewG {
             upperTectons.add(tectonFactory.onCreate(i * 80 + 10, 40, 30, id, insect.getCurrentPlace()));
         }
 
-        // Update combobox models with current data
-        int insectSize = entomologist.getInsect().size();
-        Insect[] insects = entomologist.getInsect().toArray(new Insect[insectSize]);
-
-        MI_insectSelect.setModel(new DefaultComboBoxModel<>(insects));
-        ES_insectSelect.setModel(new DefaultComboBoxModel<>(insects));
-        CY_insectSelect.setModel(new DefaultComboBoxModel<>(insects));
+        MI_insectSelect.setModel(new DefaultComboBoxModel<>());
+        ES_insectSelect.setModel(new DefaultComboBoxModel<>());
+        CY_insectSelect.setModel(new DefaultComboBoxModel<>());
 
         // Update the lower tecton panel if there's a selection
         if (upperStrip.getSelectedTecton() != null) {
