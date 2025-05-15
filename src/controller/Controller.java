@@ -5,11 +5,15 @@ import model.*;
 import java.io.*;
 import java.util.*;
 
-public class CmdParser {
-    private static Game game = new Game();
+public class Controller {
+    public static Game getGame() {
+        return game;
+    }
 
-    private static Map map = game.getPlayField();
-    private static boolean isRandomized = true;
+    private final static Game game = new Game();
+
+    private final static Map map = game.getPlayField();
+    //private static boolean isRandomized = true;
 
     /**
      * Searches for a MushroomPicker player among the game players using the provided ID.
@@ -17,7 +21,7 @@ public class CmdParser {
      * @param id The ID of the MushroomPicker.
      * @return The MushroomPicker if found; otherwise, null.
      */
-    private static MushroomPicker findMushroomPickerById(String id) {
+    /*private static MushroomPicker findMushroomPickerById(String id) {
         if (id == null || id.isEmpty()) {
             return null;
         }
@@ -27,7 +31,7 @@ public class CmdParser {
             }
         }
         return null;
-    }
+    }*/
 
     /**
      * Searches globally for a Yarn with the specified ID.
@@ -35,7 +39,7 @@ public class CmdParser {
      * @param yarnId The identifier of the Yarn to search for.
      * @return The Yarn object if found; otherwise, null.
      */
-    private static Yarn findYarnById(String yarnId) {
+    /*private static Yarn findYarnById(String yarnId) {
         if (yarnId == null || yarnId.isEmpty()) {
             return null;
         }
@@ -49,18 +53,18 @@ public class CmdParser {
             }
         }
         return null;
-    }
+    }*/
 
 
 
     /**
      * Kezeli az argumentumok szamabol adodo hibakat
      *
-     * @param args parancs argumentumlistaja
-     * @param count szukseges argumentumszam
+     //* @param args parancs argumentumlistaja
+     //* @param count szukseges argumentumszam
      * @return hibas-e az argumentumlista
      */
-    private static boolean handleArgCount(String[] args, int count)
+    /*private static boolean handleArgCount(String[] args, int count)
     {
         if(args.length < count)
         {
@@ -74,14 +78,15 @@ public class CmdParser {
         }
 
         return false;
-    }
+    }*/
+
     /**
      * Finds a Tecton by its ID in the map.
      *
-     * @param id The ID of the Tecton to find
+     //* @param id The ID of the Tecton to find
      * @return The Tecton object if found, null otherwise
      */
-    private static Tecton findTectonById(String id) {
+    /*private static Tecton findTectonById(String id) {
         if (id == null || id.isEmpty()) {
             return null;
         }
@@ -93,15 +98,15 @@ public class CmdParser {
         }
 
         return null;
-    }
+    }*/
 
     /**
      * Finds an Insect by its ID across all Tectons in the map.
      *
-     * @param id The ID of the Insect to find
+     //* @param id The ID of the Insect to find
      * @return The Insect object if found, null otherwise
      */
-    private static Insect findInsectById(String id) {
+    /*private static Insect findInsectById(String id) {
         if (id == null || id.isEmpty()) {
             return null;
         }
@@ -115,15 +120,15 @@ public class CmdParser {
         }
 
         return null;
-    }
+    }*/
 
     /**
      * Finds a Mushroom by its ID across all Tectons in the map.
      *
-     * @param id The ID of the Mushroom to find
+     //* @param id The ID of the Mushroom to find
      * @return The Mushroom object if found, null otherwise
      */
-    private static Mushroom findMushroomById(String id) {
+    /*private static Mushroom findMushroomById(String id) {
         if (id == null || id.isEmpty()) {
             return null;
         }
@@ -136,15 +141,15 @@ public class CmdParser {
         }
 
         return null;
-    }
+    }*/
 
     /**
      * Finds an Entomologist by their name from the game's player list.
      *
-     * @param name The name of the Entomologist to find
+     //* @param name The name of the Entomologist to find
      * @return The Entomologist object if found, null otherwise
      */
-    private static Player findPlayerByName(String name) {
+    /*private static Player findPlayerByName(String name) {
         if (name == null || name.isEmpty()) {
             return null;
         }
@@ -156,29 +161,29 @@ public class CmdParser {
         }
 
         return null;
-    }
+    }*/
 
     /**
      * Finds the Entomologist who controls a specific insect.
      *
-     * @param insect The Insect to find the controller for
+     //* @param insect The Insect to find the controller for
      * @return The Entomologist object if found, null otherwise
      */
-    private static Entomologist findEntomologistByInsect(Insect insect) {
+    /*private static Entomologist findEntomologistByInsect(Insect insect) {
         if (insect == null) {
             return null;
         }
 
         return insect.getOwner();
-    }
+    }*/
 
     /**
      * Finds the Tecton that contains a specific Insect.
      *
-     * @param insect The Insect to find the Tecton for
+     //* @param insect The Insect to find the Tecton for
      * @return The Tecton object if found, null otherwise
      */
-    private static Tecton findTectonByInsect(Insect insect) {
+    /*private static Tecton findTectonByInsect(Insect insect) {
         if (insect == null) {
             return null;
         }
@@ -190,14 +195,14 @@ public class CmdParser {
         }
 
         return null;
-    }
+    }*/
 
 
     /**
      * Értelmezi és futtatja az adott parancsot.
-     * @param cmd a parancs szöveges formában.
+    // * @param cmd a parancs szöveges formában.
      */
-    public static void parse(String cmd) {
+    /*public static void parse(String cmd) {
         String[] args = cmd.split("\\s+");
         if (args.length == 0 || args[0].isEmpty()) return;
 
@@ -229,14 +234,14 @@ public class CmdParser {
             case "run": run(args); break;
             default: System.out.println("Incorrect command: " + args[0]); break;
         }
-    }
+    }*/
 
     /**
      * Displays statistics about the current round and active player.
      * Expected output format: ActivePlayer: [name], Current round: [round_number]
-     * @param args Command arguments (not used)
+    // * @param args Command arguments (not used)
      */
-    private static void statRound(String[] args) {
+    /*private static void statRound(String[] args) {
         // Get the active player from the game
         Player activePlayer = game.getActivePlayer();
 
@@ -248,48 +253,45 @@ public class CmdParser {
 
         // Display the current round number
         System.out.println("Current round: " + currentRound);
-    }
+    }*/
 
     /**
      * Displays statistics about the current game state.
      * Command syntax: stat
      * @param args Command arguments (none expected)
      */
-    private static void stat(String[] args) {
+    /*private static void stat(String[] args) {
         if (handleArgCount(args, 1)) return;
 
-        /* ----------  TECTONS  ---------- */
         for (Tecton tecton : map.getTectons()) {
             tecton.getTectonView().printObject();
         }
 
-        /* ----------  MUSHROOMS  ---------- */
+
         for (Mushroom m : getAllMushroomsInGame()) {
             m.getMushroomView().printObject();
         }
 
-        /* ----------  INSECT  ---------- */
+
         for (Insect i : getAllInsectsInGame()) {
             i.getInsectView().printObject();
         }
 
-        /* ----------  YARNS  ---------- */
+
         for (Yarn y : getAllYarnsInGame()) {
             y.getYarnView().printObject();
         }
-
-        /* ----------  PLAYERS  ---------- */
 
         for (Player p : game.getPlayers()) {
             p.getPlayerView().printObject();
         }
 
-    }
+    }*/
 
     /**
      * Helper method to get all yarns in the game
      */
-    private static List<Yarn> getAllYarnsInGame() {
+    /*private static List<Yarn> getAllYarnsInGame() {
         List<Yarn> allYarns = new ArrayList<>();
         for (Tecton tecton : map.getTectons()) {
             for (Yarn yarn : tecton.getYarns()) {
@@ -299,12 +301,12 @@ public class CmdParser {
             }
         }
         return allYarns;
-    }
+    }*/
 
     /**
      * Helper method to get all mushrooms in the game
      */
-    private static List<Mushroom> getAllMushroomsInGame() {
+    /*private static List<Mushroom> getAllMushroomsInGame() {
         List<Mushroom> allMushrooms = new ArrayList<>();
         for (Tecton tecton : map.getTectons()) {
             if (tecton.getMushroom() != null && !allMushrooms.contains(tecton.getMushroom())) {
@@ -312,12 +314,12 @@ public class CmdParser {
             }
         }
         return allMushrooms;
-    }
+    }*/
 
     /**
      * Helper method to get all insects in the game
      */
-    private static List<Insect> getAllInsectsInGame() {
+    /*private static List<Insect> getAllInsectsInGame() {
         List<Insect> allInsects = new ArrayList<>();
         for (Tecton tecton : map.getTectons()) {
             for (Insect insect : tecton.getInsects()) {
@@ -327,15 +329,15 @@ public class CmdParser {
             }
         }
         return allInsects;
-    }
+    }*/
 
     /**
      * Saves the current game state to a file.
      * Command syntax: save <filename>
      *
-     * @param args Command arguments: filename
+     //* @param args Command arguments: filename
      */
-    private static void save(String[] args) {
+    /*private static void save(String[] args) {
         // Check if we have exactly one argument (the filename)
         if (handleArgCount(args, 2)) {
             return;
@@ -358,15 +360,15 @@ public class CmdParser {
             System.out.println("Error saving game state: " + e.getMessage());
             e.printStackTrace();
         }
-    }
+    }*/
 
     /**
      * Loads a previously saved game state from a file.
      * Command syntax: load <filename>
      *
-     * @param args Command arguments: filename
+     //* @param args Command arguments: filename
      */
-    private static void load(String[] args) {
+    /*private static void load(String[] args) {
         // Check if we have exactly one argument (the filename)
         if (handleArgCount(args, 2)) {
             return;
@@ -398,13 +400,13 @@ public class CmdParser {
             System.out.println("Error loading game state: Class not found - " + e.getMessage());
             e.printStackTrace();
         }
-    }
+    }*/
 
     /**
      * A container class to hold both controller.Game and controller.Map objects for serialization.
      * This class must be Serializable, as must all objects it references.
      */
-    private static class GameState implements Serializable {
+    /*private static class GameState implements Serializable {
         private static final long serialVersionUID = 1L;
 
         private final Game game;
@@ -422,26 +424,14 @@ public class CmdParser {
         public Map getMap() {
             return map;
         }
-    }
-    /**
-     * A parancsokat értelmezi és feldolgozza.
-     * @param is az input stream, amelyről olvas.
-     */
-    public static void start(InputStream is) {
-        // Using try-with-resources to automatically close the Scanner.
-        try (Scanner sc = new Scanner(is)) {
-            while (sc.hasNextLine()) {
-                String cmd = sc.nextLine();
-                parse(cmd);
-            }
-        }
+    }*/
+
+
+    public static void start() {
+
     }
 
-    /**
-     * Egy paraméterben meghatározott teszteset futtatása.
-     * @param args a tesztesethez tartozó bemeneti file.
-     */
-    private static void run(String[] args) {
+    /*private static void run(String[] args) {
         if (handleArgCount(args, 2)) {
             return;
         }
@@ -471,29 +461,31 @@ public class CmdParser {
             return;
         }
         System.out.println("Error: Incorrect value. Supported values: true, false");
-    }
+    }*/
 
 
-    private static void action_phase_end(String[] args) {
+    private static void action_phase_end() {
         game.nextPlayer();
     }
 
-    private static void next_round(String[] args) {
-        game.nextTurn();
+    private static void next_round() {
+         Random random = new Random();
+         int index = random.nextInt(0,map.getTectons().size());
+         Tecton potentialSplitTecton = map.getTectons().get(index);
+
+         int randNum = random.nextInt(0,100);
+
+         if(randNum<5) {
+             map.splitting(potentialSplitTecton);
+         }
+
+         game.nextTurn();
     }
 
-    /**
-     * Executes the spore dispersion action.
-     * Command syntax: action_spore_dispersion <target_tecton_ID> <mushroom_ID>
-     *
-     * Leírás: A gombász spórakilövés akciót hajt végre a körben a megadott tektonra
-     * a megadott gombatestből.
-     *
-     * @param args Command arguments: target_tecton_ID, mushroom_ID
-     */
-    private static void action_spore_dispersion(String[] args) {
+
+    private static void action_spore_dispersion(Tecton targetTecton ,Mushroom mushroom) {
         // Ensure exactly 2 arguments are provided.
-        if (handleArgCount(args, 3)) {
+        /*if (handleArgCount(args, 3)) {
             return;
         }
 
@@ -512,31 +504,28 @@ public class CmdParser {
         if (mushroom == null) {
             System.out.println("Error: No Mushroom found with ID: " + mushroomId);
             return;
-        }
+        }*/
 
         // Determine the MushroomPicker that owns the mushroom.
-        MushroomPicker picker = findMushroomPickerByMushroom(mushroom);
+        /*MushroomPicker picker = findMushroomPickerByMushroom(mushroom);
         if (picker == null) {
             System.out.println("Error: No Entomologist found with Mushroom ID (" + mushroomId + ").");
             return;
-        }
+        }*/
 
         // Execute the spore dispersion action.
-        picker.actionSporeDispersion(targetTecton, mushroom, "Accelerator", "sajt");
+
+        MushroomPicker mp = (MushroomPicker) game.getActivePlayer();
+        mp.actionSporeDispersion(targetTecton, mushroom, "Accelerator", "sajt");
     }
 
-    /**
-     * Searches for the MushroomPicker player who owns the specified Mushroom.
-     *
-     * @param mushroom The Mushroom for which to find the owning MushroomPicker.
-     * @return The MushroomPicker if found; otherwise, null.
-     */
-    private static MushroomPicker findMushroomPickerByMushroom(Mushroom mushroom) {
+
+    /*private static MushroomPicker findMushroomPickerByMushroom(Mushroom mushroom) {
         if (mushroom == null) {
             return null;
         }
         return mushroom.getOwner();
-    }
+    }*/
 
     /**
      * Executes the gombász yarn growing action.
@@ -544,11 +533,11 @@ public class CmdParser {
      *
      * Leírás: A gombász gombafonal növesztés akciót hajt végre a körben a megadott tectonra.
      *
-     * @param args Command arguments: from_tecton_ID, target_tecton_ID, yarn_ID
+     //* @param args Command arguments: from_tecton_ID, target_tecton_ID, yarn_ID
      */
-    private static void action_grow_yarn(String[] args) {
+    private static void action_grow_yarn(Tecton fromTecton ,Tecton targetTecton, Yarn yarn) {
         // Ensure exactly 3 arguments are provided.
-        if (handleArgCount(args, 4)) {
+        /*if (handleArgCount(args, 4)) {
             return;
         }
 
@@ -589,17 +578,16 @@ public class CmdParser {
         if (mushroomPicker == null) {
             System.out.println("Error: No MushroomPicker found!");
             return;
-        }
+        }*/
 
         // Execute the yarn growing action.
-        // mushroomPicker.actionGrowYarn(targetTecton, yarn);//Luca: sztem így - nem biztos, hogy ez így jó lesz
-        //- itt lehet baj lesz az, hogy ha nem négyzetrácsos a grid/sarok is szomszéd - nem egyértelműen eldönthető, hogy honnan növesztjük - Erna
+        MushroomPicker mushroomPicker = (MushroomPicker) game.getActivePlayer();
         mushroomPicker.actionGrowYarn(fromTecton, targetTecton, yarn); //Luca: itt nekünk csak a céltekton kell bemenetnek sztem
     }
 
-    private static void action_grow_mushroom(String[] args) {
+    private static void action_grow_mushroom(Tecton targetTecton, String id) {
         //senki nem hasznalja
-        if (handleArgCount(args, 4)) {
+        /*if (handleArgCount(args, 4)) {
             return;
         }
 
@@ -619,9 +607,10 @@ public class CmdParser {
         if (targetTecton == null) {
             System.out.println("tecton null");
             return;
-        }
+        }*/
 
-        picker.actionGrowMushroom(targetTecton, mushroomId);
+        MushroomPicker mushroomPicker =(MushroomPicker) game.getActivePlayer();
+        mushroomPicker.actionGrowMushroom(targetTecton, id);
     }
 
     /**
@@ -630,11 +619,11 @@ public class CmdParser {
      *
      * Leírás: A rovarász végrehajtja a fonalvágás akciót a körben a megadott rovarral a megadott gombafonálon.
      *
-     * @param args Command arguments: insect_ID, yarn_ID, target_tecton_ID
+     //* @param args Command arguments: insect_ID, yarn_ID, target_tecton_ID
      */
-    private static void action_cut_yarn(String[] args) {
+    private static void action_cut_yarn(Insect insect, Yarn yarn, Tecton amerreVagunk) {
         // Ensure exactly 3 arguments are passed: insect_ID, yarn_ID, target_tecton_ID
-        if (handleArgCount(args, 4)) {
+        /*if (handleArgCount(args, 4)) {
             return;
         }
 
@@ -668,18 +657,19 @@ public class CmdParser {
         if (entomologist == null) {
             System.out.println("Error: No Entomologist found with Insect: " + insectId);
             return;
-        }
+        }*/
 
         // Execute the yarn cutting action.
-        entomologist.actionCutYarn(targetYarn, targetInsect, yarnTecton); //Luca: kell az insect második bemenetnek
+        Entomologist entomologist =(Entomologist) game.getActivePlayer();
+        entomologist.actionCutYarn(yarn, insect, amerreVagunk);
     }
 
-    /**
+    /*/**
      * Finds the Tecton that contains the specified Yarn.
      *
      * @param yarn The Yarn whose parent tecton is to be determined.
      * @return The Tecton that contains the Yarn, or null if not found.
-     */
+
     private static Tecton findTectonByYarn(Yarn yarn, String id) {
         if (yarn == null) {
             return null;
@@ -691,18 +681,18 @@ public class CmdParser {
             }
         }
         return null;
-    }
+    }*/
 
 
     /**
      * Executes the eat spore action for an insect with the specified ID on a target spore.
      * This command makes the insect eat a spore to gain nutrition points.
      *
-     * @param args Command arguments, where args[0] is the insect ID and args[1] is the spore ID
+     //* @param args Command arguments, where args[0] is the insect ID and args[1] is the spore ID
      */
-    private static void action_eat_spore(String[] args) {
+    private static void action_eat_spore(Spore spore, Insect insect) {
         // Check if we have exactly two arguments (insect ID and spore ID)
-        if (handleArgCount(args, 3)) {
+        /*if (handleArgCount(args, 3)) {
             return;
         }
 
@@ -742,21 +732,22 @@ public class CmdParser {
         if (entomologist == null) {
             System.out.println("Error: No entomologist controls this insect.");
             return;
-        }
+        }*/
 
         // Execute the eat spore action
-        entomologist.actionEatSpore(targetSpore, targetInsect); //Luca: kell az insect bemenetnek
+        Entomologist entomologist = (Entomologist)game.getActivePlayer();
+        entomologist.actionEatSpore(spore, insect);
     }
 
     /**
      * Executes the move action for an insect with the specified ID to a target Tecton.
      * This command makes the insect move to another Tecton.
      *
-     * @param args Command arguments, where args[0] is the insect ID and args[1] is the target Tecton ID
+    // * @param args Command arguments, where args[0] is the insect ID and args[1] is the target Tecton ID
      */
-    private static void action_move(String[] args) {
+    private static void action_move(Insect insect, Tecton targetTecton) {
         // Check if we have exactly two arguments (insect ID and target Tecton ID)
-        if (handleArgCount(args, 3)) {
+        /*if (handleArgCount(args, 3)) {
             return;
         }
 
@@ -783,20 +774,21 @@ public class CmdParser {
             System.out.println("Error: No entomologist controls this insect.");
             return;
         }
-
+        */
         // Execute the move action
-        entomologist.actionMove(targetTecton, targetInsect);
+        Entomologist entomologist = (Entomologist)game.getActivePlayer();
+        entomologist.actionMove(targetTecton, insect);
     }
 
     /**
      * Executes the wait action for an insect with the specified ID.
      * This command makes the insect do nothing for the current turn.
      *
-     * @param args Command arguments, where args[0] is the ID of the insect
+     //* @param args Command arguments, where args[0] is the ID of the insect
      */
-    private static void action_wait(String[] args) {
+    private static void action_wait(Insect insect) {
         // Check if we have exactly one argument (the insect ID)
-        if (handleArgCount(args, 2)) {
+        /*if (handleArgCount(args, 2)) {
             return;
         }
 
@@ -814,19 +806,20 @@ public class CmdParser {
         if (entomologist == null) {
             System.out.println("Error: No entomologist controls this insect.");
             return;
-        }
+        }*/
 
         // Execute the wait action
-        entomologist.actionWait(targetInsect);
+        Entomologist entomologist = (Entomologist)game.getActivePlayer();
+        entomologist.actionWait(insect);
     }
 
-    /**
+    /*/**
      * Splits a Tecton into two separate Tectons.
      * This method finds the target Tecton by ID and uses the controller.Map's splitting method.
      *
      * @param args Command arguments, where args[0] is the ID of the Tecton to split
      */
-    private static void split_tecton(String[] args) {
+    /*private static void split_tecton(String[] args) {
         // Check if we have exactly one argument (the Tecton ID)
         if (handleArgCount(args, 2)) {
             return;
@@ -850,18 +843,16 @@ public class CmdParser {
                 map.notRandomizedSplitting(targetTecton);
             }
         }
-
-
-    }
+    }*/
 
 
     /**
      * A megadott típusú spóra hatást rárakja a megadott rovarra.
      * @param args A parancs argumentumai (spore_type, insect_ID)
      */
-    private static void add_effect_to_insect(String[] args) {
+    /*private static void add_effect_to_insect(String[] args) {
         // Ellenőrizzük, hogy pontosan 3 argumentum van-e (beleértve a parancs nevét)
-        if (handleArgCount(args, 3)) {
+        /*if (handleArgCount(args, 3)) {
             System.out.println("Use: add_effect_to_insect <spore_type> <insect_ID>");
             return;
         }
@@ -900,13 +891,13 @@ public class CmdParser {
                 System.out.println("Supported Types: accelerator, paralyze, decelerator, insectDuplicating, cutPreventing");
                 break;
         }
-    }
+    }*/
 
     /**
      * Kölcsönösen hozzáadja a megadott két tectont egymásnak szomszédként.
-     * @param args A parancs argumentumai (tecton_id, neighbour_tecton_id)
+     //* @param args A parancs argumentumai (tecton_id, neighbour_tecton_id)
      */
-    private static void add_neighbour_to_tecton(String[] args) {
+    /*private static void add_neighbour_to_tecton(String[] args) {
         // Ellenőrizzük, hogy pontosan 3 argumentum van-e (beleértve a parancs nevét)
         if (handleArgCount(args, 3)) {
             System.out.println("Use: add_neighbour_to_tecton <tecton_id> <neighbour_tecton_id>");
@@ -945,13 +936,13 @@ public class CmdParser {
 
         // Hozzáadjuk őket egymáshoz szomszédként
         tecton.addNeighbour(neighbourTecton);
-    }
+    }*/
 
     /**
      * Létrehoz egy rovart a megadott rovarászhoz és lerakja a megadott tektonra.
-     * @param args A parancs argumentumai (entomologist_NAME, tecton_id, test_name_id)
+     //* @param args A parancs argumentumai (entomologist_NAME, tecton_id, test_name_id)
      */
-    private static void create_insect(String[] args) {
+    /*private static void create_insect(String[] args) {
         // Ellenőrizzük, hogy pontosan 4 argumentum van-e (beleértve a parancs nevét)
         if (handleArgCount(args, 4)) {
             System.out.println("Use: create_insect <entomologist_NAME> <tecton_id> <test_name_id>");
@@ -982,14 +973,14 @@ public class CmdParser {
 
         // Hozzáadjuk a rovart a rovarászhoz
         entomologist.addInsect(newInsect);
-    }
+    }*/
 
     /**
      * Létrehoz egy spórát a megadott tectonon.
      * Spóra típusok: paralyzing, decelerator, cutpreventing
-     * @param args A parancs argumentumai (tecton_id, spore_type)
+     //* @param args A parancs argumentumai (tecton_id, spore_type)
     */
-    private static void create_spore_on_tecton(String[] args) {
+    /*private static void create_spore_on_tecton(String[] args) {
         // Ellenőrizzük, hogy pontosan 4 argumentum van-e (beleértve a parancs nevét)
         if (handleArgCount(args, 4)) {
             System.out.println("Use: create_spore_on_tecton <tecton_id> <spore_type> <spore_id>");
@@ -1035,14 +1026,14 @@ public class CmdParser {
 
         // Hozzáadjuk a spórát a tectonhoz
         targetTecton.addSpore(newSpore);
-    }
+    }*/
 
     /**
      * Létrehoz egy megadott típusú gombafonalat és hozzákapcsolja a megadott gombához.
      * Opciók: normal, killer (killer nincs még implementálva)
-     * @param args A parancs argumentumai (mushroom_id, yarn_type, test_name_id)
+     //* @param args A parancs argumentumai (mushroom_id, yarn_type, test_name_id)
      */
-    private static void create_yarn(String[] args) {
+    /*private static void create_yarn(String[] args) {
         // Ellenőrizzük, hogy pontosan 4 argumentum van-e (beleértve a parancs nevét)
         if (handleArgCount(args, 4)) {
             System.out.println("Use: create_yarn <mushroom_id> <yarn_type> <test_name_id>");
@@ -1078,13 +1069,14 @@ public class CmdParser {
                 return;
         }
         Tecton targetTecton = findTectonById(targetMushroom.getTecton().getId());
-    }
+    }*/
+
     /**
      * Létrehoz egy tektont a megadott típusból és hozzáadja a térképhez.
      * Opciók: normal, keepAlive, yarnAbsorbant, multiplePlayer, mushroomPrevent
-     * @param args A parancs argumentumai (tecton_type, test_name_id)
+     //* @param args A parancs argumentumai (tecton_type, test_name_id)
      */
-    private static void create_tecton(String[] args) {
+    /*private static void create_tecton(String[] args) {
         // Ellenőrizzük, hogy pontosan 3 argumentum van-e (beleértve a parancs nevét)
         if (handleArgCount(args, 3)) {
             System.out.println("Use: create_tecton <tecton_type> <test_name_id>");
@@ -1126,13 +1118,15 @@ public class CmdParser {
 
         // Hozzáadjuk a létrehozott Tecton-t a térképhez
         map.addTecton(newTecton);
-    }
+    }*/
+
+
     /**
      * Creates a new Mushroom on a specified Tecton.
      * Expected format: create_mushroom [tecton_id]
-     * @param args Command arguments
+     //* @param args Command arguments
      */
-    private static void create_mushroom(String[] args) {
+    /*private static void create_mushroom(String[] args) {
         // Check for correct number of arguments (command name + 1 argument)
         if (handleArgCount(args, 4)) {
             return;
@@ -1167,14 +1161,14 @@ public class CmdParser {
         targetTecton.addMushroom(mushroom);
         mp.addMushroom(mushroom);
 
-    }
+    }*/
 
     /**
      * Új rovarász játékos létrehozása, és hozzáadása a játékhoz
      * Elvárt formátum: create_entomologist [név] [gombász_id]
-     * @param args parancs argumentumok
+     //* @param args parancs argumentumok
      */
-    private static void create_mushroom_picker(String[] args) {
+    /*private static void create_mushroom_picker(String[] args) {
         // Ellenőrzi az argumentumok számát (parancs neve + 2 argumentum)
         if (handleArgCount(args, 3)) {
             return;
@@ -1192,14 +1186,14 @@ public class CmdParser {
         players.add(mushroomPicker);
         game.setPlayers(players);
 
-    }
+    }*/
 
     /**
      * Új rovarász játékos létrehozása, és hozzáadása a játékhoz
      * Elvárt formátum: create_entomologist [név] [rovarász_id]
      * @param args parancs argumentumok
      */
-    private static void create_entomologist(String[] args) {
+    /*private static void create_entomologist(String[] args) {
         // Ellenőrzi az argumentumok számát (parancs neve + 2 argumentum)
         if (handleArgCount(args, 3)) {
             return;
@@ -1221,6 +1215,6 @@ public class CmdParser {
             players.add(entomologist);
             game.setPlayers(players);
         }
-    }
+    }*/
 
 }

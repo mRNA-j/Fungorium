@@ -58,7 +58,7 @@ public class Map implements Serializable {
         tecton6.addNeighbour(tecton5);
         tecton5.addNeighbour(tecton6);
 
-        System.out.println("controller.Map generated with " + tectons.size() + " tectons.");
+        //System.out.println("controller.Map generated with " + tectons.size() + " tectons.");
     }
 
     /**
