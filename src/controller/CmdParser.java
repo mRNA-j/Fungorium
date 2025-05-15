@@ -522,7 +522,7 @@ public class CmdParser {
         }
 
         // Execute the spore dispersion action.
-        picker.actionSporeDispersion(targetTecton, mushroom);
+        picker.actionSporeDispersion(targetTecton, mushroom, "Accelerator", "sajt");
     }
 
     /**

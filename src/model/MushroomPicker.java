@@ -236,7 +236,7 @@ public class MushroomPicker extends Player implements Serializable {
      * @param targetTecton A cél tecton.
      * @param mushroom   A forrás gomba, amelyből a spóra indul.
      */
-    public void actionSporeDispersion(Tecton targetTecton, Mushroom mushroom) {
+    public void actionSporeDispersion(Tecton targetTecton, Mushroom mushroom, String type, String id) {
         // Ellenőrzi, hogy a gombának van-e spórája
         if (!mushroom.getHasSpore()) {
             return;
@@ -247,7 +247,7 @@ public class MushroomPicker extends Player implements Serializable {
             // Ellenőrzi, hogy a cél tecton szerepel-e a szomszédok között
             //Ha nem, akkor visszatér a függvény
             if (mushroom.getTecton().getNeighbours().contains(targetTecton)) {
-                mushroom.disperseSpore(targetTecton);   // Elindítja a spóra szórását a cél tectonra
+                mushroom.disperseSpore(targetTecton, type, id);   // Elindítja a spóra szórását a cél tectonra
             }
         }
         // Ha a gomba kora nagyobb, mint 10, bővíti a hatókört a másodfokú szomszédokra
@@ -255,7 +255,7 @@ public class MushroomPicker extends Player implements Serializable {
             // Ellenőrzi, hogy a cél tecton szerepel-e a szomszédok között
             //Ha nem, akkor visszatér a függvény
             if (addSecondNeighbours(mushroom.getTecton()).contains(targetTecton)) {
-                mushroom.disperseSpore(targetTecton);
+                mushroom.disperseSpore(targetTecton, type, id);
             }
         }
     }

@@ -81,7 +81,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
       Mushroom mushroom = picker.getOwnedMushrooms().get(i);
       Tecton t = mushroom.getTecton();
       if(t.getId() != null&& addedTectonIds.add(t.getId())) {
-        upperTectons.add(tectonFactory.onCreate(i * 80 + 10, 40, 30, t.getId(), t));
+        upperTectons.add(tectonFactory.onCreate(0, 0, 30, t.getId(), t));
       }
     }
 
@@ -91,7 +91,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
         Tecton t = yarn.getTectons().get(j);
 
         if(t.getId() != null&& addedTectonIds.add(t.getId())){
-          upperTectons.add(tectonFactory.onCreate(i * 80 + 10, 40, 30, t.getId(), t));
+          upperTectons.add(tectonFactory.onCreate(0, 0, 30, t.getId(), t));
         }
 
       }
@@ -108,7 +108,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
     DS_mushroomSelector.setVisible(false);
     DS_tectonSelector = new JComboBox<>();
     DS_tectonSelector.setVisible(false);
-    DS_growMushroom_sporeSelector = new JComboBox<>();
+    DS_growMushroom_sporeSelector = new JComboBox<>(new String[] {"Accelerator", "Decelerator", "Cut Preventing", "Insect Duplicating", "Paralyzing"});
     DS_growMushroom_sporeSelector.setVisible(false);
     //GM = new JComboBox<>(new String[] {"Spore Type 1", "Spore Type 2"});
     GM_yarnSelector = new JComboBox<>();
@@ -134,6 +134,12 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
 
     upperStrip = new TectonPanel(upperTectons, true, this::updateLowerStrip);
     lowerStrip = new TectonPanel(lowerTectons, false, null);
+    upperStrip.getPreferredSize();
+
+    lowerStrip.setPreferredSize(
+            new Dimension(lowerStrip.getPreferredSize().width,
+                    upperStrip.getPreferredSize().height) // Match upper strip height
+    );
 
     upperScroll = new JScrollPane(upperStrip);
     lowerScroll = new JScrollPane(lowerStrip);
@@ -155,60 +161,84 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
 
     GM_yarnSelector.addActionListener(e -> {
       chosenYarn = (Yarn) GY_yarnSelector.getSelectedItem();
-      //Tecton[] tectons =
-      GM_tectonSelector.setModel(new DefaultComboBoxModel<>());
-      GM_yarnSelector.setEnabled(false);
+      List<Tecton> tectonsList= chosenYarn.getTectons();
+      tectonsList.removeIf(t -> t.getSpores().size() < 3);
+      int tectonSize = tectonsList.size();
+      Tecton[] tectons = tectonsList.toArray(new Tecton[tectonSize]);
+      GM_tectonSelector.setModel(new DefaultComboBoxModel<>(tectons));
       GM_tectonSelector.setEnabled(true);
+      GM_tectonSelector.setVisible(true);
+      GM_yarnSelector.setEnabled(false);
     });
 
     GM_tectonSelector.addActionListener(e -> {
-      Object yarnSelected = GM_yarnSelector.getSelectedItem();
-      Object tectonSelected = GM_tectonSelector.getSelectedItem();
-
-      //ide kell beadni, amint nem testId a paraméter!!
-      //picker.actionGrowMushroom();
+      chosenTecton1 = (Tecton) GM_tectonSelector.getSelectedItem();
+      picker.actionGrowMushroom(chosenTecton1, "MEG KELL CSINÁNI A NÉVADÁST");
+      //TODO a névadásnak boxot
     });
 
     disperseButton.addActionListener(e -> {
+      List<Mushroom> mushroomList = picker.getOwnedMushrooms();
+      mushroomList.removeIf(m -> !m.getHasSpore());
+      int mushroomSize = mushroomList.size();
+      Mushroom[] mushrooms = mushroomList.toArray(new Mushroom[mushroomSize]);
+      DS_mushroomSelector.setModel(new DefaultComboBoxModel<>(mushrooms));
       DS_mushroomSelector.setVisible(true);
       DS_mushroomSelector.setEnabled(true);
-      DS_tectonSelector.setVisible(true);
+      DS_tectonSelector.setVisible(false);
       DS_tectonSelector.setEnabled(false);
-      growYarnButton.setEnabled(false);
-      growMushroomButton.setEnabled(false);
-      skipButton.setEnabled(false);
-      disperseButton.setEnabled(false);
+      disableOtherButtons(disperseButton);
+
     });
 
     DS_mushroomSelector.addActionListener(e -> {
-      
-      DS_mushroomSelector.setEnabled(false);
+      chosenMushroom = (Mushroom) DS_mushroomSelector.getSelectedItem();
+      List<Tecton> tectonList = chosenMushroom.getTecton().getNeighbours();
+      if(chosenMushroom.getAge()>10){
+        for(Tecton t : tectonList){
+          for(Tecton t2 : t.getNeighbours()){
+            if(!tectonList.contains(t2)){
+              tectonList.add(t2);
+            }
+          }
+        }
+      }
+      int tectonSize = tectonList.size();
+      Tecton[] tectons = tectonList.toArray(new Tecton[tectonSize]);
+      DS_tectonSelector.setModel(new DefaultComboBoxModel<>(tectons));
       DS_tectonSelector.setEnabled(true);
+      DS_tectonSelector.setVisible(true);
+      DS_mushroomSelector.setEnabled(false);
     });
 
     DS_tectonSelector.addActionListener(e -> {
-      
-      Object mushroomSelected = DS_mushroomSelector.getSelectedItem();
-      Object tectonSelected = DS_tectonSelector.getSelectedItem();
+      chosenTecton1 = (Tecton) DS_tectonSelector.getSelectedItem();
+      DS_growMushroom_sporeSelector.setEnabled(true);
+      DS_growMushroom_sporeSelector.setVisible(true);
+      DS_tectonSelector.setEnabled(false);
+    });
 
-      // Call disperse spore action
-      // mushroomPicker.actionDisperseSpore(...);
+    DS_growMushroom_sporeSelector.addActionListener(e -> {
+      chosenSporeType = (String) DS_growMushroom_sporeSelector.getSelectedItem();
+      picker.actionSporeDispersion(chosenTecton1, chosenMushroom, chosenSporeType, "MEG KELL CSINALNI");
     });
 
     growYarnButton.addActionListener(e -> {
+      int yarnSize = picker.getOwnedYarns().size();
+      Yarn[] yarns = picker.getOwnedYarns().toArray(new Yarn[yarnSize]);
+      GY_yarnSelector.setModel(new DefaultComboBoxModel<>(yarns));
       GY_yarnSelector.setVisible(true);
       GY_yarnSelector.setEnabled(true);
-      GY_srcTectonSelector.setVisible(true);
+      GY_srcTectonSelector.setVisible(false);
       GY_srcTectonSelector.setEnabled(false);
-      GY_tgtTectonSelector.setVisible(true); // Initially hidden
+      GY_tgtTectonSelector.setVisible(false);
       GY_tgtTectonSelector.setEnabled(false);
-      growMushroomButton.setEnabled(false);
-      disperseButton.setEnabled(false);
-      skipButton.setEnabled(false);
-      growYarnButton.setEnabled(false);
+      disableOtherButtons(growYarnButton);
     });
 
     GY_yarnSelector.addActionListener(e -> {
+      chosenYarn = (Yarn) GY_yarnSelector.getSelectedItem();
+      //get
       GY_yarnSelector.setEnabled(false);
       GY_srcTectonSelector.setEnabled(true);
     });
@@ -265,9 +295,16 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
     buttonPanel.add(nextPlayerButton);
 
     // === Center Panel ===
-    JPanel centerPanel = new JPanel(new BorderLayout());
-    centerPanel.add(upperScroll, BorderLayout.NORTH);
-    centerPanel.add(lowerScroll, BorderLayout.CENTER);
+
+    JPanel centerPanel = new JPanel();
+    centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+
+    upperScroll.setMaximumSize(new Dimension(Integer.MAX_VALUE, 120)); // limit scroll area height
+    lowerScroll.setMaximumSize(new Dimension(Integer.MAX_VALUE, 120));
+
+    centerPanel.add(upperScroll);
+    centerPanel.add(Box.createRigidArea(new Dimension(0, 10))); // spacing
+    centerPanel.add(lowerScroll);
 
     JPanel rightPanel = new JPanel();
     rightPanel.setLayout(new BorderLayout());
