@@ -1,6 +1,4 @@
 package view;
-
-import controller.UpdateListener;
 import model.Tecton;
 
 import javax.swing.*;
@@ -10,7 +8,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TectonG extends JComponent {
+public class TectonG extends JComponent implements BaseViewG {
 
 
     int x, y, radius;
@@ -67,6 +65,18 @@ public class TectonG extends JComponent {
 
         // Tecton ID
         g.drawString(id, x - 5, y + radius + 15);
+    }
+
+    @Override
+    public void update() {
+        // Update view state from model
+        hasMushroom = t.getMushroom() != null;
+        hasInsect = !t.getInsects().isEmpty();
+        hasYarn = !t.getYarns().isEmpty();
+        sporeCount = t.getSpores().size();
+
+        // Request repaint to reflect updated state
+        repaint();
     }
 }
 

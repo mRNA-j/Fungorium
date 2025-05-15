@@ -1,6 +1,5 @@
 package view;
 
-import controller.UpdateListener;
 import model.*;
 
 import javax.swing.*;
@@ -10,7 +9,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EntomologistG extends JPanel implements UpdateListener {
+public class EntomologistG extends JPanel implements BaseViewG {
     public Entomologist getEntomologist() {
         return entomologist;
     }
@@ -51,6 +50,8 @@ public class EntomologistG extends JPanel implements UpdateListener {
     private Tecton chosenTecton;
     private Yarn chosenYarn;
     private Spore chosenSpore;
+    private IFactory factory ;
+
 
     public void setPanelSwitcher(PanelSwitcher panelSwitcher) {
         this.panelSwitcher = panelSwitcher;
@@ -58,6 +59,8 @@ public class EntomologistG extends JPanel implements UpdateListener {
 
     public EntomologistG(Entomologist ento, String panelName) {
         this.entomologist = ento;
+        ento.addObserver(this);
+        this.factory = new JFactory();
         nameLabel.setText(entomologist.getName() + " - " + entomologist.getPoints());
         nextPanelName=panelName;
         // Title label
@@ -76,7 +79,7 @@ public class EntomologistG extends JPanel implements UpdateListener {
         for (int i = 0; i < ento.getInsect().size(); i++) {
             Insect insect = ento.getInsect().get(i);
             String id = insect.getId();
-            upperTectons.add(new TectonG(i * 80 + 10, 40, 30, id, insect.getCurrentPlace()));
+            upperTectons.add(factory.onCreateTectonG(i * 80 + 10, 40, 30, id, insect.getCurrentPlace()));
         }
 
         // Initialize TectonPanels
@@ -106,7 +109,7 @@ public class EntomologistG extends JPanel implements UpdateListener {
         CY_yarnSelect = new JComboBox<Yarn>();
         CY_tgtTectonSelect = new JComboBox<Tecton>();
 
-// Set all invisible initially
+        // Set all invisible initially
        MI_insectSelect.setVisible(false);
         MI_tgtTectonSelect.setVisible(false);
         MI_yarnSelect.setVisible(false);
@@ -116,7 +119,7 @@ public class EntomologistG extends JPanel implements UpdateListener {
         CY_yarnSelect.setVisible(false);
         CY_tgtTectonSelect.setVisible(false);
 
-// === Add them to your comboPanel ===
+        // === Add them to your comboPanel ===
         comboPanel.add(MI_insectSelect, 0);
         comboPanel.add(MI_tgtTectonSelect, 1);
         comboPanel.add(MI_yarnSelect, 2);
@@ -128,9 +131,9 @@ public class EntomologistG extends JPanel implements UpdateListener {
 
 
 
-// === Add the action listeners ===
+        // === Add the action listeners ===
 
-// Move Insect
+        // Move Insect
         moveButton.addActionListener(e -> {
             MI_insectSelect.setVisible(true);
             MI_insectSelect.setEnabled(true);
@@ -157,7 +160,8 @@ public class EntomologistG extends JPanel implements UpdateListener {
             chosenTecton = (Tecton) MI_tgtTectonSelect.getSelectedItem();
             entomologist.actionMove(chosenTecton, chosenInsect);
         });
-// Eat Spore
+
+        // Eat Spore
         eatButton.addActionListener(e -> {
             ES_insectSelect.setVisible(true);
             ES_insectSelect.setEnabled(true);
@@ -183,7 +187,7 @@ public class EntomologistG extends JPanel implements UpdateListener {
            entomologist.actionEatSpore(chosenSpore, chosenInsect);
         });
 
-// Cut Yarn
+        // Cut Yarn
         cutButton.addActionListener(e -> {
             CY_insectSelect.setVisible(true);
             CY_insectSelect.setEnabled(true);
@@ -222,14 +226,14 @@ public class EntomologistG extends JPanel implements UpdateListener {
             entomologist.actionCutYarn(chosenYarn, chosenInsect, chosenTecton);
         });
 
-// Update skip button to handle new combo boxes
+        // Update skip button to handle new combo boxes
         skipButton.addActionListener(e -> {
             eatButton.setEnabled(false);
             moveButton.setEnabled(false);
             cutButton.setEnabled(false);
         });
 
-// Update nextPlayerButton to handle new combo boxes
+        // Update nextPlayerButton to handle new combo boxes
         nextPlayerButton.addActionListener(e -> {
             if (panelSwitcher != null) {
                 setAllComboBoxesVisible(false);
@@ -238,7 +242,7 @@ public class EntomologistG extends JPanel implements UpdateListener {
             }
         });
 
-// === Add the new buttons to your button panel ===
+        // === Add the new buttons to your button panel ===
         buttonPanel.add(moveButton);
         buttonPanel.add(eatButton);
         buttonPanel.add(cutButton);
@@ -310,11 +314,42 @@ public class EntomologistG extends JPanel implements UpdateListener {
 
     @Override
     public void update() {
+        // Update the entomologist name and points display
+        nameLabel.setText(entomologist.getName() + " - " + entomologist.getPoints());
+
+        // Update the upper tectons based on current insects
+        upperTectons.clear();
+        for (int i = 0; i < entomologist.getInsect().size(); i++) {
+            Insect insect = entomologist.getInsect().get(i);
+            String id = insect.getId();
+            upperTectons.add(new TectonG(i * 80 + 10, 40, 30, id, insect.getCurrentPlace()));
+        }
+
+        // Update combobox models with current data
+        int insectSize = entomologist.getInsect().size();
+        Insect[] insects = entomologist.getInsect().toArray(new Insect[insectSize]);
+
+        MI_insectSelect.setModel(new DefaultComboBoxModel<>(insects));
+        ES_insectSelect.setModel(new DefaultComboBoxModel<>(insects));
+        CY_insectSelect.setModel(new DefaultComboBoxModel<>(insects));
+
+        // Update the lower tecton panel if there's a selection
+        if (upperStrip.getSelectedTecton() != null) {
+            updateLowerStrip(upperStrip.getSelectedTecton().t);
+        }
+
+        // Reset button states
+        enableAllButtons();
+        setAllComboBoxesVisible(false);
+
+        // Request visual update
+        upperStrip.update();
+        lowerStrip.update();
+        revalidate();
         repaint();
-    }
-
-
 
     }
+
+}
 
 

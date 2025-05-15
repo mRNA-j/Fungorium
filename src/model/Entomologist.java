@@ -117,6 +117,7 @@ public class Entomologist extends Player implements Serializable {
         if(!sikeres){
             //System.out.println("Mozgás végrehajtása sikertelen");
         }
+        notifyObservers();
     }
 
     /**
@@ -131,6 +132,8 @@ public class Entomologist extends Player implements Serializable {
         insect.eatSpore(spore);
 
         this.addPoints(spore.getNutrition());
+
+        notifyObservers();
     }
 
     /**
@@ -150,5 +153,7 @@ public class Entomologist extends Player implements Serializable {
             return;
         }
         insect.cutYarn(yarn, amerreVagunk);
+
+        notifyObservers();
     }
 }
