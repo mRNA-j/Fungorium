@@ -102,7 +102,7 @@ public class TectonG extends JComponent implements BaseViewG {
             InsectG insectG = insectGs.get(i);
 
             // Calculate position - directly to the left of the tecton
-            int insectX = x - radius - insectSize - 5; // 5 pixels spacing from the tecton
+            int insectX = x + radius - 5; // 5 pixels spacing from the tecton
             int insectY = y - radius + (i * (insectSize + spacing));
 
             // Draw a debug rectangle around the insect area
