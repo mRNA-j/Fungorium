@@ -10,9 +10,13 @@ public class Controller {
         return game;
     }
 
-    private final static Game game = new Game();
+    public static void setGame(Game game) {
+        Controller.game = game;
+    }
 
-    private final static Map map = game.getPlayField();
+    private static Game game = new Game();
+
+    private final Map map = game.getPlayField();
     //private static boolean isRandomized = true;
 
     /**
@@ -427,7 +431,7 @@ public class Controller {
     }*/
 
 
-    public static void start() {
+    public void start() {
 
     }
 
@@ -464,11 +468,11 @@ public class Controller {
     }*/
 
 
-    private static void action_phase_end() {
+    public void action_phase_end() {
         game.nextPlayer();
     }
 
-    private static void next_round() {
+    public void next_round() {
          Random random = new Random();
          int index = random.nextInt(0,map.getTectons().size());
          Tecton potentialSplitTecton = map.getTectons().get(index);
@@ -483,7 +487,7 @@ public class Controller {
     }
 
 
-    private static void action_spore_dispersion(Tecton targetTecton ,Mushroom mushroom) {
+    public void action_spore_dispersion(Tecton targetTecton ,Mushroom mushroom) {
         // Ensure exactly 2 arguments are provided.
         /*if (handleArgCount(args, 3)) {
             return;
@@ -535,7 +539,7 @@ public class Controller {
      *
      //* @param args Command arguments: from_tecton_ID, target_tecton_ID, yarn_ID
      */
-    private static void action_grow_yarn(Tecton fromTecton ,Tecton targetTecton, Yarn yarn) {
+    public void action_grow_yarn(Tecton fromTecton ,Tecton targetTecton, Yarn yarn) {
         // Ensure exactly 3 arguments are provided.
         /*if (handleArgCount(args, 4)) {
             return;
@@ -585,7 +589,7 @@ public class Controller {
         mushroomPicker.actionGrowYarn(fromTecton, targetTecton, yarn); //Luca: itt nekünk csak a céltekton kell bemenetnek sztem
     }
 
-    private static void action_grow_mushroom(Tecton targetTecton, String id) {
+    public void action_grow_mushroom(Tecton targetTecton, String id) {
         //senki nem hasznalja
         /*if (handleArgCount(args, 4)) {
             return;
@@ -621,7 +625,7 @@ public class Controller {
      *
      //* @param args Command arguments: insect_ID, yarn_ID, target_tecton_ID
      */
-    private static void action_cut_yarn(Insect insect, Yarn yarn, Tecton amerreVagunk) {
+    public void action_cut_yarn(Insect insect, Yarn yarn, Tecton amerreVagunk) {
         // Ensure exactly 3 arguments are passed: insect_ID, yarn_ID, target_tecton_ID
         /*if (handleArgCount(args, 4)) {
             return;
@@ -690,7 +694,7 @@ public class Controller {
      *
      //* @param args Command arguments, where args[0] is the insect ID and args[1] is the spore ID
      */
-    private static void action_eat_spore(Spore spore, Insect insect) {
+    public void action_eat_spore(Spore spore, Insect insect) {
         // Check if we have exactly two arguments (insect ID and spore ID)
         /*if (handleArgCount(args, 3)) {
             return;
@@ -745,7 +749,7 @@ public class Controller {
      *
     // * @param args Command arguments, where args[0] is the insect ID and args[1] is the target Tecton ID
      */
-    private static void action_move(Insect insect, Tecton targetTecton) {
+    public void action_move(Insect insect, Tecton targetTecton) {
         // Check if we have exactly two arguments (insect ID and target Tecton ID)
         /*if (handleArgCount(args, 3)) {
             return;
@@ -776,7 +780,7 @@ public class Controller {
         }
         */
         // Execute the move action
-        Entomologist entomologist = (Entomologist)game.getActivePlayer();
+        Entomologist entomologist = (Entomologist) game.getActivePlayer();
         entomologist.actionMove(targetTecton, insect);
     }
 
@@ -786,7 +790,7 @@ public class Controller {
      *
      //* @param args Command arguments, where args[0] is the ID of the insect
      */
-    private static void action_wait(Insect insect) {
+    public void action_wait(Insect insect) {
         // Check if we have exactly one argument (the insect ID)
         /*if (handleArgCount(args, 2)) {
             return;

@@ -43,9 +43,9 @@ public class MainFrame extends JFrame implements PanelSwitcher {
         revalidate();
         repaint();
     }
-    /*public void setGame(Game game) {
-        this.game = game;
-    }*/
+    public void setGame(Game game) {
+        this.controller.setGame(game);
+    }
 
     public void setUpPlayers(){
         mpPanel1 = new MushroomPickerG(Controller.getGame().getMps().get(0),"ent1Panel", controller);

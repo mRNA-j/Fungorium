@@ -23,6 +23,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
 
     private Entomologist entomologist;
     private JLabel nameLabel = new JLabel();
+    private Controller controller;
 
     private final JButton eatButton = new JButton("Eat Spore");
     private final JButton moveButton = new JButton("Move Insect");
@@ -60,9 +61,10 @@ public class EntomologistG extends JPanel implements BaseViewG {
         this.panelSwitcher = panelSwitcher;
     }
 
-    public EntomologistG(Entomologist ento, String panelName, Controller controller) {
+    public EntomologistG(Entomologist ento, String panelName, Controller controllerIn) {
         this.entomologist = ento;
         ento.addObserver(this);
+        this.controller = controllerIn;
         this.tectonFactory = new TectonGFactory();
         this.nextPanelName = panelName;
         nameLabel.setText(entomologist.getName() + " - "+ entomologist.getPoints());
@@ -165,7 +167,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
         MI_tgtTectonSelect.addActionListener(e -> {
             MI_tgtTectonSelect.setEnabled(false);
             chosenTecton = (Tecton) MI_tgtTectonSelect.getSelectedItem();
-            entomologist.actionMove(chosenTecton, chosenInsect);
+            controller.action_move(chosenInsect, chosenTecton);
         });
 
         // Eat Spore
@@ -196,7 +198,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
 
         ES_sporeSelect.addActionListener(e -> {
             chosenSpore = (Spore) ES_sporeSelect.getSelectedItem();
-           entomologist.actionEatSpore(chosenSpore, chosenInsect);
+            controller.action_eat_spore(chosenSpore, chosenInsect);
         });
 
         // Cut Yarn
@@ -240,7 +242,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
 
         CY_tgtTectonSelect.addActionListener(e -> {
             chosenTecton = (Tecton) CY_tgtTectonSelect.getSelectedItem();
-            entomologist.actionCutYarn(chosenYarn, chosenInsect, chosenTecton);
+            controller.action_cut_yarn(chosenInsect, chosenYarn, chosenTecton);
         });
 
         // Update skip button to handle new combo boxes
@@ -256,6 +258,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
                 setAllComboBoxesVisible(false);
                 enableAllButtons();
                 panelSwitcher.showPanel(nextPanelName);
+                controller.action_phase_end();
             }
         });
 
