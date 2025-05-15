@@ -1,5 +1,6 @@
 package view;
 
+import controller.Controller;
 import factory.TectonGFactory;
 import model.*;
 
@@ -60,7 +61,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
   }
 
 
-  public MushroomPickerG(MushroomPicker picker,String panelName) {
+  public MushroomPickerG(MushroomPicker picker, String panelName, Controller controller) {
     this.mushroomPicker = picker;
     this.tectonFactory = new TectonGFactory();
     nameLabel.setText(mushroomPicker.getName() + " - "+ mushroomPicker.getPoints());

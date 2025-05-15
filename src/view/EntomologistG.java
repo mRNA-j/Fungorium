@@ -1,5 +1,6 @@
 package view;
 
+import controller.Controller;
 import factory.TectonGFactory;
 import interfaces.ITectonGFactory;
 import model.*;
@@ -59,7 +60,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
         this.panelSwitcher = panelSwitcher;
     }
 
-    public EntomologistG(Entomologist ento, String panelName) {
+    public EntomologistG(Entomologist ento, String panelName, Controller controller) {
         this.entomologist = ento;
         ento.addObserver(this);
         this.tectonFactory = new TectonGFactory();
