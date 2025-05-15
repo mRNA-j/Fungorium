@@ -155,8 +155,27 @@ public class Mushroom implements Serializable {
      * A gombában lévő spórát hozzáadja a megadott tectonhoz.
      * @param tecton A tecton, amire a spórát kilövi.
      */
-    public void disperseSpore(Tecton tecton) {
-        currentSpore = new AcceleratorSpore("Spore1");
+    public void disperseSpore(Tecton tecton, String type, String id) {
+        switch(type) {
+            case "Accelerator":
+                currentSpore = new AcceleratorSpore("MEG KELL CSINAÉLNI");
+                break;
+            case "Decelerator":
+                currentSpore = new DeceleratorSpore("MEG KELL CSINA");
+                break;
+            case "Cut Preventing":
+                currentSpore = new CutPreventingSpore("MEG KELL CSINA");
+                break;
+            case "Insect Duplicating":
+                currentSpore = new InsectDuplicatingSpore("MEG KELL");
+                break;
+            case "Paralyzing":
+                currentSpore = new ParalyzingSpore("MEG KELL");
+                break;
+            default:
+                currentSpore = new AcceleratorSpore("MEG KELL");
+                break;
+        }
 
         //Akkor lehet csak kilőni, ha nincs
         if (hasSpore && currentSpore != null && numberOfDispersions<5) {
