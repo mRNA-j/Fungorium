@@ -1,5 +1,7 @@
 package view;
 
+import factory.TectonGFactory;
+import interfaces.ITectonGFactory;
 import model.*;
 
 import javax.swing.*;
@@ -50,7 +52,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
     private Tecton chosenTecton;
     private Yarn chosenYarn;
     private Spore chosenSpore;
-    private IFactory factory ;
+    private ITectonGFactory tectonFactory;
 
 
     public void setPanelSwitcher(PanelSwitcher panelSwitcher) {
@@ -60,7 +62,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
     public EntomologistG(Entomologist ento, String panelName) {
         this.entomologist = ento;
         ento.addObserver(this);
-        this.factory = new JFactory();
+        this.tectonFactory = new TectonGFactory();
         nameLabel.setText(entomologist.getName() + " - " + entomologist.getPoints());
         nextPanelName=panelName;
         // Title label
@@ -79,7 +81,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
         for (int i = 0; i < ento.getInsect().size(); i++) {
             Insect insect = ento.getInsect().get(i);
             String id = insect.getId();
-            upperTectons.add(factory.onCreateTectonG(i * 80 + 10, 40, 30, id, insect.getCurrentPlace()));
+            upperTectons.add(tectonFactory.onCreate(i * 80 + 10, 40, 30, id, insect.getCurrentPlace()));
         }
 
         // Initialize TectonPanels
@@ -306,7 +308,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
 
         for (int i = 0; i < neighbors.size(); i++) {
             Tecton neighbor = neighbors.get(i);
-            lowerTectons.add(new TectonG(i * 80 + 10, 40, 30, neighbor.getId(), neighbor));
+            lowerTectons.add(tectonFactory.onCreate(i * 80 + 10, 40, 30, neighbor.getId(), neighbor));
         }
 
         lowerStrip.repaint();
@@ -322,7 +324,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
         for (int i = 0; i < entomologist.getInsect().size(); i++) {
             Insect insect = entomologist.getInsect().get(i);
             String id = insect.getId();
-            upperTectons.add(new TectonG(i * 80 + 10, 40, 30, id, insect.getCurrentPlace()));
+            upperTectons.add(tectonFactory.onCreate(i * 80 + 10, 40, 30, id, insect.getCurrentPlace()));
         }
 
         // Update combobox models with current data

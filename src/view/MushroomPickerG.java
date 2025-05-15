@@ -47,6 +47,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
   public final List<TectonG> upperTectons = new ArrayList<>();
   public final List<TectonG> lowerTectons = new ArrayList<>();
   private String nextPanelName;
+  private ITectonGFactory tectonFactory;
 
   Set<String> addedTectonIds = new HashSet<>();
 
@@ -59,6 +60,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
 
   public MushroomPickerG(MushroomPicker picker,String panelName) {
     this.mushroomPicker = picker;
+    this.tectonFactory = new TectonGFactory();
     nameLabel.setText(picker.getName() + " - "+ picker.getPoints());
     nextPanelName = panelName;
     setLayout(new BorderLayout());
@@ -77,7 +79,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
       Mushroom mushroom = picker.getOwnedMushrooms().get(i);
       Tecton t = mushroom.getTecton();
       if(t.getId() != null&& addedTectonIds.add(t.getId())) {
-        upperTectons.add(new TectonG(i * 80 + 10, 40, 30, t.getId(), t));
+        upperTectons.add(tectonFactory.onCreate(i * 80 + 10, 40, 30, t.getId(), t));
       }
     }
 
@@ -87,7 +89,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
         Tecton t = yarn.getTectons().get(j);
 
         if(t.getId() != null&& addedTectonIds.add(t.getId())){
-          upperTectons.add(new TectonG(i * 80 + 10, 40, 30, t.getId(), t));
+          upperTectons.add(tectonFactory.onCreate(i * 80 + 10, 40, 30, t.getId(), t));
         }
 
       }
@@ -281,7 +283,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
 
     for (int i = 0; i < neighbors.size(); i++) {
       Tecton neighbor = neighbors.get(i);
-      lowerTectons.add(new TectonG(i * 80 + 10, 40, 30, neighbor.getId(), neighbor));
+      lowerTectons.add(tectonFactory.onCreate(i * 80 + 10, 40, 30, neighbor.getId(), neighbor));
     }
 
     lowerStrip.repaint();
