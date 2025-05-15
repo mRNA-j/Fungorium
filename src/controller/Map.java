@@ -64,6 +64,11 @@ public class Map implements Serializable {
         addTecton(t3);
         addTecton(t4);
         addTecton(t5);
+
+        System.out.println("generate" + mps.get(0).getName() + "  " + mps.get(0).getOwnedMushrooms().size());
+        System.out.println("generate" + mps.get(1).getName() + "  " + mps.get(1).getOwnedMushrooms().size());
+        System.out.println("generateYARN " + mps.get(0).getName() + "  " + mps.get(0).getOwnedYarns().size());
+        System.out.println("generateYARN " + mps.get(1).getName() + "  " + mps.get(1).getOwnedYarns().size());
     }
 
     /**

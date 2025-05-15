@@ -106,8 +106,8 @@ public class StartGamePanel extends JPanel {
 
     public ArrayList<MushroomPicker> createMps() {
         ArrayList<MushroomPicker> mps = new ArrayList<>();
-        Mushroom mushroom = new Mushroom(new Tecton(2,false,false),mp1);
-        mp1.addMushroom(mushroom);
+        //Mushroom mushroom = new Mushroom(new Tecton(2,false,false),mp1);
+        //mp1.addMushroom(mushroom);
         mps.add(mp1);
         mps.add(mp2);
         return mps;

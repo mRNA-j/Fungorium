@@ -73,7 +73,8 @@ public class TectonG extends JComponent implements BaseViewG {
 
         // Yarn indicator
         if (hasYarn) {
-            g.fillRect(x + radius - 10, y + radius - 10, 5, 5);
+            //g.fillRect(x + radius - 10, y + radius - 10, 5, 5);
+            g.drawString("*", x-10, y - radius - 10);
         }
 
         // Tecton ID

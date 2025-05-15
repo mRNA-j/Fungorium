@@ -68,6 +68,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
   public MushroomPickerG(MushroomPicker picker, String panelName, Controller controllerIn) {
     this.mushroomPicker = picker;
     this.tectonFactory = new TectonGFactory();
+
     this.controller = controllerIn;
     nameLabel.setText(mushroomPicker.getName() + " - "+ mushroomPicker.getPoints());
     nextPanelName = panelName;
@@ -84,6 +85,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
 
     // === Upper Tectons from Owned Mushrooms ===
     for (int i = 0; i < mushroomPicker.getOwnedMushrooms().size(); i++) {
+      System.out.println(mushroomPicker.getName() + "  " +mushroomPicker.getOwnedMushrooms().size());
       Mushroom mushroom = mushroomPicker.getOwnedMushrooms().get(i);
       Tecton t = mushroom.getTecton();
       if(t.getId() != null&& addedTectonIds.add(t.getId())) {

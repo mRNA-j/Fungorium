@@ -32,13 +32,10 @@ public class MushroomPicker extends Player implements Serializable {
      */
     public MushroomPicker(String name, Mushroom mushroom, String testId) {
         super(name, 0, testId); // A szülő (Player) osztály konstruktorának meghívása a játékos névvel és induló értékkel (0)
-        MushroomPickerView mushroomPickerView = new MushroomPickerView(this);
-        super.setPlayerView(mushroomPickerView);
+
         ownedMushrooms = new ArrayList<>(); // A ownedMushrooms lista inicializálása egy új ArrayList példánnyal
         ownedMushrooms.add(mushroom); // Az induló gomba hozzáadása a gombák listájához
         ownedYarns = new ArrayList<>(); // A statikus ownedYarns lista inicializálása egy új ArrayList példánnyal
-
-
     }
 
     /**
@@ -55,15 +52,7 @@ public class MushroomPicker extends Player implements Serializable {
         ownedYarns = new ArrayList<>(); // A statikus ownedYarns lista inicializálása egy új ArrayList példánnyal
 
         //hard coded
-        Tecton t1 = new Tecton("t1", 2, false, false);
-        Tecton t2 = new Tecton("t2", 2, false, false);
-        Tecton t3 = new Tecton("t3", 2, false, false);
-        Mushroom m1 = new Mushroom(t1,this, "m1");
-        Yarn y1=new Yarn(m1,this,"y1");
-        ownedMushrooms.add(m1);
-        ownedYarns.add(y1);
-        t1.addNeighbour(t2);
-        t1.addNeighbour(t3);
+
     }
 
     /**
