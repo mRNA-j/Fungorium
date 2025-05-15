@@ -84,7 +84,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
         // Prepare upper tectons from insects
         for (int i = 0; i < ento.getInsect().size(); i++) {
             Insect insect = ento.getInsect().get(i);
-            String id = insect.getId();
+            String id = insect.getCurrentPlace().getId();
             upperTectons.add(tectonFactory.onCreate(i * 80 + 10, 40, 30, id, insect.getCurrentPlace()));
         }
 
