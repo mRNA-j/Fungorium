@@ -58,22 +58,23 @@ public class EntomologistG extends JPanel implements BaseViewG {
     }
 
     public EntomologistG(Entomologist ento, String panelName) {
-        this.entomologist = ento;
-        ento.addObserver(this);
-        this.factory = new JFactory();
-        nameLabel.setText(entomologist.getName() + " - " + entomologist.getPoints());
-        nextPanelName=panelName;
-        // Title label
-        nameLabel.setFont(new Font("SansSerif", Font.PLAIN, 16));
-        nameLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
-        this.add(nameLabel, BorderLayout.NORTH);
-        JPanel topPanel = new JPanel(new BorderLayout());
-        topPanel.add(Box.createHorizontalGlue(), BorderLayout.CENTER); // Push to right
-        topPanel.add(nameLabel, BorderLayout.EAST);
-        topPanel.setOpaque(false); // Optional: make it transparent
-        this.add(topPanel, BorderLayout.NORTH);
 
-        setLayout(new BorderLayout());
+            this.entomologist = ento;
+            ento.addObserver(this);
+            this.factory = new JFactory();
+            this.nextPanelName = panelName;
+            nameLabel.setText(entomologist.getName() + " - "+ entomologist.getPoints());
+            setLayout(new BorderLayout());
+
+        // === Name Label ===
+            nameLabel.setFont(new Font("SansSerif", Font.PLAIN, 16));
+            nameLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
+             JPanel topPanel = new JPanel(new BorderLayout());
+                topPanel.add(Box.createHorizontalGlue(), BorderLayout.CENTER);
+                topPanel.add(nameLabel, BorderLayout.EAST);
+                topPanel.setOpaque(false);
+                add(topPanel, BorderLayout.NORTH);
+
 
         // Prepare upper tectons from insects
         for (int i = 0; i < ento.getInsect().size(); i++) {
@@ -250,9 +251,15 @@ public class EntomologistG extends JPanel implements BaseViewG {
         buttonPanel.add(skipButton);
         buttonPanel.add(nextPlayerButton);
         // Center panel for tecton views
-        JPanel centerPanel = new JPanel(new BorderLayout());
-        centerPanel.add(upperScroll, BorderLayout.NORTH);
-        centerPanel.add(lowerScroll, BorderLayout.CENTER);
+        JPanel centerPanel = new JPanel();
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+
+        upperScroll.setMaximumSize(new Dimension(Integer.MAX_VALUE, 120)); // limit scroll area height
+        lowerScroll.setMaximumSize(new Dimension(Integer.MAX_VALUE, 120));
+
+        centerPanel.add(upperScroll);
+        centerPanel.add(Box.createRigidArea(new Dimension(0, 10))); // spacing
+        centerPanel.add(lowerScroll);
 
         JPanel rightPanel = new JPanel();
         rightPanel.setLayout(new BorderLayout());
@@ -342,10 +349,11 @@ public class EntomologistG extends JPanel implements BaseViewG {
         enableAllButtons();
         setAllComboBoxesVisible(false);
 
+        revalidate();
         // Request visual update
         upperStrip.update();
         lowerStrip.update();
-        revalidate();
+
         repaint();
 
     }

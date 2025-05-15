@@ -13,6 +13,9 @@
         private final boolean selectable;
         private TectonG selectedTecton = null;
         private final TectonSelectionListener selectionListener;
+        private final int spacing = 80;
+
+
 
         @Override
         public void update() {
@@ -21,6 +24,7 @@
             setPreferredSize(new Dimension(Math.max(tectons.size() * 80, 400), 100));
 
             // Request repaint to reflect updated state
+            revalidate();
             repaint();
         }
 
@@ -67,8 +71,22 @@
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            for (TectonG circle : tectons) {
-                circle.draw(g, circle == selectedTecton);
+
+            int totalWidth = tectons.size() * spacing;
+            int startX = 40; // Fixed left padding
+            int yPos = getHeight() / 2; // Keep vertical centering
+
+            for (int i = 0; i < tectons.size(); i++) {
+                TectonG tecton = tectons.get(i);
+                tecton.x = startX + i * 80; // 80px spacing between circles
+                tecton.y = yPos;
+                tecton.draw(g, tecton == selectedTecton);
             }
+        }
+
+        @Override
+        public Dimension getPreferredSize() {
+            int width = Math.max(tectons.size() * 80, 400);
+            return new Dimension(width, 100); // Fixed height for all tecton panels
         }
     }

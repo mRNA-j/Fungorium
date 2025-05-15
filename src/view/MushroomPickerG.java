@@ -77,7 +77,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
       Mushroom mushroom = picker.getOwnedMushrooms().get(i);
       Tecton t = mushroom.getTecton();
       if(t.getId() != null&& addedTectonIds.add(t.getId())) {
-        upperTectons.add(new TectonG(i * 80 + 10, 40, 30, t.getId(), t));
+        upperTectons.add(new TectonG(0, 0, 30, t.getId(), t));
       }
     }
 
@@ -87,7 +87,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
         Tecton t = yarn.getTectons().get(j);
 
         if(t.getId() != null&& addedTectonIds.add(t.getId())){
-          upperTectons.add(new TectonG(i * 80 + 10, 40, 30, t.getId(), t));
+          upperTectons.add(new TectonG(0, 0, 30, t.getId(), t));
         }
 
       }
@@ -130,6 +130,12 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
 
     upperStrip = new TectonPanel(upperTectons, true, this::updateLowerStrip);
     lowerStrip = new TectonPanel(lowerTectons, false, null);
+    upperStrip.getPreferredSize();
+
+    lowerStrip.setPreferredSize(
+            new Dimension(lowerStrip.getPreferredSize().width,
+                    upperStrip.getPreferredSize().height) // Match upper strip height
+    );
 
     upperScroll = new JScrollPane(upperStrip);
     lowerScroll = new JScrollPane(lowerStrip);
@@ -177,13 +183,13 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
     });
 
     DS_mushroomSelector.addActionListener(e -> {
-      
+
       DS_mushroomSelector.setEnabled(false);
       DS_tectonSelector.setEnabled(true);
     });
 
     DS_tectonSelector.addActionListener(e -> {
-      
+
       Object mushroomSelected = DS_mushroomSelector.getSelectedItem();
       Object tectonSelected = DS_tectonSelector.getSelectedItem();
 
@@ -261,9 +267,16 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
     buttonPanel.add(nextPlayerButton);
 
     // === Center Panel ===
-    JPanel centerPanel = new JPanel(new BorderLayout());
-    centerPanel.add(upperScroll, BorderLayout.NORTH);
-    centerPanel.add(lowerScroll, BorderLayout.CENTER);
+
+    JPanel centerPanel = new JPanel();
+    centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+
+    upperScroll.setMaximumSize(new Dimension(Integer.MAX_VALUE, 120)); // limit scroll area height
+    lowerScroll.setMaximumSize(new Dimension(Integer.MAX_VALUE, 120));
+
+    centerPanel.add(upperScroll);
+    centerPanel.add(Box.createRigidArea(new Dimension(0, 10))); // spacing
+    centerPanel.add(lowerScroll);
 
     JPanel rightPanel = new JPanel();
     rightPanel.setLayout(new BorderLayout());
@@ -314,6 +327,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
 
   @Override
   public void update() {
+    revalidate();
     repaint();
   }
 }
