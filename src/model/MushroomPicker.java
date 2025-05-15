@@ -1,5 +1,4 @@
 package model;
-import view.MushroomPickerView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -46,8 +45,6 @@ public class MushroomPicker extends Player implements Serializable {
      */
     public MushroomPicker(String name, String testId) {
         super(name, 0, testId); // A szülő (Player) osztály konstruktorának meghívása a játékos névvel és induló értékkel (0)
-        MushroomPickerView mushroomPickerView = new MushroomPickerView(this);
-        super.setPlayerView(mushroomPickerView);
         ownedMushrooms = new ArrayList<>(); // A ownedMushrooms lista inicializálása egy új ArrayList példánnyal
         ownedYarns = new ArrayList<>(); // A statikus ownedYarns lista inicializálása egy új ArrayList példánnyal
 

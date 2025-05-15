@@ -1,6 +1,5 @@
 package model;
 
-import view.InsectView;
 
 import java.io.Serializable;
 
@@ -9,7 +8,6 @@ import java.io.Serializable;
  * és különböző állapotváltozásokat szenvedhet el spórák hatására.
  */
 public class Insect implements Serializable {
-    private final InsectView insectView;
     private Tecton currentPlace; // Az aktuális tecton, ahol a rovar tartózkodik
     private Entomologist owner; //visszadja melyik rovarász játékoshoz tartozik a rovar
     // A rovarra ható spóra effektusok
@@ -56,7 +54,6 @@ public class Insect implements Serializable {
      * @param owner Az {@code Entomologist}, akihez az élőlény tartozik.
      */
     public Insect(Tecton place,Entomologist owner){
-        insectView = new InsectView(this);
         decelerated = false;
         paralized = false;
         accelerated = false;
@@ -71,7 +68,6 @@ public class Insect implements Serializable {
      * csak annyiban tér el, hogy a tesztelésnél használ azonosítót is beállítja
      */
     public Insect(Tecton place,Entomologist owner ,String testID){
-        insectView = new InsectView(this);
         decelerated = false;
         paralized = false;
         accelerated = false;
@@ -84,14 +80,6 @@ public class Insect implements Serializable {
 
     // Getter és setter metódusok a spóra effektusokhoz
 
-    /**
-     * Visszaadja, a rovar view modell részéért felelő osztályt.
-     *
-     * @return a tagváltozó a rovar view interfacet megvalósító osztályához.
-     */
-    public InsectView getInsectView() {
-        return insectView;
-    }
 
     /**
      * Beállítja, hogy a rovar lassító spóra hatása alatt áll-e.

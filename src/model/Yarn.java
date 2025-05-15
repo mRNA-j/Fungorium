@@ -1,7 +1,5 @@
 package model;
 
-import view.YarnView;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +7,6 @@ import java.util.Random;
 
 /** A Yarn class a gombafonal reprezentációja. */
 public class Yarn implements Serializable {
-    private YarnView yarnView;
     protected List<Tecton> tectons;
     protected Mushroom mushroom;
     protected MushroomPicker player;
@@ -20,7 +17,6 @@ public class Yarn implements Serializable {
      * A Yarn class konstruktora.
      */
     public Yarn() {
-        yarnView = new YarnView(this);
         this.tectons = new ArrayList<>();
         id = "Yarn" + new Random().nextInt();
         name="normal";
@@ -32,7 +28,6 @@ public class Yarn implements Serializable {
      * @param picker A gombász akinek  fonala
      */
     public Yarn(Mushroom mushroom, MushroomPicker picker) {
-        yarnView = new YarnView(this);
         this.tectons = new ArrayList<>();
         tectons.add(mushroom.getTecton());
         this.player = picker;
@@ -47,7 +42,6 @@ public class Yarn implements Serializable {
      * @param id a teszteléshez hazsnált azonosító
      */
     public Yarn(Mushroom mushroom, MushroomPicker picker,String id) {
-        yarnView = new YarnView(this);
         this.tectons = new ArrayList<>();
         tectons.add(mushroom.getTecton());
         this.mushroom = mushroom;
@@ -74,15 +68,6 @@ public class Yarn implements Serializable {
 
     public String getName(){return name;}
 
-
-
-    public YarnView getYarnView() {
-        return yarnView;
-    }
-
-    public void setYarnView(YarnView yarnView) {
-        this.yarnView = yarnView;
-    }
     /**
      * Ellenőrzi, hogy a gombafonal kapcsolódik-e gombatesthez. Implementáció: ellenőrzi, hogy a
      * gombatest Tectonja szerepel-e a gombafonalhoz tartozó Tectonok listájában.

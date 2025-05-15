@@ -1,6 +1,4 @@
 package model;
-import view.PlayerView;
-import view.View;
 
 import java.io.Serializable;
 
@@ -11,7 +9,6 @@ import java.io.Serializable;
  */
 public abstract class Player extends BaseModel implements Serializable {
     /** Az objektumhoz tartozó View, ami az objektum kiírásáért felel (később a megjelenítést fogja végezni)*/
-    private PlayerView playerView;
 
     /** A játékos neve */
     private String name;
@@ -30,7 +27,6 @@ public abstract class Player extends BaseModel implements Serializable {
         this.name = name;
         this.points = points;
         this.testID = null;
-        this.playerView = null;
     }
 
     /**
@@ -44,18 +40,7 @@ public abstract class Player extends BaseModel implements Serializable {
         this.name = name;
         this.points = points;
         this.testID = testID;
-        this.playerView = null;
     }
-
-
-    public void setPlayerView(PlayerView view) {
-        this.playerView = view;
-    }
-
-    public PlayerView getPlayerView() {
-        return playerView;
-    }
-
     /**
      * Beállítja a játékos nevét.
      * @param name A játékos új neve.

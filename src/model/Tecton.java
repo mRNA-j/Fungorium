@@ -1,14 +1,10 @@
 package model;
-
-import view.TectonView;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /** A Tecton class a játéktér egy területi egységének reprezentációja. */
 public class Tecton implements Serializable {
-    private TectonView tectonView;
     private String id; //teszteléshez használt azonosító
     private final int yarnLimit;
     private final boolean mushroomPrevent;
@@ -20,23 +16,6 @@ public class Tecton implements Serializable {
     private List<Tecton> neighbours;
     private boolean yarnAbsorption = false;
 
-    /**
-     * Visszaadja a jelenlegi TectonView objektumot, amely a Tecton megjelenítését kezeli.
-     *
-     * @return A TectonView objektum.
-     */
-    public TectonView getTectonView() {
-        return tectonView;
-    }
-
-    /**
-     * Beállítja a Tecton nézetét a megadott TectonView objektummal.
-     *
-     * @param tectonView Az új TectonView.
-     */
-    public void setTectonView(TectonView tectonView) {
-        this.tectonView = tectonView;
-    }
 
     /**
      * Visszajelzést ad arról, hogy az tectonon lehet-e gombát növeszteni.
@@ -92,7 +71,6 @@ public class Tecton implements Serializable {
      * @param isKeepAlive true, ha a tekton életbentartó.
      */
     public Tecton( int yarnLimit, boolean mushroomPrevent, boolean isKeepAlive) {
-        tectonView = new TectonView(this);
         this.yarnLimit = yarnLimit;
         this.mushroomPrevent = mushroomPrevent;
         this.isKeepAlive = isKeepAlive;
@@ -112,7 +90,6 @@ public class Tecton implements Serializable {
      * @param isKeepAlive true, ha a tekton életbentartó.
      */
     public Tecton(String id, int yarnLimit, boolean mushroomPrevent, boolean isKeepAlive) {
-        tectonView = new TectonView(this);
         this.id = id;
         this.yarnLimit = yarnLimit;
         this.mushroomPrevent = mushroomPrevent;

@@ -1,7 +1,5 @@
 package model;
 
-import view.MushroomView;
-
 import java.io.Serializable;
 
 /**
@@ -9,7 +7,6 @@ import java.io.Serializable;
  * Kezeli a gomba korát, spóráit és a tectonhoz való kapcsolódását.
  */
 public class Mushroom implements Serializable {
-    private final MushroomView mushroomView;
     private MushroomPicker owner;
     private String id; // Hozzáadott ID mező
     private int numberOfDispersions;
@@ -25,7 +22,6 @@ public class Mushroom implements Serializable {
      * @param picker A gombász akihez a gomba tartozik
      */
     public Mushroom(Tecton tecton, MushroomPicker picker) {
-        mushroomView = new MushroomView(this);
         this.tecton = tecton;
         tecton.addMushroom(this);
         owner = picker;
@@ -44,7 +40,6 @@ public class Mushroom implements Serializable {
      * @param testID a teszteléshez használt azonosító
      */
     public Mushroom(Tecton tecton,MushroomPicker picker , String testID) {
-        mushroomView = new MushroomView(this);
         owner = picker;
         this.tecton = tecton;
         tecton.addMushroom(this);
@@ -72,13 +67,6 @@ public class Mushroom implements Serializable {
         this.owner = owner;
     }
 
-    /**
-     * Visszaadja a nézetet
-     * @return MushroomView
-     */
-    public MushroomView getMushroomView() {
-        return mushroomView;
-    }
 
     /**
      * Visszaadja, hogy hány körig tart a spórát kinöveszteni
