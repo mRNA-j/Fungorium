@@ -57,5 +57,7 @@ public class KillerYarn extends Yarn implements Serializable {
           }
         }
       }
+      notifyObservers();
+
     }
 }

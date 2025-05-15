@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Random;
 
 /** A Yarn class a gombafonal reprezentációja. */
-public class Yarn implements Serializable {
+public class Yarn extends BaseModel implements Serializable {
+
     protected List<Tecton> tectons;
     protected Mushroom mushroom;
     protected MushroomPicker player;
@@ -155,6 +156,7 @@ public class Yarn implements Serializable {
 
         //Tekton listáját kitöröljük
         tectons.clear();
+        notifyObservers();
     }
 
     /**
@@ -166,6 +168,7 @@ public class Yarn implements Serializable {
         if (!tectons.contains(t)) {
             this.tectons.add(t);
         }
+        notifyObservers();
     }
 
     /**

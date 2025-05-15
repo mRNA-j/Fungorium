@@ -262,25 +262,34 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
       disableOtherButtons(growYarnButton);
     });
 
+    // Fix for the IndexOutOfBoundsException in GY_yarnSelector.addActionListener
+
     GY_yarnSelector.addActionListener(e -> {
       chosenYarn = (Yarn) GY_yarnSelector.getSelectedItem();
       List<Tecton> tectonList = new ArrayList<>();
-      for(Tecton t1: chosenYarn.getTectons()){
-        for(Tecton t: t1.getNeighbours()){
-          if(!tectonList.contains(t)){
-            if(t.getYarnLimit()<1) {
-              if (t.getYarns() != null && t.getYarns().get(0).getPlayer() != mushroomPicker) {
-                if (!tectonList.contains(t1)) {
+
+      // The issue is here - when chosenYarn.getTectons() is empty,
+      // the loop doesn't execute but we still try to access elements later
+
+      if (chosenYarn != null && !chosenYarn.getTectons().isEmpty()) {
+        for(Tecton t1: chosenYarn.getTectons()){
+          for(Tecton t: t1.getNeighbours()){
+            if(!tectonList.contains(t)){
+              if(t.getYarnLimit() > t.getYarns().size()) {
+                if (t.getYarns() != null && !t.getYarns().isEmpty() && t.getYarns().get(0).getPlayer() != mushroomPicker) {
+                  if (!tectonList.contains(t1)) {
+                    tectonList.add(t1);
+                  }
+                }
+                else {
                   tectonList.add(t1);
                 }
-              }
-              else {
-                tectonList.add(t1);
               }
             }
           }
         }
       }
+
       int tectonSize = tectonList.size();
       Tecton[] tectons = tectonList.toArray(new Tecton[tectonSize]);
       GY_tgtTectonSelector.setModel(new DefaultComboBoxModel<>(tectons));
@@ -292,18 +301,18 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
     GY_tgtTectonSelector.addActionListener(e -> {
       chosenTecton2 = (Tecton) GY_tgtTectonSelector.getSelectedItem();
       List<Tecton> tectonList = new ArrayList<>();
-      for(Tecton t: chosenTecton2.getNeighbours()){
-        if(!tectonList.contains(t) && t.getYarns().contains(chosenYarn)){
+      for (Tecton t : chosenTecton2.getNeighbours()) {
+        if (!tectonList.contains(t)) {
           tectonList.add(t);
         }
       }
-      int tectonSize = tectonList.size();
-      Tecton[] tectons = tectonList.toArray(new Tecton[tectonSize]);
+      Tecton[] tectons = tectonList.toArray(new Tecton[0]);
       GY_srcTectonSelector.setModel(new DefaultComboBoxModel<>(tectons));
       GY_srcTectonSelector.setEnabled(true);
       GY_srcTectonSelector.setVisible(true);
       GY_tgtTectonSelector.setEnabled(false);
     });
+
 
     GY_srcTectonSelector.addActionListener(e -> {
       chosenTecton1 = (Tecton) GY_srcTectonSelector.getSelectedItem();
