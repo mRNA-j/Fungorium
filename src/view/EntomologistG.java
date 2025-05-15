@@ -50,6 +50,8 @@ public class EntomologistG extends JPanel implements BaseViewG {
     private Tecton chosenTecton;
     private Yarn chosenYarn;
     private Spore chosenSpore;
+    private IFactory factory ;
+
 
     public void setPanelSwitcher(PanelSwitcher panelSwitcher) {
         this.panelSwitcher = panelSwitcher;
@@ -58,6 +60,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
     public EntomologistG(Entomologist ento, String panelName) {
         this.entomologist = ento;
         ento.addObserver(this);
+        this.factory = new JFactory();
         nameLabel.setText(entomologist.getName() + " - " + entomologist.getPoints());
         nextPanelName=panelName;
         // Title label
@@ -76,7 +79,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
         for (int i = 0; i < ento.getInsect().size(); i++) {
             Insect insect = ento.getInsect().get(i);
             String id = insect.getId();
-            upperTectons.add(new TectonG(i * 80 + 10, 40, 30, id, insect.getCurrentPlace()));
+            upperTectons.add(factory.onCreateTectonG(i * 80 + 10, 40, 30, id, insect.getCurrentPlace()));
         }
 
         // Initialize TectonPanels
