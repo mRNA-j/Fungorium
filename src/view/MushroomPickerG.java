@@ -1,5 +1,6 @@
 package view;
 
+import factory.TectonGFactory;
 import model.*;
 
 import javax.swing.*;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
+import interfaces.ITectonGFactory;
 
 public class MushroomPickerG extends JPanel implements BaseViewG {
   private MushroomPicker mushroomPicker;
