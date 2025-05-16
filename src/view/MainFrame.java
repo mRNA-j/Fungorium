@@ -23,11 +23,11 @@ public class MainFrame extends JFrame implements PanelSwitcher {
 
     Controller controller;
 
-    public MainFrame(){
+    public MainFrame() {
         setTitle("Pentagon 98 Fungorium");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
-        setMinimumSize(new Dimension(800,600));
+        setMinimumSize(new Dimension(800, 600));
 
         startPanel.setPanelSwitcher(this);
         startGamePanel.setPanelSwitcher(this);

@@ -41,8 +41,6 @@ public class Controller {
         } else if (currentTurn == 0) {
             game.setActivePlayer(game.getEnts().get(1));
         }
-
-        System.out.println("New active player type: " + game.getActivePlayer().getClass().getSimpleName());
     }
 
     //private static boolean isRandomized = true;

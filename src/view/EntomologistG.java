@@ -64,7 +64,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
 
         ento.addObserver(this);
         this.controller = controllerIn;
-        this.entomologist = controller.getGame().getEnts().get(0);
+        this.entomologist = ento;
         this.tectonFactory = new TectonGFactory();
         this.nextPanelName = panelName;
         nameLabel.setText(entomologist.getName() + " - "+ entomologist.getPoints());
@@ -77,9 +77,6 @@ public class EntomologistG extends JPanel implements BaseViewG {
         topPanel.add(nameLabel, BorderLayout.EAST);
         topPanel.setOpaque(false);
         add(topPanel, BorderLayout.NORTH);
-
-
-        setLayout(new BorderLayout());
 
         // Prepare upper tectons from insects
         for (int i = 0; i < ento.getInsect().size(); i++) {
@@ -259,8 +256,6 @@ public class EntomologistG extends JPanel implements BaseViewG {
                 setAllComboBoxesVisible(false);
                 enableAllButtons();
                 panelSwitcher.showPanel(nextPanelName);
-                controller.action_phase_end();
-                //System.out.println(entomologist.getName() + "\n");
                 controller.setNextActivePlayer();
             }
         });
@@ -338,7 +333,10 @@ public class EntomologistG extends JPanel implements BaseViewG {
             lowerTectons.add(tectonFactory.onCreate(i * 80 + 10, 40, 30, neighbor.getId(), neighbor));
         }
 
-        lowerStrip.repaint();
+        SwingUtilities.invokeLater(() -> {
+            lowerStrip.update();
+            lowerStrip.repaint();
+        });
     }
 
     @Override
@@ -367,12 +365,12 @@ public class EntomologistG extends JPanel implements BaseViewG {
         enableAllButtons();
         setAllComboBoxesVisible(false);
 
-        revalidate();
-        // Request visual update
-        upperStrip.update();
-        lowerStrip.update();
-
-        repaint();
+        SwingUtilities.invokeLater(() -> {
+            upperStrip.update();
+            lowerStrip.update();
+            revalidate();
+            repaint();
+        });
 
     }
 

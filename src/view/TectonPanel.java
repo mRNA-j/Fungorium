@@ -24,8 +24,11 @@
             setPreferredSize(new Dimension(Math.max(tectons.size() * 80, 400), 100));
 
             // Request repaint to reflect updated state
-            revalidate();
-            repaint();
+            SwingUtilities.invokeLater(() -> {            
+                revalidate();
+                repaint();
+            });
+
         }
 
         public interface TectonSelectionListener {
@@ -51,7 +54,9 @@
                                 } else {
                                     selectedTecton = circle;
                                 }
-                                repaint();
+                                SwingUtilities.invokeLater(() -> {
+                                    repaint();
+                                });
 
                                 if (selectionListener != null && selectedTecton != null) {
                                     selectionListener.onTectonSelected(selectedTecton.t);
