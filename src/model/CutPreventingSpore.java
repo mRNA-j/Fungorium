@@ -36,5 +36,6 @@ public class CutPreventingSpore extends Spore implements Serializable {
      */
     public void addEffect(Insect insect) {
         insect.setCutPrevented(true);
+        insect.setEffectDuration(2);
     }
 }

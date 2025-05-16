@@ -35,5 +35,6 @@ public class ParalyzingSpore extends Spore implements Serializable {
      */
     public void addEffect(Insect insect) {
         insect.setParalized(true);
+        insect.setEffectDuration(2);
     }
 }

@@ -4,8 +4,6 @@ import model.Tecton;
 import model.Insect;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +27,9 @@ public class TectonG extends JComponent implements BaseViewG {
         hasInsect = !t.getInsects().isEmpty();
         hasYarn = !t.getYarns().isEmpty();
         sporeCount = t.getSpores().size();
+
+        t.addObserver(this);
+
 
         // Create InsectG instances for all insects
         createInsectGs();
@@ -183,6 +184,9 @@ public class TectonG extends JComponent implements BaseViewG {
         }
 
         // Request repaint to reflect updated state
-        repaint();
+        SwingUtilities.invokeLater(() -> {
+            revalidate();
+            repaint();
+        });
     }
 }

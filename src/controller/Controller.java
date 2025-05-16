@@ -31,6 +31,7 @@ public class Controller {
 
         currentTurn = game.getCurrentTurn();  // Frissítsd a currentTurn-t a beállított értékkel
 
+
         // Most állítsd be az aktív játékost az új körszám alapján
         if (currentTurn == 1) {
             game.setActivePlayer(game.getMps().get(0));
@@ -40,6 +41,10 @@ public class Controller {
             game.setActivePlayer(game.getMps().get(1));
         } else if (currentTurn == 0) {
             game.setActivePlayer(game.getEnts().get(1));
+        }
+
+        if(currentTurn == 1) {
+            next_round();
         }
     }
 
@@ -512,8 +517,24 @@ public class Controller {
          if(randNum<5) {
              map.splitting(potentialSplitTecton);
          }
+         
+         // Csökkenti az összes rovar effektusának időtartamát
+         decreaseAllInsectEffectDuration();
+    }
 
-         game.nextTurn();
+    /**
+     * Csökkenti az összes rovar effektusának időtartamát a játékban.
+     * Ezt minden kör végén meg kell hívni.
+     */
+    private void decreaseAllInsectEffectDuration() {
+        List<Tecton> tectons = game.getPlayField().getTectons();
+        int insectCount = 0;
+        for (Tecton tecton : tectons) {
+            insectCount += tecton.getInsects().size();
+            for (Insect insect : tecton.getInsects()) {
+                insect.decrementEffectDuration();
+            }
+        }
     }
 
 
@@ -656,46 +677,12 @@ public class Controller {
      //* @param args Command arguments: insect_ID, yarn_ID, target_tecton_ID
      */
     public void action_cut_yarn(Insect insect, Yarn yarn, Tecton amerreVagunk) {
-        // Ensure exactly 3 arguments are passed: insect_ID, yarn_ID, target_tecton_ID
-        /*if (handleArgCount(args, 4)) {
-            return;
-        }
-
-        String insectId = args[1];
-        String yarnId = args[2];
-        String tectonId = args[3];
-
-        // Look up the insect by its ID.
-        Insect targetInsect = findInsectById(insectId);
-        if (targetInsect == null) {
-            System.out.println("Error: No Insect found with ID: " + insectId);
-            return;
-        }
-
-        // Globally search for the yarn using its ID.
-        Yarn targetYarn = findYarnById(yarnId);
-        if (targetYarn == null) {
-            System.out.println("Error: No Yarn found with ID: " + yarnId);
-            return;
-        }
-
-        // Verify that the yarn is located on the tecton with the given target_tecton_ID.
-        Tecton yarnTecton = findTectonByYarn(targetYarn, tectonId);
-        if (yarnTecton == null || !yarnTecton.getId().equals(tectonId)) {
-            System.out.println("Error: Yarn (" + yarnId + ") is not contained by Tecton (" + tectonId + ").");
-            return;
-        }
-
-        // Find the entomologist controlling the insect.
-        Entomologist entomologist = findEntomologistByInsect(targetInsect);
-        if (entomologist == null) {
-            System.out.println("Error: No Entomologist found with Insect: " + insectId);
-            return;
-        }*/
-
         // Execute the yarn cutting action.
-        Entomologist entomologist =(Entomologist) game.getActivePlayer();
+        Entomologist entomologist = (Entomologist) game.getActivePlayer();
+        
+        // Csak egyszer távolítsuk el a fonalat
         entomologist.actionCutYarn(yarn, insect, amerreVagunk);
+        
     }
 
     /*/**

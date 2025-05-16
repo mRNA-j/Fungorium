@@ -40,5 +40,8 @@ public class AcceleratorSpore extends Spore implements Serializable {
      */
     public void addEffect(Insect insect) {
         insect.setAccelerated(true);
+        
+        // Beállítja az effektus időtartamát 2 körre
+        insect.setEffectDuration(2);
     }
 }

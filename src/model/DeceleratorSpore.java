@@ -35,6 +35,9 @@ public class DeceleratorSpore extends Spore implements Serializable {
      * @param insect A rovar, amelyre a lassító hatást kell alkalmazni.
      */
     public void addEffect(Insect insect) {
+        System.out.println("DEBUG: Gyorsító spóra hatás alkalmazása");
         insect.setDecelerated(true);
+        insect.setEffectDuration(2);
+        System.out.println("DEBUG: Gyorsító effektus időtartama beállítva: 2");
     }
 }

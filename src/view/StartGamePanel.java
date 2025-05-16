@@ -74,8 +74,6 @@ public class StartGamePanel extends JPanel {
                     mainFrame.setGame(controller);
                     mainFrame.setUpPlayers();
                     mainFrame.showPanel("mp1Panel");
-
-
             }
         });
         backButton.addActionListener(e -> {

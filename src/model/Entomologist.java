@@ -114,12 +114,12 @@ public class Entomologist extends Player implements Serializable {
      */
     public void actionCutYarn(Yarn yarn, Insect insect, Tecton amerreVagunk) {
         if(insect.getParalized()){
-            //System.out.println("A rovar bénítóspóra hatása alatt van, a fonalvágás nem lehetéges");
+            System.out.println("A rovar bénítóspóra hatása alatt van, a fonalvágás nem lehetéges");
             actionWait(insect);
             return;
         }
         if(insect.getCutPrevented()){
-            //System.out.println("A rovar vágásgátló spóra hatása alatt van, a fonalvágás nem lehetéges");
+            System.out.println("A rovar vágásgátló spóra hatása alatt van, a fonalvágás nem lehetséges");
             actionWait(insect);
             return;
         }

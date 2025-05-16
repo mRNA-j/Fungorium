@@ -177,6 +177,7 @@ public class Tecton extends BaseModel implements Serializable {
     public void removeYarn(Yarn yarn, Tecton masik) {
         yarn.split(this, masik);
         yarns.remove(yarn);
+        yarn.getTectons().remove(this);
     }
 
     /**

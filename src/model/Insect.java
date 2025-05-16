@@ -18,6 +18,8 @@ public class Insect implements Serializable {
 
     private String testID; //Csak tesztelésnél használt azonosító
 
+    private int effectDuration = 0; // 0 jelentése: nincs effektus, pozitív szám: hátralévő körök száma
+
     /**
      * Visszaadja a rovar aktuálisan melyik tektonon van
      *
@@ -186,7 +188,6 @@ public class Insect implements Serializable {
      * @param errefeleVagunk az aktualis irány, hogy melyik tekton fele kell vágni a fonalat
      */
     public void cutYarn(Yarn yarn, Tecton errefeleVagunk) {
-
         int index = yarn.tectons.indexOf(currentPlace);
         if(index == 0 || index == yarn.getTectons().size()-1) {
             currentPlace.removeYarn(yarn, errefeleVagunk);
@@ -194,6 +195,7 @@ public class Insect implements Serializable {
         } else {
             currentPlace.removeYarn(yarn, errefeleVagunk);
         }
+        System.out.println("A rovar sikeresen elvágta a fonalat.");
     }
 
     /**
@@ -207,13 +209,43 @@ public class Insect implements Serializable {
     }
 
     /**
-     * Vissazálítja a rovaron lévő effektusokat semmire, minden kör végén meghívódik
-     * */
+     * Beállítja az aktuális effektus időtartamát körökben.
+     * @param duration Az effektus időtartama körökben (általában 2 kör)
+     */
+    public void setEffectDuration(int duration) {
+        this.effectDuration = duration;
+    }
+
+    /**
+     * Visszaadja az effektus hátralévő időtartamát.
+     * @return Az effektus hátralévő köreinek száma, vagy 0 ha nincs aktív effektus
+     */
+    public int getEffectDuration() {
+        return effectDuration;
+    }
+
+    /**
+     * Csökkenti az effektus időtartamát és törli az effektust, ha az időtartam eléri a 0-t.
+     * Minden kör végén meg kell hívni.
+     */
+    public void decrementEffectDuration() {
+        if (effectDuration > 0) {
+            effectDuration--;
+            if (effectDuration == 0) {
+                resetEffect();
+            }
+        }
+    }
+
+    /**
+     * Visszaállítja a rovaron lévő effektusokat alapállapotba
+     */
     public void resetEffect() {
         setAccelerated(false);
         setDecelerated(false);
         setParalized(false);
         setCutPrevented(false);
+        effectDuration = 0;
     }
 
     /**
@@ -224,7 +256,7 @@ public class Insect implements Serializable {
      */
     public boolean move(Tecton targetTecton) {
 
-        if(targetTecton.isConnectedWithYarn(currentPlace)){
+        if(!decelerated && targetTecton.isConnectedWithYarn(currentPlace)){
             currentPlace.removeInsect(this);
             targetTecton.addInsect(this);
             currentPlace = targetTecton;

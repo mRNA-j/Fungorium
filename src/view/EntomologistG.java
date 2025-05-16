@@ -147,7 +147,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
             MI_yarnSelect.setEnabled(false);
             MI_tgtTectonSelect.setVisible(false);
             MI_tgtTectonSelect.setEnabled(false);
-            disableOtherButtons(moveButton);
+            disableOtherButtons(nextPlayerButton);
         });
 
         MI_insectSelect.addActionListener(e -> {
@@ -166,6 +166,14 @@ public class EntomologistG extends JPanel implements BaseViewG {
             MI_tgtTectonSelect.setEnabled(false);
             chosenTecton = (Tecton) MI_tgtTectonSelect.getSelectedItem();
             controller.action_move(chosenInsect, chosenTecton);
+            // disable all buttons except for next player, if the insect has accelerator spore, then leave the move button enabled
+            if(chosenInsect.getAccelerated()){
+                disableOtherButtons(moveButton);
+                moveButton.setEnabled(true);
+                chosenInsect.resetEffect();
+            } else {
+                disableOtherButtons(nextPlayerButton);
+            } 
         });
 
         // Eat Spore
@@ -179,7 +187,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
             ES_insectSelect.setEnabled(true);
             ES_sporeSelect.setVisible(false);
             ES_sporeSelect.setEnabled(false);
-            disableOtherButtons(eatButton);
+            disableOtherButtons(nextPlayerButton);
         });
 
         ES_insectSelect.addActionListener(e -> {
@@ -197,6 +205,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
         ES_sporeSelect.addActionListener(e -> {
             chosenSpore = (Spore) ES_sporeSelect.getSelectedItem();
             controller.action_eat_spore(chosenSpore, chosenInsect);
+            disableOtherButtons(skipButton);
         });
 
         // Cut Yarn
@@ -212,7 +221,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
             CY_yarnSelect.setEnabled(false);
             CY_tgtTectonSelect.setVisible(false); // Initially hidden
             CY_tgtTectonSelect.setEnabled(false);
-            disableOtherButtons(cutButton);
+            disableOtherButtons(nextPlayerButton);
         });
 
         CY_insectSelect.addActionListener(e -> {
@@ -241,6 +250,8 @@ public class EntomologistG extends JPanel implements BaseViewG {
         CY_tgtTectonSelect.addActionListener(e -> {
             chosenTecton = (Tecton) CY_tgtTectonSelect.getSelectedItem();
             controller.action_cut_yarn(chosenInsect, chosenYarn, chosenTecton);
+            update();
+            disableOtherButtons(skipButton);
         });
 
         // Update skip button to handle new combo boxes
@@ -295,7 +306,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
         eatButton.setEnabled(false);
         cutButton.setEnabled(false);
         skipButton.setEnabled(false);
-        activeButton.setEnabled(false);
+        activeButton.setEnabled(true);
     }
 
     private void enableAllButtons() {
@@ -373,7 +384,6 @@ public class EntomologistG extends JPanel implements BaseViewG {
         });
 
     }
-
 }
 
 
