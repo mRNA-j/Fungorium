@@ -49,6 +49,7 @@ public class Map implements Serializable {
         ents.get(0).addInsect(i1);
         ents.get(1).addInsect(i2);
 
+        //ITT a hiba
         Mushroom m1 = new Mushroom(t1, mps.get(0), "m1");
         Yarn y1 = new Yarn(m1,mps.get(0), "y1");
         mps.get(0).actionGrowYarn(t1,t2, y1);

@@ -43,6 +43,7 @@ public class Mushroom implements Serializable {
         owner = picker;
         this.tecton = tecton;
         tecton.addMushroom(this);
+        picker.addMushroom(this);
         age = 0;
         numberOfDispersions = 0;
         newSporeGrowth = 5;

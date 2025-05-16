@@ -69,6 +69,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
     this.mushroomPicker = picker;
     this.tectonFactory = new TectonGFactory();
 
+    picker.addObserver(this);
     this.controller = controllerIn;
     nameLabel.setText(mushroomPicker.getName() + " - "+ mushroomPicker.getPoints());
     nextPanelName = panelName;
@@ -112,25 +113,25 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
 
 
 
-    DS_mushroomSelector= new JComboBox<>();
+    DS_mushroomSelector= new JComboBox<Mushroom>();
     DS_mushroomSelector.setVisible(false);
-    DS_tectonSelector = new JComboBox<>();
+    DS_tectonSelector = new JComboBox<Tecton>();
     DS_tectonSelector.setVisible(false);
-    DS_sporeSelector = new JComboBox<>(new String[] {"Accelerator", "Decelerator", "Cut Preventing", "Insect Duplicating", "Paralyzing"});
+    DS_sporeSelector = new JComboBox<String>(new String[] {"Accelerator", "Decelerator", "Cut Preventing", "Insect Duplicating", "Paralyzing"});
     DS_sporeSelector.setVisible(false);
     DS_sporeID = new JTextField("id");
     DS_sporeSelector.setVisible(false);
-    GM_yarnSelector = new JComboBox<>();
+    GM_yarnSelector = new JComboBox<Yarn>();
     GM_yarnSelector.setVisible(false);
-    GM_tectonSelector= new JComboBox<>();
+    GM_tectonSelector= new JComboBox<Tecton>();
     GM_tectonSelector.setVisible(false);
     GM_mushroomID = new JTextField("id");
     GM_mushroomID.setVisible(false);
-    GY_yarnSelector=new JComboBox<>();
+    GY_yarnSelector=new JComboBox<Yarn>();
     GY_yarnSelector.setVisible(false);
-    GY_srcTectonSelector = new JComboBox<>();
+    GY_srcTectonSelector = new JComboBox<Tecton>();
     GY_srcTectonSelector.setVisible(false);
-    GY_tgtTectonSelector= new JComboBox<>();
+    GY_tgtTectonSelector= new JComboBox<Tecton>();
     GY_tgtTectonSelector.setVisible(false);
 
     comboPanel.add(DS_mushroomSelector);
@@ -141,8 +142,9 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
     comboPanel.add(GM_tectonSelector);
     comboPanel.add(GM_mushroomID);
     comboPanel.add(GY_yarnSelector);
-    comboPanel.add(GY_tgtTectonSelector);
     comboPanel.add(GY_srcTectonSelector);
+    comboPanel.add(GY_tgtTectonSelector);
+
 
 
     upperStrip = new TectonPanel(upperTectons, true, this::updateLowerStrip);
@@ -195,6 +197,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
     GM_mushroomID.addActionListener(e->{
       String id = GM_mushroomID.getText();
       controller.action_grow_mushroom(chosenTecton1, id);  //TODO nem kell yarn??
+                                                            //a yarn csak azért kell hogy szűkítse a növeszthető tektonok listáját
     });
 
     disperseButton.addActionListener(e -> {
@@ -273,10 +276,9 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
 
       if (chosenYarn != null && !chosenYarn.getTectons().isEmpty()) {
         for(Tecton t1: chosenYarn.getTectons()){
-          for(Tecton t: t1.getNeighbours()){
-            if(!tectonList.contains(t)){
-              if(t.getYarnLimit() > t.getYarns().size()) {
-                if (t.getYarns() != null && !t.getYarns().isEmpty() && t.getYarns().get(0).getPlayer() != mushroomPicker) {
+            if(!tectonList.contains(t1)){
+              if(t1.getYarnLimit() > t1.getYarns().size()) {
+                if (t1.getYarns() != null && !t1.getYarns().isEmpty() && t1.getYarns().get(0).getPlayer() != mushroomPicker) {
                   if (!tectonList.contains(t1)) {
                     tectonList.add(t1);
                   }
@@ -287,35 +289,35 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
               }
             }
           }
-        }
+
       }
 
       int tectonSize = tectonList.size();
       Tecton[] tectons = tectonList.toArray(new Tecton[tectonSize]);
-      GY_tgtTectonSelector.setModel(new DefaultComboBoxModel<>(tectons));
-      GY_tgtTectonSelector.setEnabled(true);
-      GY_tgtTectonSelector.setVisible(true);
+      GY_srcTectonSelector.setModel(new DefaultComboBoxModel<>(tectons));
+      GY_srcTectonSelector.setEnabled(true);
+      GY_srcTectonSelector.setVisible(true);
       GY_yarnSelector.setEnabled(false);
     });
 
-    GY_tgtTectonSelector.addActionListener(e -> {
-      chosenTecton2 = (Tecton) GY_tgtTectonSelector.getSelectedItem();
+    GY_srcTectonSelector.addActionListener(e -> {
+      chosenTecton1 = (Tecton) GY_srcTectonSelector.getSelectedItem();
       List<Tecton> tectonList = new ArrayList<>();
-      for (Tecton t : chosenTecton2.getNeighbours()) {
+      for (Tecton t : chosenTecton1.getNeighbours()) {
         if (!tectonList.contains(t)) {
           tectonList.add(t);
         }
       }
       Tecton[] tectons = tectonList.toArray(new Tecton[0]);
-      GY_srcTectonSelector.setModel(new DefaultComboBoxModel<>(tectons));
-      GY_srcTectonSelector.setEnabled(true);
-      GY_srcTectonSelector.setVisible(true);
-      GY_tgtTectonSelector.setEnabled(false);
+      GY_tgtTectonSelector.setModel(new DefaultComboBoxModel<>(tectons));
+      GY_tgtTectonSelector.setEnabled(true);
+      GY_tgtTectonSelector.setVisible(true);
+      GY_srcTectonSelector.setEnabled(false);
     });
 
 
-    GY_srcTectonSelector.addActionListener(e -> {
-      chosenTecton1 = (Tecton) GY_srcTectonSelector.getSelectedItem();
+    GY_tgtTectonSelector.addActionListener(e -> {
+      chosenTecton2 = (Tecton) GY_tgtTectonSelector.getSelectedItem();
       controller.action_grow_yarn(chosenTecton1, chosenTecton2, chosenYarn);
     });
 
@@ -437,7 +439,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
         }
       }
     }
-/*
+
     // Update combobox models with current data
     int mushroomSize = mushroomPicker.getOwnedMushrooms().size();
     Mushroom[] mushrooms = mushroomPicker.getOwnedMushrooms().toArray(new Mushroom[mushroomSize]);
@@ -450,7 +452,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
     // Update the yarn selectors
     GM_yarnSelector.setModel(new DefaultComboBoxModel<>(yarns));
     GY_yarnSelector.setModel(new DefaultComboBoxModel<>(yarns));
-*/
+
     // Update the lower tecton panel if there's a selection
     if (upperStrip.getSelectedTecton() != null) {
       updateLowerStrip(upperStrip.getSelectedTecton().t);
@@ -458,6 +460,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
 
     // Reset button states
     enableAllButtons();
+
 
     // Hide all combo boxes
     DS_mushroomSelector.setVisible(false);
@@ -469,11 +472,11 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
     GY_srcTectonSelector.setVisible(false);
     GY_tgtTectonSelector.setVisible(false);
 
-    revalidate();
-    // Request visual update
-    upperStrip.repaint();
-    lowerStrip.repaint();
-
-    repaint();
+    SwingUtilities.invokeLater(() -> {
+      upperStrip.update();
+      lowerStrip.update();
+      revalidate();
+      repaint();
+    });
   }
 }

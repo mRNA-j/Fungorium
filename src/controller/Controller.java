@@ -32,13 +32,13 @@ public class Controller {
         currentTurn = game.getCurrentTurn();  // Frissítsd a currentTurn-t a beállított értékkel
 
         // Most állítsd be az aktív játékost az új körszám alapján
-        if (currentTurn == 0) {
+        if (currentTurn == 1) {
             game.setActivePlayer(game.getMps().get(0));
-        } else if (currentTurn == 1) {
-            game.setActivePlayer(game.getEnts().get(0));
         } else if (currentTurn == 2) {
-            game.setActivePlayer(game.getMps().get(1));
+            game.setActivePlayer(game.getEnts().get(0));
         } else if (currentTurn == 3) {
+            game.setActivePlayer(game.getMps().get(1));
+        } else if (currentTurn == 0) {
             game.setActivePlayer(game.getEnts().get(1));
         }
 
