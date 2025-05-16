@@ -184,6 +184,7 @@ public class MushroomPicker extends Player implements Serializable {
         } else {
             //System.out.println(errorMessage + " Nem lehet gombat noveszteni a tektonon");
         }
+        notifyObservers();
     }
 
 
@@ -214,6 +215,7 @@ public class MushroomPicker extends Player implements Serializable {
         else {
             //System.out.println("The selected tecton does not neighbour the yarn");
         }
+        notifyObservers();
     }
 
     /**

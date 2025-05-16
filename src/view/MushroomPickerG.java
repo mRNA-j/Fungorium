@@ -316,7 +316,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
 
     GY_srcTectonSelector.addActionListener(e -> {
       chosenTecton1 = (Tecton) GY_srcTectonSelector.getSelectedItem();
-      mushroomPicker.actionGrowYarn(chosenTecton1, chosenTecton2, chosenYarn);
+      controller.action_grow_yarn(chosenTecton1, chosenTecton2, chosenYarn);
     });
 
     skipButton.addActionListener(e -> {
@@ -344,6 +344,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
         skipButton.setEnabled(true);
         growYarnButton.setEnabled(true);
         panelSwitcher.showPanel(nextPanelName); // Or logic to decide which comes next
+        controller.setNextActivePlayer();
       }
     });
 

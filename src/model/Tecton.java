@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** A Tecton class a játéktér egy területi egységének reprezentációja. */
-public class Tecton implements Serializable {
+public class Tecton extends BaseModel implements Serializable {
     private String id; //teszteléshez használt azonosító
     private final int yarnLimit;
     private final boolean mushroomPrevent;
@@ -166,6 +166,7 @@ public class Tecton implements Serializable {
                 yarns.add(yarn);
             }
         }
+        notifyObservers();
     }
 
     /**

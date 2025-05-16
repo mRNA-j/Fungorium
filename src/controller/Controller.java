@@ -23,7 +23,27 @@ public class Controller {
         map = game.getPlayField();
     }
 
+    public void setNextActivePlayer() {
+        // Először növeld a körszámot és állítsd be a megfelelő értéket
+        int currentTurn = game.getCurrentTurn();
+        int nextTurn = (currentTurn + 1) % 4;  // Ez biztosítja hogy 0,1,2,3,0,1,2,3... legyen
+        game.setCurrentTurn(nextTurn);
 
+        currentTurn = game.getCurrentTurn();  // Frissítsd a currentTurn-t a beállított értékkel
+
+        // Most állítsd be az aktív játékost az új körszám alapján
+        if (currentTurn == 0) {
+            game.setActivePlayer(game.getMps().get(0));
+        } else if (currentTurn == 1) {
+            game.setActivePlayer(game.getEnts().get(0));
+        } else if (currentTurn == 2) {
+            game.setActivePlayer(game.getMps().get(1));
+        } else if (currentTurn == 3) {
+            game.setActivePlayer(game.getEnts().get(1));
+        }
+
+        System.out.println("New active player type: " + game.getActivePlayer().getClass().getSimpleName());
+    }
 
     //private static boolean isRandomized = true;
 

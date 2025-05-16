@@ -51,9 +51,13 @@ public class Map implements Serializable {
 
         Mushroom m1 = new Mushroom(t1, mps.get(0), "m1");
         Yarn y1 = new Yarn(m1,mps.get(0), "y1");
+        mps.get(0).actionGrowYarn(t1,t2, y1);
+
 
         Mushroom m2 = new Mushroom(t3, mps.get(1), "m2");
         Yarn y3 = new Yarn(m2,mps.get(1), "y3");
+
+
 
         addTecton(t1);
         addTecton(t2);

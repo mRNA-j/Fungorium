@@ -48,6 +48,11 @@ public class Game implements Serializable {
 
     private ArrayList<Entomologist> ents;
 
+    public void setCurrentTurn(int currentTurn) {
+        this.currentTurn = currentTurn;
+        if (currentTurn == 4) this.currentTurn = 0;
+    }
+
     /**
      * Alapértelmezett konstruktor a játék inicializálásához.
      * Beállítja a kezdő értékeket és létrehozza a játékteret.
