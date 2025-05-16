@@ -175,7 +175,9 @@ public class Tecton extends BaseModel implements Serializable {
      * @param yarn Az eltávolítandó gombafonal.
      */
     public void removeYarn(Yarn yarn, Tecton masik) {
-        yarn.split(this, masik);
+        if(yarn.getTectons().size() > 2) {
+            yarn.split(this, masik);
+        }
         yarns.remove(yarn);
         yarn.getTectons().remove(this);
     }
