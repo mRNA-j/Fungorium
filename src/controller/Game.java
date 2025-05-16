@@ -127,7 +127,7 @@ public class Game implements Serializable {
      */
     public void nextPlayer() {
         activePlayerIndex++;
-        activePlayer = players.get(activePlayerIndex);
+        activePlayer = players.get(activePlayerIndex%4);
     }
 
     /**
@@ -153,14 +153,9 @@ public class Game implements Serializable {
      */
     public void nextTurn() {
         getPlayField().refresh();
-        activePlayerIndex = 0;
-        activePlayer = players.get(activePlayerIndex);
-        currentTurn++;
         if(currentTurn == numberOfTurns) {
             end();
         }
-
-
     }
 
     /**

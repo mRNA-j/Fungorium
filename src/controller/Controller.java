@@ -43,7 +43,7 @@ public class Controller {
             game.setActivePlayer(game.getEnts().get(1));
         }
 
-        if(currentTurn == 1) {
+        if(currentTurn %4==1) {
             next_round();
         }
     }
@@ -235,7 +235,7 @@ public class Controller {
 
     /**
      * Értelmezi és futtatja az adott parancsot.
-    // * @param cmd a parancs szöveges formában.
+     // * @param cmd a parancs szöveges formában.
      */
     /*public static void parse(String cmd) {
         String[] args = cmd.split("\\s+");
@@ -274,7 +274,7 @@ public class Controller {
     /**
      * Displays statistics about the current round and active player.
      * Expected output format: ActivePlayer: [name], Current round: [round_number]
-    // * @param args Command arguments (not used)
+     // * @param args Command arguments (not used)
      */
     /*private static void statRound(String[] args) {
         // Get the active player from the game
@@ -508,18 +508,20 @@ public class Controller {
     }
 
     public void next_round() {
-         Random random = new Random();
-         int index = random.nextInt(0,map.getTectons().size());
-         Tecton potentialSplitTecton = map.getTectons().get(index);
+        Random random = new Random();
+        int index = random.nextInt(0,map.getTectons().size());
+        Tecton potentialSplitTecton = map.getTectons().get(index);
 
-         int randNum = random.nextInt(0,100);
+        int randNum = random.nextInt(0,100);
 
-         if(randNum<5) {
-             map.splitting(potentialSplitTecton);
-         }
-         
-         // Csökkenti az összes rovar effektusának időtartamát
-         decreaseAllInsectEffectDuration();
+        if(randNum<5) {
+            map.splitting(potentialSplitTecton);
+        }
+
+        // Csökkenti az összes rovar effektusának időtartamát
+        decreaseAllInsectEffectDuration();
+        game.nextTurn();
+
     }
 
     /**
@@ -679,10 +681,10 @@ public class Controller {
     public void action_cut_yarn(Insect insect, Yarn yarn, Tecton amerreVagunk) {
         // Execute the yarn cutting action.
         Entomologist entomologist = (Entomologist) game.getActivePlayer();
-        
+
         // Csak egyszer távolítsuk el a fonalat
         entomologist.actionCutYarn(yarn, insect, amerreVagunk);
-        
+
     }
 
     /*/**
@@ -764,7 +766,7 @@ public class Controller {
      * Executes the move action for an insect with the specified ID to a target Tecton.
      * This command makes the insect move to another Tecton.
      *
-    // * @param args Command arguments, where args[0] is the insect ID and args[1] is the target Tecton ID
+     // * @param args Command arguments, where args[0] is the insect ID and args[1] is the target Tecton ID
      */
     public void action_move(Insect insect, Tecton targetTecton) {
         // Check if we have exactly two arguments (insect ID and target Tecton ID)
@@ -1000,7 +1002,7 @@ public class Controller {
      * Létrehoz egy spórát a megadott tectonon.
      * Spóra típusok: paralyzing, decelerator, cutpreventing
      //* @param args A parancs argumentumai (tecton_id, spore_type)
-    */
+     */
     /*private static void create_spore_on_tecton(String[] args) {
         // Ellenőrizzük, hogy pontosan 4 argumentum van-e (beleértve a parancs nevét)
         if (handleArgCount(args, 4)) {
@@ -1202,7 +1204,7 @@ public class Controller {
         // Gombász játékos létrehozása
         MushroomPicker mushroomPicker = new MushroomPicker(name, mushroomPickerId);
 
-        
+
         List<Player> players = game.getPlayers();
         players.add(mushroomPicker);
         game.setPlayers(players);

@@ -192,4 +192,9 @@ public class Mushroom implements Serializable {
     public Tecton getTecton() {
         return tecton;
     }
+
+    @Override
+    public String toString(){
+        return id;
+    }
 }

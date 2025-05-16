@@ -35,6 +35,8 @@ public class MushroomPicker extends Player implements Serializable {
         ownedMushrooms = new ArrayList<>(); // A ownedMushrooms lista inicializálása egy új ArrayList példánnyal
         ownedMushrooms.add(mushroom); // Az induló gomba hozzáadása a gombák listájához
         ownedYarns = new ArrayList<>(); // A statikus ownedYarns lista inicializálása egy új ArrayList példánnyal
+
+
     }
 
     /**
@@ -47,7 +49,6 @@ public class MushroomPicker extends Player implements Serializable {
         super(name, 0, testId); // A szülő (Player) osztály konstruktorának meghívása a játékos névvel és induló értékkel (0)
         ownedMushrooms = new ArrayList<>(); // A ownedMushrooms lista inicializálása egy új ArrayList példánnyal
         ownedYarns = new ArrayList<>(); // A statikus ownedYarns lista inicializálása egy új ArrayList példánnyal
-
         //hard coded
 
     }
@@ -171,6 +172,9 @@ public class MushroomPicker extends Player implements Serializable {
                         targetTecton.removeSpore(targetTecton.getSpores().remove(0)); // Első spóra eltávolítása
                         targetTecton.removeSpore(targetTecton.getSpores().remove(0)); // Második spóra eltávolítása
                         targetTecton.removeSpore(targetTecton.getSpores().remove(0)); // Harmadik spóra eltávolítása
+
+                        //new yarn initialized with the length 0
+                        Yarn newYarn=new Yarn(newMushroom,this ,"y"+tesztId);
                         addPoints(3);
                     } else {
                         //System.out.println(errorMessage + " Nem erheto el fonalakkal");

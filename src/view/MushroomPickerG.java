@@ -70,6 +70,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
     this.tectonFactory = new TectonGFactory();
 
     picker.addObserver(this);
+    picker.addObserver(this);
     this.controller = controllerIn;
     nameLabel.setText(mushroomPicker.getName() + " - "+ mushroomPicker.getPoints());
     nextPanelName = panelName;
@@ -120,6 +121,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
     DS_sporeSelector = new JComboBox<String>(new String[] {"Accelerator", "Decelerator", "Cut Preventing", "Insect Duplicating", "Paralyzing"});
     DS_sporeSelector.setVisible(false);
     DS_sporeID = new JTextField("id");
+    DS_sporeID.setVisible(false);
     DS_sporeSelector.setVisible(false);
     GM_yarnSelector = new JComboBox<Yarn>();
     GM_yarnSelector.setVisible(false);
@@ -196,8 +198,8 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
 
     GM_mushroomID.addActionListener(e->{
       String id = GM_mushroomID.getText();
-      controller.action_grow_mushroom(chosenTecton1, id);  //TODO nem kell yarn??
-                                                            //a yarn csak azért kell hogy szűkítse a növeszthető tektonok listáját
+      controller.action_grow_mushroom(chosenTecton1, id);
+
     });
 
     disperseButton.addActionListener(e -> {
@@ -249,6 +251,9 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
     });
     DS_sporeID.addActionListener(e->{
       String id = DS_sporeID.getText();
+      // Disable the text box
+      DS_sporeID.setEnabled(false);
+
       controller.action_spore_dispersion(chosenTecton1, chosenMushroom, chosenSporeType, id);
     });
 
@@ -337,7 +342,10 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
         GM_yarnSelector.setVisible(false);
         DS_mushroomSelector.setVisible(false);
         DS_tectonSelector.setVisible(false);
+        DS_sporeID.setVisible(false);
+        DS_sporeSelector.setVisible(false);
         GM_tectonSelector.setVisible(false);
+        GM_mushroomID.setVisible(false);
         GY_yarnSelector.setVisible(false);
         GY_srcTectonSelector.setVisible(false);
         GY_tgtTectonSelector.setVisible(false);
@@ -347,6 +355,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
         growYarnButton.setEnabled(true);
         panelSwitcher.showPanel(nextPanelName); // Or logic to decide which comes next
         controller.setNextActivePlayer();
+
       }
     });
 

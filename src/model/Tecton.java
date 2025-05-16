@@ -111,6 +111,7 @@ public class Tecton extends BaseModel implements Serializable {
      */
     public void addMushroom(Mushroom mushroom) {
         this.mushroom = mushroom;
+
     }
 
     /**
@@ -120,6 +121,7 @@ public class Tecton extends BaseModel implements Serializable {
      */
     public void removeMushroom(Mushroom mushroom) {
         this.mushroom = null;
+
     }
 
     /**
@@ -130,6 +132,8 @@ public class Tecton extends BaseModel implements Serializable {
     public void addInsect(Insect insect) {
         this.insects.add(insect);
         insect.setCurrentPlace(this);
+
+
     }
 
     /**
@@ -139,6 +143,7 @@ public class Tecton extends BaseModel implements Serializable {
      */
     public void removeInsect(Insect insect) {
         this.insects.remove(insect);
+
     }
 
     /**
@@ -188,7 +193,9 @@ public class Tecton extends BaseModel implements Serializable {
      * @param spore A hozzáadandó spóra.
      */
     public void addSpore(Spore spore) {
+
         this.spores.add(spore);
+        notifyObservers();
     }
 
     /**
@@ -197,7 +204,9 @@ public class Tecton extends BaseModel implements Serializable {
      * @param spore Az eltávolítandó spóra.
      */
     public void removeSpore(Spore spore) {
+
         this.spores.remove(spore);
+        notifyObservers();
     }
 
     /**

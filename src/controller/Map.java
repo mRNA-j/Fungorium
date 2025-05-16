@@ -148,6 +148,8 @@ public class Map implements Serializable {
         tectons.remove(tecton);
         tectons.add(newTecton1);
         tectons.add(newTecton2);
+
+
     }
 
     /**
