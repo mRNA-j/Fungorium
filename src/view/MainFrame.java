@@ -42,8 +42,10 @@ public class MainFrame extends JFrame implements PanelSwitcher {
 
     public void showPanel(String panelName) {
         cardLayout.show(cardPanel, panelName);
-        revalidate();
-        repaint();
+        SwingUtilities.invokeLater(() -> {
+            revalidate();
+            repaint();
+        });
     }
 
     public void setGame(Controller controller) {
