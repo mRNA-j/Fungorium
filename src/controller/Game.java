@@ -63,7 +63,7 @@ public class Game implements Serializable {
         currentTurn = 1;
         currentFullTurn = 1;
         playField = new Map();
-        numberOfTurns = 50;
+        numberOfTurns =50;
         players = new ArrayList<>();
         mps = new ArrayList<>();
         ents = new ArrayList<>();
@@ -80,6 +80,7 @@ public class Game implements Serializable {
     public Game(List<Player> inputPlayers) {
         activePlayerIndex = 0;
         currentTurn = 1;
+        currentFullTurn = 1;
         playField = new Map();
         numberOfTurns = 50;
         players = inputPlayers;
