@@ -16,6 +16,7 @@ import java.util.List;
 public class Game implements Serializable {
     /** Az aktuális kör száma */
     private int currentTurn;
+    private int currentFullTurn;
 
     /** A játék maximális köreinek száma */
     private final int numberOfTurns;
@@ -60,6 +61,7 @@ public class Game implements Serializable {
     public Game() {
         activePlayerIndex = 0;
         currentTurn = 1;
+        currentFullTurn = 1;
         playField = new Map();
         numberOfTurns = 50;
         players = new ArrayList<>();
@@ -153,9 +155,13 @@ public class Game implements Serializable {
      */
     public void nextTurn() {
         getPlayField().refresh();
-        if(currentTurn == numberOfTurns) {
+        if(currentFullTurn == numberOfTurns) {
             end();
         }
+        else{
+            currentFullTurn++;
+        }
+
     }
 
     /**
