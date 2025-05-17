@@ -573,7 +573,7 @@ public class Controller {
         // Execute the spore dispersion action.
 
         MushroomPicker mp = (MushroomPicker) game.getActivePlayer();
-        mp.actionSporeDispersion(targetTecton, mushroom, "Accelerator", "sajt");
+        mp.actionSporeDispersion(targetTecton, mushroom, type, id);
     }
 
 

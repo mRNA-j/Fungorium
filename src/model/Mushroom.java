@@ -46,7 +46,7 @@ public class Mushroom implements Serializable {
         picker.addMushroom(this);
         age = 0;
         numberOfDispersions = 0;
-        newSporeGrowth = 5;
+        newSporeGrowth = 1;
         hasSpore = false;
         currentSpore = null;
         this.id = testID;
@@ -147,22 +147,22 @@ public class Mushroom implements Serializable {
     public void disperseSpore(Tecton tecton, String type, String id) {
         switch(type) {
             case "Accelerator":
-                currentSpore = new AcceleratorSpore("MEG KELL CSINAÉLNI");
+                currentSpore = new AcceleratorSpore(id);
                 break;
             case "Decelerator":
-                currentSpore = new DeceleratorSpore("MEG KELL CSINA");
+                currentSpore = new DeceleratorSpore(id);
                 break;
             case "Cut Preventing":
-                currentSpore = new CutPreventingSpore("MEG KELL CSINA");
+                currentSpore = new CutPreventingSpore(id);
                 break;
             case "Insect Duplicating":
-                currentSpore = new InsectDuplicatingSpore("MEG KELL");
+                currentSpore = new InsectDuplicatingSpore(id);
                 break;
             case "Paralyzing":
-                currentSpore = new ParalyzingSpore("MEG KELL");
+                currentSpore = new ParalyzingSpore(id);
                 break;
             default:
-                currentSpore = new AcceleratorSpore("MEG KELL");
+                currentSpore = new AcceleratorSpore(id);
                 break;
         }
 
@@ -181,7 +181,7 @@ public class Mushroom implements Serializable {
      * Az új spóra növekedéséig hátralévő időt 5-re állítja.
      */
     public void restartSporeGrowth() {
-        newSporeGrowth = 5;
+        newSporeGrowth = 1;
         setHasSpore(false);
     }
 

@@ -185,8 +185,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
       GM_tectonSelector.setModel(new DefaultComboBoxModel<>(tectons));
       GM_tectonSelector.setEnabled(true);
       GM_tectonSelector.setVisible(true);
-      GM_yarnSelector.setVisible(false);
-      GM_mushroomID.setVisible(false);
+      GM_yarnSelector.setEditable(false);
     });
 
     GM_tectonSelector.addActionListener(e -> {
