@@ -22,6 +22,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
   private final JButton disperseButton = new JButton("Disperse Spore");
   private final JButton skipButton = new JButton("Skip");
   private final JButton nextPlayerButton = new JButton("nextPlayer");
+  private boolean firstGrow=true;
 
   //Disperse spore
   private JComboBox<Mushroom> DS_mushroomSelector;
@@ -322,7 +323,35 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
 
     GY_tgtTectonSelector.addActionListener(e -> {
       chosenTecton2 = (Tecton) GY_tgtTectonSelector.getSelectedItem();
-      controller.action_grow_yarn(chosenTecton1, chosenTecton2, chosenYarn);
+      if(!chosenTecton2.getSpores().isEmpty()&&firstGrow==true){
+        firstGrow=false;
+        controller.action_grow_yarn(chosenTecton1, chosenTecton2, chosenYarn);
+        SwingUtilities.invokeLater(() -> {
+          GY_yarnSelector.setVisible(true);
+          GY_yarnSelector.setEnabled(false);
+
+          GY_srcTectonSelector.setVisible(true);
+          GY_srcTectonSelector.setEnabled(false);
+
+          // Repopulate the target selector with neighbors
+          List<Tecton> neighbors = new ArrayList<>(chosenTecton2.getNeighbours());
+
+          Tecton temp=chosenTecton2;
+          chosenTecton2=chosenTecton1;
+          chosenTecton1=temp;
+
+          GY_tgtTectonSelector.setModel(new DefaultComboBoxModel<>(neighbors.toArray(new Tecton[0])));
+          GY_tgtTectonSelector.setVisible(true);
+          GY_tgtTectonSelector.setEnabled(true);
+        });
+
+
+      }
+      else {
+        firstGrow=true;
+        controller.action_grow_yarn(chosenTecton1, chosenTecton2, chosenYarn);
+      }
+
     });
 
     skipButton.addActionListener(e -> {
@@ -354,6 +383,8 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
         growYarnButton.setEnabled(true);
         panelSwitcher.showPanel(nextPanelName); // Or logic to decide which comes next
         controller.setNextActivePlayer();
+
+        enableAllButtons();
 
       }
     });
@@ -416,7 +447,8 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
     growYarnButton.setEnabled(false);
     disperseButton.setEnabled(false);
     skipButton.setEnabled(false);
-    activeButton.setEnabled(false);
+    activeButton.setEnabled(true);
+
   }
 
   @Override
@@ -466,8 +498,6 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
       updateLowerStrip(upperStrip.getSelectedTecton().t);
     }
 
-    // Reset button states
-    enableAllButtons();
 
 
     // Hide all combo boxes

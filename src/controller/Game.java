@@ -100,6 +100,8 @@ public class Game implements Serializable {
         return activePlayer;
     }
 
+    public int getCurrentFullTurn() {return  currentFullTurn;}
+
     /**
      * Visszaadja az aktuális kör számát.
      * @return Az aktuális kör száma.

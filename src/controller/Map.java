@@ -39,9 +39,22 @@ public class Map implements Serializable {
         Tecton t4 = new Tecton("t4", 2, false, false);
         Tecton t5 = new Tecton("t5", 2, false, false);
 
+        Tecton t6 = new Tecton("t6", 2, false, false);
+        Tecton t7 = new Tecton("t7", 1, false, false);
+        Tecton t8 = new Tecton("t8", 2, true, false);
+        Tecton t9 = new Tecton("t9", 1, false, true);
+        Tecton t10 = new Tecton("t10", 2, false, false);
+
         t1.addNeighbour(t2);
         t1.addNeighbour(t5);
+        t2.addNeighbour(t6);
+        t6.addNeighbour(t7);
         t4.addNeighbour(t3);
+        t3.addNeighbour(t8);
+        t5.addNeighbour(t9);
+        t8.addNeighbour(t10);
+        t9.addNeighbour(t10);
+
 
         Insect i1 = new Insect(t1,ents.get(0), "i1");
         Insect i2 = new Insect(t3,ents.get(1), "i2");

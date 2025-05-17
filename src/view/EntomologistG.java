@@ -99,7 +99,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
         // Button panel
         JPanel buttonPanel = new JPanel(new GridLayout(4, 1, 5, 5));
         JPanel comboPanel = new JPanel();
-        comboPanel.setLayout(new GridLayout(7, 1, 5, 5));
+        comboPanel.setLayout(new GridLayout(11, 1, 5, 5));
 
         MI_insectSelect = new JComboBox<Insect>();
         MI_tgtTectonSelect = new JComboBox<Tecton>();
@@ -205,7 +205,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
         ES_sporeSelect.addActionListener(e -> {
             chosenSpore = (Spore) ES_sporeSelect.getSelectedItem();
             controller.action_eat_spore(chosenSpore, chosenInsect);
-            disableOtherButtons(skipButton);
+            disableOtherButtons(nextPlayerButton);
         });
 
         // Cut Yarn
@@ -251,7 +251,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
             chosenTecton = (Tecton) CY_tgtTectonSelect.getSelectedItem();
             controller.action_cut_yarn(chosenInsect, chosenYarn, chosenTecton);
             update();
-            disableOtherButtons(skipButton);
+            disableOtherButtons(nextPlayerButton);
         });
 
         // Update skip button to handle new combo boxes
