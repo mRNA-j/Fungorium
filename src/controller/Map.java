@@ -247,10 +247,7 @@ public class Map implements Serializable {
                 tecton.getMushroom().setNewSporeGrowth(tecton.getMushroom().getNewSporeGrowth()-1);
             }
 
-            //Rovarokról az effectet eltünteti
-            for (Insect insect : tecton.getInsects()) {
-                insect.resetEffect();
-            }
+
         }
 
         //Fonalakat szívja fel

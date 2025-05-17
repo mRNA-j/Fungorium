@@ -165,13 +165,29 @@ public class EntomologistG extends JPanel implements BaseViewG {
         MI_tgtTectonSelect.addActionListener(e -> {
             MI_tgtTectonSelect.setEnabled(false);
             chosenTecton = (Tecton) MI_tgtTectonSelect.getSelectedItem();
-            controller.action_move(chosenInsect, chosenTecton);
             // disable all buttons except for next player, if the insect has accelerator spore, then leave the move button enabled
             if(chosenInsect.getAccelerated()){
-                disableOtherButtons(moveButton);
-                moveButton.setEnabled(true);
-                chosenInsect.resetEffect();
+                controller.action_move(chosenInsect, chosenTecton);
+
+                SwingUtilities.invokeLater(() -> {
+                    SwingUtilities.invokeLater(() -> {
+                        disableOtherButtons(moveButton);
+                        nextPlayerButton.setEnabled(false);
+
+
+                        // Repopulate the target selector with neighbors
+                        List<Tecton> neighbors = new ArrayList<>(chosenInsect.getCurrentPlace().getNeighbours());
+
+                        MI_tgtTectonSelect.setModel(new DefaultComboBoxModel<>(neighbors.toArray(new Tecton[0])));
+                        MI_tgtTectonSelect.setVisible(true);
+                        MI_tgtTectonSelect.setEnabled(true);
+
+                    });
+                });
+
+
             } else {
+                controller.action_move(chosenInsect, chosenTecton);
                 disableOtherButtons(nextPlayerButton);
             } 
         });
