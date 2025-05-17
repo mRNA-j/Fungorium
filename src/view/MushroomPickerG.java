@@ -327,6 +327,9 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
         firstGrow=false;
         controller.action_grow_yarn(chosenTecton1, chosenTecton2, chosenYarn);
         SwingUtilities.invokeLater(() -> {
+
+          growYarnButton.setEnabled(false);
+          nextPlayerButton.setEnabled(false);
           GY_yarnSelector.setVisible(true);
           GY_yarnSelector.setEnabled(false);
 
@@ -350,6 +353,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
       else {
         firstGrow=true;
         controller.action_grow_yarn(chosenTecton1, chosenTecton2, chosenYarn);
+        nextPlayerButton.setEnabled(true);
       }
 
     });
