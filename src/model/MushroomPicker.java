@@ -174,7 +174,8 @@ public class MushroomPicker extends Player implements Serializable {
                         targetTecton.removeSpore(targetTecton.getSpores().remove(0)); // Harmadik spóra eltávolítása
 
                         //new yarn initialized with the length 0
-                        Yarn newYarn=new Yarn(newMushroom,this ,"y"+tesztId);
+                        Yarn newYarn=new Yarn(newMushroom,this ,"y"+tesztId); //TODO választható legyen a tipus
+                        targetTecton.addYarn(newYarn);
                         addPoints(3);
                     } else {
                         //System.out.println(errorMessage + " Nem erheto el fonalakkal");
