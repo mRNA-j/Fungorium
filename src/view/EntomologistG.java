@@ -156,7 +156,6 @@ public class EntomologistG extends JPanel implements BaseViewG {
             MI_tgtTectonSelect.setModel(new DefaultComboBoxModel<>(chosenInsect.getPlace().tectonsConnectedWithYarn().toArray(new Tecton[tectonSize])));
             //revalidate();
             //repaint();
-            System.out.println(chosenInsect.getPlace());
             MI_tgtTectonSelect.setVisible(true);
             MI_tgtTectonSelect.setEnabled(true);
             MI_insectSelect.setEnabled(false);

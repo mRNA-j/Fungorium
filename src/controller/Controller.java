@@ -43,6 +43,8 @@ public class Controller {
             game.setActivePlayer(game.getEnts().get(1));
         }
 
+        System.out.println("JÁTÉKOSVÁLTÁS: Kör " + game.getCurrentFullTurn() + " - " + game.getActivePlayer().getName() + " következik");
+
         if(currentTurn %4==1) {
             next_round();
         }

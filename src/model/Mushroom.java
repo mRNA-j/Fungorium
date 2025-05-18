@@ -145,24 +145,31 @@ public class Mushroom implements Serializable {
      * @param tecton A tecton, amire a spórát kilövi.
      */
     public void disperseSpore(Tecton tecton, String type, String id) {
+        System.out.println("MUSHROOM: " + getId() + " spórát szór a " + tecton.getId() + " tectonra");
         switch(type) {
             case "Accelerator":
                 currentSpore = new AcceleratorSpore(id);
+                System.out.println("MUSHROOM: " + getId() + " - Gyorsító spóra létrehozva: " + id);
                 break;
             case "Decelerator":
                 currentSpore = new DeceleratorSpore(id);
+                System.out.println("MUSHROOM: " + getId() + " - Lassító spóra létrehozva: " + id);
                 break;
             case "Cut Preventing":
                 currentSpore = new CutPreventingSpore(id);
+                System.out.println("MUSHROOM: " + getId() + " - Vágásgátló spóra létrehozva: " + id);
                 break;
             case "Insect Duplicating":
                 currentSpore = new InsectDuplicatingSpore(id);
+                System.out.println("MUSHROOM: " + getId() + " - Rovar duplikáló spóra létrehozva: " + id);
                 break;
             case "Paralyzing":
                 currentSpore = new ParalyzingSpore(id);
+                System.out.println("MUSHROOM: " + getId() + " - Bénító spóra létrehozva: " + id);
                 break;
             default:
                 currentSpore = new AcceleratorSpore(id);
+                System.out.println("MUSHROOM: " + getId() + " - Ismeretlen típus, alapértelmezett gyorsító spóra létrehozva: " + id);
                 break;
         }
 

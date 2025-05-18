@@ -159,12 +159,13 @@ public class Game implements Serializable {
     public void nextTurn() {
         getPlayField().refresh();
         if(currentFullTurn == numberOfTurns) {
+            System.out.println("GAME: Elértük a maximális körszámot (" + numberOfTurns + ")");
             end();
         }
         else{
             currentFullTurn++;
+            System.out.println("GAME: Új kör kezdődik - " + currentFullTurn + ". kör");
         }
-
     }
 
     /**
@@ -172,6 +173,6 @@ public class Game implements Serializable {
      * Kiírja, hogy a játék véget ért.
      */
     public void end() {
-        System.out.println("controller.Game ended");
+        System.out.println("CONTROLLER - A játék véget ért.");
     }
 }

@@ -188,14 +188,17 @@ public class Insect implements Serializable {
      * @param errefeleVagunk az aktualis irány, hogy melyik tekton fele kell vágni a fonalat
      */
     public void cutYarn(Yarn yarn, Tecton errefeleVagunk) {
+        System.out.println("INSECT: " + getId() + " megpróbálja elvágni a " + yarn.getId() + " fonalat a " + errefeleVagunk.getId() + " tecton irányába");
         int index = yarn.tectons.indexOf(currentPlace);
         if(index == 0 || index == yarn.getTectons().size()-1) {
+            System.out.println("INSECT: A fonal végpontján vágás történik");
             currentPlace.removeYarn(yarn, errefeleVagunk);
             errefeleVagunk.removeYarn(yarn, errefeleVagunk);
         } else {
+            System.out.println("INSECT: A fonal közepén vágás történik");
             currentPlace.removeYarn(yarn, errefeleVagunk);
         }
-        System.out.println("A rovar sikeresen elvágta a fonalat.");
+        System.out.println("INSECT: A " + getId() + " rovar sikeresen elvágta a " + yarn.getId() + " fonalat.");
     }
 
     /**
@@ -204,8 +207,10 @@ public class Insect implements Serializable {
      * @param spore A megevett spóra.
      */
     public void eatSpore(Spore spore) {
+        System.out.println("INSECT: " + getId() + " elfogyasztja a " + spore.getId() + " spórát");
         currentPlace.removeSpore(spore);
         spore.addEffect(this);
+        System.out.println("INSECT: A " + spore.getId() + " spóra hatása érvényesült a " + getId() + " rovaron");
     }
 
     /**
@@ -231,7 +236,9 @@ public class Insect implements Serializable {
     public void decrementEffectDuration() {
         if (effectDuration > 0) {
             effectDuration--;
+            System.out.println("INSECT: " + getId() + " effektus időtartama csökkent, hátralévő idő: " + effectDuration);
             if (effectDuration == 0) {
+                System.out.println("INSECT: " + getId() + " effektusa lejárt, visszaállítás alapállapotba");
                 resetEffect();
             }
         }
@@ -241,11 +248,13 @@ public class Insect implements Serializable {
      * Visszaállítja a rovaron lévő effektusokat alapállapotba
      */
     public void resetEffect() {
+        String currentEffect = getCurrentEffect();
         setAccelerated(false);
         setDecelerated(false);
         setParalized(false);
         setCutPrevented(false);
         effectDuration = 0;
+        System.out.println("INSECT: " + getId() + " " + (currentEffect != null ? currentEffect : "nincs") + " effektusa megszűnt");
     }
 
     /**
@@ -255,16 +264,16 @@ public class Insect implements Serializable {
      * @return Igaz, ha a mozgás sikeres volt, különben hamis.
      */
     public boolean move(Tecton targetTecton) {
-
+        System.out.println("INSECT: " + getId() + " megpróbál átmozogni a " + targetTecton.getId() + " tectonra");
         if(!decelerated && targetTecton.isConnectedWithYarn(currentPlace)){
             currentPlace.removeInsect(this);
             targetTecton.addInsect(this);
             currentPlace = targetTecton;
-            //System.out.println("A választott tektonra vezet gombafonal. A mozgás végrehajtva");
+            System.out.println("INSECT: " + getId() + " sikeresen átmozgott a " + targetTecton.getId() + " tectonra");
             return true;
         }
         else{
-            //System.out.println("A választott tektonra erről a tektonról nem vezet gombafonal. A mozgás nem lehetséges.");
+            System.out.println("INSECT: " + getId() + " nem tud átmozogni a " + targetTecton.getId() + " tectonra, mert nincs összekötve fonallal vagy lassító hatás alatt áll");
             return false;
         }
     }

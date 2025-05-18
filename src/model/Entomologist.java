@@ -67,6 +67,7 @@ public class Entomologist extends Player implements Serializable {
      * Az akció várakozás, amely nem csinál semmit.
      */
     public void actionWait(Insect insect) {
+        System.out.println("ENTOMOLOGIST: " + getName() + " várakozik a " + insect.getId() + " rovarral");
         return;
     }
 
@@ -77,16 +78,19 @@ public class Entomologist extends Player implements Serializable {
      */
     public void actionMove(Tecton targetTecton, Insect insect) {
         if(insect.getParalized()){
-            //System.out.println("A rovar bénítóspóra hatása alatt van, a mozgás nem lehetéges");
+            System.out.println("ENTOMOLOGIST: " + getName() + " - A rovar bénítóspóra hatása alatt van, a mozgás nem lehetéges");
             return;
         }
         if(insect.getDecelerated()){
-            //System.out.println("A rovar lassító spóra hatása alatt van, a mozgás nem lehetséges");
+            System.out.println("ENTOMOLOGIST: " + getName() + " - A rovar lassító spóra hatása alatt van, a mozgás nem lehetséges");
             return;
         }
+        System.out.println("ENTOMOLOGIST: " + getName() + " megpróbálja mozgatni a " + insect.getId() + " rovart a " + targetTecton + " tectonra");
         boolean sikeres = insect.move(targetTecton);
         if(!sikeres){
-            //System.out.println("Mozgás végrehajtása sikertelen");
+            System.out.println("ENTOMOLOGIST: " + getName() + " - Mozgás végrehajtása sikertelen");
+        } else {
+            System.out.println("ENTOMOLOGIST: " + getName() + " - Mozgás végrehajtása sikeres");   
         }
         notifyObservers();
     }
@@ -98,11 +102,14 @@ public class Entomologist extends Player implements Serializable {
      */
     public void actionEatSpore(Spore spore, Insect insect) {
         if(insect.getParalized()){
+            System.out.println("ENTOMOLOGIST: " + getName() + " - A rovar bénítóspóra hatása alatt van, a spóra evés nem lehetséges");
             return;
         }
+        System.out.println("ENTOMOLOGIST: " + getName() + " megpróbálja megenni a " + spore + " spórát a " + insect.getId() + " rovarral");
         insect.eatSpore(spore);
 
         this.addPoints(spore.getNutrition());
+        System.out.println("ENTOMOLOGIST: " + getName() + " " + spore.getNutrition() + " pontot szerzett a spóra elfogyasztásával");
 
         notifyObservers();
     }
@@ -114,15 +121,16 @@ public class Entomologist extends Player implements Serializable {
      */
     public void actionCutYarn(Yarn yarn, Insect insect, Tecton amerreVagunk) {
         if(insect.getParalized()){
-            System.out.println("A rovar bénítóspóra hatása alatt van, a fonalvágás nem lehetéges");
+            System.out.println("ENTOMOLOGIST: " + getName() + " - A rovar bénítóspóra hatása alatt van, a fonalvágás nem lehetéges");
             actionWait(insect);
             return;
         }
         if(insect.getCutPrevented()){
-            System.out.println("A rovar vágásgátló spóra hatása alatt van, a fonalvágás nem lehetséges");
+            System.out.println("ENTOMOLOGIST: " + getName() + " - A rovar vágásgátló spóra hatása alatt van, a fonalvágás nem lehetséges");
             actionWait(insect);
             return;
         }
+        System.out.println("ENTOMOLOGIST: " + getName() + " megpróbálja elvágni a " + yarn + " fonalat a " + insect.getId() + " rovarral a " + amerreVagunk + " tecton irányába");
         insect.cutYarn(yarn, amerreVagunk);
 
         notifyObservers();
