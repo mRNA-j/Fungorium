@@ -180,7 +180,7 @@ public class Tecton extends BaseModel implements Serializable {
      * @param yarn Az eltávolítandó gombafonal.
      */
     public void removeYarn(Yarn yarn, Tecton masik) {
-        if(yarn.getTectons().size() > 2) {
+        if(yarn.getTectons().size() > 2&&!yarn.getMushroom().getTecton().equals(this)&&!yarn.getMushroom().getTecton().equals(masik)) {
             yarn.split(this, masik);
         }
 
@@ -195,6 +195,8 @@ public class Tecton extends BaseModel implements Serializable {
         else{
             yarns.remove(yarn);
             yarn.getTectons().remove(this);
+            this.notifyObservers();
+            masik.notifyObservers();
         }
 
     }
