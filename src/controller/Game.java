@@ -3,7 +3,6 @@ package controller;
 import model.Entomologist;
 import model.MushroomPicker;
 import model.Player;
-import model.Tecton;
 
 import java.io.Serializable;
 import java.util.ArrayList;

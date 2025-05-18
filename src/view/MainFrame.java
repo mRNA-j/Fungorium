@@ -1,15 +1,16 @@
 package view;
 
 import controller.Controller;
-import controller.Game;
-import model.MushroomPicker;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
+/**
+ * A MainFrame osztály a játék fő ablakát reprezentálja.
+ * Ez az osztály felelős a különböző panelek közötti váltásért és a játék
+ * felhasználói felületének megjelenítéséért.
+ * Implementálja a PanelSwitcher interfészt, amely lehetővé teszi a panelek közötti váltást.
+ */
 public class MainFrame extends JFrame implements PanelSwitcher {
     CardLayout cardLayout = new CardLayout();
     JPanel cardPanel = new JPanel(cardLayout);
@@ -23,6 +24,11 @@ public class MainFrame extends JFrame implements PanelSwitcher {
 
     Controller controller;
 
+    /**
+     * A MainFrame konstruktora.
+     * Inicializálja az ablakot, beállítja a címet, a bezárási műveletet,
+     * a méreteket és létrehozza a kezdeti paneleket.
+     */
     public MainFrame() {
         setTitle("Pentagon 98 Fungorium");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,6 +46,12 @@ public class MainFrame extends JFrame implements PanelSwitcher {
         setVisible(true);
     }
 
+    /**
+     * Megjeleníti a megadott nevű panelt.
+     * Implementálja a PanelSwitcher interfész showPanel metódusát.
+     * 
+     * @param panelName A megjelenítendő panel neve
+     */
     public void showPanel(String panelName) {
         cardLayout.show(cardPanel, panelName);
         SwingUtilities.invokeLater(() -> {
@@ -48,11 +60,19 @@ public class MainFrame extends JFrame implements PanelSwitcher {
         });
     }
 
+    /**
+     * Beállítja a játék vezérlőjét.
+     * 
+     * @param controller A játék vezérlője
+     */
     public void setGame(Controller controller) {
         this.controller = controller;
-
     }
 
+    /**
+     * Létrehozza és inicializálja a játékosok paneljeit.
+     * Beállítja a panel váltókat és hozzáadja a paneleket a kártyapanelhez.
+     */
     public void setUpPlayers(){
         // Create all panels first before calling methods on them
         ePanel1 = new EntomologistG(controller.getGame().getEnts().get(0),"mp2Panel", controller);

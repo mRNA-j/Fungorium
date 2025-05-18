@@ -1,24 +1,18 @@
 import view.MainFrame;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Iterator;
-
-
-
+/**
+ * A Main osztály a program belépési pontja.
+ * Ez az osztály felelős a játék elindításáért és a grafikus felhasználói felület megjelenítéséért.
+ */
 public class Main {
 
+    /**
+     * A program fő metódusa, amely elindítja a játékot.
+     * Létrehozza a fő ablakot és megjeleníti azt.
+     * 
+     * @param args A parancssori argumentumok tömbje
+     */
     public static void main(String[] args) {
-       /* if (args.length > 0) {
-            // If a command file is provided as argument, run it
-            controller.CmdParser.parse("run " + args[0]);
-        } else {
-            // Otherwise, start reading from standard input
-            controller.CmdParser.start(System.in);
-        }*/
-
         MainFrame mainFrame=new MainFrame();
         mainFrame.setVisible(true);
     }

@@ -8,15 +8,32 @@
     import java.awt.event.MouseEvent;
     import java.util.List;
 
+    /**
+     * A TectonPanel osztály a tectonok megjelenítésére szolgáló panel.
+     * Megjeleníti a tectonok listáját vízszintes sorban, és lehetővé teszi
+     * a tectonok kiválasztását.
+     * Implementálja a BaseViewG interfészt, így a modell változásakor automatikusan frissül.
+     */
     public class TectonPanel extends JPanel implements BaseViewG{
+        /** A megjelenítendő tectonok listája */
         private final List<TectonG> tectons;
+        
+        /** Jelzi, hogy a tectonok kiválaszthatók-e */
         private final boolean selectable;
+        
+        /** A jelenleg kiválasztott tecton */
         private TectonG selectedTecton = null;
+        
+        /** A tecton kiválasztását kezelő listener */
         private final TectonSelectionListener selectionListener;
+        
+        /** A tectonok közötti távolság pixelben */
         private final int spacing = 80;
 
-
-
+        /**
+         * Frissíti a panel méretét és megjelenítését a tectonok listája alapján.
+         * Implementálja a BaseViewG interfész update metódusát.
+         */
         @Override
         public void update() {
 
@@ -31,10 +48,27 @@
 
         }
 
+        /**
+         * Interfész a tecton kiválasztásának kezeléséhez.
+         * A tecton kiválasztásakor meghívódik az onTectonSelected metódus.
+         */
         public interface TectonSelectionListener {
+            /**
+             * Meghívódik, amikor egy tectont kiválasztanak.
+             * 
+             * @param selected A kiválasztott tecton
+             */
             void onTectonSelected(Tecton selected);
         }
 
+        /**
+         * A TectonPanel konstruktora.
+         * Inicializálja a panelt, beállítja a tectonok listáját és a kiválasztás kezelőjét.
+         * 
+         * @param tectons A megjelenítendő tectonok listája
+         * @param selectable Jelzi, hogy a tectonok kiválaszthatók-e
+         * @param listener A tecton kiválasztását kezelő listener
+         */
         public TectonPanel(List<TectonG> tectons, boolean selectable, TectonSelectionListener listener) {
             this.tectons = tectons;
             this.selectable = selectable;
@@ -69,10 +103,20 @@
             }
         }
 
+        /**
+         * Visszaadja a jelenleg kiválasztott tectont.
+         * 
+         * @return A kiválasztott tecton, vagy null, ha nincs kiválasztva tecton
+         */
         public TectonG getSelectedTecton() {
             return selectedTecton;
         }
 
+        /**
+         * Kirajzolja a panel tartalmát, beleértve a tectonokat.
+         * 
+         * @param g A grafikus kontextus
+         */
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -89,6 +133,11 @@
             }
         }
 
+        /**
+         * Visszaadja a panel preferált méretét a tectonok száma alapján.
+         * 
+         * @return A panel preferált mérete
+         */
         @Override
         public Dimension getPreferredSize() {
             int width = Math.max(tectons.size() * 80, 400);

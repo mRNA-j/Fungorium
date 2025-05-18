@@ -12,60 +12,134 @@ import java.util.Set;
 import java.util.HashSet;
 import interfaces.ITectonGFactory;
 
+/**
+ * A MushroomPickerG osztály a gombaszedő játékos grafikus felületét reprezentálja.
+ * Megjeleníti a játékos által birtokolt gombákat, fonalakat, és lehetővé teszi
+ * a különböző akciók végrehajtását (gomba növesztése, fonal növesztése, spóra szórása).
+ * Implementálja a BaseViewG interfészt, amely lehetővé teszi a modell változásainak követését.
+ */
 public class MushroomPickerG extends JPanel implements BaseViewG {
+  /** A megjelenített gombaszedő játékos modellje */
   private MushroomPicker mushroomPicker;
+  
+  /** A játékos nevét és pontszámát megjelenítő címke */
   private JLabel nameLabel = new JLabel();
+  
+  /** A játék vezérlője */
   private Controller controller;
 
+  /** Gomb a fonal növesztéséhez */
   private final JButton growYarnButton = new JButton("Grow Yarn");
+  
+  /** Gomb a gomba növesztéséhez */
   private final JButton growMushroomButton = new JButton("Grow Mushroom");
+  
+  /** Gomb a spóra szórásához */
   private final JButton disperseButton = new JButton("Disperse Spore");
+  
+  /** Gomb a kör kihagyásához */
   private final JButton skipButton = new JButton("Skip");
+  
+  /** Gomb a következő játékosra váltáshoz */
   private final JButton nextPlayerButton = new JButton("nextPlayer");
+  
+  /** Jelzi, hogy ez-e az első fonal növesztés a körben */
   private boolean firstGrow=true;
 
-  //Disperse spore
+  /** Legördülő lista a spóra szórásához kiválasztható gombákhoz */
   private JComboBox<Mushroom> DS_mushroomSelector;
+  
+  /** Legördülő lista a spóra szórásához kiválasztható tectonokhoz */
   private JComboBox<Tecton> DS_tectonSelector;
+  
+  /** Legördülő lista a spóra típusának kiválasztásához */
   private JComboBox<String> DS_sporeSelector;
+  
+  /** Szövegmező a spóra azonosítójának megadásához */
   private JTextField DS_sporeID;
 
-  //Grow Mushroom
+  /** Legördülő lista a gomba növesztéséhez kiválasztható fonalakhoz */
   private JComboBox<Yarn> GM_yarnSelector;
+  
+  /** Legördülő lista a gomba növesztéséhez kiválasztható tectonokhoz */
   private JComboBox<Tecton> GM_tectonSelector;
+  
+  /** Szövegmező a gomba azonosítójának megadásához */
   private JTextField GM_mushroomID;
 
-  //Grow Yarn
+  /** Legördülő lista a fonal növesztéséhez kiválasztható fonalakhoz */
   private JComboBox<Yarn> GY_yarnSelector;
+  
+  /** Legördülő lista a fonal növesztéséhez kiválasztható forrás tectonokhoz */
   private JComboBox<Tecton> GY_srcTectonSelector;
+  
+  /** Legördülő lista a fonal növesztéséhez kiválasztható cél tectonokhoz */
   private JComboBox<Tecton> GY_tgtTectonSelector;
 
+  /** A kiválasztott fonal */
   private Yarn chosenYarn;
+  
+  /** Az első kiválasztott tecton */
   private Tecton chosenTecton1;
+  
+  /** A második kiválasztott tecton */
   private Tecton chosenTecton2;
+  
+  /** A kiválasztott gomba */
   private Mushroom chosenMushroom;
+  
+  /** A kiválasztott spóra típusa */
   private String chosenSporeType;
 
-
+  /** A felső tecton sáv panelje */
   private TectonPanel upperStrip;
+  
+  /** Az alsó tecton sáv panelje */
   private TectonPanel lowerStrip;
+  
+  /** Görgetősáv a felső tecton sávhoz */
   private JScrollPane upperScroll;
+  
+  /** Görgetősáv az alsó tecton sávhoz */
   private JScrollPane lowerScroll;
+  
+  /** A felső sávban megjelenített tectonok listája */
   public final List<TectonG> upperTectons = new ArrayList<>();
+  
+  /** Az alsó sávban megjelenített tectonok listája */
   public final List<TectonG> lowerTectons = new ArrayList<>();
+  
+  /** A következő panel neve, amelyre váltani kell */
   private String nextPanelName;
+  
+  /** A tecton grafikus objektumok gyártója */
   private ITectonGFactory tectonFactory;
 
-
+  /** A már hozzáadott tectonok azonosítóinak halmaza a duplikációk elkerülésére */
   Set<String> addedTectonIds = new HashSet<>();
 
+  /** A panel váltást kezelő objektum */
   private PanelSwitcher panelSwitcher;
 
+  /**
+   * Beállítja a panel váltást kezelő objektumot.
+   * 
+   * @param panelSwitcher A panel váltást kezelő objektum
+   */
   public void setPanelSwitcher(PanelSwitcher panelSwitcher) {
     this.panelSwitcher = panelSwitcher;
   }
 
 
+  /**
+   * A MushroomPickerG osztály konstruktora.
+   * Inicializálja a gombaszedő játékos grafikus felületét, beállítja a megfigyelőket,
+   * létrehozza a gombokat, legördülő listákat és a tecton sávokat.
+   * 
+   * @param picker A megjelenítendő gombaszedő játékos modellje
+   * @param panelName A következő panel neve, amelyre váltani kell
+   * @param controllerIn A játék vezérlője
+   */
   public MushroomPickerG(MushroomPicker picker, String panelName, Controller controllerIn) {
     this.mushroomPicker = picker;
     this.tectonFactory = new TectonGFactory();
@@ -416,6 +490,11 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
     add(centerPanel, BorderLayout.CENTER);
   }
 
+  /**
+   * Frissíti az alsó tecton sávot a kiválasztott tecton szomszédaival.
+   * 
+   * @param selectedTecton A kiválasztott tecton, amelynek szomszédait meg kell jeleníteni
+   */
   private void updateLowerStrip(Tecton selectedTecton) {
     lowerTectons.clear();
     List<Tecton> neighbors = selectedTecton.getNeighbours();
@@ -428,16 +507,34 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
     lowerStrip.repaint();
   }
 
+  /**
+   * Alapértelmezett konstruktor.
+   * Tesztelési célokra használható.
+   */
   public MushroomPickerG() {}
 
+  /**
+   * Visszaadja a megjelenített gombaszedő játékos modelljét.
+   * 
+   * @return A gombaszedő játékos modellje
+   */
   public MushroomPicker getMushroomPicker() {
     return mushroomPicker;
   }
 
+  /**
+   * Beállítja a megjelenítendő gombaszedő játékos modelljét.
+   * 
+   * @param mushroomPicker A beállítandó gombaszedő játékos modellje
+   */
   public void setMushroomPicker(MushroomPicker mushroomPicker) {
     this.mushroomPicker = mushroomPicker;
   }
 
+  /**
+   * Engedélyezi az összes akciógombot.
+   * A játékos körének kezdetén hívódik meg.
+   */
   private void enableAllButtons() {
     growMushroomButton.setEnabled(true);
     growYarnButton.setEnabled(true);
@@ -445,6 +542,12 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
     skipButton.setEnabled(true);
   }
 
+  /**
+   * Letiltja az összes akciógombot az aktív gomb kivételével.
+   * Egy akció kiválasztásakor hívódik meg.
+   * 
+   * @param activeButton Az aktív gomb, amely engedélyezve marad
+   */
   private void disableOtherButtons(JButton activeButton) {
     growMushroomButton.setEnabled(false);
     growYarnButton.setEnabled(false);
@@ -454,6 +557,11 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
 
   }
 
+  /**
+   * Frissíti a grafikus felületet a modell változásai alapján.
+   * Implementálja a BaseViewG interfész update metódusát.
+   * Frissíti a játékos nevét, pontszámát, a tecton sávokat és a legördülő listákat.
+   */
   @Override
   public void update() {
     // Update the mushroom picker name and points display

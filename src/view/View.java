@@ -1,7 +1,5 @@
 package view;
 
-import java.io.File;
-
 /**
  * A megjelenítésért felelős interface.
  */

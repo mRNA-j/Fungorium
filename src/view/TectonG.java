@@ -4,21 +4,56 @@ import model.Tecton;
 import model.Insect;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A TectonG osztály a Tecton modell grafikus megjelenítéséért felelős.
+ * Megjeleníti a tecton állapotát, beleértve a rajta lévő gombákat, rovarokat,
+ * fonalakat és spórákat.
+ * Implementálja a BaseViewG interfészt, így a modell változásakor automatikusan frissül.
+ */
 public class TectonG extends JComponent implements BaseViewG {
-    int x, y, radius;
+    /** A tecton x koordinátája a megjelenítésben */
+    int x;
+    
+    /** A tecton y koordinátája a megjelenítésben */
+    int y;
+    
+    /** A tecton sugarának mérete */
+    int radius;
+    
+    /** A tecton azonosítója */
     String id;
+    
+    /** A megjelenített tecton modell */
     Tecton t;
+    
+    /** Jelzi, hogy van-e gomba a tectonon */
     boolean hasMushroom;
+    
+    /** Jelzi, hogy van-e rovar a tectonon */
     boolean hasInsect;
+    
+    /** Jelzi, hogy van-e fonal a tectonon */
     boolean hasYarn;
+    
+    /** A tectonon lévő spórák száma */
     int sporeCount;
+    
+    /** A tectonon lévő rovarok grafikus megjelenítései */
     private List<InsectG> insectGs;
 
+    /**
+     * A TectonG osztály konstruktora.
+     * Inicializálja a tecton grafikus megjelenítését és beállítja a megfigyelőt.
+     * 
+     * @param x A tecton x koordinátája
+     * @param y A tecton y koordinátája
+     * @param radius A tecton sugara
+     * @param id A tecton azonosítója
+     * @param t A megjelenítendő tecton modell
+     */
     public TectonG(int x, int y, int radius, String id, Tecton t) {
         t.addObserver(this);
         this.x = x;
@@ -35,6 +70,10 @@ public class TectonG extends JComponent implements BaseViewG {
         createInsectGs();
     }
 
+    /**
+     * Létrehozza a rovarok grafikus megjelenítéseit.
+     * Minden rovarhoz létrehoz egy InsectG példányt.
+     */
     private void createInsectGs() {
         insectGs = new ArrayList<>();
         if (hasInsect) {
@@ -47,10 +86,24 @@ public class TectonG extends JComponent implements BaseViewG {
         }
     }
 
+    /**
+     * Ellenőrzi, hogy a megadott pont a tectonon belül van-e.
+     * 
+     * @param p Az ellenőrizendő pont
+     * @return Igaz, ha a pont a tectonon belül van, egyébként hamis
+     */
     public boolean contains(Point p) {
         return p.distance(x, y) <= radius;
     }
 
+    /**
+     * Kirajzolja a tectont a megadott grafikus kontextusra.
+     * Megjeleníti a tecton állapotát, beleértve a rajta lévő gombákat, rovarokat,
+     * fonalakat és spórákat.
+     * 
+     * @param g A grafikus kontextus
+     * @param selected Jelzi, hogy a tecton ki van-e választva
+     */
     public void draw(Graphics g, boolean selected) {
         // Background color
         if (selected) {
@@ -85,6 +138,11 @@ public class TectonG extends JComponent implements BaseViewG {
         drawInsects(g);
     }
 
+    /**
+     * Kirajzolja a tectonon lévő rovarokat.
+     * 
+     * @param g A grafikus kontextus
+     */
     private void drawInsects(Graphics g) {
         if (!hasInsect || t.getInsects().isEmpty()) {
             return;
@@ -124,11 +182,10 @@ public class TectonG extends JComponent implements BaseViewG {
     }
 
     /**
-     * Returns the appropriate icon for an insect based on its current effect.
-     * This method follows the same logic as InsectG.getCurrentIcon()
-     *
-     * @param insect The insect to get the icon for
-     * @return The appropriate ImageIcon based on the insect's current effect
+     * Visszaadja a megfelelő ikont egy rovarhoz annak aktuális hatása alapján.
+     * 
+     * @param insect A rovar, amelyhez az ikont kérjük
+     * @return A megfelelő ikon a rovar aktuális hatása alapján
      */
     private ImageIcon getInsectIcon(Insect insect) {
         String effect = insect.getCurrentEffect();
@@ -152,6 +209,10 @@ public class TectonG extends JComponent implements BaseViewG {
         }
     }
 
+    /**
+     * Frissíti a tecton grafikus megjelenítését a modell változásai alapján.
+     * Implementálja a BaseViewG interfész update metódusát.
+     */
     @Override
     public void update() {
         // Update view state from model
