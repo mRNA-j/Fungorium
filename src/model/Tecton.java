@@ -172,7 +172,6 @@ public class Tecton extends BaseModel implements Serializable {
                 yarns.add(yarn);
             }
         }
-        notifyObservers();
     }
 
     /**
@@ -189,13 +188,13 @@ public class Tecton extends BaseModel implements Serializable {
             if(!this.getMushroom().equals(yarn.getMushroom())) {
                 yarns.remove(yarn);
                 yarn.getTectons().remove(this);
-                notifyObservers();
+                this.notifyObservers();
+                masik.notifyObservers();
             }
         }
         else{
             yarns.remove(yarn);
             yarn.getTectons().remove(this);
-            notifyObservers();
         }
 
     }

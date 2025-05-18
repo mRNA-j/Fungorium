@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 /** A controller.Map class a játéktér reprezentációja. */
-public class Map implements Serializable {
+public class Map  implements Serializable {
     private List<Tecton> tectons;
     private final Random random; // Random szám generátor
 
@@ -307,7 +307,10 @@ public class Map implements Serializable {
                 if(yarn.getPlayer().getOwnedYarns().contains(yarn)){
                     yarn.getPlayer().getOwnedYarns().remove(yarn);
                 }
+
             }
+            tecton.notifyObservers();
+
         }
     }
 }

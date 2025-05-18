@@ -55,12 +55,14 @@ public class TectonG extends JComponent implements BaseViewG {
      * @param t A megjelenítendő tecton modell
      */
     public TectonG(int x, int y, int radius, String id, Tecton t) {
-        t.addObserver(this);
+
         this.x = x;
         this.y = y;
         this.radius = radius;
         this.id = id;
         this.t = t;
+        this.t.addObserver(this);
+
         hasMushroom = t.getMushroom() != null;
         hasInsect = !t.getInsects().isEmpty();
         hasYarn = !t.getYarns().isEmpty();
