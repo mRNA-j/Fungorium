@@ -79,7 +79,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
         // Prepare upper tectons from insects
         for (int i = 0; i < ento.getInsect().size(); i++) {
             Insect insect = ento.getInsect().get(i);
-            String id = insect.getCurrentPlace().getId();
+            String id = insect.getCurrentPlace().getId() + ": " + insect.getId() + " (" + insect.getCurrentPlace().getType() + ")";
             upperTectons.add(tectonFactory.onCreate(i * 80 + 10, 40, 30, id, insect.getCurrentPlace()));
         }
 
@@ -152,8 +152,6 @@ public class EntomologistG extends JPanel implements BaseViewG {
             chosenInsect = (Insect) MI_insectSelect.getSelectedItem();
             int tectonSize = chosenInsect.getPlace().tectonsConnectedWithYarn().size();
             MI_tgtTectonSelect.setModel(new DefaultComboBoxModel<>(chosenInsect.getPlace().tectonsConnectedWithYarn().toArray(new Tecton[tectonSize])));
-            //revalidate();
-            //repaint();
             MI_tgtTectonSelect.setVisible(true);
             MI_tgtTectonSelect.setEnabled(true);
             MI_insectSelect.setEnabled(false);
@@ -209,8 +207,6 @@ public class EntomologistG extends JPanel implements BaseViewG {
             ES_sporeSelect.setEnabled(true);
             int sporeSize = chosenInsect.getPlace().getSpores().size();
             ES_sporeSelect.setModel(new DefaultComboBoxModel<>(chosenInsect.getPlace().getSpores().toArray(new Spore[sporeSize])));
-            //revalidate();
-            //repaint();
             ES_sporeSelect.setVisible(true);
             ES_sporeSelect.setEnabled(true);
         });
@@ -232,7 +228,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
             CY_insectSelect.setEnabled(true);
             CY_yarnSelect.setVisible(false);
             CY_yarnSelect.setEnabled(false);
-            CY_tgtTectonSelect.setVisible(false); // Initially hidden
+            CY_tgtTectonSelect.setVisible(false);
             CY_tgtTectonSelect.setEnabled(false);
             disableOtherButtons(nextPlayerButton);
         });
@@ -241,8 +237,6 @@ public class EntomologistG extends JPanel implements BaseViewG {
             chosenInsect = (Insect) CY_insectSelect.getSelectedItem();
             int yarnSize = chosenInsect.getPlace().getYarns().size();
             CY_yarnSelect.setModel(new DefaultComboBoxModel<>(chosenInsect.getPlace().getYarns().toArray(new Yarn[yarnSize])));
-            //revalidate();
-            //repaint();
             CY_yarnSelect.setVisible(true);
             CY_yarnSelect.setEnabled(true);
             CY_insectSelect.setEnabled(false);
@@ -253,8 +247,6 @@ public class EntomologistG extends JPanel implements BaseViewG {
             int tectonSize = chosenInsect.getPlace().tectonsConnectedByTheYarn(chosenYarn).size();
             Tecton[] tectons = chosenInsect.getPlace().tectonsConnectedByTheYarn(chosenYarn).toArray(new Tecton[tectonSize]);
             CY_tgtTectonSelect.setModel(new DefaultComboBoxModel<>(tectons));
-            //revalidate();
-            //repaint();
             CY_tgtTectonSelect.setVisible(true);
             CY_tgtTectonSelect.setEnabled(true);
             CY_yarnSelect.setEnabled(false);
@@ -354,7 +346,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
 
         for (int i = 0; i < neighbors.size(); i++) {
             Tecton neighbor = neighbors.get(i);
-            lowerTectons.add(tectonFactory.onCreate(i * 80 + 10, 40, 30, neighbor.getId(), neighbor));
+            lowerTectons.add(tectonFactory.onCreate(i * 80 + 10, 40, 30, neighbor.getId()+" ("+ neighbor.getType() + ")", neighbor));
         }
 
         SwingUtilities.invokeLater(() -> {
@@ -372,7 +364,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
         upperTectons.clear();
         for (int i = 0; i < entomologist.getInsect().size(); i++) {
             Insect insect = entomologist.getInsect().get(i);
-            String id = insect.getId();
+            String id = insect.getCurrentPlace().getId() + ": " + insect.getId() + " (" + insect.getCurrentPlace().getType() + ")";
             upperTectons.add(tectonFactory.onCreate(i * 80 + 10, 40, 30, id, insect.getCurrentPlace()));
         }
 

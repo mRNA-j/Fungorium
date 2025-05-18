@@ -132,7 +132,7 @@ public class TectonG extends JComponent implements BaseViewG {
         }
 
         // Tecton ID
-        g.drawString(id, x - 5, y + radius + 15);
+        g.drawString(id, x - radius, y + radius + 15);
 
         // Draw all insects to the left of the tecton in a vertical column
         drawInsects(g);

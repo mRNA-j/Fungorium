@@ -154,9 +154,11 @@ public class MushroomPicker extends Player implements Serializable {
      * A gomba növesztésének akciója a cél tectonon, ha a feltételek teljesülnek.
      *
      * @param targetTecton A cél tecton, ahol a gombát növeszteni szeretnénk.
-     * @param tesztId A tesztelésnél használt azonosító
+     * @param mushroomId tesztelésnél használt gomba azonosító
+     * @param yarnId tesztelésnél használt gombafonal azonosító
+     * @param yarnType a gombafonal, amit a gombából lehet majd növeszteni
      */
-    public void actionGrowMushroom(Tecton targetTecton, String tesztId) {
+    public void actionGrowMushroom(Tecton targetTecton, String mushroomId, String yarnType, String yarnId) {
         System.out.println("MUSHROOMPICKER: " + getName() + " megpróbál gombát növeszteni a " + targetTecton.getId() + " tectonon");
         final String errorMessage = "Feltetelek nem teljesultek,";
 
@@ -169,9 +171,9 @@ public class MushroomPicker extends Player implements Serializable {
                     // Ellenőrzi, hogy a tecton elérhető-e a birtokolt fonalakkal
                     if (isTectonInRange(targetTecton)) {
                         System.out.println("MUSHROOMPICKER: " + getName() + " - Minden feltétel teljesül a gomba növesztéséhez");
-                        Mushroom newMushroom = new Mushroom(targetTecton, this, tesztId); // Új gomba létrehozása a cél tecton alapján
+                        Mushroom newMushroom = new Mushroom(targetTecton, this, mushroomId); // Új gomba létrehozása a cél tecton alapján
                         ownedMushrooms.add(newMushroom); // Új gomba hozzáadása a játékos gombáihoz
-                        System.out.println("MUSHROOMPICKER: " + getName() + " - Új gomba létrehozva: " + tesztId);
+                        System.out.println("MUSHROOMPICKER: " + getName() + " - Új gomba létrehozva: " + mushroomId);
                         
                         // Három spóra eltávolítása a tectonról
                         targetTecton.removeSpore(targetTecton.getSpores().remove(0)); // Első spóra eltávolítása
@@ -180,9 +182,21 @@ public class MushroomPicker extends Player implements Serializable {
                         System.out.println("MUSHROOMPICKER: " + getName() + " - 3 spóra eltávolítva a " + targetTecton.getId() + " tectonról");
 
                         //new yarn initialized with the length 0
-                        Yarn newYarn = new Yarn(newMushroom, this, "y"+tesztId); //TODO választható legyen a tipus
+                        Yarn newYarn;
+                        switch (yarnType){
+                            case "Normal":
+                                newYarn = new Yarn(newMushroom, this, yarnId);
+                                break;
+                            case "Killer":
+                                newYarn = new KillerYarn(newMushroom, this, yarnId);
+                                break;
+                            default:
+                                newYarn = new Yarn(newMushroom, this, yarnId);
+                                break;
+                        }
                         targetTecton.addYarn(newYarn);
-                        System.out.println("MUSHROOMPICKER: " + getName() + " - Új fonál létrehozva: y" + tesztId);
+
+                        System.out.println("MUSHROOMPICKER: " + getName() + " - Új fonál létrehozva: " + yarnId);
                         
                         addPoints(3);
                         System.out.println("MUSHROOMPICKER: " + getName() + " - 3 pont hozzáadva, új pontszám: " + getPoints());
