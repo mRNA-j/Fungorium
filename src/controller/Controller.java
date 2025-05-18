@@ -143,9 +143,9 @@ public class Controller {
      * @param targetTecton A célpont tekton, ahová a gombát növesztjük.
      * @param id A gomba azonosítója.
      */
-    public void action_grow_mushroom(Tecton targetTecton, String id) {
+    public void action_grow_mushroom(Tecton targetTecton, String mushroomId, String yarnType, String yarnId) {
         MushroomPicker mushroomPicker =(MushroomPicker) game.getActivePlayer();
-        mushroomPicker.actionGrowMushroom(targetTecton, id);
+        mushroomPicker.actionGrowMushroom(targetTecton, mushroomId, yarnType, yarnId);
     }
 
     /**
