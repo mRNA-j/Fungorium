@@ -111,6 +111,7 @@ public class Tecton extends BaseModel implements Serializable {
      */
     public void addMushroom(Mushroom mushroom) {
         this.mushroom = mushroom;
+        notifyObservers();
 
     }
 
@@ -121,7 +122,7 @@ public class Tecton extends BaseModel implements Serializable {
      */
     public void removeMushroom(Mushroom mushroom) {
         this.mushroom = null;
-
+        notifyObservers();
     }
 
     /**
@@ -183,8 +184,20 @@ public class Tecton extends BaseModel implements Serializable {
         if(yarn.getTectons().size() > 2) {
             yarn.split(this, masik);
         }
-        yarns.remove(yarn);
-        yarn.getTectons().remove(this);
+
+        if(this.getMushroom() != null){
+            if(!this.getMushroom().equals(yarn.getMushroom())) {
+                yarns.remove(yarn);
+                yarn.getTectons().remove(this);
+                notifyObservers();
+            }
+        }
+        else{
+            yarns.remove(yarn);
+            yarn.getTectons().remove(this);
+            notifyObservers();
+        }
+
     }
 
     /**

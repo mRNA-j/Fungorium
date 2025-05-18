@@ -621,11 +621,11 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
     GY_srcTectonSelector.setVisible(false);
     GY_tgtTectonSelector.setVisible(false);
 
-    SwingUtilities.invokeLater(() -> {
+
       upperStrip.update();
       lowerStrip.update();
       revalidate();
       repaint();
-    });
+
   }
 }

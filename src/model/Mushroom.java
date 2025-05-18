@@ -46,7 +46,7 @@ public class Mushroom implements Serializable {
         picker.addMushroom(this);
         age = 0;
         numberOfDispersions = 0;
-        newSporeGrowth = 1;
+        newSporeGrowth = 5;
         hasSpore = false;
         currentSpore = null;
         this.id = testID;

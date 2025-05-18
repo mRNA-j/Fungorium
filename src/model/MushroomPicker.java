@@ -88,6 +88,10 @@ public class MushroomPicker extends Player implements Serializable {
         ownedYarns.add(y);
     }
 
+    public void removeYarn(Yarn y) {
+        ownedYarns.remove(y);
+    }
+
     /**
      * Ellenőrzi, hogy a megadott tecton elérhető-e a birtokolt fonalak alapján.
      *

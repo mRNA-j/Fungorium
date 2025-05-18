@@ -69,7 +69,7 @@ public class Map implements Serializable {
 
 
         Mushroom m2 = new Mushroom(t3, mps.get(1), "m2");
-        Yarn y3 = new Yarn(m2,mps.get(1), "y3");
+        Yarn y3 = new Yarn(m2,mps.get(1), "y2");
 
 
 
@@ -78,6 +78,26 @@ public class Map implements Serializable {
         addTecton(t3);
         addTecton(t4);
         addTecton(t5);
+        addTecton(t6);
+        addTecton(t7);
+        addTecton(t8);
+        addTecton(t9);
+        addTecton(t10);
+
+        System.out.println("generate" + mps.get(0).getName() + "  " + mps.get(0).getOwnedMushrooms().size());
+        System.out.println("generate" + mps.get(1).getName() + "  " + mps.get(1).getOwnedMushrooms().size());
+        System.out.println("generateYARN " + mps.get(0).getName() + "  " + mps.get(0).getOwnedYarns().size());
+
+        for(int i=0; i<mps.get(0).getOwnedYarns().size();i++) {
+
+            System.out.print(" " + mps.get(0).getOwnedYarns().get(i).getId());
+        }
+
+        System.out.println("generateYARN " + mps.get(1).getName() + "  " + mps.get(1).getOwnedYarns().size());
+        for(int i=0; i<mps.get(1).getOwnedYarns().size();i++) {
+
+            System.out.print(" " + mps.get(1).getOwnedYarns().get(i).getId());
+        }
     }
 
     /**
@@ -284,6 +304,9 @@ public class Map implements Serializable {
 
             for (Yarn yarn : yarnsToRemove) {
                 tecton.getYarns().remove(yarn);
+                if(yarn.getPlayer().getOwnedYarns().contains(yarn)){
+                    yarn.getPlayer().getOwnedYarns().remove(yarn);
+                }
             }
         }
     }

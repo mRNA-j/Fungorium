@@ -114,6 +114,8 @@ public class Yarn extends BaseModel implements Serializable {
         newYarn1.setPlayer(getPlayer());
         newYarn2.setPlayer(getPlayer());
 
+
+
         //Keressuk meg melyik iranyba vagunk
         int iranyIndex = tectons.indexOf(iranyAmerreSzakad);
 
@@ -153,6 +155,11 @@ public class Yarn extends BaseModel implements Serializable {
         for (Tecton t : new ArrayList<>(tectons)) {
             t.getYarns().remove(this);  // Direct removal
         }
+
+        getPlayer().addYarn(newYarn1);
+        getPlayer().addYarn(newYarn2);
+
+        getPlayer().removeYarn(this);
 
         //Tekton listáját kitöröljük
         tectons.clear();
