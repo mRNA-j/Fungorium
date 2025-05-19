@@ -21,6 +21,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
     private Entomologist entomologist;
     private JLabel nameLabel = new JLabel();
     private Controller controller;
+    private boolean isFirst=true;
 
     private final JButton eatButton = new JButton("Eat Spore");
     private final JButton moveButton = new JButton("Move Insect");
@@ -161,7 +162,8 @@ public class EntomologistG extends JPanel implements BaseViewG {
             MI_tgtTectonSelect.setEnabled(false);
             chosenTecton = (Tecton) MI_tgtTectonSelect.getSelectedItem();
             // disable all buttons except for next player, if the insect has accelerator spore, then leave the move button enabled
-            if(chosenInsect.getAccelerated()){
+            if(chosenInsect.getAccelerated()&&isFirst){
+                isFirst=false;
                 controller.action_move(chosenInsect, chosenTecton);
 
                 SwingUtilities.invokeLater(() -> {
@@ -184,6 +186,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
             } else {
                 controller.action_move(chosenInsect, chosenTecton);
                 disableOtherButtons(nextPlayerButton);
+                isFirst=true;
             } 
         });
 

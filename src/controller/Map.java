@@ -55,13 +55,7 @@ public class Map  implements Serializable {
         t8.addNeighbour(t10);
         t9.addNeighbour(t10);
 
-        Spore one=new AcceleratorSpore("1");
-        Spore two=new AcceleratorSpore("2");
-        Spore three=new AcceleratorSpore("3");
 
-        t2.addSpore(one);
-        t2.addSpore(two);
-        t2.addSpore(three);
 
 
         Insect i1 = new Insect(t1,ents.get(0), "i1");
