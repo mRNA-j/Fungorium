@@ -176,7 +176,7 @@ public class MushroomPicker extends Player implements Serializable {
                     if (isTectonInRange(targetTecton)) {
                         System.out.println("MUSHROOMPICKER: " + getName() + " - Minden feltétel teljesül a gomba növesztéséhez");
                         Mushroom newMushroom = new Mushroom(targetTecton, this, mushroomId); // Új gomba létrehozása a cél tecton alapján
-                        ownedMushrooms.add(newMushroom); // Új gomba hozzáadása a játékos gombáihoz
+                        // Új gomba hozzáadása a játékos gombáihoz
                         System.out.println("MUSHROOMPICKER: " + getName() + " - Új gomba létrehozva: " + mushroomId);
                         
                         // Három spóra eltávolítása a tectonról
@@ -190,12 +190,15 @@ public class MushroomPicker extends Player implements Serializable {
                         switch (yarnType){
                             case "Normal":
                                 newYarn = new Yarn(newMushroom, this, yarnId);
+
                                 break;
                             case "Killer":
                                 newYarn = new KillerYarn(newMushroom, this, yarnId);
+
                                 break;
                             default:
                                 newYarn = new Yarn(newMushroom, this, yarnId);
+
                                 break;
                         }
                         targetTecton.addYarn(newYarn);

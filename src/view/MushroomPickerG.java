@@ -265,11 +265,15 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
       GM_tectonSelector.setEnabled(false);
       GM_yarnSelector.setVisible(true);
       GM_yarnSelector.setEnabled(true);
+      int yarnSize = mushroomPicker.getOwnedYarns().size();
+      Yarn[] yarns = mushroomPicker.getOwnedYarns().toArray(new Yarn[yarnSize]);
+      GM_yarnSelector.setModel(new DefaultComboBoxModel<>(yarns));
+
       disableOtherButtons(nextPlayerButton);
     });
 
     GM_yarnSelector.addActionListener(e -> {
-      chosenYarn = (Yarn) GY_yarnSelector.getSelectedItem();
+      chosenYarn = (Yarn) GM_yarnSelector.getSelectedItem();
       List<Tecton> tectonsList= chosenYarn.getTectons();
 
       int tectonSize = tectonsList.size();
@@ -291,7 +295,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
       chosenMushroomId = GM_mushroomID.getText();
       GM_yarnTypeSelector.setVisible(true);
       GM_yarnTypeSelector.setEnabled(true);
-      GM_mushroomID.setEditable(false);
+      GM_mushroomID.setEnabled(false);
     });
 
     GM_yarnTypeSelector.addActionListener(e->{
@@ -302,7 +306,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
     });
 
     GM_yarnID.addActionListener(e->{
-      String yarnId = GM_yarnID.getSelectedText();
+      String yarnId = GM_yarnID.getText();
       controller.action_grow_mushroom(chosenTecton1, chosenMushroomId, chosenYarnType, yarnId);
     });
 
