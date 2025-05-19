@@ -9,12 +9,22 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * A GUI komponens, amely megjeleníti az entomológus (játékos) állapotát és lehetséges akcióit.
+ * Kezeli a rovarmozgatást, spórafogyasztást és fonalvágást a játékban.
+ */
 public class EntomologistG extends JPanel implements BaseViewG {
+    /**
+     * Visszaadja az aktuális entomológus objektumot
+     * @return Az aktuális entomológus objektum
+     */
     public Entomologist getEntomologist() {
         return entomologist;
     }
-
+    /**
+     * Beállítja az entomológus objektumot
+     * @param entomologist Az új entomológus objektum
+     */
     public void setEntomologist(Entomologist entomologist) {
         this.entomologist = entomologist;
     }
@@ -54,11 +64,20 @@ public class EntomologistG extends JPanel implements BaseViewG {
     private Spore chosenSpore;
     private ITectonGFactory tectonFactory;
 
-
+    /**
+     * Beállítja a panelváltót, amely lehetővé teszi a különböző panelek közötti navigációt
+     * @param panelSwitcher A panelváltó objektum
+     */
     public void setPanelSwitcher(PanelSwitcher panelSwitcher) {
         this.panelSwitcher = panelSwitcher;
     }
 
+    /**
+     * Az EntomologistG osztály konstruktora, amely inicializálja a GUI komponenst
+     * @param ento Az entomológus objektum, amelyhez a GUI tartozik
+     * @param panelName A következő panel neve, amelyre váltani lehet
+     * @param controllerIn A controller objektum a felhasználói akciók kezeléséhez
+     */
     public EntomologistG(Entomologist ento, String panelName, Controller controllerIn) {
 
         ento.addObserver(this);
@@ -133,7 +152,11 @@ public class EntomologistG extends JPanel implements BaseViewG {
 
         // === Add the action listeners ===
 
-        // Move Insect
+        /**
+         * Az eseménykezelő a Move Insect gombhoz.
+         * Amikor a felhasználó a gombra kattint, megjeleníti a nem bénult rovarok listáját
+         * és elrejti az egyéb választható mezőket.
+         */
         moveButton.addActionListener(e -> {
             List<Insect> insectList = entomologist.getInsect();
             insectList.removeIf(i -> i.getParalized());
@@ -149,6 +172,10 @@ public class EntomologistG extends JPanel implements BaseViewG {
             disableOtherButtons(nextPlayerButton);
         });
 
+        /**
+         * Az eseménykezelő a rovar kiválasztásához a Move Insect műveletben.
+         * Amikor a felhasználó kiválaszt egy rovart, megjeleníti a fonalakkal összekapcsolt tectonok listáját.
+         */
         MI_insectSelect.addActionListener(e -> {
             chosenInsect = (Insect) MI_insectSelect.getSelectedItem();
             int tectonSize = chosenInsect.getPlace().tectonsConnectedWithYarn().size();
@@ -158,6 +185,11 @@ public class EntomologistG extends JPanel implements BaseViewG {
             MI_insectSelect.setEnabled(false);
         });
 
+        /**
+         * Az eseménykezelő a célpont tecton kiválasztásához a Move Insect műveletben.
+         * Kezeli a rovar mozgatását és a gyorsító spóra hatását is, amely lehetővé teszi
+         * a dupla mozgást egy körben.
+         */
         MI_tgtTectonSelect.addActionListener(e -> {
             MI_tgtTectonSelect.setEnabled(false);
             chosenTecton = (Tecton) MI_tgtTectonSelect.getSelectedItem();
@@ -190,7 +222,11 @@ public class EntomologistG extends JPanel implements BaseViewG {
             } 
         });
 
-        // Eat Spore
+        /**
+         * Az eseménykezelő az Eat Spore gombhoz.
+         * Megjeleníti a nem bénult rovarok listáját, hogy a felhasználó kiválaszthassa,
+         * melyik rovar egyen meg egy spórát.
+         */
         eatButton.addActionListener(e -> {
             List<Insect> insectList = entomologist.getInsect();
             insectList.removeIf(i -> i.getParalized());
@@ -204,6 +240,11 @@ public class EntomologistG extends JPanel implements BaseViewG {
             disableOtherButtons(nextPlayerButton);
         });
 
+        /**
+         * Az eseménykezelő a rovar kiválasztásához az Eat Spore műveletben.
+         * Amikor a felhasználó kiválaszt egy rovart, megjeleníti az adott tectonon lévő
+         * spórák listáját.
+         */
         ES_insectSelect.addActionListener(e -> {
             ES_insectSelect.setEnabled(false);
             chosenInsect = (Insect) ES_insectSelect.getSelectedItem();
@@ -214,6 +255,10 @@ public class EntomologistG extends JPanel implements BaseViewG {
             ES_sporeSelect.setEnabled(true);
         });
 
+        /**
+         * Az eseménykezelő a spóra kiválasztásához az Eat Spore műveletben.
+         * Végrehajtja a spóra elfogyasztását és átadja a vezérlést a következő játékosnak.
+         */
         ES_sporeSelect.addActionListener(e -> {
             chosenSpore = (Spore) ES_sporeSelect.getSelectedItem();
             controller.action_eat_spore(chosenSpore, chosenInsect);
@@ -221,6 +266,11 @@ public class EntomologistG extends JPanel implements BaseViewG {
         });
 
         // Cut Yarn
+        /**
+         * Az eseménykezelő a Cut Yarn gombhoz.
+         * Megjeleníti a nem bénult rovarok listáját, hogy a felhasználó kiválaszthassa,
+         * melyik rovar vágjon el egy fonalat.
+         */
         cutButton.addActionListener(e -> {
             List<Insect> insectList = entomologist.getInsect();
             insectList.removeIf(i -> i.getParalized());
@@ -236,6 +286,11 @@ public class EntomologistG extends JPanel implements BaseViewG {
             disableOtherButtons(nextPlayerButton);
         });
 
+        /**
+         * Az eseménykezelő a rovar kiválasztásához a Cut Yarn műveletben.
+         * Amikor a felhasználó kiválaszt egy rovart, megjeleníti az adott tectonon lévő
+         * fonalak listáját.
+         */
         CY_insectSelect.addActionListener(e -> {
             chosenInsect = (Insect) CY_insectSelect.getSelectedItem();
             int yarnSize = chosenInsect.getPlace().getYarns().size();
@@ -245,6 +300,11 @@ public class EntomologistG extends JPanel implements BaseViewG {
             CY_insectSelect.setEnabled(false);
         });
 
+        /**
+         * Az eseménykezelő a fonal kiválasztásához a Cut Yarn műveletben.
+         * Amikor a felhasználó kiválaszt egy fonalat, megjeleníti az adott fonallal
+         * összekapcsolt tectonok listáját.
+         */
         CY_yarnSelect.addActionListener(e -> {
             chosenYarn = (Yarn) CY_yarnSelect.getSelectedItem();
             int tectonSize = chosenInsect.getPlace().tectonsConnectedByTheYarn(chosenYarn).size();
@@ -255,6 +315,11 @@ public class EntomologistG extends JPanel implements BaseViewG {
             CY_yarnSelect.setEnabled(false);
         });
 
+        /**
+         * Az eseménykezelő a célpont tecton kiválasztásához a Cut Yarn műveletben.
+         * Végrehajtja a fonal elvágását a kiválasztott tecton és az aktuális helyzet között,
+         * majd frissíti a nézetet.
+         */
         CY_tgtTectonSelect.addActionListener(e -> {
             chosenTecton = (Tecton) CY_tgtTectonSelect.getSelectedItem();
             controller.action_cut_yarn(chosenInsect, chosenYarn, chosenTecton);
@@ -263,6 +328,11 @@ public class EntomologistG extends JPanel implements BaseViewG {
         });
 
         // Update skip button to handle new combo boxes
+        /**
+         * Az eseménykezelő a Skip gombhoz.
+         * Letiltja az összes akciógombot, ezzel jelezve, hogy a játékos
+         * kihagyja a körét.
+         */
         skipButton.addActionListener(e -> {
             eatButton.setEnabled(false);
             moveButton.setEnabled(false);
@@ -270,6 +340,11 @@ public class EntomologistG extends JPanel implements BaseViewG {
         });
 
         // Update nextPlayerButton to handle new combo boxes
+        /**
+         * Az eseménykezelő a NEXT Player gombhoz.
+         * Elrejti az összes választási lehetőséget, aktiválja az összes gombot,
+         * átvált a következő játékos paneljére és beállítja a következő aktív játékost.
+         */
         nextPlayerButton.addActionListener(e -> {
             if (panelSwitcher != null) {
                 setAllComboBoxesVisible(false);
@@ -308,7 +383,10 @@ public class EntomologistG extends JPanel implements BaseViewG {
         add(centerPanel, BorderLayout.CENTER);
     }
 
-    // === Helper methods ===
+    /**
+     * Letiltja az összes gombot, kivéve a megadott aktív gombot
+     * @param activeButton Az a gomb, amely aktív marad
+     */
     private void disableOtherButtons(JButton activeButton) {
         moveButton.setEnabled(false);
         eatButton.setEnabled(false);
@@ -316,14 +394,19 @@ public class EntomologistG extends JPanel implements BaseViewG {
         skipButton.setEnabled(false);
         activeButton.setEnabled(true);
     }
-
+    /**
+     * Engedélyezi az összes gombot a felhasználói felületen
+     */
     private void enableAllButtons() {
         moveButton.setEnabled(true);
         eatButton.setEnabled(true);
         cutButton.setEnabled(true);
         skipButton.setEnabled(true);
     }
-
+    /**
+     * Beállítja az összes legördülő lista láthatóságát
+     * @param visible true, ha láthatónak kell lennie, false egyébként
+     */
     private void setAllComboBoxesVisible(boolean visible) {
 
 
@@ -338,11 +421,17 @@ public class EntomologistG extends JPanel implements BaseViewG {
         CY_tgtTectonSelect.setVisible(visible);
     }
 
-
+    /**
+     * Alapértelmezett konstruktor, amely egy üres EntomologistG objektumot hoz létre
+     */
     public EntomologistG() {
 
     }
 
+    /**
+     * Frissíti az alsó tecton sávot a kiválasztott tecton szomszédaival
+     * @param selectedTecton A kiválasztott tecton, amelynek szomszédait meg kell jeleníteni
+     */
     private void updateLowerStrip(Tecton selectedTecton) {
         lowerTectons.clear();
         List<Tecton> neighbors = selectedTecton.getNeighbours();
@@ -357,7 +446,10 @@ public class EntomologistG extends JPanel implements BaseViewG {
             lowerStrip.repaint();
         });
     }
-
+    /**
+     * Frissíti a GUI-t az entomológus aktuális állapota alapján.
+     * Implementálja a BaseViewG interfész update metódusát.
+     */
     @Override
     public void update() {
         // Update the entomologist name and points display

@@ -260,6 +260,12 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
     // === Button Panel ===
     JPanel buttonPanel = new JPanel(new GridLayout(4, 1, 5, 5));
 
+    /**
+     * Gomba növesztés gomb eseménykezelője
+     * - Megjeleníti a fonal kiválasztó legördülő listát
+     * - Betölti a játékos által birtokolt fonalakat a legördülő listába
+     * - Letiltja a többi akciógombot, csak a nextPlayerButton marad aktív
+     */
     growMushroomButton.addActionListener(e -> {
       GM_tectonSelector.setVisible(false);
       GM_tectonSelector.setEnabled(false);
@@ -272,6 +278,12 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
       disableOtherButtons(nextPlayerButton);
     });
 
+    /**
+     * Fonal választó (gomba növesztéshez) eseménykezelője
+     * - A kiválasztott fonal alapján betölti a tecton választó listát
+     * - Megjeleníti a tecton választót
+     * - Letiltja a fonal választó további módosítását
+     */
     GM_yarnSelector.addActionListener(e -> {
       chosenYarn = (Yarn) GM_yarnSelector.getSelectedItem();
       List<Tecton> tectonsList= chosenYarn.getTectons();
@@ -284,6 +296,10 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
       GM_yarnSelector.setEditable(false);
     });
 
+    /**
+     * Tecton választó eseménykezelője (gomba növesztéshez)
+     * – Elmenti a kiválasztott tectont, majd láthatóvá teszi a gomba-ID mezőt
+     */
     GM_tectonSelector.addActionListener(e -> {
       chosenTecton1 = (Tecton) GM_tectonSelector.getSelectedItem();
       GM_mushroomID.setVisible(true);
@@ -291,6 +307,11 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
       GM_tectonSelector.setEnabled(false);
     });
 
+    /**
+     * Gomba azonosító beviteli mező eseménykezelője
+     * - Elmenti a megadott gomba azonosítót
+     * - Megjeleníti a fonal típus választót
+     */
     GM_mushroomID.addActionListener(e->{
       chosenMushroomId = GM_mushroomID.getText();
       GM_yarnTypeSelector.setVisible(true);
@@ -298,6 +319,11 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
       GM_mushroomID.setEnabled(false);
     });
 
+    /**
+     * Fonal típus választó eseménykezelője (gomba növesztéshez)
+     * - Elmenti a kiválasztott fonal típust
+     * - Megjeleníti a fonal azonosító beviteli mezőt
+     */
     GM_yarnTypeSelector.addActionListener(e->{
       chosenYarnType = (String) GM_yarnTypeSelector.getSelectedItem();
       GM_yarnID.setVisible(true);
@@ -305,11 +331,22 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
       GM_yarnTypeSelector.setEnabled(false);
     });
 
+    /**
+     * Fonal azonosító beviteli mező eseménykezelője (gomba növesztéshez)
+     * – A megadott ID-vel és típus-beállításokkal létrehozza az új gombát
+     */
     GM_yarnID.addActionListener(e->{
       String yarnId = GM_yarnID.getText();
       controller.action_grow_mushroom(chosenTecton1, chosenMushroomId, chosenYarnType, yarnId);
     });
 
+    /**
+     * Spóra szórás gomb eseménykezelője
+     * - Szűri a játékos gombáit, csak azokat tartja meg, amelyeknek van spórája
+     * - Betölti a spórával rendelkező gombákat a gomba választóba
+     * - Megjeleníti a gomba választót
+     * - Letiltja a többi akciógombot
+     */
     disperseButton.addActionListener(e -> {
       List<Mushroom> mushroomList = mushroomPicker.getOwnedMushrooms();
       mushroomList.removeIf(m -> !m.getHasSpore());
@@ -323,6 +360,13 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
       disableOtherButtons(nextPlayerButton);
     });
 
+    /**
+     * Gomba választó eseménykezelője (spóra szóráshoz)
+     * - Elmenti a kiválasztott gombát
+     * - Betölti a szóba jöhető szomszédos tectonokat a tecton választóba
+     * - Ha a gomba kora > 10, akkor a távolabbi tectonokat is betölti
+     * - Megjeleníti a tecton választót
+     */
     DS_mushroomSelector.addActionListener(e -> {
       chosenMushroom = (Mushroom) DS_mushroomSelector.getSelectedItem();
       List<Tecton> tectonList = chosenMushroom.getTecton().getNeighbours();
@@ -343,6 +387,11 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
       DS_mushroomSelector.setEnabled(false);
     });
 
+    /**
+     * Tecton választó eseménykezelője (spóra szóráshoz)
+     * - Elmenti a kiválasztott tectont
+     * - Megjeleníti a spóra típus választót
+     */
     DS_tectonSelector.addActionListener(e -> {
       chosenTecton1 = (Tecton) DS_tectonSelector.getSelectedItem();
       DS_sporeSelector.setEnabled(true);
@@ -350,6 +399,11 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
       DS_tectonSelector.setEnabled(false);
     });
 
+    /**
+     * Spóra típus választó eseménykezelője
+     * - Elmenti a kiválasztott spóra típust
+     * - Megjeleníti a spóra azonosító beviteli mezőt
+     */
     DS_sporeSelector.addActionListener(e -> {
       chosenSporeType = (String) DS_sporeSelector.getSelectedItem();
       DS_sporeID.setEnabled(true);
@@ -363,6 +417,10 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
       controller.action_spore_dispersion(chosenTecton1, chosenMushroom, chosenSporeType, id);
     });
 
+    /**
+     * Fonal növesztés gomb eseménykezelője
+     * – Betölti a játékos fonalait a listába, és letiltja a többi akciógombot
+     */
     growYarnButton.addActionListener(e -> {
       int yarnSize = mushroomPicker.getOwnedYarns().size();
       Yarn[] yarns = mushroomPicker.getOwnedYarns().toArray(new Yarn[yarnSize]);
@@ -377,13 +435,15 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
     });
 
     // Fix for the IndexOutOfBoundsException in GY_yarnSelector.addActionListener
-
+    /**
+     * Fonal választó eseménykezelője (fonal növesztéshez)
+     * – A kiválasztott fonal alapján összegyűjti a lehetséges forrás tectonokat
+     */
     GY_yarnSelector.addActionListener(e -> {
       chosenYarn = (Yarn) GY_yarnSelector.getSelectedItem();
       List<Tecton> tectonList = new ArrayList<>();
 
-      // The issue is here - when chosenYarn.getTectons() is empty,
-      // the loop doesn't execute but we still try to access elements later
+
 
       if (chosenYarn != null && !chosenYarn.getTectons().isEmpty()) {
         for(Tecton t1: chosenYarn.getTectons()){
@@ -411,6 +471,10 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
       GY_yarnSelector.setEnabled(false);
     });
 
+    /**
+     * Forrás tecton választó eseménykezelője (fonal növesztéshez)
+     * – Betölti a szomszédos cél tectonokat a második legördülő listába
+     */
     GY_srcTectonSelector.addActionListener(e -> {
       chosenTecton1 = (Tecton) GY_srcTectonSelector.getSelectedItem();
       List<Tecton> tectonList = new ArrayList<>();
@@ -427,6 +491,11 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
     });
 
 
+
+    /**
+     * Cél tecton választó eseménykezelője (fonal növesztéshez)
+     * – Végrehajtja a fonal növesztését, és kezeli az első-/többedik növesztés logikát
+     */
     GY_tgtTectonSelector.addActionListener(e -> {
       chosenTecton2 = (Tecton) GY_tgtTectonSelector.getSelectedItem();
       if(!chosenTecton2.getSpores().isEmpty()&&firstGrow==true){
@@ -464,6 +533,11 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
 
     });
 
+
+    /**
+     * Kör kihagyása gomb eseménykezelője
+     * – Letiltja az akciógombokat, jelezve a kör passzolását
+     */
     skipButton.addActionListener(e -> {
       growMushroomButton.setEnabled(false);
       disperseButton.setEnabled(false);
@@ -475,6 +549,10 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
     buttonPanel.add(disperseButton);
     buttonPanel.add(skipButton);
 
+    /**
+     * Következő játékos gomb eseménykezelője
+     * – Panelt vált a következő játékosra, és visszaállítja a GUI kezdőállapotát
+     */
     nextPlayerButton.addActionListener(e -> {
       if (panelSwitcher != null) {
         GM_yarnSelector.setVisible(false);
