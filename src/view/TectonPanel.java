@@ -28,7 +28,7 @@
         private final TectonSelectionListener selectionListener;
         
         /** A tectonok közötti távolság pixelben */
-        private final int spacing = 80;
+        private final int spacing = 100;
 
         /**
          * Frissíti a panel méretét és megjelenítését a tectonok listája alapján.
@@ -38,7 +38,7 @@
         public void update() {
 
             // Update panel size based on current tectons list
-            setPreferredSize(new Dimension(Math.max(tectons.size() * 80, 400), 100));
+            setPreferredSize(new Dimension(Math.max(tectons.size() * spacing, 400), 100));
 
             // Request repaint to reflect updated state
             SwingUtilities.invokeLater(() -> {            
@@ -74,7 +74,7 @@
             this.selectable = selectable;
             this.selectionListener = listener;
 
-            setPreferredSize(new Dimension(Math.max(tectons.size() * 80, 400), 100));
+            setPreferredSize(new Dimension(Math.max(tectons.size() * spacing, 400), 100));
             setBackground(Color.WHITE);
 
             if (selectable) {
@@ -127,7 +127,7 @@
 
             for (int i = 0; i < tectons.size(); i++) {
                 TectonG tecton = tectons.get(i);
-                tecton.x = startX + i * 80; // 80px spacing between circles
+                tecton.x = startX + i * spacing; // 80px spacing between circles
                 tecton.y = yPos;
                 tecton.draw(g, tecton == selectedTecton);
             }
@@ -140,7 +140,7 @@
          */
         @Override
         public Dimension getPreferredSize() {
-            int width = Math.max(tectons.size() * 80, 400);
+            int width = Math.max(tectons.size() * spacing, 400);
             return new Dimension(width, 100); // Fixed height for all tecton panels
         }
     }
