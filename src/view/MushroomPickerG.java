@@ -388,7 +388,7 @@ public class MushroomPickerG extends JPanel implements BaseViewG {
       if (chosenYarn != null && !chosenYarn.getTectons().isEmpty()) {
         for(Tecton t1: chosenYarn.getTectons()){
             if(!tectonList.contains(t1)){
-              if(t1.getYarnLimit() > t1.getYarns().size()) {
+              if(t1.getYarnLimit() >=t1.getYarns().size()) {
                 if (t1.getYarns() != null && !t1.getYarns().isEmpty() && t1.getYarns().get(0).getPlayer() != mushroomPicker) {
                   if (!tectonList.contains(t1)) {
                     tectonList.add(t1);

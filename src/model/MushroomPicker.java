@@ -201,7 +201,7 @@ public class MushroomPicker extends Player implements Serializable {
 
                                 break;
                         }
-                        targetTecton.addYarn(newYarn);
+
 
                         System.out.println("MUSHROOMPICKER: " + getName() + " - Új fonál létrehozva: " + yarnId);
                         
