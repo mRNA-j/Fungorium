@@ -205,7 +205,7 @@ public class EntomologistG extends JPanel implements BaseViewG {
 
 
                         // Repopulate the target selector with neighbors
-                        List<Tecton> neighbors = new ArrayList<>(chosenInsect.getCurrentPlace().getNeighbours());
+                        List<Tecton> neighbors = new ArrayList<>(chosenInsect.getPlace().tectonsConnectedWithYarn());
 
                         MI_tgtTectonSelect.setModel(new DefaultComboBoxModel<>(neighbors.toArray(new Tecton[0])));
                         MI_tgtTectonSelect.setVisible(true);
