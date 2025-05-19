@@ -35,13 +35,13 @@ public class Map  implements Serializable {
 
         Tecton t1 = new Tecton("t1", 2, false, false);
         Tecton t2 = new Tecton("t2", 2, false, false);
-        Tecton t3 = new Tecton("t3", 2, false, false);
+        Tecton t3 = new Tecton("t3", 1, false, false);
         Tecton t4 = new Tecton("t4", 2, false, false);
-        Tecton t5 = new Tecton("t5", 2, false, false);
+        Tecton t5 = new Tecton("t5", 1, false, false);
 
         Tecton t6 = new Tecton("t6", 2, false, false);
         Tecton t7 = new Tecton("t7", 1, false, false);
-        Tecton t8 = new Tecton("t8", 2, true, false);
+        Tecton t8 = new Tecton("t8", 1, true, false);
         Tecton t9 = new Tecton("t9", 1, false, true);
         Tecton t10 = new Tecton("t10", 2, false, false);
 
@@ -71,6 +71,12 @@ public class Map  implements Serializable {
         Mushroom m2 = new Mushroom(t3, mps.get(1), "m2");
         Yarn y3 = new Yarn(m2,mps.get(1), "y2");
 
+
+        t1.addSpore(new AcceleratorSpore("basespor1"));
+
+        t2.addSpore(new CutPreventingSpore("basespor2"));
+        t2.addSpore(new AcceleratorSpore("basespor3"));
+        t2.addSpore(new AcceleratorSpore("basespor4"));
 
 
         addTecton(t1);
